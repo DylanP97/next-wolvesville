@@ -1,89 +1,19 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PlayersGrid from "./PlayersGrid";
 import characters from "../data/characters";
 import PlayerBoard from "./PlayerBoard";
+import initialPlayersList from "../data/playerListTemplate";
 
 const GameArea = () => {
+  const [gameIsInitialized, setGameIsInitialized] = useState(false);
   const [timeOfTheDay, setTimeOfTheDay] = useState("nighttime");
   const [dayCount, setDayCount] = useState(0);
   const actionsHistoryListRef = useRef(null);
 
-  const initialPlayersList = [
-    {
-      id: 0,
-      name: "Player 0",
-      role: "",
-      isAlive: true,
-      roleIsPublic: false,
-    },
-    {
-      id: 1,
-      name: "Player 1",
-      role: "",
-      isAlive: true,
-      roleIsPublic: false,
-    },
-    {
-      id: 2,
-      name: "Player 2",
-      role: "",
-      isAlive: true,
-      roleIsPublic: false,
-    },
-    {
-      id: 3,
-      name: "Player 3",
-      role: "",
-      isAlive: true,
-      roleIsPublic: false,
-    },
-    {
-      id: 4,
-      name: "Player 4",
-      role: "",
-      isAlive: true,
-      roleIsPublic: false,
-    },
-    {
-      id: 5,
-      name: "Player 5",
-      role: "",
-      isAlive: true,
-      roleIsPublic: false,
-    },
-    {
-      id: 6,
-      name: "Player 6",
-      role: "",
-      isAlive: true,
-      roleIsPublic: false,
-    },
-    {
-      id: 7,
-      name: "Player 7",
-      role: "",
-      isAlive: true,
-      roleIsPublic: false,
-    },
-    {
-      id: 8,
-      name: "Player 8",
-      role: "",
-      isAlive: true,
-      roleIsPublic: false,
-    },
-    {
-      id: 9,
-      name: "Player 9",
-      role: "",
-      isAlive: true,
-      roleIsPublic: false,
-    },
-  ];
-
   const assignedRoles = new Set();
+
   const randomRoles = initialPlayersList.map((player, index) => {
     let randomCharacter;
     do {
@@ -102,18 +32,19 @@ const GameArea = () => {
   const [registeredNightActions, setRegisteredNightActions] = useState([]);
 
   const killPlayer = (playerId) => {
-    console.log("pan " + playerId)
-    const newPlayersList = updatedPlayersList.map((player) => {
-      if (player.id === playerId) {
-        return {
-          ...player,
-          isAlive: false,
-        };
-      }
-      return player;
+    setUpdatedPlayersList((prevPlayersList) => {
+      // Create a new array based on the previous state
+      return prevPlayersList.map((player) => {
+        if (player.id === playerId) {
+          // If the player matches the playerId, mark them as not alive
+          return {
+            ...player,
+            isAlive: false,
+          };
+        }
+        return player;
+      });
     });
-    setUpdatedPlayersList(newPlayersList);
-    console.log(newPlayersList)
   };
 
   const displayAction = (message) => {
@@ -154,14 +85,56 @@ const GameArea = () => {
     );
   };
 
+  const findNextPlayerToPlayAlive = (currentPlayerId) => {
+    let isFirstAlivePlayer = false;
+
+    if (
+      currentPlayerId === -1 ||
+      currentPlayerId === updatedPlayersList.length - 1
+    ) {
+      for (let i = 0; i < updatedPlayersList.length; i++) {
+        if (updatedPlayersList[i].isAlive) {
+          if (i === 0) {
+            isFirstAlivePlayer = true;
+          }
+          return { index: i, isFirstAlivePlayer };
+        }
+      }
+    } else {
+      for (let i = currentPlayerId + 1; i < updatedPlayersList.length; i++) {
+        if (updatedPlayersList[i].isAlive) {
+          return { index: i, isFirstAlivePlayer };
+        }
+      }
+
+      for (let i = 0; i < currentPlayerId; i++) {
+        if (updatedPlayersList[i].isAlive) {
+          if (i === 0) {
+            isFirstAlivePlayer = true;
+          }
+          return { index: i, isFirstAlivePlayer };
+        }
+      }
+    }
+
+    return { index: -1, isFirstAlivePlayer };
+  };
+
   const nextAction = () => {
-    if (playerToPlay.id === 9) {
-      setPlayerToPlay(updatedPlayersList[0]);
+    const { index: nextPlayerId, isFirstAlivePlayer } =
+      findNextPlayerToPlayAlive(playerToPlay.id);
+
+    if (isFirstAlivePlayer) {
+      setPlayerToPlay(updatedPlayersList[nextPlayerId]);
       changeTimeOfTheDay();
     } else {
-      setPlayerToPlay(updatedPlayersList[playerToPlay.id + 1]);
+      setPlayerToPlay(updatedPlayersList[nextPlayerId]);
     }
   };
+
+  useEffect(() => {
+    setGameIsInitialized(true);
+  }, []);
 
   return (
     <section
@@ -187,19 +160,22 @@ const GameArea = () => {
         <ul ref={actionsHistoryListRef}></ul>
       </div>
 
-      <PlayersGrid playersList={updatedPlayersList} />
+      {gameIsInitialized && (
+        <>
+          <PlayersGrid
+            playersList={updatedPlayersList}
+            playerToPlay={playerToPlay}
+          />
 
-      <PlayerBoard
-        playerToPlay={playerToPlay}
-        setPlayerToPlay={setPlayerToPlay}
-        registeredNightActions={registeredNightActions}
-        setRegisteredNightActions={setRegisteredNightActions}
-        nextAction={nextAction}
-      />
-
-      {/* <div className="chatbox bg-white rounded-xl shadow-lg p-4 ">
-        <p className="text-xs text-black ">Chat box</p>
-      </div> */}
+          <PlayerBoard
+            playerToPlay={playerToPlay}
+            setPlayerToPlay={setPlayerToPlay}
+            registeredNightActions={registeredNightActions}
+            setRegisteredNightActions={setRegisteredNightActions}
+            nextAction={nextAction}
+          />
+        </>
+      )}
     </section>
   );
 };
