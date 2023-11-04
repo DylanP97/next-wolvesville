@@ -41,6 +41,7 @@ const characters = [
     name: "Civilian",
     maxNbrInGame: 5,
     canVote: true,
+    canPerformAtNighttime: null,
     specialAbility: null,
     image: rolesIcons["man"],
     description:
@@ -50,6 +51,7 @@ const characters = [
     name: "Sheriff",
     maxNbrInGame: 1,
     canVote: true,
+    canPerformAtNighttime: "shoot",
     specialAbility: arrestSomeone(),
     image: rolesIcons["sheriff"],
     description:
@@ -59,6 +61,7 @@ const characters = [
     name: "Doctor",
     maxNbrInGame: 1,
     canVote: true,
+    canPerformAtNighttime: null,
     specialAbility: canHeal(),
     image: rolesIcons["doctor"],
     description: "The doctor can protect the person he wants each night.",
@@ -67,6 +70,7 @@ const characters = [
     name: "Shooter",
     maxNbrInGame: 1,
     canVote: true,
+    canPerformAtNighttime: "shoot",
     specialAbility: canShoot(),
     image: rolesIcons["shooter"],
     description:
@@ -76,6 +80,7 @@ const characters = [
     name: "Detective",
     maxNbrInGame: 1,
     canVote: true,
+    canPerformAtNighttime: null,
     specialAbility: checkIntentions(),
     image: rolesIcons["detective"],
     description:
@@ -85,6 +90,7 @@ const characters = [
     name: "Mayor",
     maxNbrInGame: 1,
     canVote: true,
+    canPerformAtNighttime: null,
     specialAbility: doubleVote(),
     image: rolesIcons["mayor"],
     description: "The mayor vote counts double.",
@@ -93,6 +99,7 @@ const characters = [
     name: "Fool",
     maxNbrInGame: 1,
     canVote: true,
+    canPerformAtNighttime: null,
     specialAbility: null,
     image: rolesIcons["fool"],
     description:
@@ -102,11 +109,9 @@ const characters = [
     name: "Bandit",
     maxNbrInGame: 2,
     canVote: true,
+    canPerformAtNighttime: "shoot",
     specialAbility: null,
-    functions: [
-      selectPartner(),
-      killPlayer(),
-    ],
+    functions: [selectPartner(), killPlayer()],
     image: rolesIcons["bandit"],
     description:
       "The bandit goal is to be the last one alive. He can choose to teammate with someone. One bandit can kill one person each two nights.",
@@ -115,6 +120,7 @@ const characters = [
     name: "Reaper",
     maxNbrInGame: 1,
     canVote: true,
+    canPerformAtNighttime: null,
     specialAbility: collectingSouls(),
     image: rolesIcons["reaper"],
     description:
@@ -124,6 +130,7 @@ const characters = [
     name: "Terrorist",
     maxNbrInGame: 1,
     canVote: true,
+    canPerformAtNighttime: "shoot",
     specialAbility: bombExplode(),
     image: rolesIcons["terrorist"],
     description:

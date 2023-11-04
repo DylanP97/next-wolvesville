@@ -20,19 +20,21 @@ const HomePage = () => {
   };  
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold my-4">Welcome to Wolvesville Game</h1>
-      <label>Your name:</label>
+    <main className="flex min-h-screen flex-col items-center justify-between p-16">
+      <h1 className="text-4xl font-bold my-6">Welcome to Wolvesville Game</h1>
+      {/* <label>Your name:</label>
       <input
         type="text"
         value={playerName}
         onChange={(e) => setPlayerName(e.target.value)}
       />
-      <Button color="primary" onClick={handleNameSubmit}>Submit</Button>
+      <Button color="primary" onClick={handleNameSubmit}>Submit</Button> */}
 
-      <Button className="my-2" color="primary" onClick={(() => launchGame())}>Launch a Game</Button>
-      
-      {gameLaunched && <GameArea playerName={playerName} /> }
+      {/* <Button className="my-2" color="primary" onClick={(() => launchGame())}>Launch a Game</Button>
+       */}
+      <GameArea /> 
+
+      <div className="h-20" />
             
       <RolesGrid />
 
