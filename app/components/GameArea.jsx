@@ -5,6 +5,9 @@ import PlayersGrid from "./PlayersGrid";
 import characters from "../data/characters";
 import PlayerBoard from "./PlayerBoard";
 import initialPlayersList from "../data/playerListTemplate";
+import { killSelectedPlayer } from "../data/gameActions";
+import ActionsHistory from "./ActionsHistory";
+import GameHeader from "./GameHeader";
 
 const GameArea = () => {
   const [gameIsInitialized, setGameIsInitialized] = useState(false);
@@ -30,25 +33,11 @@ const GameArea = () => {
   const [updatedPlayersList, setUpdatedPlayersList] = useState(randomRoles);
   const [playerToPlay, setPlayerToPlay] = useState(updatedPlayersList[0]);
   const [registeredNightActions, setRegisteredNightActions] = useState([]);
-
-  const killPlayer = (playerId) => {
-    setUpdatedPlayersList((prevPlayersList) => {
-      // Create a new array based on the previous state
-      return prevPlayersList.map((player) => {
-        if (player.id === playerId) {
-          // If the player matches the playerId, mark them as not alive
-          return {
-            ...player,
-            isAlive: false,
-          };
-        }
-        return player;
-      });
-    });
-  };
+  const [isSelectionMode, setIsSelectionMode] = useState(false);
 
   const displayAction = (message) => {
     const newAction = document.createElement("li");
+    newAction.classList.add("text-xs");
     newAction.innerText = message;
     actionsHistoryListRef.current.appendChild(newAction);
   };
@@ -59,13 +48,12 @@ const GameArea = () => {
       displayAction(`Day ${dayCount} has come... discuss with the village`);
 
       registeredNightActions.forEach((action) => {
-        if (action.action === "shoot") {
-          const randomKilledIndex = Math.round(
-            Math.random() * updatedPlayersList.length
-          );
-          killPlayer(randomKilledIndex);
+        if (action.type === "shoot") {
+          killSelectedPlayer(action.selectedPlayerId, setUpdatedPlayersList);
           displayAction(
-            `${updatedPlayersList[randomKilledIndex].name} has been killed last night!`
+            `The shooter has shot ${
+              updatedPlayersList[action.selectedPlayerId].name
+            } this night !`
           );
         }
       });
@@ -120,7 +108,7 @@ const GameArea = () => {
     return { index: -1, isFirstAlivePlayer };
   };
 
-  const nextAction = () => {
+  const toNext = () => {
     const { index: nextPlayerId, isFirstAlivePlayer } =
       findNextPlayerToPlayAlive(playerToPlay.id);
 
@@ -136,35 +124,33 @@ const GameArea = () => {
     setGameIsInitialized(true);
   }, []);
 
-  return (
+  return !gameIsInitialized ? (
+    <p>We choose the roles for each player...</p>
+  ) : (
     <section
       className={`${
         timeOfTheDay === "daytime"
           ? "bg-blue-500"
           : timeOfTheDay === "votetime"
           ? "bg-orange-800"
-          : "bg-zinc-800"
+          : "bg-slate-950"
       } w-full p-4 rounded-xl`}>
-      <div className="bg-zinc-900 rounded-xl shadow-lg p-4 my-4">
-        {timeOfTheDay === "daytime" ? (
-          <p className="text-xs">Daytime n°{dayCount}</p>
-        ) : timeOfTheDay === "votetime" ? (
-          <p className="text-xs">Votetime n°{dayCount}</p>
-        ) : (
-          <p className="text-xs">Nighttime n°{dayCount}</p>
-        )}
-      </div>
-
-      <div className="bg-slate-900 rounded-xl shadow-lg p-4 my-4">
-        <p className="text-white text-xs">Actions history</p>
-        <ul ref={actionsHistoryListRef}></ul>
-      </div>
-
+      <GameHeader
+        timeOfTheDay={timeOfTheDay}
+        dayCount={dayCount}
+        playerToPlay={playerToPlay}
+      />
+      <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
       {gameIsInitialized && (
         <>
           <PlayersGrid
             playersList={updatedPlayersList}
             playerToPlay={playerToPlay}
+            registeredNightActions={registeredNightActions}
+            setRegisteredNightActions={setRegisteredNightActions}
+            toNext={toNext}
+            isSelectionMode={isSelectionMode}
+            setIsSelectionMode={setIsSelectionMode}
           />
 
           <PlayerBoard
@@ -172,7 +158,9 @@ const GameArea = () => {
             setPlayerToPlay={setPlayerToPlay}
             registeredNightActions={registeredNightActions}
             setRegisteredNightActions={setRegisteredNightActions}
-            nextAction={nextAction}
+            toNext={toNext}
+            isSelectionMode={isSelectionMode}
+            setIsSelectionMode={setIsSelectionMode}
           />
         </>
       )}

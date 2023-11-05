@@ -51,7 +51,7 @@ const characters = [
     name: "Sheriff",
     maxNbrInGame: 1,
     canVote: true,
-    canPerformAtNighttime: "shoot",
+    canPerformAtNighttime: null,
     specialAbility: arrestSomeone(),
     image: rolesIcons["sheriff"],
     description:
@@ -70,7 +70,11 @@ const characters = [
     name: "Shooter",
     maxNbrInGame: 1,
     canVote: true,
-    canPerformAtNighttime: "shoot",
+    canPerformAtNighttime: {
+      label: "Select someone to shoot him",
+      type: "shoot",
+      needSelection: true,
+    },
     specialAbility: canShoot(),
     image: rolesIcons["shooter"],
     description:
@@ -109,9 +113,8 @@ const characters = [
     name: "Bandit",
     maxNbrInGame: 2,
     canVote: true,
-    canPerformAtNighttime: "shoot",
+    canPerformAtNighttime: null,
     specialAbility: null,
-    functions: [selectPartner(), killPlayer()],
     image: rolesIcons["bandit"],
     description:
       "The bandit goal is to be the last one alive. He can choose to teammate with someone. One bandit can kill one person each two nights.",
@@ -130,7 +133,7 @@ const characters = [
     name: "Terrorist",
     maxNbrInGame: 1,
     canVote: true,
-    canPerformAtNighttime: "shoot",
+    canPerformAtNighttime: null,
     specialAbility: bombExplode(),
     image: rolesIcons["terrorist"],
     description:
