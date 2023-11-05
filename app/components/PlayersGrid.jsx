@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import tombstone from "@/public/game/tombstone.png";
+import { voteAgainst } from "../data/gameActions";
 
 const PlayersGrid = ({
   playersList,
@@ -11,9 +12,11 @@ const PlayersGrid = ({
   setIsSelectionMode,
   registeredNightActions,
   setRegisteredNightActions,
+  timeOfTheDay,
+  updatedPlayersList,
+  setUpdatedPlayersList,
   toNext,
 }) => {
-
   const registerNightAction = (otherSelectedPlayerId) => {
     setRegisteredNightActions([
       ...registeredNightActions,
@@ -22,7 +25,13 @@ const PlayersGrid = ({
         player: playerToPlay.id,
         selectedPlayerId: otherSelectedPlayerId,
       },
-    ])
+    ]);
+    setIsSelectionMode(false);
+    toNext();
+  };
+
+  const voteForVotetime = (playerId) => {
+    voteAgainst(playerId, setUpdatedPlayersList);
     setIsSelectionMode(false);
     toNext();
   };
@@ -44,10 +53,11 @@ const PlayersGrid = ({
           } w-28 h-36 p-2 rounded-xl flex flex-col justify-center items-center relative gap-2`}
           key={player.name}
           onClick={() =>
-            player.isAlive &&
-            player.id !== playerToPlay.id &&
-            isSelectionMode &&
-            registerNightAction(player.id)
+            player.isAlive && isSelectionMode && player.id !== playerToPlay.id
+              ? timeOfTheDay === "nighttime"
+                ? registerNightAction(player.id)
+                : voteForVotetime(player.id)
+              : console.log("don't select yourself!")
           }>
           <Image
             width={50}

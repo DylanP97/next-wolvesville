@@ -5,13 +5,16 @@ import PlayersGrid from "./PlayersGrid";
 import characters from "../data/characters";
 import PlayerBoard from "./PlayerBoard";
 import initialPlayersList from "../data/playerListTemplate";
-import { killSelectedPlayer } from "../data/gameActions";
+import {
+  findPlayerWithMostVotes,
+  killSelectedPlayer,
+} from "../data/gameActions";
 import ActionsHistory from "./ActionsHistory";
 import GameHeader from "./GameHeader";
 
 const GameArea = () => {
   const [gameIsInitialized, setGameIsInitialized] = useState(false);
-  const [timeOfTheDay, setTimeOfTheDay] = useState("nighttime");
+  const [timeOfTheDay, setTimeOfTheDay] = useState(null);
   const [dayCount, setDayCount] = useState(0);
   const actionsHistoryListRef = useRef(null);
 
@@ -62,6 +65,14 @@ const GameArea = () => {
       displayAction(`Its time to vote!`);
     }
     if (timeOfTheDay === "votetime") {
+      const mostVotedAgainstPlayer =
+        findPlayerWithMostVotes(updatedPlayersList);
+      killSelectedPlayer(mostVotedAgainstPlayer.id, setUpdatedPlayersList);
+      displayAction(
+        `The town decided to kill ${
+          updatedPlayersList[mostVotedAgainstPlayer.id].name
+        } has a result of the vote!`
+      );
       displayAction(`beware its night...`);
     }
     setTimeOfTheDay(
@@ -121,6 +132,7 @@ const GameArea = () => {
   };
 
   useEffect(() => {
+    setTimeOfTheDay("nighttime");
     setGameIsInitialized(true);
   }, []);
 
@@ -151,11 +163,14 @@ const GameArea = () => {
             toNext={toNext}
             isSelectionMode={isSelectionMode}
             setIsSelectionMode={setIsSelectionMode}
+            updatedPlayersList={updatedPlayersList}
+            setUpdatedPlayersList={setUpdatedPlayersList}
+            timeOfTheDay={timeOfTheDay}
           />
 
           <PlayerBoard
+            timeOfTheDay={timeOfTheDay}
             playerToPlay={playerToPlay}
-            setPlayerToPlay={setPlayerToPlay}
             registeredNightActions={registeredNightActions}
             setRegisteredNightActions={setRegisteredNightActions}
             toNext={toNext}
