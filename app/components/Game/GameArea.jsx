@@ -2,13 +2,14 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import PlayersGrid from "./PlayersGrid";
-import characters from "../data/characters";
+import characters from "../../data/characters";
 import PlayerBoard from "./PlayerBoard";
-import initialPlayersList from "../data/playerListTemplate";
+import initialPlayersList from "../../data/playerListTemplate";
 import {
-  findPlayerWithMostVotes,
-  killSelectedPlayer,
-} from "../data/gameActions";
+  aftermathOfVote,
+  arrestPlayer,
+  shootBullet,
+} from "../../data/gameActions";
 import ActionsHistory from "./ActionsHistory";
 import GameHeader from "./GameHeader";
 
@@ -35,7 +36,7 @@ const GameArea = () => {
 
   const [updatedPlayersList, setUpdatedPlayersList] = useState(randomRoles);
   const [playerToPlay, setPlayerToPlay] = useState(updatedPlayersList[0]);
-  const [registeredNightActions, setRegisteredNightActions] = useState([]);
+  const [registeredActions, setRegisteredActions] = useState([]);
   const [isSelectionMode, setIsSelectionMode] = useState(false);
 
   const displayAction = (message) => {
@@ -50,14 +51,15 @@ const GameArea = () => {
       setDayCount((prevDayCount) => prevDayCount + 1);
       displayAction(`Day ${dayCount} has come... discuss with the village`);
 
-      registeredNightActions.forEach((action) => {
-        if (action.type === "shoot") {
-          killSelectedPlayer(action.selectedPlayerId, setUpdatedPlayersList);
-          displayAction(
-            `The shooter has shot ${
-              updatedPlayersList[action.selectedPlayerId].name
-            } this night !`
-          );
+      registeredActions.forEach((action) => {
+        if (action.actionTime === "night") {
+          if (action.type === "shoot")
+            shootBullet(
+              action,
+              updatedPlayersList,
+              setUpdatedPlayersList,
+              displayAction
+            );
         }
       });
     }
@@ -65,15 +67,21 @@ const GameArea = () => {
       displayAction(`Its time to vote!`);
     }
     if (timeOfTheDay === "votetime") {
-      const mostVotedAgainstPlayer =
-        findPlayerWithMostVotes(updatedPlayersList);
-      killSelectedPlayer(mostVotedAgainstPlayer.id, setUpdatedPlayersList);
-      displayAction(
-        `The town decided to kill ${
-          updatedPlayersList[mostVotedAgainstPlayer.id].name
-        } has a result of the vote!`
-      );
+      aftermathOfVote(displayAction, updatedPlayersList, setUpdatedPlayersList);
       displayAction(`beware its night...`);
+
+
+      registeredActions.forEach((action) => {
+        if (action.actionTime === "day") {
+          if (action.type === "arrest")
+            arrestPlayer(
+              action,
+              updatedPlayersList,
+              setUpdatedPlayersList,
+              displayAction
+            );
+        }
+      });
     }
     setTimeOfTheDay(
       timeOfTheDay === "daytime"
@@ -120,6 +128,8 @@ const GameArea = () => {
   };
 
   const toNext = () => {
+    console.log(registeredActions)
+
     const { index: nextPlayerId, isFirstAlivePlayer } =
       findNextPlayerToPlayAlive(playerToPlay.id);
 
@@ -158,8 +168,8 @@ const GameArea = () => {
           <PlayersGrid
             playersList={updatedPlayersList}
             playerToPlay={playerToPlay}
-            registeredNightActions={registeredNightActions}
-            setRegisteredNightActions={setRegisteredNightActions}
+            registeredActions={registeredActions}
+            setRegisteredActions={setRegisteredActions}
             toNext={toNext}
             isSelectionMode={isSelectionMode}
             setIsSelectionMode={setIsSelectionMode}
@@ -171,8 +181,8 @@ const GameArea = () => {
           <PlayerBoard
             timeOfTheDay={timeOfTheDay}
             playerToPlay={playerToPlay}
-            registeredNightActions={registeredNightActions}
-            setRegisteredNightActions={setRegisteredNightActions}
+            registeredActions={registeredActions}
+            setRegisteredActions={setRegisteredActions}
             toNext={toNext}
             isSelectionMode={isSelectionMode}
             setIsSelectionMode={setIsSelectionMode}

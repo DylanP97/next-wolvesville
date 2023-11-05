@@ -1,4 +1,3 @@
-
 export const killSelectedPlayer = (playerIdToKill, setUpdatedPlayersList) => {
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
@@ -32,17 +31,10 @@ export const voteAgainst = (playerId, setUpdatedPlayersList) => {
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
       if (player.id === playerId) {
-        if (player.voteAgainst === undefined) {
-          return {
-            ...player,
-            voteAgainst: 0,
-          };
-        } else {
-          return {
-            ...player,
-            voteAgainst: player.voteAgainst + 1,
-          };
-        }
+        return {
+          ...player,
+          voteAgainst: player.voteAgainst + 1,
+        };
       }
       return player;
     });
@@ -61,4 +53,60 @@ export const findPlayerWithMostVotes = (playersList) => {
   }
 
   return playerWithMostVotes;
-}
+};
+
+export const aftermathOfVote = (
+  displayAction,
+  updatedPlayersList,
+  setUpdatedPlayersList
+) => {
+  const mostVotedAgainstPlayer = findPlayerWithMostVotes(updatedPlayersList);
+  if (!mostVotedAgainstPlayer) {
+    displayAction(`The town couldn't decide who to kill!`);
+  } else {
+    killSelectedPlayer(mostVotedAgainstPlayer.id, setUpdatedPlayersList);
+    displayAction(
+      `The town decided to kill ${
+        updatedPlayersList[mostVotedAgainstPlayer.id].name
+      } has a result of the vote!`
+    );
+  }
+};
+
+export const shootBullet = (
+  action,
+  updatedPlayersList,
+  setUpdatedPlayersList,
+  displayAction
+) => {
+  killSelectedPlayer(action.selectedPlayerId, setUpdatedPlayersList);
+  displayAction(
+    `The shooter has shot ${
+      updatedPlayersList[action.selectedPlayerId].name
+    } this night !`
+  );
+};
+
+export const arrestPlayer = (
+  action,
+  updatedPlayersList,
+  setUpdatedPlayersList,
+  displayAction
+) => {
+  setUpdatedPlayersList((prevPlayersList) => {
+    return prevPlayersList.map((player) => {
+      if (player.id === action.selectedPlayerId) {
+        return {
+          ...player,
+          isUnderArrest: true,
+        };
+      }
+      return player;
+    });
+  });
+  displayAction(
+    `The sheriff has handcuffed ${
+      updatedPlayersList[action.selectedPlayerId].name
+    }!`
+  );
+};

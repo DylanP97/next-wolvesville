@@ -5,6 +5,8 @@ const initialPlayersList = [
       role: "",
       isAlive: true,
       roleIsPublic: false,
+      voteAgainst: 0,
+      isUnderArrest: false,
     },
     {
       id: 1,
@@ -12,6 +14,8 @@ const initialPlayersList = [
       role: "",
       isAlive: true,
       roleIsPublic: false,
+      voteAgainst: 0,
+      isUnderArrest: false,
     },
     {
       id: 2,
@@ -19,6 +23,8 @@ const initialPlayersList = [
       role: "",
       isAlive: true,
       roleIsPublic: false,
+      voteAgainst: 0,
+      isUnderArrest: false,
     },
     {
       id: 3,
@@ -26,6 +32,8 @@ const initialPlayersList = [
       role: "",
       isAlive: true,
       roleIsPublic: false,
+      voteAgainst: 0,
+      isUnderArrest: false,
     },
     {
       id: 4,
@@ -33,6 +41,8 @@ const initialPlayersList = [
       role: "",
       isAlive: true,
       roleIsPublic: false,
+      voteAgainst: 0,
+      isUnderArrest: false,
     },
     {
       id: 5,
@@ -40,6 +50,8 @@ const initialPlayersList = [
       role: "",
       isAlive: true,
       roleIsPublic: false,
+      voteAgainst: 0,
+      isUnderArrest: false,
     },
     {
       id: 6,
@@ -47,6 +59,8 @@ const initialPlayersList = [
       role: "",
       isAlive: true,
       roleIsPublic: false,
+      voteAgainst: 0,
+      isUnderArrest: false,
     },
     {
       id: 7,
@@ -54,6 +68,8 @@ const initialPlayersList = [
       role: "",
       isAlive: true,
       roleIsPublic: false,
+      voteAgainst: 0,
+      isUnderArrest: false,
     },
     {
       id: 8,
@@ -61,6 +77,8 @@ const initialPlayersList = [
       role: "",
       isAlive: true,
       roleIsPublic: false,
+      voteAgainst: 0,
+      isUnderArrest: false,
     },
     {
       id: 9,
@@ -68,6 +86,8 @@ const initialPlayersList = [
       role: "",
       isAlive: true,
       roleIsPublic: false,
+      voteAgainst: 0,
+      isUnderArrest: false,
     },
   ];
 

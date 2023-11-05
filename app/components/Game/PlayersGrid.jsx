@@ -3,30 +3,39 @@
 import Image from "next/image";
 import React from "react";
 import tombstone from "@/public/game/tombstone.png";
-import { voteAgainst } from "../data/gameActions";
+import prison from "@/public/game/prison.png";
+import { voteAgainst } from "../../data/gameActions";
 
 const PlayersGrid = ({
   playersList,
   playerToPlay,
   isSelectionMode,
   setIsSelectionMode,
-  registeredNightActions,
-  setRegisteredNightActions,
+  registeredActions,
+  setRegisteredActions,
   timeOfTheDay,
   updatedPlayersList,
   setUpdatedPlayersList,
   toNext,
 }) => {
-  const registerNightAction = (otherSelectedPlayerId) => {
-    setRegisteredNightActions([
-      ...registeredNightActions,
+  const registerActionThatNeedSelection = (otherSelectedPlayerId) => {
+    console.log(
+      "entering the registerActionThatNeedSelection function and otherSelectedPlayerId is: ",
+      otherSelectedPlayerId
+    );
+    setRegisteredActions([
+      ...registeredActions,
       {
-        type: playerToPlay.role.canPerformAtNighttime.type,
+        type: playerToPlay.role.canPerform.type,
         player: playerToPlay.id,
         selectedPlayerId: otherSelectedPlayerId,
+        actionTime: playerToPlay.role.canPerform.actionTime,
       },
     ]);
     setIsSelectionMode(false);
+
+    console.log(registeredActions);
+
     toNext();
   };
 
@@ -54,8 +63,8 @@ const PlayersGrid = ({
           key={player.name}
           onClick={() =>
             player.isAlive && isSelectionMode && player.id !== playerToPlay.id
-              ? timeOfTheDay === "nighttime"
-                ? registerNightAction(player.id)
+              ? timeOfTheDay !== "votetime"
+                ? registerActionThatNeedSelection(player.id)
                 : voteForVotetime(player.id)
               : console.log("don't select yourself!")
           }>
@@ -65,7 +74,7 @@ const PlayersGrid = ({
             src={player.role.image && player.role.image.src}
             alt="role"
           />
-          {!player.isAlive && (
+          {!player.isAlive ? (
             <Image
               className="absolute"
               width={60}
@@ -73,6 +82,16 @@ const PlayersGrid = ({
               src={tombstone}
               alt="role"
             />
+          ) : (
+            player.isUnderArrest && (
+              <Image
+                className="absolute"
+                width={100}
+                height={100}
+                src={prison}
+                alt="role"
+              />
+            )
           )}
           <p className="text-xs">{player.name}</p>
         </div>

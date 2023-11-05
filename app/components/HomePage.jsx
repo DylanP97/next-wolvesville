@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import PlayersGrid from "./PlayersGrid";
+import PlayersGrid from "./Game/PlayersGrid";
 import { Button, Link } from "@nextui-org/react";
-import RolesGrid from "./RolesGrid";
-import GameArea from "./GameArea";
+import RolesGrid from "./Roles/RolesGrid";
+import GameArea from "./Game/GameArea";
 
 const HomePage = () => {
   const [playerName, setPlayerName] = useState("");

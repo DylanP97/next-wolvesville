@@ -1,4 +1,4 @@
-import RolesGrid from "../components/RolesGrid"
+import RolesGrid from "../components/Roles/RolesGrid"
 
 const RolePage = () => {
 

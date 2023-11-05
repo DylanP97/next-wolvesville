@@ -1,4 +1,4 @@
-import GameArea from "../components/GameArea"
+import GameArea from "../components/Game/GameArea"
 
 const GamePage = () => {
 

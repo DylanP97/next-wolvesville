@@ -2,7 +2,7 @@
 
 import React from "react";
 import RoleCard from "./RoleCard";
-import characters from "../data/characters";
+import characters from "../../data/characters";
 
 const RolesGrid = () => {
   return (
