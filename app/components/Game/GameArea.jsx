@@ -8,6 +8,7 @@ import initialPlayersList from "../../data/playerListTemplate";
 import {
   aftermathOfVote,
   arrestPlayer,
+  cleanUpRegisteredActionsConcerningDeadPlayers,
   shootBullet,
 } from "../../data/gameActions";
 import ActionsHistory from "./ActionsHistory";
@@ -62,14 +63,21 @@ const GameArea = () => {
             );
         }
       });
+      setRegisteredActions([]);
     }
     if (timeOfTheDay === "daytime") {
       displayAction(`Its time to vote!`);
     }
     if (timeOfTheDay === "votetime") {
       aftermathOfVote(displayAction, updatedPlayersList, setUpdatedPlayersList);
-      displayAction(`beware its night...`);
 
+      cleanUpRegisteredActionsConcerningDeadPlayers(
+        updatedPlayersList,
+        setRegisteredActions
+      );
+    }
+    if (timeOfTheDay === "nighttime") {
+      displayAction(`beware its night...`);
 
       registeredActions.forEach((action) => {
         if (action.actionTime === "day") {
@@ -82,6 +90,7 @@ const GameArea = () => {
             );
         }
       });
+      setRegisteredActions([]);
     }
     setTimeOfTheDay(
       timeOfTheDay === "daytime"
@@ -128,8 +137,6 @@ const GameArea = () => {
   };
 
   const toNext = () => {
-    console.log(registeredActions)
-
     const { index: nextPlayerId, isFirstAlivePlayer } =
       findNextPlayerToPlayAlive(playerToPlay.id);
 

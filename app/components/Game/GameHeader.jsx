@@ -5,11 +5,11 @@ const GameHeader = ({ timeOfTheDay, dayCount, playerToPlay }) => {
     <div className="bg-slate-900 rounded-xl shadow-lg p-4 my-4">
       <p className="text-xs">
         {timeOfTheDay === "daytime" ? (
-          <>Daytime n°{dayCount}</>
+          <>☀️ Daytime n°{dayCount}</>
         ) : timeOfTheDay === "votetime" ? (
-          <>Votetime n°{dayCount}</>
+          <>🌅🗳️ Votetime n°{dayCount}</>
         ) : (
-          <>Nighttime n°{dayCount}</>
+          <>🌙 Nighttime n°{dayCount}</>
         )}
         <>
          {" "} - {playerToPlay.name} it&apos;s your time to play

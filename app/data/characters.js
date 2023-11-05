@@ -1,4 +1,6 @@
 import rolesIcons from "@/public/roles";
+import target from "@/public/game/target.png";
+import handcuffs from "@/public/game/handcuffs.png";
 
 const characters = [
   {
@@ -16,6 +18,7 @@ const characters = [
     canVote: true,
     canPerform: {
       label: "Handcuff a player for the next night",
+      emoji: handcuffs,
       type: "arrest",
       needSelection: true,
       actionTime: "day",
@@ -38,6 +41,7 @@ const characters = [
     canVote: true,
     canPerform: {
       label: "Select someone to shoot him",
+      emoji: target,
       type: "shoot",
       needSelection: true,
       actionTime: "night",

@@ -110,3 +110,17 @@ export const arrestPlayer = (
     }!`
   );
 };
+
+export const cleanUpRegisteredActionsConcerningDeadPlayers = (updatedPlayersList, setRegisteredActions) => {
+  // if player is dead clean all his registered actions
+  updatedPlayersList.forEach((player) => {
+    if (!player.isAlive) {
+      setRegisteredActions((registeredActionsList) => {
+        return registeredActionsList.filter((action) => {
+          action.playerId !== player.id &&
+            action.selectedPlayerId !== player.id;
+        });
+      });
+    }
+  });
+};

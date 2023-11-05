@@ -4,6 +4,7 @@ import Image from "next/image";
 import React from "react";
 import tombstone from "@/public/game/tombstone.png";
 import prison from "@/public/game/prison.png";
+import forefinger from "@/public/game/forefinger.png";
 import { voteAgainst } from "../../data/gameActions";
 
 const PlayersGrid = ({
@@ -18,11 +19,8 @@ const PlayersGrid = ({
   setUpdatedPlayersList,
   toNext,
 }) => {
+
   const registerActionThatNeedSelection = (otherSelectedPlayerId) => {
-    console.log(
-      "entering the registerActionThatNeedSelection function and otherSelectedPlayerId is: ",
-      otherSelectedPlayerId
-    );
     setRegisteredActions([
       ...registeredActions,
       {
@@ -53,7 +51,7 @@ const PlayersGrid = ({
             player.isAlive
               ? player.id !== playerToPlay.id
                 ? isSelectionMode
-                  ? "bg-slate-800 opacity-50 hover:bg-red-800 cursor-pointer"
+                  ? "bg-slate-800 opacity-70 hover:bg-red-800 cursor-pointer"
                   : "bg-slate-700"
                 : "bg-yellow-950"
               : "bg-black"
@@ -68,12 +66,31 @@ const PlayersGrid = ({
                 : voteForVotetime(player.id)
               : console.log("don't select yourself!")
           }>
+
           <Image
             width={50}
             height={50}
             src={player.role.image && player.role.image.src}
             alt="role"
           />
+          {player.id !== playerToPlay.id && player.isAlive && isSelectionMode && timeOfTheDay === "votetime" && (
+            <Image
+              className="absolute z-10 animate-pulse"
+              width={60}
+              height={60}
+              src={forefinger}
+              alt="forefinger"
+            />
+          )}
+          {player.id !== playerToPlay.id && player.isAlive && isSelectionMode && timeOfTheDay !== "votetime" && (
+            <Image
+              className="absolute z-10 animate-pulse"
+              width={60}
+              height={60}
+              src={playerToPlay.role.canPerform.emoji.src}
+              alt={playerToPlay.role.canPerform.type}
+            />
+          )}
           {!player.isAlive ? (
             <Image
               className="absolute"
@@ -84,13 +101,15 @@ const PlayersGrid = ({
             />
           ) : (
             player.isUnderArrest && (
-              <Image
-                className="absolute"
-                width={100}
-                height={100}
-                src={prison}
-                alt="role"
-              />
+              <>
+                <Image
+                  className="absolute"
+                  width={100}
+                  height={100}
+                  src={prison}
+                  alt="prison"
+                />
+              </>
             )
           )}
           <p className="text-xs">{player.name}</p>
