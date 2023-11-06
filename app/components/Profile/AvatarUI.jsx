@@ -15,7 +15,7 @@ const AvatarUI = () => {
     }).toDataUriSync();
   }, []);
 
-  return <Image height={70} width={70} src={avatar} alt="Avatar" />;
+  return <Image height={60} width={60} src={avatar} alt="Avatar" />;
 };
 
 export default AvatarUI;

@@ -32,6 +32,11 @@ const PlayerBoard = ({
           </p>
         </div>
         <div className="actions-board flex flex-row gap-4">
+          <div
+            onClick={() => toNext()}
+            className="border border-red bg-slate-600 hover:bg-slate-700 rounded-xl shadow-lg p-4 my-4 cursor-pointer">
+            <p className="text-xs text-gray-200">To next player</p>
+          </div>
           {playerToPlay.role.canPerform !== null && (
             <>
               {timeOfTheDay === "nighttime" &&
@@ -89,11 +94,6 @@ const PlayerBoard = ({
                 </p>
               </div>
             )}
-            <div
-              onClick={() => toNext()}
-              className="border border-red bg-slate-600 hover:bg-slate-700 rounded-xl shadow-lg p-4 my-4 cursor-pointer">
-              <p className="text-xs text-gray-200">To next player</p>
-            </div>
           </div>
         </div>
       </div>

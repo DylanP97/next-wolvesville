@@ -1,3 +1,30 @@
+
+import characters from "./characters";
+import { shortName } from "@/app/lib/randomUsername";
+import initialPlayersList from "./playerListTemplate";
+
+export const assignRolesToPlayers = () => {
+  const assignedRoles = new Set();
+
+  const randomRoles = initialPlayersList.map((player, index) => {
+    let randomCharacter;
+    do {
+      randomCharacter =
+        characters[Math.floor(Math.random() * characters.length)];
+    } while (assignedRoles.has(randomCharacter.name));
+    assignedRoles.add(randomCharacter.name);
+    let randomName;
+    randomName = shortName();
+    return {
+      ...player,
+      name: randomName,
+      role: randomCharacter,
+    };
+  });
+
+  return randomRoles;
+};
+
 export const killSelectedPlayer = (playerIdToKill, setUpdatedPlayersList) => {
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
@@ -111,7 +138,10 @@ export const arrestPlayer = (
   );
 };
 
-export const cleanUpRegisteredActionsConcerningDeadPlayers = (updatedPlayersList, setRegisteredActions) => {
+export const cleanUpRegisteredActionsConcerningDeadPlayers = (
+  updatedPlayersList,
+  setRegisteredActions
+) => {
   // if player is dead clean all his registered actions
   updatedPlayersList.forEach((player) => {
     if (!player.isAlive) {

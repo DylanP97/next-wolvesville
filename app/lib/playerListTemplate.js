@@ -99,6 +99,26 @@ const initialPlayersList = [
     voteAgainst: 0,
     isUnderArrest: false,
   },
+  // {
+  //   id: 10,
+  //   name: "Player 10",
+  //   avatar: "",
+  //   role: "",
+  //   isAlive: true,
+  //   isRevealed: false,
+  //   voteAgainst: 0,
+  //   isUnderArrest: false,
+  // },
+  // {
+  //   id: 11,
+  //   name: "Player 11",
+  //   avatar: "",
+  //   role: "",
+  //   isAlive: true,
+  //   isRevealed: false,
+  //   voteAgainst: 0,
+  //   isUnderArrest: false,
+  // },
 ];
 
 export default initialPlayersList;

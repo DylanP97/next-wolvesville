@@ -25,3 +25,8 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.actions-list {
+  max-height: 70px; /* Adjust the height as needed */
+  overflow-y: auto;
+}

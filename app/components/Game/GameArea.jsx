@@ -2,9 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import PlayersGrid from "./PlayersGrid";
-import characters from "../../lib/characters";
 import PlayerBoard from "./PlayerBoard";
-import initialPlayersList from "../../lib/playerListTemplate";
 import {
   aftermathOfVote,
   arrestPlayer,
@@ -13,34 +11,14 @@ import {
 } from "../../lib/gameActions";
 import ActionsHistory from "./ActionsHistory";
 import GameHeader from "./GameHeader";
-import { shortName } from "@/app/lib/randomUsername";
 
-const GameArea = () => {
+const GameArea = ({ randomRoles }) => {
   const [gameIsInitialized, setGameIsInitialized] = useState(false);
   const [timeOfTheDay, setTimeOfTheDay] = useState(null);
   const [dayCount, setDayCount] = useState(0);
   const actionsHistoryListRef = useRef(null);
-
-  const assignedRoles = new Set();
-
-  const randomRoles = initialPlayersList.map((player, index) => {
-    let randomCharacter;
-    do {
-      randomCharacter =
-        characters[Math.floor(Math.random() * characters.length)];
-    } while (assignedRoles.has(randomCharacter.name));
-    assignedRoles.add(randomCharacter.name);
-    let randomName
-    randomName = shortName();
-    return {
-      ...player,
-      name: randomName,
-      role: randomCharacter,
-    };
-  });
-
-  const [updatedPlayersList, setUpdatedPlayersList] = useState(randomRoles);
-  const [playerToPlay, setPlayerToPlay] = useState(updatedPlayersList[0]);
+  const [updatedPlayersList, setUpdatedPlayersList] = useState(null);
+  const [playerToPlay, setPlayerToPlay] = useState(null);
   const [registeredActions, setRegisteredActions] = useState([]);
   const [isSelectionMode, setIsSelectionMode] = useState(false);
 
@@ -153,9 +131,13 @@ const GameArea = () => {
   };
 
   useEffect(() => {
-    setTimeOfTheDay("nighttime");
-    setGameIsInitialized(true);
-  }, []);
+    if (randomRoles) {
+      setUpdatedPlayersList(randomRoles);
+      setPlayerToPlay(randomRoles[0]);
+      setTimeOfTheDay("nighttime");
+      setGameIsInitialized(true);
+    }
+  }, [randomRoles]);
 
   return !gameIsInitialized ? (
     <p>We choose the roles for each player...</p>
@@ -173,7 +155,6 @@ const GameArea = () => {
         dayCount={dayCount}
         playerToPlay={playerToPlay}
       />
-      <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
       {gameIsInitialized && (
         <>
           <PlayersGrid
@@ -200,6 +181,7 @@ const GameArea = () => {
           />
         </>
       )}
+      <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
     </section>
   );
 };

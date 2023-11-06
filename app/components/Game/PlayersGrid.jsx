@@ -41,7 +41,7 @@ const PlayersGrid = ({
     toNext();
   };
 
-  const twClassesPlayerCard = "w-32 h-32 m-2 p-4 rounded-3xl flex flex-col justify-center items-center relative gap-2"
+  const twClassesPlayerCard = "w-44 h-28 m-2 p-4 rounded-3xl flex flex-col justify-center items-center relative gap-2"
 
   return (
     <div className="grid grid-cols-4 gap-6 my-6 place-items-center	">
@@ -67,10 +67,10 @@ const PlayersGrid = ({
               : console.log("don't select yourself!")
           }>
           {/* below : player icons/images displayed conditionnals */}
-          {player.isRevealed ? (
+          {!player.isRevealed ? (
             <Image
-              width={50}
-              height={50}
+              width={40}
+              height={40}
               src={player.role.image && player.role.image.src}
               alt="role"
             />
@@ -83,8 +83,8 @@ const PlayersGrid = ({
             timeOfTheDay === "votetime" && (
               <Image
                 className="absolute z-10 animate-pulse"
-                width={60}
-                height={60}
+                width={50}
+                height={50}
                 src={forefinger}
                 alt="forefinger"
               />
@@ -95,8 +95,8 @@ const PlayersGrid = ({
             timeOfTheDay !== "votetime" && (
               <Image
                 className="absolute z-10 animate-pulse"
-                width={60}
-                height={60}
+                width={50}
+                height={50}
                 src={playerToPlay.role.canPerform.emoji.src}
                 alt={playerToPlay.role.canPerform.type}
               />
@@ -122,7 +122,7 @@ const PlayersGrid = ({
               </>
             )
           )}
-          <p className="text-xs">{player.name}</p>
+          <p className="text-xs text-center">{player.name}</p>
         </div>
       ))}
     </div>

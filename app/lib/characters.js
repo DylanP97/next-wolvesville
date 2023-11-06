@@ -13,6 +13,36 @@ const characters = [
       "A random civilian that can do nothing either complain or vote.",
   },
   {
+    name: "Seer",
+    maxNbrInGame: 1,
+    canVote: true,
+    canPerform: {
+      label:
+        "Choose a player to see it's role. The role will be revealed the next day!",
+      // emoji: "🔍",
+      type: "reveal",
+      needSelection: true,
+      actionTime: "night",
+    },
+    image: rolesIcons["seer"],
+    description:
+      "The Seer possesses a unique ability to unveil the true nature of a player. During the night, the Seer can select a player to reveal that player's role. The revelation, takes place the following day, allowing the town to gather valuable information to aid in their decision-making. The Seer's power can be a crucial asset in identifying friends and foes amidst the shadows.",
+  },
+  {
+    name: "Cupid",
+    maxNbrInGame: 1,
+    canVote: true,
+    canPerform: {
+      label: "Link two players together in love",
+      // emoji: "💘",
+      type: "love",
+      needSelection: true,
+      actionTime: "night",
+    },
+    image: rolesIcons["cupid"],
+    description: "Cupid is the matchmaker of the town, with the power to create a bond of love between two players. During the night, Cupid can choose two players to link together, making them 'lovers.' If one of the lovers is eliminated, the other will also perish from heartbreak. Cupid's actions can have a profound impact on the game, as they determine the fate of the lovers, who must work together to survive."
+  },  
+  {
     name: "Sheriff",
     maxNbrInGame: 1,
     canVote: true,
