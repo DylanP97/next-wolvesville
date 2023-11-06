@@ -2,17 +2,18 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import PlayersGrid from "./PlayersGrid";
-import characters from "../../data/characters";
+import characters from "../../lib/characters";
 import PlayerBoard from "./PlayerBoard";
-import initialPlayersList from "../../data/playerListTemplate";
+import initialPlayersList from "../../lib/playerListTemplate";
 import {
   aftermathOfVote,
   arrestPlayer,
   cleanUpRegisteredActionsConcerningDeadPlayers,
   shootBullet,
-} from "../../data/gameActions";
+} from "../../lib/gameActions";
 import ActionsHistory from "./ActionsHistory";
 import GameHeader from "./GameHeader";
+import { shortName } from "@/app/lib/randomUsername";
 
 const GameArea = () => {
   const [gameIsInitialized, setGameIsInitialized] = useState(false);
@@ -29,8 +30,11 @@ const GameArea = () => {
         characters[Math.floor(Math.random() * characters.length)];
     } while (assignedRoles.has(randomCharacter.name));
     assignedRoles.add(randomCharacter.name);
+    let randomName
+    randomName = shortName();
     return {
       ...player,
+      name: randomName,
       role: randomCharacter,
     };
   });

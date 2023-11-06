@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import AvatarUI from "./AvatarUI";
 
 const ProfileCard = () => {
   const [playerUserName, setPlayerUserName] = useState("");
@@ -17,6 +18,7 @@ const ProfileCard = () => {
         <p className="text-gray-700 text-base">
           Welcome, {playerUserName || "Guest"}!
         </p>
+        <AvatarUI />
       </div>
       <div className="px-6 py-4">
         <label>Username</label>
