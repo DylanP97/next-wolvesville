@@ -3,7 +3,9 @@ import { createAvatar } from "@dicebear/core";
 import { avataaars } from "@dicebear/collection";
 import Image from "next/image";
 
-const AvatarUI = () => {
+const AvatarUI = ({
+  selection
+}) => {
   const avatar = useMemo(() => {
     // Generate a random seed for the avatar
     const randomSeed = Math.random().toString();
@@ -15,7 +17,7 @@ const AvatarUI = () => {
     }).toDataUriSync();
   }, []);
 
-  return <Image height={60} width={60} src={avatar} alt="Avatar" />;
+  return <Image className={selection ? "opacity-50" : ""} height={60} width={60} src={avatar} alt="Avatar" />;
 };
 
 export default AvatarUI;

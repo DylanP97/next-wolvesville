@@ -1,6 +1,8 @@
 import rolesIcons from "@/public/roles";
 import target from "@/public/game/target.png";
 import handcuffs from "@/public/game/handcuffs.png";
+import bowAndArrow from "@/public/game/bow-and-arrow.png";
+import crystalBall from "@/public/game/crystal-ball.png";
 
 const characters = [
   {
@@ -18,8 +20,8 @@ const characters = [
     canVote: true,
     canPerform: {
       label:
-        "Choose a player to see it's role. The role will be revealed the next day!",
-      // emoji: "🔍",
+        "Choose a player to reveal it's role.",
+      emoji: crystalBall,
       type: "reveal",
       needSelection: true,
       actionTime: "night",
@@ -34,14 +36,16 @@ const characters = [
     canVote: true,
     canPerform: {
       label: "Link two players together in love",
-      // emoji: "💘",
+      emoji: bowAndArrow,
       type: "love",
-      needSelection: true,
-      actionTime: "night",
+      needSelection: false,
+      needDoubleSelection: true,
+      actionTime: "any",
     },
     image: rolesIcons["cupid"],
-    description: "Cupid is the matchmaker of the town, with the power to create a bond of love between two players. During the night, Cupid can choose two players to link together, making them 'lovers.' If one of the lovers is eliminated, the other will also perish from heartbreak. Cupid's actions can have a profound impact on the game, as they determine the fate of the lovers, who must work together to survive."
-  },  
+    description:
+      "Cupid is the matchmaker of the town, with the power to create a bond of love between two players. During the night, Cupid can choose two players to link together, making them 'lovers.' If one of the lovers is eliminated, the other will also perish from heartbreak. Cupid's actions can have a profound impact on the game, as they determine the fate of the lovers, who must work together to survive.",
+  },
   {
     name: "Sheriff",
     maxNbrInGame: 1,

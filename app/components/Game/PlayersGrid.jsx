@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import tombstone from "@/public/game/tombstone.png";
 import prison from "@/public/game/prison.png";
 import forefinger from "@/public/game/forefinger.png";
@@ -19,8 +19,30 @@ const PlayersGrid = ({
   updatedPlayersList,
   setUpdatedPlayersList,
   toNext,
+  isDoubleSelection,
+  setIsDoubleSelection,
 }) => {
-  const registerActionThatNeedSelection = (otherSelectedPlayerId) => {
+  const [selectedOtherPlayers, setSelectedOtherPlayers] = useState([]);
+
+  const registerActionThatNeedSelection = (otherSelectedPlayer) => {
+    setRegisteredActions([
+      ...registeredActions,
+      {
+        type: playerToPlay.role.canPerform.type,
+        player: playerToPlay.id,
+        selectedPlayer: otherSelectedPlayer,
+        actionTime: playerToPlay.role.canPerform.actionTime,
+      },
+    ]);
+    setIsSelectionMode(false);
+
+    toNext();
+  };
+
+  const registerActionThatNeedDoubleSelection = (
+    otherSelectedPlayerId,
+    otherSelected2PlayerId
+  ) => {
     setRegisteredActions([
       ...registeredActions,
       {
@@ -29,8 +51,14 @@ const PlayersGrid = ({
         selectedPlayerId: otherSelectedPlayerId,
         actionTime: playerToPlay.role.canPerform.actionTime,
       },
+      {
+        type: playerToPlay.role.canPerform.type,
+        player: playerToPlay.id,
+        selectedPlayerId: otherSelected2PlayerId,
+        actionTime: playerToPlay.role.canPerform.actionTime,
+      },
     ]);
-    setIsSelectionMode(false);
+    setIsDoubleSelection(false);
 
     toNext();
   };
@@ -41,7 +69,39 @@ const PlayersGrid = ({
     toNext();
   };
 
-  const twClassesPlayerCard = "w-44 h-28 m-2 p-4 rounded-3xl flex flex-col justify-center items-center relative gap-2"
+  const handlePlayerClick = (player) => {
+    if (!player.isAlive) {
+      console.log("This player is dead. Stop hitting its grave.");
+      return;
+    }
+
+    if (player.id === playerToPlay.id) {
+      console.log("Don't select yourself!");
+      return;
+    }
+
+    if (isSelectionMode) {
+      if (timeOfTheDay === "votetime") {
+        voteForVotetime(player.id);
+      } else {
+        registerActionThatNeedSelection(player);
+      }
+    } else if (isDoubleSelection) {
+      if (selectedOtherPlayers.length === 0) {
+        setSelectedOtherPlayers([player.id]);
+      } else if (selectedOtherPlayers.length === 1) {
+        // Two players have been selected, perform the double selection action
+        registerActionThatNeedDoubleSelection(
+          selectedOtherPlayers[0],
+          player.id
+        );
+        setSelectedOtherPlayers([]); // Reset selected players
+      }
+    }
+  };
+
+  const twClassesPlayerCard =
+    "w-44 h-28 m-2 p-4 rounded-3xl flex flex-col justify-center items-center relative gap-2";
 
   return (
     <div className="grid grid-cols-4 gap-6 my-6 place-items-center	">
@@ -50,8 +110,8 @@ const PlayersGrid = ({
           className={`${
             player.isAlive
               ? player.id !== playerToPlay.id
-                ? isSelectionMode
-                  ? "bg-slate-800 opacity-70 hover:bg-red-800 cursor-pointer"
+                ? isSelectionMode || isDoubleSelection
+                  ? "bg-slate-800 hover:bg-red-800 cursor-pointer"
                   : "bg-slate-700"
                 : "bg-yellow-950"
               : "bg-black"
@@ -59,23 +119,20 @@ const PlayersGrid = ({
             playerToPlay.id === player.id && "border border-slate"
           } ${twClassesPlayerCard}`}
           key={player.name}
-          onClick={() =>
-            player.isAlive && isSelectionMode && player.id !== playerToPlay.id
-              ? timeOfTheDay !== "votetime"
-                ? registerActionThatNeedSelection(player.id)
-                : voteForVotetime(player.id)
-              : console.log("don't select yourself!")
-          }>
-          {/* below : player icons/images displayed conditionnals */}
+          onClick={() => handlePlayerClick(player)}>
+          {/* Your player icons/images displayed conditionals */}
           {!player.isRevealed ? (
             <Image
-              width={40}
-              height={40}
+              width={60}
+              height={60}
               src={player.role.image && player.role.image.src}
               alt="role"
+              className={
+                isDoubleSelection || isSelectionMode ? "opacity-50" : ""
+              }
             />
           ) : (
-            <AvatarUI />
+            <AvatarUI selection={isDoubleSelection || isSelectionMode} />
           )}
           {player.id !== playerToPlay.id &&
             player.isAlive &&
@@ -91,7 +148,7 @@ const PlayersGrid = ({
             )}
           {player.id !== playerToPlay.id &&
             player.isAlive &&
-            isSelectionMode &&
+            (isSelectionMode || isDoubleSelection) &&
             timeOfTheDay !== "votetime" && (
               <Image
                 className="absolute z-10 animate-pulse"

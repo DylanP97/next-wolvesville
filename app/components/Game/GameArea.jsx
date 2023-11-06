@@ -5,12 +5,20 @@ import PlayersGrid from "./PlayersGrid";
 import PlayerBoard from "./PlayerBoard";
 import {
   aftermathOfVote,
-  arrestPlayer,
   cleanUpRegisteredActionsConcerningDeadPlayers,
-  shootBullet,
 } from "../../lib/gameActions";
 import ActionsHistory from "./ActionsHistory";
 import GameHeader from "./GameHeader";
+import {
+  arrestPlayer,
+  linkLovers,
+  revealPlayer,
+  shootBullet,
+} from "@/app/lib/charactersActions";
+import Image from "next/image";
+import daytime from "@/public/game/day-time.png";
+import votetime from "@/public/game/vote-time.png";
+import nighttime from "@/public/game/night-time.png";
 
 const GameArea = ({ randomRoles }) => {
   const [gameIsInitialized, setGameIsInitialized] = useState(false);
@@ -21,6 +29,8 @@ const GameArea = ({ randomRoles }) => {
   const [playerToPlay, setPlayerToPlay] = useState(null);
   const [registeredActions, setRegisteredActions] = useState([]);
   const [isSelectionMode, setIsSelectionMode] = useState(false);
+  const [isDoubleSelection, setIsDoubleSelection] = useState(false);
+  const [winner, setWinner] = useState(false);
 
   const displayAction = (message) => {
     const newAction = document.createElement("li");
@@ -35,9 +45,17 @@ const GameArea = ({ randomRoles }) => {
       displayAction(`Day ${dayCount} has come... discuss with the village`);
 
       registeredActions.forEach((action) => {
+        if (action.type === "love") linkLovers(action, setUpdatedPlayersList);
         if (action.actionTime === "night") {
           if (action.type === "shoot")
             shootBullet(
+              action,
+              updatedPlayersList,
+              setUpdatedPlayersList,
+              displayAction
+            );
+          else if (action.type === "reveal")
+            revealPlayer(
               action,
               updatedPlayersList,
               setUpdatedPlayersList,
@@ -51,16 +69,18 @@ const GameArea = ({ randomRoles }) => {
       displayAction(`Its time to vote!`);
     }
     if (timeOfTheDay === "votetime") {
-      aftermathOfVote(displayAction, updatedPlayersList, setUpdatedPlayersList);
+      displayAction(`beware its night...`);
+      aftermathOfVote(
+        displayAction,
+        updatedPlayersList,
+        setUpdatedPlayersList,
+        setWinner
+      );
 
       cleanUpRegisteredActionsConcerningDeadPlayers(
         updatedPlayersList,
         setRegisteredActions
       );
-    }
-    if (timeOfTheDay === "nighttime") {
-      displayAction(`beware its night...`);
-
       registeredActions.forEach((action) => {
         if (action.actionTime === "day") {
           if (action.type === "arrest")
@@ -83,7 +103,7 @@ const GameArea = ({ randomRoles }) => {
     );
   };
 
-  const findNextPlayerToPlayAlive = (currentPlayerId) => {
+  const findNextAlivePlayer = (currentPlayerId) => {
     let isFirstAlivePlayer = false;
 
     if (
@@ -118,15 +138,18 @@ const GameArea = ({ randomRoles }) => {
     return { index: -1, isFirstAlivePlayer };
   };
 
-  const toNext = () => {
-    const { index: nextPlayerId, isFirstAlivePlayer } =
-      findNextPlayerToPlayAlive(playerToPlay.id);
+  const toNext = (event = null) => {
+    if (!event || (event.type === "keydown" && event.key === "Enter")) {
+      const { index: nextPlayerId, isFirstAlivePlayer } = findNextAlivePlayer(
+        playerToPlay.id
+      );
 
-    if (isFirstAlivePlayer) {
-      setPlayerToPlay(updatedPlayersList[nextPlayerId]);
-      changeTimeOfTheDay();
-    } else {
-      setPlayerToPlay(updatedPlayersList[nextPlayerId]);
+      if (isFirstAlivePlayer) {
+        setPlayerToPlay(updatedPlayersList[nextPlayerId]);
+        changeTimeOfTheDay();
+      } else {
+        setPlayerToPlay(updatedPlayersList[nextPlayerId]);
+      }
     }
   };
 
@@ -143,17 +166,35 @@ const GameArea = ({ randomRoles }) => {
     <p>We choose the roles for each player...</p>
   ) : (
     <section
+      onKeyDown={toNext}
+      tabIndex={0}
       className={`${
         timeOfTheDay === "daytime"
           ? "bg-blue-500"
           : timeOfTheDay === "votetime"
           ? "bg-orange-800"
           : "bg-slate-950"
-      } w-full p-4 rounded-xl`}>
+      } w-full p-4 rounded-xl relative`}
+      style={{ outline: "none" }}>
       <GameHeader
         timeOfTheDay={timeOfTheDay}
         dayCount={dayCount}
         playerToPlay={playerToPlay}
+      />
+      <Image
+        src={
+          timeOfTheDay === "nighttime"
+            ? nighttime
+            : timeOfTheDay === "votetime"
+            ? votetime
+            : daytime
+        }
+        alt="bg-time"
+        width={500}
+        height={500}
+        priority
+        style={{ width: "auto", height: "auto" }}
+        className="absolute top-44 right-80 opacity-20"
       />
       {gameIsInitialized && (
         <>
@@ -165,6 +206,8 @@ const GameArea = ({ randomRoles }) => {
             toNext={toNext}
             isSelectionMode={isSelectionMode}
             setIsSelectionMode={setIsSelectionMode}
+            isDoubleSelection={isDoubleSelection}
+            setIsDoubleSelection={setIsDoubleSelection}
             updatedPlayersList={updatedPlayersList}
             setUpdatedPlayersList={setUpdatedPlayersList}
             timeOfTheDay={timeOfTheDay}
@@ -178,10 +221,30 @@ const GameArea = ({ randomRoles }) => {
             toNext={toNext}
             isSelectionMode={isSelectionMode}
             setIsSelectionMode={setIsSelectionMode}
+            isDoubleSelection={isDoubleSelection}
+            setIsDoubleSelection={setIsDoubleSelection}
           />
         </>
       )}
       <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
+      {winner && (
+        <div
+          className="winner-overlay"
+          style={{
+            zIndex: 999,
+          }}>
+          <div className="winner-message flex flex-col justify-center align-center">
+            <Image
+              src={winner.role.image}
+              alt="winner"
+              height={200}
+              width={200}
+            />
+            <p>The {winner.role.name} won!</p>
+            <p>{winner.name}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

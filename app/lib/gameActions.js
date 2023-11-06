@@ -1,7 +1,7 @@
-
 import characters from "./characters";
 import { shortName } from "@/app/lib/randomUsername";
 import initialPlayersList from "./playerListTemplate";
+import { checkIfIsInLove } from "./charactersActions";
 
 export const assignRolesToPlayers = () => {
   const assignedRoles = new Set();
@@ -82,62 +82,6 @@ export const findPlayerWithMostVotes = (playersList) => {
   return playerWithMostVotes;
 };
 
-export const aftermathOfVote = (
-  displayAction,
-  updatedPlayersList,
-  setUpdatedPlayersList
-) => {
-  const mostVotedAgainstPlayer = findPlayerWithMostVotes(updatedPlayersList);
-  if (!mostVotedAgainstPlayer) {
-    displayAction(`The town couldn't decide who to kill!`);
-  } else {
-    killSelectedPlayer(mostVotedAgainstPlayer.id, setUpdatedPlayersList);
-    displayAction(
-      `The town decided to kill ${
-        updatedPlayersList[mostVotedAgainstPlayer.id].name
-      } has a result of the vote!`
-    );
-  }
-};
-
-export const shootBullet = (
-  action,
-  updatedPlayersList,
-  setUpdatedPlayersList,
-  displayAction
-) => {
-  killSelectedPlayer(action.selectedPlayerId, setUpdatedPlayersList);
-  displayAction(
-    `The shooter has shot ${
-      updatedPlayersList[action.selectedPlayerId].name
-    } this night !`
-  );
-};
-
-export const arrestPlayer = (
-  action,
-  updatedPlayersList,
-  setUpdatedPlayersList,
-  displayAction
-) => {
-  setUpdatedPlayersList((prevPlayersList) => {
-    return prevPlayersList.map((player) => {
-      if (player.id === action.selectedPlayerId) {
-        return {
-          ...player,
-          isUnderArrest: true,
-        };
-      }
-      return player;
-    });
-  });
-  displayAction(
-    `The sheriff has handcuffed ${
-      updatedPlayersList[action.selectedPlayerId].name
-    }!`
-  );
-};
-
 export const cleanUpRegisteredActionsConcerningDeadPlayers = (
   updatedPlayersList,
   setRegisteredActions
@@ -153,4 +97,34 @@ export const cleanUpRegisteredActionsConcerningDeadPlayers = (
       });
     }
   });
+};
+
+export const aftermathOfVote = (
+  displayAction,
+  updatedPlayersList,
+  setUpdatedPlayersList,
+  setWinner
+) => {
+  const mostVotedAgainstPlayer = findPlayerWithMostVotes(updatedPlayersList);
+  if (!mostVotedAgainstPlayer) {
+    displayAction(`The town couldn't decide who to kill!`);
+  } else {
+    killSelectedPlayer(mostVotedAgainstPlayer.id, setUpdatedPlayersList);
+    if (mostVotedAgainstPlayer.role.name === "Fool") {
+      displayAction(`The fool won 🤡!`);
+      setWinner(mostVotedAgainstPlayer);
+    } else {
+      displayAction(
+        `The town decided to kill ${
+          updatedPlayersList[mostVotedAgainstPlayer.id].name
+        } has a result of the vote!`
+      );
+      checkIfIsInLove(
+        mostVotedAgainstPlayer,
+        updatedPlayersList,
+        setUpdatedPlayersList,
+        displayAction
+      );
+    }
+  }
 };
