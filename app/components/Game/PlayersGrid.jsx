@@ -40,21 +40,21 @@ const PlayersGrid = ({
   };
 
   const registerActionThatNeedDoubleSelection = (
-    otherSelectedPlayerId,
-    otherSelected2PlayerId
+    otherSelectedPlayer,
+    otherSelected2Player
   ) => {
     setRegisteredActions([
       ...registeredActions,
       {
         type: playerToPlay.role.canPerform.type,
         player: playerToPlay.id,
-        selectedPlayerId: otherSelectedPlayerId,
+        selectedPlayer: otherSelectedPlayer.id,
         actionTime: playerToPlay.role.canPerform.actionTime,
       },
       {
         type: playerToPlay.role.canPerform.type,
         player: playerToPlay.id,
-        selectedPlayerId: otherSelected2PlayerId,
+        selectedPlayer: otherSelected2Player.id,
         actionTime: playerToPlay.role.canPerform.actionTime,
       },
     ]);
@@ -88,12 +88,12 @@ const PlayersGrid = ({
       }
     } else if (isDoubleSelection) {
       if (selectedOtherPlayers.length === 0) {
-        setSelectedOtherPlayers([player.id]);
+        setSelectedOtherPlayers([player]);
       } else if (selectedOtherPlayers.length === 1) {
         // Two players have been selected, perform the double selection action
         registerActionThatNeedDoubleSelection(
           selectedOtherPlayers[0],
-          player.id
+          player
         );
         setSelectedOtherPlayers([]); // Reset selected players
       }
@@ -104,7 +104,7 @@ const PlayersGrid = ({
     "w-44 h-28 m-2 p-4 rounded-3xl flex flex-col justify-center items-center relative gap-2";
 
   return (
-    <div className="grid grid-cols-4 gap-6 my-6 place-items-center	">
+    <div className="grid grid-cols-4 gap-6 my-6 place-items-center xl:w-[80%]">
       {playersList.map((player) => (
         <div
           className={`${
@@ -120,8 +120,22 @@ const PlayersGrid = ({
           } ${twClassesPlayerCard}`}
           key={player.name}
           onClick={() => handlePlayerClick(player)}>
+          {timeOfTheDay === "votetime" && player.voteAgainst > 0 && (
+            <div className="absolute top-[-10px] right-[-10px] h-8 w-8 p-2 flex justify-center items-center rounded-full bg-red-400">
+              <p>{player.voteAgainst}</p>
+            </div>
+          )}
+
           {/* Your player icons/images displayed conditionals */}
-          {!player.isRevealed ? (
+          {!player.isAlive ? (
+            <Image
+              className="absolute"
+              width={60}
+              height={60}
+              src={tombstone}
+              alt="role"
+            />
+          ) : !player.isRevealed ? (
             <Image
               width={60}
               height={60}
@@ -134,6 +148,19 @@ const PlayersGrid = ({
           ) : (
             <AvatarUI selection={isDoubleSelection || isSelectionMode} />
           )}
+
+          {player.isUnderArrest && (
+            <>
+              <Image
+                className="absolute"
+                width={100}
+                height={100}
+                src={prison}
+                alt="prison"
+              />
+            </>
+          )}
+
           {player.id !== playerToPlay.id &&
             player.isAlive &&
             isSelectionMode &&
@@ -158,27 +185,6 @@ const PlayersGrid = ({
                 alt={playerToPlay.role.canPerform.type}
               />
             )}
-          {!player.isAlive ? (
-            <Image
-              className="absolute"
-              width={60}
-              height={60}
-              src={tombstone}
-              alt="role"
-            />
-          ) : (
-            player.isUnderArrest && (
-              <>
-                <Image
-                  className="absolute"
-                  width={100}
-                  height={100}
-                  src={prison}
-                  alt="prison"
-                />
-              </>
-            )
-          )}
           <p className="text-xs text-center">{player.name}</p>
         </div>
       ))}

@@ -39,36 +39,39 @@ const GameArea = ({ randomRoles }) => {
     actionsHistoryListRef.current.appendChild(newAction);
   };
 
+  registeredActions.forEach((action) => {
+    if (action.type === "shoot")
+      shootBullet(
+        action,
+        updatedPlayersList,
+        setUpdatedPlayersList,
+        displayAction
+      );
+    if (action.type === "love") linkLovers(action, setUpdatedPlayersList);
+    if (action.type === "reveal")
+      revealPlayer(
+        action,
+        updatedPlayersList,
+        setUpdatedPlayersList,
+        displayAction
+      );
+    setRegisteredActions([...registeredActions.filter((a) => a !== action)]);
+  });
+
   const changeTimeOfTheDay = () => {
     if (timeOfTheDay === "nighttime") {
+      // end of night, beginning of day
+
       setDayCount((prevDayCount) => prevDayCount + 1);
       displayAction(`Day ${dayCount} has come... discuss with the village`);
-
-      registeredActions.forEach((action) => {
-        if (action.type === "love") linkLovers(action, setUpdatedPlayersList);
-        if (action.actionTime === "night") {
-          if (action.type === "shoot")
-            shootBullet(
-              action,
-              updatedPlayersList,
-              setUpdatedPlayersList,
-              displayAction
-            );
-          else if (action.type === "reveal")
-            revealPlayer(
-              action,
-              updatedPlayersList,
-              setUpdatedPlayersList,
-              displayAction
-            );
-        }
-      });
-      setRegisteredActions([]);
     }
     if (timeOfTheDay === "daytime") {
+      // end of daytime, beginning of votetime
       displayAction(`Its time to vote!`);
     }
     if (timeOfTheDay === "votetime") {
+      // end of votetime, beginning of nighttime
+
       displayAction(`beware its night...`);
       aftermathOfVote(
         displayAction,
@@ -76,7 +79,6 @@ const GameArea = ({ randomRoles }) => {
         setUpdatedPlayersList,
         setWinner
       );
-
       cleanUpRegisteredActionsConcerningDeadPlayers(
         updatedPlayersList,
         setRegisteredActions
@@ -197,7 +199,7 @@ const GameArea = ({ randomRoles }) => {
         className="absolute top-44 right-80 opacity-20"
       />
       {gameIsInitialized && (
-        <>
+        <div className="xl:flex xl:flex-row">
           <PlayersGrid
             playersList={updatedPlayersList}
             playerToPlay={playerToPlay}
@@ -213,20 +215,22 @@ const GameArea = ({ randomRoles }) => {
             timeOfTheDay={timeOfTheDay}
           />
 
-          <PlayerBoard
-            timeOfTheDay={timeOfTheDay}
-            playerToPlay={playerToPlay}
-            registeredActions={registeredActions}
-            setRegisteredActions={setRegisteredActions}
-            toNext={toNext}
-            isSelectionMode={isSelectionMode}
-            setIsSelectionMode={setIsSelectionMode}
-            isDoubleSelection={isDoubleSelection}
-            setIsDoubleSelection={setIsDoubleSelection}
-          />
-        </>
+          <div className="xl:w-[20%]">
+            <PlayerBoard
+              timeOfTheDay={timeOfTheDay}
+              playerToPlay={playerToPlay}
+              registeredActions={registeredActions}
+              setRegisteredActions={setRegisteredActions}
+              toNext={toNext}
+              isSelectionMode={isSelectionMode}
+              setIsSelectionMode={setIsSelectionMode}
+              isDoubleSelection={isDoubleSelection}
+              setIsDoubleSelection={setIsDoubleSelection}
+            />
+            <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
+          </div>
+        </div>
       )}
-      <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
       {winner && (
         <div
           className="winner-overlay"

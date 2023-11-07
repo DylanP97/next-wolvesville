@@ -27,7 +27,7 @@ body {
 }
 
 .actions-list {
-  max-height: 70px; /* Adjust the height as needed */
+  max-height: 150px; /* Adjust the height as needed */
   overflow-y: auto;
 }
 

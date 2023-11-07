@@ -92,7 +92,7 @@ export const cleanUpRegisteredActionsConcerningDeadPlayers = (
       setRegisteredActions((registeredActionsList) => {
         return registeredActionsList.filter((action) => {
           action.playerId !== player.id &&
-            action.selectedPlayerId !== player.id;
+            action.selectedPlayer.id !== player.id;
         });
       });
     }

@@ -1,5 +1,17 @@
 "use client";
 
+const PlayerInfo = ({ playerToPlay }) => (
+  <div className="bg-slate-950 rounded-xl shadow-lg p-4 my-4">
+    <p className="text-xs text-gray-200">
+      {playerToPlay.role.name} it&apos;s your time to play{" "}
+      {playerToPlay.isUnderArrest && <>you can do nothing while in jail</>}
+      {playerToPlay.role.canPerform === null && (
+        <>but you have no actions to do</>
+      )}
+    </p>
+  </div>
+);
+
 const PlayerBoard = ({
   timeOfTheDay,
   playerToPlay,
@@ -22,38 +34,29 @@ const PlayerBoard = ({
     console.log("some other action");
   };
 
-
+  const twClassesDiv = "z-20 border border-red bg-slate-600 hover:bg-slate-700 rounded-xl shadow-lg p-4 my-4 cursor-pointer"
 
   return (
-    <div className="w-full">
-      <div className="grid grid-cols-2 gap-4">
-        <div className="bg-slate-950 rounded-xl shadow-lg p-4 my-4">
-          <p className="text-xs text-gray-200">
-            {playerToPlay.role.name} it&apos;s your time to play{" "}
-            {playerToPlay.isUnderArrest && (
-              <>you can do nothing while in jail</>
-            )}
-            {playerToPlay.role.canPerform === null && (
-              <>but you have no actions to do</>
-            )}
-          </p>
-        </div>
-        <div className="actions-board flex flex-row gap-4">
+    <div className="z-20">
+      <div className="gap-4">
+        <PlayerInfo playerToPlay={playerToPlay} />
+        <div className="z-20 actions-board flex flex-row gap-4">
           <div
             onClick={() => toNext()}
-            className="border border-red bg-slate-600 hover:bg-slate-700 rounded-xl shadow-lg p-4 my-4 cursor-pointer">
+            className={twClassesDiv}>
             <p className="text-xs text-gray-200">To next player</p>
           </div>
           {playerToPlay.role.canPerform !== null && (
             <>
               {playerToPlay.isAlive &&
                 !playerToPlay.isUnderArrest &&
-                playerToPlay.role.canPerform.needDoubleSelection && (
+                playerToPlay.role.canPerform.needDoubleSelection &&
+                timeOfTheDay !== "votetime" && (
                   <div
                     onClick={() => {
                       setIsDoubleSelection(!isDoubleSelection);
                     }}
-                    className="border border-red bg-red-900 hover:bg-red-800 rounded-xl shadow-lg p-4 my-4 cursor-pointer">
+                    className={twClassesDiv}>
                     <p className="text-xs text-gray-200">
                       {!isDoubleSelection ? (
                         playerToPlay.role.canPerform.label
@@ -63,8 +66,10 @@ const PlayerBoard = ({
                     </p>
                   </div>
                 )}
-              {timeOfTheDay === "nighttime" &&
-                !playerToPlay.isUnderArrest &&
+
+              {!playerToPlay.isUnderArrest &&
+                playerToPlay.role.canPerform.needSelection &&
+                timeOfTheDay === "nighttime" &&
                 playerToPlay.role.canPerform.actionTime === "night" && (
                   <div
                     onClick={() => {
@@ -72,7 +77,7 @@ const PlayerBoard = ({
                         ? setIsSelectionMode(!isSelectionMode)
                         : registerSimpleAction();
                     }}
-                    className="border border-red bg-red-900 hover:bg-red-800 rounded-xl shadow-lg p-4 my-4 cursor-pointer">
+                    className={twClassesDiv}>
                     <p className="text-xs text-gray-200">
                       {!isSelectionMode ? (
                         playerToPlay.role.canPerform.label
@@ -90,7 +95,7 @@ const PlayerBoard = ({
                         ? setIsSelectionMode(!isSelectionMode)
                         : registerSimpleAction();
                     }}
-                    className="border border-red bg-red-900 hover:bg-red-800 rounded-xl shadow-lg p-4 my-4 cursor-pointer">
+                    className={twClassesDiv}>
                     <p className="text-xs text-gray-200">
                       {!isSelectionMode ? (
                         playerToPlay.role.canPerform.label
@@ -102,13 +107,14 @@ const PlayerBoard = ({
                 )}
             </>
           )}
+
           <div className="flex flex-row gap-2">
             {timeOfTheDay === "votetime" && playerToPlay.role.canVote && (
               <div
                 onClick={() => {
                   setIsSelectionMode(!isSelectionMode);
                 }}
-                className="border border-red bg-red-900 hover:bg-red-800 rounded-xl shadow-lg p-4 my-4 cursor-pointer">
+                className={twClassesDiv}>
                 <p className="text-xs text-gray-200">
                   {!isSelectionMode ? (
                     <>Select a player to vote against!</>

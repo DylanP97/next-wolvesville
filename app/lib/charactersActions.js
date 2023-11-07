@@ -28,7 +28,7 @@ export const arrestPlayer = (
 ) => {
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
-      if (player.id === action.selectedPlayerId) {
+      if (player.id === action.selectedPlayer.id) {
         return {
           ...player,
           isUnderArrest: true,
@@ -39,7 +39,7 @@ export const arrestPlayer = (
   });
   displayAction(
     `The sheriff has handcuffed ${
-      updatedPlayersList[action.selectedPlayerId].name
+      updatedPlayersList[action.selectedPlayer.id].name
     }!`
   );
 };
@@ -52,7 +52,7 @@ export const revealPlayer = (
 ) => {
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
-      if (player.id === action.selectedPlayerId) {
+      if (player.id === action.selectedPlayer.id) {
         return {
           ...player,
           isRevealed: true,
@@ -63,7 +63,7 @@ export const revealPlayer = (
   });
   displayAction(
     `The seer's magical crystal ball unveiled the identity of ${
-      updatedPlayersList[action.selectedPlayerId].name
+      updatedPlayersList[action.selectedPlayer.id].name
     }!`
   );
 };
@@ -95,11 +95,13 @@ export const findLovers = (updatedPlayersList) => {
 export const linkLovers = (action, setUpdatedPlayersList) => {
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
-      if (player.id === action.selectedPlayerId) {
+      console.log(action.selectedPlayer)
+      if (player.id === action.selectedPlayer) {
         return {
           ...player,
           isInLove: true,
         };
+        console.log(player)
       }
       return player;
     });

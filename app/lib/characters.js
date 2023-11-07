@@ -2,12 +2,14 @@ import rolesIcons from "@/public/roles";
 import target from "@/public/game/target.png";
 import handcuffs from "@/public/game/handcuffs.png";
 import bowAndArrow from "@/public/game/bow-and-arrow.png";
+import bandAid from "@/public/game/band-aid.png";
 import crystalBall from "@/public/game/crystal-ball.png";
 
 const characters = [
   {
     name: "Civilian",
-    maxNbrInGame: 5,
+    maxNbrInGame: 1,
+    team: "village",
     canVote: true,
     canPerform: null,
     image: rolesIcons["man"],
@@ -17,10 +19,10 @@ const characters = [
   {
     name: "Seer",
     maxNbrInGame: 1,
+    team: "village",
     canVote: true,
     canPerform: {
-      label:
-        "Choose a player to reveal it's role.",
+      label: "Choose a player to reveal it's role.",
       emoji: crystalBall,
       type: "reveal",
       needSelection: true,
@@ -33,6 +35,7 @@ const characters = [
   {
     name: "Cupid",
     maxNbrInGame: 1,
+    team: "village",
     canVote: true,
     canPerform: {
       label: "Link two players together in love",
@@ -40,7 +43,7 @@ const characters = [
       type: "love",
       needSelection: false,
       needDoubleSelection: true,
-      actionTime: "any",
+      actionTime: "night",
     },
     image: rolesIcons["cupid"],
     description:
@@ -49,6 +52,7 @@ const characters = [
   {
     name: "Sheriff",
     maxNbrInGame: 1,
+    team: "village",
     canVote: true,
     canPerform: {
       label: "Handcuff a player for the next night",
@@ -64,21 +68,29 @@ const characters = [
   {
     name: "Doctor",
     maxNbrInGame: 1,
+    team: "village",
     canVote: true,
-    canPerform: null,
+    canPerform: {
+      label: "Select someone to heal tonight",
+      emoji: bandAid,
+      type: "heal",
+      needSelection: true,
+      actionTime: "night",
+    },
     image: rolesIcons["doctor"],
     description: "The doctor can protect the person he wants each night.",
   },
   {
     name: "Shooter",
     maxNbrInGame: 1,
+    team: "village",
     canVote: true,
     canPerform: {
       label: "Select someone to shoot him",
       emoji: target,
       type: "shoot",
       needSelection: true,
-      actionTime: "night",
+      actionTime: "day",
     },
     image: rolesIcons["shooter"],
     description:
@@ -86,6 +98,7 @@ const characters = [
   },
   {
     name: "Detective",
+    team: "village",
     maxNbrInGame: 1,
     canVote: true,
     canPerform: null,
@@ -95,6 +108,7 @@ const characters = [
   },
   {
     name: "Mayor",
+    team: "village",
     maxNbrInGame: 1,
     canVote: true,
     canPerform: null,
@@ -102,7 +116,28 @@ const characters = [
     description: "The mayor vote counts double.",
   },
   {
+    name: "Grumpy Grandma",
+    team: "village",
+    maxNbrInGame: 1,
+    canVote: true,
+    canPerform: null,
+    image: rolesIcons["grumpyGrandma"],
+    description:
+      "The grumpy grandma can prevent a player from voting two times in a game.",
+  },
+  {
+    name: "Priest",
+    team: "village",
+    maxNbrInGame: 1,
+    canVote: true,
+    canPerform: null,
+    image: rolesIcons["priest"],
+    description:
+      "Once per game, the Priest can throw holy water at a player. If this player is a Werewolf, he will die. Otherwise, it is the Priest who dies. He can't kill a solo killer.",
+  },
+  {
     name: "Fool",
+    team: "solo",
     maxNbrInGame: 1,
     canVote: true,
     canPerform: null,
@@ -112,7 +147,8 @@ const characters = [
   },
   {
     name: "Bandit",
-    maxNbrInGame: 2,
+    team: "bandits",
+    maxNbrInGame: 1,
     canVote: true,
     canPerform: null,
     image: rolesIcons["bandit"],
@@ -121,6 +157,7 @@ const characters = [
   },
   {
     name: "Reaper",
+    team: "solo",
     maxNbrInGame: 1,
     canVote: true,
     canPerform: null,
@@ -130,12 +167,44 @@ const characters = [
   },
   {
     name: "Terrorist",
+    team: "solo",
     maxNbrInGame: 1,
     canVote: true,
     canPerform: null,
     image: rolesIcons["terrorist"],
     description:
       "The terrorist can choose to manufacture a bomb each night or choose to blow it up the night he wants. He might die with the explosion. The more nights he crafts its bomb the more damage it will do. The bomb can kill randomly any player.",
+  },
+  {
+    name: "Pyromaniac",
+    team: "solo",
+    maxNbrInGame: 1,
+    canVote: true,
+    canPerform: {
+      label: "Select someone to burn tonight",
+      emoji: target,
+      type: "burn",
+      needSelection: true,
+      actionTime: "night",
+    },
+    image: rolesIcons["pyromaniac"],
+    description:
+      "The pyromaniac can choose to burn the person he wants each night. The burned person will die tonight.",
+  },
+  {
+    name: "Serial Killer",
+    team: "solo",
+    maxNbrInGame: 1,
+    canVote: true,
+    canPerform: {
+      label: "Select someone to kill tonight",
+      emoji: target,
+      type: "murder",
+      needSelection: true,
+      actionTime: "night",
+    },
+    image: rolesIcons["serialKiller"],
+    description: "The serial killer can kill one person by night!",
   },
 ];
 

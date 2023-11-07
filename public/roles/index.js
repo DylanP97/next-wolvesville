@@ -11,6 +11,10 @@ import reaper from "./reaper.png";
 import terrorist from "./terrorist.png";
 import seer from "./seer.png";
 import cupid from "./cupid.png";
+import pyromaniac from "./pyromaniac.png";
+import serialKiller from "./serial-killer.png";
+import priest from "./priest.png";
+import grumpyGrandma from "./grumpy-grandma.png";
 
 const rolesIcons = {
   doctor: doctor,
@@ -26,6 +30,10 @@ const rolesIcons = {
   terrorist: terrorist,
   seer: seer,
   cupid: cupid,
+  pyromaniac: pyromaniac,
+  priest: priest,
+  serialKiller: serialKiller,
+  grumpyGrandma: grumpyGrandma,
 };
 
 export default rolesIcons;
