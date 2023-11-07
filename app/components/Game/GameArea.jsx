@@ -12,6 +12,7 @@ import GameHeader from "./GameHeader";
 import {
   arrestPlayer,
   linkLovers,
+  releasePrisoners,
   revealPlayer,
   shootBullet,
 } from "@/app/lib/charactersActions";
@@ -40,30 +41,36 @@ const GameArea = ({ randomRoles }) => {
   };
 
   registeredActions.forEach((action) => {
-    if (action.type === "shoot")
+    if (action.type === "shoot") {
       shootBullet(
         action,
         updatedPlayersList,
         setUpdatedPlayersList,
         displayAction
       );
-    if (action.type === "love") linkLovers(action, setUpdatedPlayersList);
-    if (action.type === "reveal")
+      setRegisteredActions([...registeredActions.filter((a) => a !== action)]);
+    }
+    if (action.type === "love") {
+      linkLovers(action, setUpdatedPlayersList);
+      setRegisteredActions([...registeredActions.filter((a) => a !== action)]);
+    }
+    if (action.type === "reveal") {
       revealPlayer(
         action,
         updatedPlayersList,
         setUpdatedPlayersList,
         displayAction
       );
-    setRegisteredActions([...registeredActions.filter((a) => a !== action)]);
+      setRegisteredActions([...registeredActions.filter((a) => a !== action)]);
+    }
   });
 
   const changeTimeOfTheDay = () => {
     if (timeOfTheDay === "nighttime") {
       // end of night, beginning of day
-
       setDayCount((prevDayCount) => prevDayCount + 1);
       displayAction(`Day ${dayCount} has come... discuss with the village`);
+      releasePrisoners(setUpdatedPlayersList);
     }
     if (timeOfTheDay === "daytime") {
       // end of daytime, beginning of votetime
@@ -84,15 +91,15 @@ const GameArea = ({ randomRoles }) => {
         setRegisteredActions
       );
       registeredActions.forEach((action) => {
-        if (action.actionTime === "day") {
-          if (action.type === "arrest")
-            arrestPlayer(
-              action,
-              updatedPlayersList,
-              setUpdatedPlayersList,
-              displayAction
-            );
-        }
+        console.log("hello");
+        console.log(action);
+        if (action.type === "arrest")
+          arrestPlayer(
+            action,
+            updatedPlayersList,
+            setUpdatedPlayersList,
+            displayAction
+          );
       });
       setRegisteredActions([]);
     }
