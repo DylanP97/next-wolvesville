@@ -157,3 +157,66 @@ export const linkLovers = (action, setUpdatedPlayersList) => {
     });
   });
 };
+
+export const murder = (
+  action,
+  updatedPlayersList,
+  setUpdatedPlayersList,
+  displayAction
+) => {
+  const wasHealed = checkIfWasHealed(
+    action.selectedPlayer,
+    setUpdatedPlayersList
+  );
+  if (!wasHealed) {
+    killSelectedPlayer(action.selectedPlayer.id, setUpdatedPlayersList);
+    displayAction(
+      `A serial killer killed ${
+        updatedPlayersList[action.selectedPlayer.id].name
+      } last night...`
+    );
+    checkIfIsInLove(
+      action.selectedPlayer,
+      updatedPlayersList,
+      setUpdatedPlayersList,
+      displayAction
+    );
+  } else {
+    displayAction("Someone wounds were healed by the doctor tonight!")
+  }
+};
+
+export const checkIfWasHealed = (attackedPlayer, setUpdatedPlayersList) => {
+  const wasHealed = attackedPlayer.isHealed;
+
+  setUpdatedPlayersList((prevPlayersList) => {
+    return prevPlayersList.map((player) => {
+      if (player.id === attackedPlayer.id) {
+        return {
+          ...player,
+          isHealed: false,
+        };
+      }
+      return player;
+    });
+  });
+
+  if (wasHealed) return true;
+  else {
+    return;
+  }
+};
+
+export const heal = (action, setUpdatedPlayersList) => {
+  setUpdatedPlayersList((prevPlayersList) => {
+    return prevPlayersList.map((player) => {
+      if (player.id === action.selectedPlayer.id) {
+        return {
+          ...player,
+          isHealed: true,
+        };
+      }
+      return player;
+    });
+  });
+};

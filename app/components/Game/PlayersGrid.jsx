@@ -1,12 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import React, { useState } from "react";
-import tombstone from "@/public/game/tombstone.png";
-import prison from "@/public/game/prison.png";
-import forefinger from "@/public/game/forefinger.png";
+import { useState } from "react";
 import { voteAgainst } from "../../lib/gameActions";
-import AvatarUI from "../Profile/AvatarUI";
+import PlayerCardImage from "./PlayerCardImage";
+import VoteCount from "./VoteCount";
 
 const PlayersGrid = ({
   playersList,
@@ -91,10 +88,7 @@ const PlayersGrid = ({
         setSelectedOtherPlayers([player]);
       } else if (selectedOtherPlayers.length === 1) {
         // Two players have been selected, perform the double selection action
-        registerActionThatNeedDoubleSelection(
-          selectedOtherPlayers[0],
-          player
-        );
+        registerActionThatNeedDoubleSelection(selectedOtherPlayers[0], player);
         setSelectedOtherPlayers([]); // Reset selected players
       }
     }
@@ -120,71 +114,18 @@ const PlayersGrid = ({
           } ${twClassesPlayerCard}`}
           key={player.name}
           onClick={() => handlePlayerClick(player)}>
-          {timeOfTheDay === "votetime" && player.voteAgainst > 0 && (
-            <div className="absolute top-[-10px] right-[-10px] h-8 w-8 p-2 flex justify-center items-center rounded-full bg-red-400">
-              <p>{player.voteAgainst}</p>
-            </div>
-          )}
+          
+          <VoteCount timeOfTheDay={timeOfTheDay} player={player} />
 
-          {/* Your player icons/images displayed conditionals */}
-          {!player.isAlive ? (
-            <Image
-              className="absolute"
-              width={60}
-              height={60}
-              src={tombstone}
-              alt="role"
-            />
-          ) : !player.isRevealed ? (
-            <Image
-              width={60}
-              height={60}
-              src={player.role.image && player.role.image.src}
-              alt="role"
-              className={
-                isDoubleSelection || isSelectionMode ? "opacity-50" : ""
-              }
-            />
-          ) : (
-            <AvatarUI selection={isDoubleSelection || isSelectionMode} />
-          )}
+          {/* Your player avatar displayed conditionals */}
+          <PlayerCardImage
+            timeOfTheDay={timeOfTheDay}
+            player={player}
+            playerToPlay={playerToPlay}
+            isDoubleSelection={isDoubleSelection}
+            isSelectionMode={isSelectionMode}
+          />
 
-          {player.isUnderArrest && (
-            <>
-              <Image
-                className="absolute"
-                width={100}
-                height={100}
-                src={prison}
-                alt="prison"
-              />
-            </>
-          )}
-
-          {player.id !== playerToPlay.id &&
-            player.isAlive &&
-            isSelectionMode &&
-            timeOfTheDay === "votetime" && (
-              <Image
-                className="absolute z-10 animate-pulse"
-                width={50}
-                height={50}
-                src={forefinger}
-                alt="forefinger"
-              />
-            )}
-          {player.id !== playerToPlay.id &&
-            player.isAlive &&
-            (isSelectionMode || isDoubleSelection) &&
-            timeOfTheDay !== "votetime" && (
-              <Image
-                className="absolute z-10 animate-pulse"
-                width={50}
-                height={50}
-                src={playerToPlay.role.canPerform.emoji.src}
-                alt={playerToPlay.role.canPerform.type}
-              />
-            )}
           <p className="text-xs text-center">{player.name}</p>
         </div>
       ))}

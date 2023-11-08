@@ -1,5 +1,6 @@
 import rolesIcons from "@/public/roles";
 import target from "@/public/game/target.png";
+import knife from "@/public/game/knife.png";
 import handcuffs from "@/public/game/handcuffs.png";
 import bowAndArrow from "@/public/game/bow-and-arrow.png";
 import bandAid from "@/public/game/band-aid.png";
@@ -14,6 +15,7 @@ const characters = [
     image: rolesIcons["man"],
     description:
       "A random civilian that can do nothing either complain or vote.",
+    // done
   },
   {
     name: "Seer",
@@ -30,6 +32,7 @@ const characters = [
     image: rolesIcons["seer"],
     description:
       "The Seer possesses the unique ability to unveil the true nature of a player. During the day, the Seer can select a player to reveal its role instantly. The Seer can only perform this action once per game.",
+    // done
   },
   {
     name: "Cupid",
@@ -46,7 +49,8 @@ const characters = [
     },
     image: rolesIcons["cupid"],
     description:
-      "Cupid is the matchmaker of the town, with the power to create a bond of love between two players. During the night, Cupid can choose two players to link together, making them 'lovers.' If one of the lovers is eliminated, the other will also perish from heartbreak.",
+      "Cupid is the matchmaker of the town, with the power to create a bond of love between two players. During the night, Cupid can choose two players to link together, making them 'lovers.' If one of the lovers is killed, the other will also perish from heartbreak.",
+    // done
   },
   {
     name: "Sheriff",
@@ -62,6 +66,7 @@ const characters = [
     image: rolesIcons["sheriff"],
     description:
       "The sheriff can decide to arrest the person he wants each day. The arrested person would be in jail for one night.",
+    // done
   },
   {
     name: "Doctor",
@@ -75,7 +80,7 @@ const characters = [
       actionTime: "night",
     },
     image: rolesIcons["doctor"],
-    description: "The doctor can protect the person he wants each night.",
+    description: "The doctor can protect the person he wants each night. If the selected player is attacked during the night, he will be healed.",
   },
   {
     name: "Shooter",
@@ -91,7 +96,8 @@ const characters = [
     },
     image: rolesIcons["shooter"],
     description:
-      "The shooter has two bullets and can shoot the person he wants during the day.",
+      "The shooter has two bullets and can shoot instantaneously the person he wants during the day.",
+    // done
   },
   {
     name: "Detective",
@@ -136,6 +142,7 @@ const characters = [
     image: rolesIcons["fool"],
     description:
       "The fool goal is that the people vote for him during the day! If that happens he wins the game.",
+    // done
   },
   {
     name: "Bandit",
@@ -144,7 +151,7 @@ const characters = [
     canPerform: null,
     image: rolesIcons["bandit"],
     description:
-      "The bandit goal is to be the last one alive. He can choose to teammate with someone. One bandit can kill one person each two nights.",
+      "The bandit goal is to be the last one alive. He can choose a player to become its accomplice. One bandit can kill one person each two nights.",
   },
   {
     name: "Reaper",
@@ -185,13 +192,14 @@ const characters = [
     canVote: true,
     canPerform: {
       label: "Select someone to kill tonight",
-      emoji: target,
+      emoji: knife,
       type: "murder",
       needSelection: true,
       actionTime: "night",
     },
     image: rolesIcons["serialKiller"],
-    description: "The serial killer can kill one person by night!",
+    description: "The serial killer can kill one person every night!",
+    // done
   },
 ];
 

@@ -12,9 +12,11 @@ import GameHeader from "./GameHeader";
 import {
   arrestPlayer,
   linkLovers,
+  murder,
   releasePrisoners,
   revealPlayer,
   shootBullet,
+  heal
 } from "@/app/lib/charactersActions";
 import Image from "next/image";
 import daytime from "@/public/game/day-time.png";
@@ -42,6 +44,10 @@ const GameArea = ({ randomRoles }) => {
 
   // instantaneous actions
   registeredActions.forEach((action) => {
+    if (action.type === "heal") {
+      heal(action, setUpdatedPlayersList);
+      setRegisteredActions([...registeredActions.filter((a) => a !== action)]);
+    }
     if (action.type === "shoot") {
       shootBullet(
         action,
@@ -69,9 +75,23 @@ const GameArea = ({ randomRoles }) => {
   const changeTimeOfTheDay = () => {
     if (timeOfTheDay === "nighttime") {
       // end of night, beginning of day
+      registeredActions.forEach((action) => {
+        if (action.type === "murder") {
+          murder(
+            action,
+            updatedPlayersList,
+            setUpdatedPlayersList,
+            displayAction
+          );
+          setRegisteredActions([
+            ...registeredActions.filter((a) => a !== action),
+          ]);
+        }
+      });
+
+      releasePrisoners(setUpdatedPlayersList);
       setDayCount((prevDayCount) => prevDayCount + 1);
       displayAction(`Day ${dayCount + 1} has come... discuss with the village`);
-      releasePrisoners(setUpdatedPlayersList);
     }
     if (timeOfTheDay === "daytime") {
       // end of daytime, beginning of votetime
@@ -92,8 +112,6 @@ const GameArea = ({ randomRoles }) => {
         setRegisteredActions
       );
       registeredActions.forEach((action) => {
-        console.log("hello");
-        console.log(action);
         if (action.type === "arrest")
           arrestPlayer(
             action,

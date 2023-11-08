@@ -106,6 +106,12 @@ export const aftermathOfVote = (
   setWinner
 ) => {
   const mostVotedAgainstPlayer = findPlayerWithMostVotes(updatedPlayersList);
+
+  // reset every player nbrOfVotes to 0
+  updatedPlayersList.forEach((player) => {
+    player.voteAgainst = 0;
+  });
+
   if (!mostVotedAgainstPlayer) {
     displayAction(`The town couldn't decide who to kill!`);
   } else {
