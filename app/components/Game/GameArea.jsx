@@ -40,6 +40,7 @@ const GameArea = ({ randomRoles }) => {
     actionsHistoryListRef.current.appendChild(newAction);
   };
 
+  // instantaneous actions
   registeredActions.forEach((action) => {
     if (action.type === "shoot") {
       shootBullet(
@@ -69,7 +70,7 @@ const GameArea = ({ randomRoles }) => {
     if (timeOfTheDay === "nighttime") {
       // end of night, beginning of day
       setDayCount((prevDayCount) => prevDayCount + 1);
-      displayAction(`Day ${dayCount} has come... discuss with the village`);
+      displayAction(`Day ${dayCount + 1} has come... discuss with the village`);
       releasePrisoners(setUpdatedPlayersList);
     }
     if (timeOfTheDay === "daytime") {

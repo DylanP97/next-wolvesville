@@ -34,24 +34,27 @@ const PlayerBoard = ({
     console.log("some other action");
   };
 
-  const twClassesDiv = "z-20 border border-red bg-slate-600 hover:bg-slate-700 rounded-xl shadow-lg p-4 my-4 cursor-pointer"
+  const twClassesDiv =
+    "z-20 border border-red bg-slate-600 hover:bg-slate-700 rounded-xl shadow-lg p-4 my-4 cursor-pointer";
 
   return (
     <div className="z-20">
       <div className="gap-4">
         <PlayerInfo playerToPlay={playerToPlay} />
         <div className="z-20 actions-board flex flex-row gap-4">
-          <div
-            onClick={() => toNext()}
-            className={twClassesDiv}>
+          <div onClick={() => toNext()} className={twClassesDiv}>
             <p className="text-xs text-gray-200">To next player</p>
           </div>
           {playerToPlay.role.canPerform !== null && (
             <>
-              {playerToPlay.isAlive &&
-                !playerToPlay.isUnderArrest &&
+              {/* If it's night or day, check for actions that need double selection */}
+              {!playerToPlay.isUnderArrest &&
+                playerToPlay.role.canPerform.nbrLeftToPerform !== 0 &&
                 playerToPlay.role.canPerform.needDoubleSelection &&
-                timeOfTheDay !== "votetime" && (
+                ((timeOfTheDay === "daytime" &&
+                  playerToPlay.role.canPerform.actionTime === "day") ||
+                  (timeOfTheDay === "nighttime" &&
+                    playerToPlay.role.canPerform.actionTime === "night")) && (
                   <div
                     onClick={() => {
                       setIsDoubleSelection(!isDoubleSelection);
@@ -67,7 +70,9 @@ const PlayerBoard = ({
                   </div>
                 )}
 
+              {/* If it's night, check for night actions and that need selection */}
               {!playerToPlay.isUnderArrest &&
+                playerToPlay.role.canPerform.nbrLeftToPerform !== 0 &&
                 playerToPlay.role.canPerform.needSelection &&
                 timeOfTheDay === "nighttime" &&
                 playerToPlay.role.canPerform.actionTime === "night" && (
@@ -87,7 +92,11 @@ const PlayerBoard = ({
                     </p>
                   </div>
                 )}
-              {timeOfTheDay === "daytime" &&
+
+              {/* If it's day, check for day actions and that need selection */}
+              {playerToPlay.role.canPerform.nbrLeftToPerform !== 0 &&
+                playerToPlay.role.canPerform.needSelection &&
+                timeOfTheDay === "daytime" &&
                 playerToPlay.role.canPerform.actionTime === "day" && (
                   <div
                     onClick={() => {
@@ -108,6 +117,7 @@ const PlayerBoard = ({
             </>
           )}
 
+          {/* If it's votetime, action to vote */}
           <div className="flex flex-row gap-2">
             {timeOfTheDay === "votetime" && playerToPlay.role.canVote && (
               <div

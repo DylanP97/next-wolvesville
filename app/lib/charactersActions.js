@@ -7,10 +7,25 @@ export const shootBullet = (
   displayAction
 ) => {
   killSelectedPlayer(action.selectedPlayer.id, setUpdatedPlayersList);
+  setUpdatedPlayersList((prevPlayersList) => {
+    return prevPlayersList.map((player) => {
+      if (player.id === action.player) {
+        return {
+          ...player,
+          role: {
+            ...player.role,
+            canPerform: {
+              ...player.role.canPerform,
+              nbrLeftToPerform: player.role.canPerform.nbrLeftToPerform - 1,
+            },
+          },
+        };
+      }
+      return player;
+    });
+  });
   displayAction(
-    `The shooter has shot ${
-      updatedPlayersList[action.selectedPlayer.id].name
-    } this night !`
+    `The shooter has shot ${updatedPlayersList[action.selectedPlayer.id].name}!`
   );
   checkIfIsInLove(
     action.selectedPlayer,
@@ -72,9 +87,20 @@ export const revealPlayer = (
           isRevealed: true,
         };
       }
+      if (player.id === action.player.id) {
+        return {
+          ...player,
+          role: {
+            ...role,
+            canPerform: {
+              ...canPerform,
+              nbrLeftToPerform: player.role.canPerform.nbrLeftToPerform - 1,
+            },
+          },
+        };
+      }
       return player;
     });
-    
   });
   displayAction(
     `The seer's magical crystal ball unveiled the identity of ${
@@ -92,7 +118,6 @@ export const checkIfIsInLove = (
   if (player.isInLove) {
     const lovers = findLovers(updatedPlayersList);
     const partner = lovers.find((partner) => partner.id !== player.id);
-    console.log(partner);
     killSelectedPlayer(partner.id, setUpdatedPlayersList);
     displayAction(
       `${partner.name} is dead because of its loving relation with ${player.name}!`
@@ -110,13 +135,23 @@ export const findLovers = (updatedPlayersList) => {
 export const linkLovers = (action, setUpdatedPlayersList) => {
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
-      console.log(action.selectedPlayer);
       if (player.id === action.selectedPlayer) {
         return {
           ...player,
           isInLove: true,
         };
-        console.log(player);
+      }
+      if (player.id === action.player) {
+        return {
+          ...player,
+          role: {
+            ...player.role,
+            canPerform: {
+              ...player.role.canPerform,
+              nbrLeftToPerform: 0,
+            },
+          },
+        };
       }
       return player;
     });

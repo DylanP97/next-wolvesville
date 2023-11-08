@@ -8,7 +8,6 @@ import crystalBall from "@/public/game/crystal-ball.png";
 const characters = [
   {
     name: "Civilian",
-    maxNbrInGame: 1,
     team: "village",
     canVote: true,
     canPerform: null,
@@ -18,7 +17,6 @@ const characters = [
   },
   {
     name: "Seer",
-    maxNbrInGame: 1,
     team: "village",
     canVote: true,
     canPerform: {
@@ -26,15 +24,15 @@ const characters = [
       emoji: crystalBall,
       type: "reveal",
       needSelection: true,
-      actionTime: "night",
+      actionTime: "day",
+      nbrLeftToPerform: 1,
     },
     image: rolesIcons["seer"],
     description:
-      "The Seer possesses a unique ability to unveil the true nature of a player. During the night, the Seer can select a player to reveal that player's role. The revelation, takes place the following day, allowing the town to gather valuable information to aid in their decision-making. The Seer's power can be a crucial asset in identifying friends and foes amidst the shadows.",
+      "The Seer possesses the unique ability to unveil the true nature of a player. During the day, the Seer can select a player to reveal its role instantly. The Seer can only perform this action once per game.",
   },
   {
     name: "Cupid",
-    maxNbrInGame: 1,
     team: "village",
     canVote: true,
     canPerform: {
@@ -44,14 +42,14 @@ const characters = [
       needSelection: false,
       needDoubleSelection: true,
       actionTime: "night",
+      nbrLeftToPerform: 1,
     },
     image: rolesIcons["cupid"],
     description:
-      "Cupid is the matchmaker of the town, with the power to create a bond of love between two players. During the night, Cupid can choose two players to link together, making them 'lovers.' If one of the lovers is eliminated, the other will also perish from heartbreak. Cupid's actions can have a profound impact on the game, as they determine the fate of the lovers, who must work together to survive.",
+      "Cupid is the matchmaker of the town, with the power to create a bond of love between two players. During the night, Cupid can choose two players to link together, making them 'lovers.' If one of the lovers is eliminated, the other will also perish from heartbreak.",
   },
   {
     name: "Sheriff",
-    maxNbrInGame: 1,
     team: "village",
     canVote: true,
     canPerform: {
@@ -67,7 +65,6 @@ const characters = [
   },
   {
     name: "Doctor",
-    maxNbrInGame: 1,
     team: "village",
     canVote: true,
     canPerform: {
@@ -82,24 +79,23 @@ const characters = [
   },
   {
     name: "Shooter",
-    maxNbrInGame: 1,
     team: "village",
     canVote: true,
     canPerform: {
-      label: "Select someone to shoot him",
+      label: "Select someone to shoot",
       emoji: target,
       type: "shoot",
       needSelection: true,
       actionTime: "day",
+      nbrLeftToPerform: 2,
     },
     image: rolesIcons["shooter"],
     description:
-      "The shooter has one bullet and can shoot the person he wants at night one time during the game.",
+      "The shooter has two bullets and can shoot the person he wants during the day.",
   },
   {
     name: "Detective",
     team: "village",
-    maxNbrInGame: 1,
     canVote: true,
     canPerform: null,
     image: rolesIcons["detective"],
@@ -109,7 +105,6 @@ const characters = [
   {
     name: "Mayor",
     team: "village",
-    maxNbrInGame: 1,
     canVote: true,
     canPerform: null,
     image: rolesIcons["mayor"],
@@ -118,7 +113,6 @@ const characters = [
   {
     name: "Grumpy Grandma",
     team: "village",
-    maxNbrInGame: 1,
     canVote: true,
     canPerform: null,
     image: rolesIcons["grumpyGrandma"],
@@ -128,7 +122,6 @@ const characters = [
   {
     name: "Priest",
     team: "village",
-    maxNbrInGame: 1,
     canVote: true,
     canPerform: null,
     image: rolesIcons["priest"],
@@ -138,7 +131,6 @@ const characters = [
   {
     name: "Fool",
     team: "solo",
-    maxNbrInGame: 1,
     canVote: true,
     canPerform: null,
     image: rolesIcons["fool"],
@@ -148,7 +140,6 @@ const characters = [
   {
     name: "Bandit",
     team: "bandits",
-    maxNbrInGame: 1,
     canVote: true,
     canPerform: null,
     image: rolesIcons["bandit"],
@@ -158,7 +149,6 @@ const characters = [
   {
     name: "Reaper",
     team: "solo",
-    maxNbrInGame: 1,
     canVote: true,
     canPerform: null,
     image: rolesIcons["reaper"],
@@ -168,7 +158,6 @@ const characters = [
   {
     name: "Terrorist",
     team: "solo",
-    maxNbrInGame: 1,
     canVote: true,
     canPerform: null,
     image: rolesIcons["terrorist"],
@@ -178,7 +167,6 @@ const characters = [
   {
     name: "Pyromaniac",
     team: "solo",
-    maxNbrInGame: 1,
     canVote: true,
     canPerform: {
       label: "Select someone to burn tonight",
@@ -194,7 +182,6 @@ const characters = [
   {
     name: "Serial Killer",
     team: "solo",
-    maxNbrInGame: 1,
     canVote: true,
     canPerform: {
       label: "Select someone to kill tonight",
