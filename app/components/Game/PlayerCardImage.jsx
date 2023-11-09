@@ -5,13 +5,18 @@ import AvatarUI from "../Profile/AvatarUI";
 import tombstone from "@/public/game/tombstone.png";
 import prison from "@/public/game/prison.png";
 import forefinger from "@/public/game/forefinger.png";
+import same from "@/public/game/same.png";
+import different from "@/public/game/different.png";
 
 const PlayerCardImage = ({
-    timeOfTheDay,
-    player,
-    playerToPlay,
-    isDoubleSelection,
-    isSelectionMode,
+  timeOfTheDay,
+  player,
+  playerToPlay,
+  isDoubleSelection,
+  isSelectionMode,
+  displayInvestigation,
+  investigationResult,
+  investigatedPlayers,
 }) => {
   return (
     <>
@@ -23,7 +28,7 @@ const PlayerCardImage = ({
           src={tombstone}
           alt="role"
         />
-      ) : player.isRevealed ? (
+      ) : !player.isRevealed ? (
         <Image
           width={60}
           height={60}
@@ -36,15 +41,13 @@ const PlayerCardImage = ({
       )}
 
       {player.isUnderArrest && (
-        <>
-          <Image
-            className="absolute"
-            width={100}
-            height={100}
-            src={prison}
-            alt="prison"
-          />
-        </>
+        <Image
+          className="absolute"
+          width={100}
+          height={100}
+          src={prison}
+          alt="prison"
+        />
       )}
 
       {player.id !== playerToPlay.id &&
@@ -59,16 +62,49 @@ const PlayerCardImage = ({
             alt="forefinger"
           />
         )}
+
       {player.id !== playerToPlay.id &&
         player.isAlive &&
         (isSelectionMode || isDoubleSelection) &&
-        timeOfTheDay !== "votetime" && (
+        timeOfTheDay !== "votetime" &&
+        !displayInvestigation &&
+        playerToPlay.role.name !== "Pyronamiac" && (
           <Image
             className="absolute z-10 animate-pulse"
             width={50}
             height={50}
             src={playerToPlay.role.canPerform.emoji.src}
             alt={playerToPlay.role.canPerform.type}
+          />
+        )}
+
+      {player.id !== playerToPlay.id &&
+        player.isAlive &&
+        (isSelectionMode || isDoubleSelection) &&
+        timeOfTheDay !== "votetime" &&
+        !displayInvestigation &&
+        playerToPlay.role.name === "Pyronamiac" &&
+        playerToPlay.role.playersToSetOnFire.some(
+          (firedPlayer) => firedPlayer.name === player.name
+        ) && (
+          <Image
+            className="absolute z-10 animate-pulse"
+            width={50}
+            height={50}
+            src={playerToPlay.role.canPerform.emoji.src}
+            alt={playerToPlay.role.canPerform.type}
+          />
+        )}
+
+      {investigatedPlayers &&
+        investigatedPlayers.includes(player.id) &&
+        displayInvestigation && (
+          <Image
+            className="absolute z-10 animate-pulse"
+            width={50}
+            height={50}
+            src={investigationResult === "same" ? same : different}
+            alt="investigation-result"
           />
         )}
     </>

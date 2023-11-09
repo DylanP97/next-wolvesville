@@ -4,6 +4,7 @@ import { useState } from "react";
 import { voteAgainst } from "../../lib/gameActions";
 import PlayerCardImage from "./PlayerCardImage";
 import VoteCount from "./VoteCount";
+import { investigatePlayers } from "@/app/lib/charactersActions";
 
 const PlayersGrid = ({
   playersList,
@@ -20,6 +21,9 @@ const PlayersGrid = ({
   setIsDoubleSelection,
 }) => {
   const [selectedOtherPlayers, setSelectedOtherPlayers] = useState([]);
+  const [displayInvestigation, setDisplayInvestigation] = useState(false);
+  const [investigationResult, setInvestigationResult] = useState(null);
+  const [investigatedPlayers, setInvestigatedPlayers] = useState(null);
 
   const registerActionThatNeedSelection = (otherSelectedPlayer) => {
     setRegisteredActions([
@@ -56,7 +60,6 @@ const PlayersGrid = ({
       },
     ]);
     setIsDoubleSelection(false);
-
     toNext();
   };
 
@@ -87,15 +90,30 @@ const PlayersGrid = ({
       if (selectedOtherPlayers.length === 0) {
         setSelectedOtherPlayers([player]);
       } else if (selectedOtherPlayers.length === 1) {
-        // Two players have been selected, perform the double selection action
-        registerActionThatNeedDoubleSelection(selectedOtherPlayers[0], player);
-        setSelectedOtherPlayers([]); // Reset selected players
+        if (playerToPlay.role.canPerform.type === "investigate") {
+          investigatePlayers(
+            setInvestigatedPlayers,
+            setInvestigationResult,
+            setDisplayInvestigation,
+            setIsDoubleSelection,
+            toNext,
+            selectedOtherPlayers[0],
+            player
+          );
+        } else {
+          // Two players have been selected, perform the double selection action
+          registerActionThatNeedDoubleSelection(
+            selectedOtherPlayers[0],
+            player
+          );
+          setSelectedOtherPlayers([]); // Reset selected players
+        }
       }
     }
   };
 
   const twClassesPlayerCard =
-    "w-44 h-28 m-2 p-4 rounded-3xl flex flex-col justify-center items-center relative gap-2";
+    "w-48 h-36 p-4 rounded-3xl flex flex-col justify-center items-center relative gap-2";
 
   return (
     <div className="grid grid-cols-4 gap-6 my-6 place-items-center xl:w-[80%]">
@@ -114,7 +132,6 @@ const PlayersGrid = ({
           } ${twClassesPlayerCard}`}
           key={player.name}
           onClick={() => handlePlayerClick(player)}>
-          
           <VoteCount timeOfTheDay={timeOfTheDay} player={player} />
 
           {/* Your player avatar displayed conditionals */}
@@ -124,6 +141,9 @@ const PlayersGrid = ({
             playerToPlay={playerToPlay}
             isDoubleSelection={isDoubleSelection}
             isSelectionMode={isSelectionMode}
+            displayInvestigation={displayInvestigation}
+            investigationResult={investigationResult}
+            investigatedPlayers={investigatedPlayers}
           />
 
           <p className="text-xs text-center">{player.name}</p>

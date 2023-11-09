@@ -1,5 +1,7 @@
 "use client";
 
+import { burnPlayers } from "@/app/lib/charactersActions";
+
 const PlayerInfo = ({ playerToPlay }) => (
   <div className="bg-slate-950 rounded-xl shadow-lg p-4 my-4">
     <p className="text-xs text-gray-200">
@@ -22,6 +24,8 @@ const PlayerBoard = ({
   setIsSelectionMode,
   isDoubleSelection,
   setIsDoubleSelection,
+  setUpdatedPlayersList,
+  displayAction
 }) => {
   const registerSimpleAction = () => {
     setRegisteredActions([
@@ -116,6 +120,25 @@ const PlayerBoard = ({
                 )}
             </>
           )}
+
+          {timeOfTheDay === "nighttime" &&
+            playerToPlay.role.name === "Pyromaniac" &&
+            playerToPlay.role.playersToSetOnFire.length > 0 && (
+              <div
+                onClick={() => {
+                  burnPlayers(
+                    playerToPlay.role.playersToSetOnFire,
+                    setUpdatedPlayersList,
+                    displayAction,
+                    toNext
+                  );
+                }}
+                className={twClassesDiv}>
+                <p className="text-xs text-gray-200">
+                  Burn {playerToPlay.role.playersToSetOnFire.length} players
+                </p>
+              </div>
+            )}
 
           {/* If it's votetime, action to vote */}
           <div className="flex flex-row gap-2">

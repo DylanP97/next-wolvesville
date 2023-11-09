@@ -1,10 +1,12 @@
 import rolesIcons from "@/public/roles";
+import loupe from "@/public/game/loupe.png";
 import target from "@/public/game/target.png";
 import knife from "@/public/game/knife.png";
 import handcuffs from "@/public/game/handcuffs.png";
 import bowAndArrow from "@/public/game/bow-and-arrow.png";
 import bandAid from "@/public/game/band-aid.png";
 import crystalBall from "@/public/game/crystal-ball.png";
+import pouring from "@/public/roles/pyromaniac.png";
 
 const characters = [
   {
@@ -80,8 +82,10 @@ const characters = [
       actionTime: "night",
     },
     image: rolesIcons["doctor"],
-    description: "The doctor can protect the person he wants each night. If the selected player is attacked during the night, he will be healed.",
+    description:
+      "The doctor can protect the person he wants each night. If the selected player is attacked during the night, he will be healed.",
   },
+  // done
   {
     name: "Shooter",
     team: "village",
@@ -103,10 +107,18 @@ const characters = [
     name: "Detective",
     team: "village",
     canVote: true,
-    canPerform: null,
+    canPerform: {
+      label: "Select two players to check if they are in the same side or not.",
+      emoji: loupe,
+      type: "investigate",
+      needSelection: false,
+      needDoubleSelection: true,
+      actionTime: "night",
+    },
     image: rolesIcons["detective"],
     description:
-      "The detective can check a person intentions (good / neutral / bad) during the night.",
+      "The detective can check two persons and see if they are in the same or different team during the night.",
+    // done
   },
   {
     name: "Mayor",
@@ -176,12 +188,13 @@ const characters = [
     team: "solo",
     canVote: true,
     canPerform: {
-      label: "Select someone to burn tonight",
-      emoji: target,
-      type: "burn",
+      label: "Select someone to pour liquid at",
+      emoji: pouring,
+      type: "pouring",
       needSelection: true,
       actionTime: "night",
     },
+    playersToSetOnFire: [],
     image: rolesIcons["pyromaniac"],
     description:
       "The pyromaniac can choose to burn the person he wants each night. The burned person will die tonight.",

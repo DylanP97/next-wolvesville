@@ -6,6 +6,8 @@ import PlayerBoard from "./PlayerBoard";
 import {
   aftermathOfVote,
   cleanUpRegisteredActionsConcerningDeadPlayers,
+  findNextAlivePlayerId,
+  isLastPlayerAliveInList,
 } from "../../lib/gameActions";
 import ActionsHistory from "./ActionsHistory";
 import GameHeader from "./GameHeader";
@@ -16,7 +18,8 @@ import {
   releasePrisoners,
   revealPlayer,
   shootBullet,
-  heal
+  heal,
+  pourGasoline,
 } from "@/app/lib/charactersActions";
 import Image from "next/image";
 import daytime from "@/public/game/day-time.png";
@@ -29,6 +32,11 @@ const GameArea = ({ randomRoles }) => {
   const [dayCount, setDayCount] = useState(0);
   const actionsHistoryListRef = useRef(null);
   const [updatedPlayersList, setUpdatedPlayersList] = useState(null);
+  const [firstPlayerIndexInAliveList, setFirstPlayerIndexInAliveList] =
+    useState(null);
+  const [LastPlayerIndexInAliveList, setLastPlayerIndexInAliveList] =
+    useState(null);
+  const [aliveList, setAliveList] = useState(null);
   const [playerToPlay, setPlayerToPlay] = useState(null);
   const [registeredActions, setRegisteredActions] = useState([]);
   const [isSelectionMode, setIsSelectionMode] = useState(false);
@@ -44,6 +52,10 @@ const GameArea = ({ randomRoles }) => {
 
   // instantaneous actions
   registeredActions.forEach((action) => {
+    if (action.type === "pouring") {
+      pourGasoline(action, setUpdatedPlayersList);
+      setRegisteredActions([...registeredActions.filter((a) => a !== action)]);
+    }
     if (action.type === "heal") {
       heal(action, setUpdatedPlayersList);
       setRegisteredActions([...registeredActions.filter((a) => a !== action)]);
@@ -88,7 +100,6 @@ const GameArea = ({ randomRoles }) => {
           ]);
         }
       });
-
       releasePrisoners(setUpdatedPlayersList);
       setDayCount((prevDayCount) => prevDayCount + 1);
       displayAction(`Day ${dayCount + 1} has come... discuss with the village`);
@@ -131,55 +142,31 @@ const GameArea = ({ randomRoles }) => {
     );
   };
 
-  const findNextAlivePlayer = (currentPlayerId) => {
-    let isFirstAlivePlayer = false;
-
-    if (
-      currentPlayerId === -1 ||
-      currentPlayerId === updatedPlayersList.length - 1
-    ) {
-      for (let i = 0; i < updatedPlayersList.length; i++) {
-        if (updatedPlayersList[i].isAlive) {
-          if (i === 0) {
-            isFirstAlivePlayer = true;
-          }
-          return { index: i, isFirstAlivePlayer };
-        }
-      }
-    } else {
-      for (let i = currentPlayerId + 1; i < updatedPlayersList.length; i++) {
-        if (updatedPlayersList[i].isAlive) {
-          return { index: i, isFirstAlivePlayer };
-        }
-      }
-
-      for (let i = 0; i < currentPlayerId; i++) {
-        if (updatedPlayersList[i].isAlive) {
-          if (i === 0) {
-            isFirstAlivePlayer = true;
-          }
-          return { index: i, isFirstAlivePlayer };
-        }
-      }
-    }
-
-    return { index: -1, isFirstAlivePlayer };
-  };
-
   const toNext = (event = null) => {
     if (!event || (event.type === "keydown" && event.key === "Enter")) {
-      const { index: nextPlayerId, isFirstAlivePlayer } = findNextAlivePlayer(
-        playerToPlay.id
+      const index = aliveList.findIndex(
+        (player) => player.id === playerToPlay.id
       );
-
-      if (isFirstAlivePlayer) {
-        setPlayerToPlay(updatedPlayersList[nextPlayerId]);
+      const nextPlayer = aliveList[index + 1];
+      if (!nextPlayer) {
         changeTimeOfTheDay();
-      } else {
-        setPlayerToPlay(updatedPlayersList[nextPlayerId]);
-      }
+        setPlayerToPlay(aliveList[0]);
+      } else setPlayerToPlay(nextPlayer);
+      setIsDoubleSelection(false);
+      setIsSelectionMode(false);
     }
   };
+
+  useEffect(() => {
+    if (updatedPlayersList) {
+      const onlyAliveList = updatedPlayersList.filter(
+        (player) => player.isAlive
+      );
+      setAliveList(onlyAliveList);
+      setFirstPlayerIndexInAliveList(onlyAliveList[0].id);
+      setLastPlayerIndexInAliveList(onlyAliveList[onlyAliveList.length - 1].id);
+    }
+  }, [updatedPlayersList]);
 
   useEffect(() => {
     if (randomRoles) {
@@ -191,7 +178,9 @@ const GameArea = ({ randomRoles }) => {
   }, [randomRoles]);
 
   return !gameIsInitialized ? (
-    <p>We choose the roles for each player...</p>
+    <p className="w-full h-full m-auto p-8">
+      We choose the roles for each player...
+    </p>
   ) : (
     <section
       onKeyDown={toNext}
@@ -202,7 +191,7 @@ const GameArea = ({ randomRoles }) => {
           : timeOfTheDay === "votetime"
           ? "bg-orange-800"
           : "bg-slate-950"
-      } w-full p-4 rounded-xl relative`}
+      } w-full h-full p-4 relative`}
       style={{ outline: "none" }}>
       <GameHeader
         timeOfTheDay={timeOfTheDay}
@@ -252,6 +241,8 @@ const GameArea = ({ randomRoles }) => {
               setIsSelectionMode={setIsSelectionMode}
               isDoubleSelection={isDoubleSelection}
               setIsDoubleSelection={setIsDoubleSelection}
+              setUpdatedPlayersList={setUpdatedPlayersList}
+              displayAction={displayAction}
             />
             <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
           </div>

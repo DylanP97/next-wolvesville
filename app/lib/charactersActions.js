@@ -182,7 +182,7 @@ export const murder = (
       displayAction
     );
   } else {
-    displayAction("Someone wounds were healed by the doctor tonight!")
+    displayAction("Someone wounds were healed by the doctor tonight!");
   }
 };
 
@@ -219,4 +219,54 @@ export const heal = (action, setUpdatedPlayersList) => {
       return player;
     });
   });
+};
+
+export const investigatePlayers = (
+  setInvestigatedPlayers,
+  setInvestigationResult,
+  setDisplayInvestigation,
+  setIsDoubleSelection,
+  toNext,
+  otherSelectedPlayer,
+  otherSelected2Player
+) => {
+  setInvestigatedPlayers([otherSelectedPlayer.id, otherSelected2Player.id]);
+  const isDifferentTeam =
+    otherSelectedPlayer.role.team !== otherSelected2Player.role.team;
+  setInvestigationResult(isDifferentTeam ? "different" : "same");
+  setDisplayInvestigation(true);
+  setTimeout(() => {
+    setDisplayInvestigation(false);
+    setIsDoubleSelection(false);
+    toNext();
+  }, 3000);
+};
+
+export const pourGasoline = (action, setUpdatedPlayersList) => {
+  setUpdatedPlayersList((prevPlayersList) => {
+    return prevPlayersList.map((player) => {
+      if (player.id === action.player) {
+        return {
+          ...player,
+          role: {
+            ...player.role,
+            playersToSetOnFire: [
+              ...player.role.playersToSetOnFire,
+              action.selectedPlayer,
+            ],
+          },
+        };
+      }
+      return player;
+    });
+  });
+  // done
+};
+
+export const burnPlayers = (playersToSetOnFire, setUpdatedPlayersList, displayAction, toNext) => {
+  playersToSetOnFire.map((player) => {
+    killSelectedPlayer(player.id, setUpdatedPlayersList);
+    displayAction(`A malicious fire burned ${player.name}!`);
+  });
+  toNext();
 };
