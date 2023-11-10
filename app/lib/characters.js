@@ -9,6 +9,9 @@ import crystalBall from "@/public/game/crystal-ball.png";
 import pouring from "@/public/roles/pyromaniac.png";
 import forefinger from "@/public/game/forefinger.png";
 import mute from "@/public/game/mute.png";
+import holyWater from "@/public/game/holy-water.png";
+import shovel from "@/public/game/shovel.png";
+import whiteFlame from "@/public/game/white-flame.png";
 
 const characters = [
   {
@@ -148,10 +151,17 @@ const characters = [
     name: "Priest",
     team: "village",
     canVote: true,
-    canPerform: null,
+    canPerform: {
+      label: "Select a player to throw the holy water at",
+      emoji: holyWater,
+      type: "throw",
+      needSelection: true,
+      actionTime: "night",
+      nbrLeftToPerform: 1,
+    },
     image: rolesIcons["priest"],
     description:
-      "Once per game, the Priest can throw holy water at a player. If this player is a Werewolf, he will die. Otherwise, it is the Priest who dies. He can't kill a solo killer.",
+      "Once per game, the Priest can throw holy water at a player. If this player is against the village, he will die. Otherwise, it is the Priest who dies.",
   },
   {
     name: "Fool",
@@ -198,19 +208,47 @@ const characters = [
       "The accomplice is a role that appears during the game when a player is transformed when the bandit select him as its partner. A accomplice can kill one person each two nights.",
   },
   {
-    name: "Reaper",
+    name: "Grave Robber",
+    team: "village",
+    canVote: true,
+    canPerform: {
+      label: "Select someone to loot its grave",
+      emoji: shovel,
+      type: "loot",
+      needSelection: true,
+      actionTime: "night",
+    },
+    image: rolesIcons["graveRobber"],
+    description:
+      "You can choose from dead players. At the start of the next day? you will take on his role, and thus potentially change teams.",
+  },
+  {
+    name: "Ghost Lady",
     team: "solo",
     canVote: true,
-    canPerform: null,
-    image: rolesIcons["reaper"],
-    description:
-      "The grim reaper has the mission to kill a specific person during a specific night. He will die if he doesn't get the requested soul.",
+    canPerform: {
+      label: "Select someone to visit tonight",
+      emoji: whiteFlame,
+      type: "",
+      needSelection: true,
+      actionTime: "night",
+    },
+    image: rolesIcons["ghostLady"],
+    description: "",
   },
   {
     name: "Terrorist",
     team: "solo",
     canVote: true,
-    canPerform: null,
+    canPerform: {
+      label: "Craft the bomb",
+      emoji: null,
+      type: "craft",
+      needSelection: false,
+      actionTime: "night",
+      nbrLeftToPerform: 7,
+    },
+    bombPower: 0,
     image: rolesIcons["terrorist"],
     description:
       "The terrorist can choose to manufacture a bomb each night or choose to blow it up the night he wants. He might die with the explosion. The more nights he crafts its bomb the more damage it will do. The bomb can kill randomly any player.",

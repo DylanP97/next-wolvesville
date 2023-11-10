@@ -8,7 +8,7 @@ import shooter from "./shooter.png";
 import bandit from "./bandit.png";
 import accomplice from "./accomplice.png";
 import fool from "./fool.png";
-import reaper from "./reaper.png";
+import ghostLady from "./ghost-lady.png";
 import terrorist from "./terrorist.png";
 import seer from "./seer.png";
 import cupid from "./cupid.png";
@@ -16,6 +16,8 @@ import pyromaniac from "./pyromaniac.png";
 import serialKiller from "./serial-killer.png";
 import priest from "./priest.png";
 import grumpyGrandma from "./grumpy-grandma.png";
+import graveRobber from "./grave-robber.png";
+import gossip from "./gossip.png";
 
 const rolesIcons = {
   doctor: doctor,
@@ -28,7 +30,7 @@ const rolesIcons = {
   bandit: bandit,
   accomplice: accomplice,
   fool: fool,
-  reaper: reaper,
+  ghostLady: ghostLady,
   terrorist: terrorist,
   seer: seer,
   cupid: cupid,
@@ -36,6 +38,8 @@ const rolesIcons = {
   priest: priest,
   serialKiller: serialKiller,
   grumpyGrandma: grumpyGrandma,
+  graveRobber: graveRobber,
+  gossip: gossip,
 };
 
 export default rolesIcons;
