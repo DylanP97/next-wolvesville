@@ -7,6 +7,7 @@ import prison from "@/public/game/prison.png";
 import forefinger from "@/public/game/forefinger.png";
 import same from "@/public/game/same.png";
 import different from "@/public/game/different.png";
+import spilled from "@/public/game/spilled.png";
 
 const PlayerCardImage = ({
   timeOfTheDay,
@@ -18,6 +19,13 @@ const PlayerCardImage = ({
   investigationResult,
   investigatedPlayers,
 }) => {
+  const checkIfAlreadyPouredWithGasoline = () => {
+    const isPoured = playerToPlay.role.playersToSetOnFire.some(
+      (pouredPlayer) => player.id === pouredPlayer.id
+    );
+    return !isPoured;
+  };
+
   return (
     <>
       {!player.isAlive ? (
@@ -68,7 +76,7 @@ const PlayerCardImage = ({
         (isSelectionMode || isDoubleSelection) &&
         timeOfTheDay !== "votetime" &&
         !displayInvestigation &&
-        playerToPlay.role.name !== "Pyronamiac" && (
+        playerToPlay.role.name !== "Pyromaniac" && (
           <Image
             className="absolute z-10 animate-pulse"
             width={50}
@@ -83,15 +91,20 @@ const PlayerCardImage = ({
         (isSelectionMode || isDoubleSelection) &&
         timeOfTheDay !== "votetime" &&
         !displayInvestigation &&
-        playerToPlay.role.name === "Pyronamiac" &&
-        playerToPlay.role.playersToSetOnFire.some(
-          (firedPlayer) => firedPlayer.name === player.name
-        ) && (
+        playerToPlay.role.name === "Pyromaniac" && (
           <Image
-            className="absolute z-10 animate-pulse"
-            width={50}
-            height={50}
-            src={playerToPlay.role.canPerform.emoji.src}
+            className={`${
+              checkIfAlreadyPouredWithGasoline()
+                ? "animate-pulse"
+                : "animate-none"
+            } absolute z-10`}
+            width={60}
+            height={60}
+            src={
+              checkIfAlreadyPouredWithGasoline()
+                ? playerToPlay.role.canPerform.emoji.src
+                : spilled
+            }
             alt={playerToPlay.role.canPerform.type}
           />
         )}

@@ -20,6 +20,8 @@ import {
   shootBullet,
   heal,
   pourGasoline,
+  muteVoter,
+  unmuteVoter,
 } from "@/app/lib/charactersActions";
 import Image from "next/image";
 import daytime from "@/public/game/day-time.png";
@@ -106,6 +108,11 @@ const GameArea = ({ randomRoles }) => {
     }
     if (timeOfTheDay === "daytime") {
       // end of daytime, beginning of votetime
+      registeredActions.forEach((action) => {
+        if (action.type === "mute") {
+          muteVoter(action, setUpdatedPlayersList);
+        }
+      });
       displayAction(`Its time to vote!`);
     }
     if (timeOfTheDay === "votetime") {
@@ -123,15 +130,23 @@ const GameArea = ({ randomRoles }) => {
         setRegisteredActions
       );
       registeredActions.forEach((action) => {
-        if (action.type === "arrest")
+        if (action.type === "arrest") {
           arrestPlayer(
             action,
             updatedPlayersList,
             setUpdatedPlayersList,
             displayAction
           );
+          setRegisteredActions([
+            ...registeredActions.filter((a) => a !== action),
+          ]);
+        } else if (action.type === "mute") {
+          unmuteVoter(action, setUpdatedPlayersList);
+          setRegisteredActions([
+            ...registeredActions.filter((a) => a !== action),
+          ]);
+        }
       });
-      setRegisteredActions([]);
     }
     setTimeOfTheDay(
       timeOfTheDay === "daytime"

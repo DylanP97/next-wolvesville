@@ -25,7 +25,7 @@ const PlayerBoard = ({
   isDoubleSelection,
   setIsDoubleSelection,
   setUpdatedPlayersList,
-  displayAction
+  displayAction,
 }) => {
   const registerSimpleAction = () => {
     setRegisteredActions([
@@ -142,21 +142,40 @@ const PlayerBoard = ({
 
           {/* If it's votetime, action to vote */}
           <div className="flex flex-row gap-2">
-            {timeOfTheDay === "votetime" && playerToPlay.role.canVote && (
-              <div
-                onClick={() => {
-                  setIsSelectionMode(!isSelectionMode);
-                }}
-                className={twClassesDiv}>
-                <p className="text-xs text-gray-200">
-                  {!isSelectionMode ? (
-                    <>Select a player to vote against!</>
-                  ) : (
-                    <>Cancel selection</>
-                  )}
-                </p>
-              </div>
-            )}
+            {timeOfTheDay === "votetime" &&
+              playerToPlay.role.name !== "Mayor" &&
+              playerToPlay.role.canVote && (
+                <div
+                  onClick={() => {
+                    setIsSelectionMode(!isSelectionMode);
+                  }}
+                  className={twClassesDiv}>
+                  <p className="text-xs text-gray-200">
+                    {!isSelectionMode ? (
+                      <>Select a player to vote against!</>
+                    ) : (
+                      <>Cancel selection</>
+                    )}
+                  </p>
+                </div>
+              )}
+            {timeOfTheDay === "votetime" &&
+              playerToPlay.role.name === "Mayor" &&
+              playerToPlay.role.canVote && (
+                <div
+                  onClick={() => {
+                    setIsSelectionMode(!isSelectionMode);
+                  }}
+                  className={twClassesDiv}>
+                  <p className="text-xs text-gray-200">
+                    {!isSelectionMode ? (
+                      <>{playerToPlay.role.canPerform.label}</>
+                    ) : (
+                      <>Cancel selection</>
+                    )}
+                  </p>
+                </div>
+              )}
           </div>
         </div>
       </div>

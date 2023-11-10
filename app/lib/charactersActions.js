@@ -260,13 +260,51 @@ export const pourGasoline = (action, setUpdatedPlayersList) => {
       return player;
     });
   });
-  // done
 };
 
-export const burnPlayers = (playersToSetOnFire, setUpdatedPlayersList, displayAction, toNext) => {
+export const burnPlayers = (
+  playersToSetOnFire,
+  setUpdatedPlayersList,
+  displayAction,
+  toNext
+) => {
   playersToSetOnFire.map((player) => {
     killSelectedPlayer(player.id, setUpdatedPlayersList);
     displayAction(`A malicious fire burned ${player.name}!`);
   });
   toNext();
+};
+
+export const muteVoter = (action, setUpdatedPlayersList) => {
+  setUpdatedPlayersList((prevPlayersList) => {
+    return prevPlayersList.map((player) => {
+      if (player.id === action.selectedPlayer.id) {
+        return {
+          ...player,
+          role: {
+            ...player.role,
+            canVote: false,
+          },
+        };
+      }
+      return player;
+    });
+  });
+};
+
+export const unmuteVoter = (action, setUpdatedPlayersList) => {
+  setUpdatedPlayersList((prevPlayersList) => {
+    return prevPlayersList.map((player) => {
+      if (player.id === action.selectedPlayer.id) {
+        return {
+          ...player,
+          role: {
+            ...player.role,
+            canVote: true,
+          },
+        };
+      }
+      return player;
+    });
+  });
 };

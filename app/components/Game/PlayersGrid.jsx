@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { voteAgainst } from "../../lib/gameActions";
+import { doubleVoteAgainst, voteAgainst } from "../../lib/gameActions";
 import PlayerCardImage from "./PlayerCardImage";
 import VoteCount from "./VoteCount";
 import { investigatePlayers } from "@/app/lib/charactersActions";
@@ -63,8 +63,10 @@ const PlayersGrid = ({
     toNext();
   };
 
-  const voteForVotetime = (playerId) => {
-    voteAgainst(playerId, setUpdatedPlayersList);
+  const voteForVotetime = (playerId, isMayor) => {
+    isMayor
+      ? doubleVoteAgainst(playerId, setUpdatedPlayersList)
+      : voteAgainst(playerId, setUpdatedPlayersList);
     setIsSelectionMode(false);
     toNext();
   };
@@ -82,8 +84,19 @@ const PlayersGrid = ({
 
     if (isSelectionMode) {
       if (timeOfTheDay === "votetime") {
-        voteForVotetime(player.id);
+        const isMayor = playerToPlay.role.name === "Mayor";
+        voteForVotetime(player.id, isMayor);
       } else {
+        if (
+          playerToPlay.role.name === "Pyromaniac" &&
+          playerToPlay.role.playersToSetOnFire.some(
+            (pouredPlayer) => player.id === pouredPlayer.id
+          )
+        ) {
+          console.log("You already poured gasoline on this player.");
+          return;
+        }
+
         registerActionThatNeedSelection(player);
       }
     } else if (isDoubleSelection) {
@@ -117,6 +130,7 @@ const PlayersGrid = ({
 
   return (
     <div className="grid grid-cols-4 gap-6 my-6 place-items-center xl:w-[80%]">
+      {/* mapping every players */}
       {playersList.map((player) => (
         <div
           className={`${

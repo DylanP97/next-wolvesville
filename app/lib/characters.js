@@ -7,18 +7,10 @@ import bowAndArrow from "@/public/game/bow-and-arrow.png";
 import bandAid from "@/public/game/band-aid.png";
 import crystalBall from "@/public/game/crystal-ball.png";
 import pouring from "@/public/roles/pyromaniac.png";
+import forefinger from "@/public/game/forefinger.png";
+import mute from "@/public/game/mute.png";
 
 const characters = [
-  {
-    name: "Civilian",
-    team: "village",
-    canVote: true,
-    canPerform: null,
-    image: rolesIcons["man"],
-    description:
-      "A random civilian that can do nothing either complain or vote.",
-    // done
-  },
   {
     name: "Seer",
     team: "village",
@@ -84,8 +76,8 @@ const characters = [
     image: rolesIcons["doctor"],
     description:
       "The doctor can protect the person he wants each night. If the selected player is attacked during the night, he will be healed.",
+    // done
   },
-  // done
   {
     name: "Shooter",
     team: "village",
@@ -124,18 +116,33 @@ const characters = [
     name: "Mayor",
     team: "village",
     canVote: true,
-    canPerform: null,
+    canPerform: {
+      label: "Choose a player to double vote against.",
+      emoji: forefinger,
+      type: "doubleVote",
+      needSelection: true,
+      actionTime: "vote",
+    },
     image: rolesIcons["mayor"],
     description: "The mayor vote counts double.",
+    // done
   },
   {
     name: "Grumpy Grandma",
     team: "village",
     canVote: true,
-    canPerform: null,
+    canPerform: {
+      label: "Choose a player to prevent him to vote",
+      emoji: mute,
+      type: "mute",
+      needSelection: true,
+      actionTime: "day",
+      nbrLeftToPerform: 3,
+    },
     image: rolesIcons["grumpyGrandma"],
     description:
-      "The grumpy grandma can prevent a player from voting two times in a game.",
+      "The grumpy grandma can prevent a player from voting three times in a game.",
+    // done
   },
   {
     name: "Priest",
@@ -160,10 +167,35 @@ const characters = [
     name: "Bandit",
     team: "bandits",
     canVote: true,
-    canPerform: null,
+    canPerform: {
+      label: "Select someone to kill tonight.",
+      emoji: knife,
+      type: "eliminate",
+      needSelection: true,
+      actionTime: "night",
+      lastNight: false,
+    },
+    partner: null,
     image: rolesIcons["bandit"],
     description:
-      "The bandit goal is to be the last one alive. He can choose a player to become its accomplice. One bandit can kill one person each two nights.",
+      "The bandit goal is to be the last one alive. He can choose a player to become its accomplice. A bandit can kill one person each two nights.",
+  },
+  {
+    name: "Accomplice",
+    team: "bandits",
+    canVote: true,
+    canPerform: {
+      label: "Select someone to kill tonight.",
+      emoji: knife,
+      type: "eliminate",
+      needSelection: true,
+      actionTime: "night",
+      lastNight: false,
+    },
+    partner: null,
+    image: rolesIcons["accomplice"],
+    description:
+      "The accomplice is a role that appears during the game when a player is transformed when the bandit select him as its partner. A accomplice can kill one person each two nights.",
   },
   {
     name: "Reaper",
@@ -199,6 +231,7 @@ const characters = [
     description:
       "The pyromaniac can choose to burn the person he wants each night. The burned person will die tonight.",
   },
+  // done
   {
     name: "Serial Killer",
     team: "solo",

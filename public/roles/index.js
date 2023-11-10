@@ -6,6 +6,7 @@ import sheriff from "./sheriff.png";
 import detective from "./detective.png";
 import shooter from "./shooter.png";
 import bandit from "./bandit.png";
+import accomplice from "./accomplice.png";
 import fool from "./fool.png";
 import reaper from "./reaper.png";
 import terrorist from "./terrorist.png";
@@ -25,6 +26,7 @@ const rolesIcons = {
   detective: detective,
   shooter: shooter,
   bandit: bandit,
+  accomplice: accomplice,
   fool: fool,
   reaper: reaper,
   terrorist: terrorist,

@@ -68,6 +68,20 @@ export const voteAgainst = (playerId, setUpdatedPlayersList) => {
   });
 };
 
+export const doubleVoteAgainst = (playerId, setUpdatedPlayersList) => {
+  setUpdatedPlayersList((prevPlayersList) => {
+    return prevPlayersList.map((player) => {
+      if (player.id === playerId) {
+        return {
+          ...player,
+          voteAgainst: player.voteAgainst + 2,
+        };
+      }
+      return player;
+    });
+  });
+};
+
 export const findPlayerWithMostVotes = (playersList) => {
   let playerWithMostVotes = null;
   let maxVotes = 0;
