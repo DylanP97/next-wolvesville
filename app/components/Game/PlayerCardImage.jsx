@@ -76,7 +76,8 @@ const PlayerCardImage = ({
         (isSelectionMode || isDoubleSelection) &&
         timeOfTheDay !== "votetime" &&
         !displayInvestigation &&
-        playerToPlay.role.name !== "Pyromaniac" && (
+        playerToPlay.role.name !== "Pyromaniac" &&
+        playerToPlay.role.name !== "Grave Robber" && (
           <Image
             className="absolute z-10 animate-pulse"
             width={50}
@@ -105,6 +106,21 @@ const PlayerCardImage = ({
                 ? playerToPlay.role.canPerform.emoji.src
                 : spilled
             }
+            alt={playerToPlay.role.canPerform.type}
+          />
+        )}
+
+      {player.id !== playerToPlay.id &&
+        !player.isAlive &&
+        (isSelectionMode || isDoubleSelection) &&
+        timeOfTheDay === "nighttime" &&
+        !displayInvestigation &&
+        playerToPlay.role.name === "Grave Robber" && (
+          <Image
+            className="absolute z-10 animate-pulse"
+            width={50}
+            height={50}
+            src={playerToPlay.role.canPerform.emoji.src}
             alt={playerToPlay.role.canPerform.type}
           />
         )}

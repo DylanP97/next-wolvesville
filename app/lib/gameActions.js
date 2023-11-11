@@ -3,7 +3,7 @@ import { shortName } from "@/app/lib/randomUsername";
 import initialPlayersList from "./playerListTemplate";
 import { checkIfIsInLove } from "./charactersActions";
 
-export const assignRolesToPlayers = () => {
+export const assignRolesToPlayers = (excludedRoles = []) => {
   const assignedRoles = new Set();
 
   const randomRoles = initialPlayersList.map((player, index) => {
@@ -11,7 +11,10 @@ export const assignRolesToPlayers = () => {
     do {
       randomCharacter =
         characters[Math.floor(Math.random() * characters.length)];
-    } while (assignedRoles.has(randomCharacter.name));
+    } while (
+      assignedRoles.has(randomCharacter.name) ||
+      excludedRoles.includes(randomCharacter.name)
+    );
     assignedRoles.add(randomCharacter.name);
     let randomName;
     randomName = shortName();
@@ -24,6 +27,10 @@ export const assignRolesToPlayers = () => {
 
   return randomRoles;
 };
+
+export const getPlayerById = (playerId, updatedPlayersList) => {
+  return updatedPlayersList.find((player) => player.id === playerId);
+}
 
 export const killSelectedPlayer = (playerIdToKill, setUpdatedPlayersList) => {
   setUpdatedPlayersList((prevPlayersList) => {
@@ -39,15 +46,28 @@ export const killSelectedPlayer = (playerIdToKill, setUpdatedPlayersList) => {
   });
 };
 
-export const killRandomPlayer = (setUpdatedPlayersList) => {
-  const randomKilledIndex = Math.round(Math.random() * 10);
+export const killRandomPlayer = (
+  setUpdatedPlayersList,
+  displayAction,
+  isTerrorist
+) => {
+  const randomKilledIndex = Math.floor(Math.random() * 12);
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
       if (player.id === randomKilledIndex) {
-        return {
-          ...player,
-          isAlive: false,
-        };
+        if (player.isAlive) {
+          isTerrorist &&
+            displayAction(
+              `A sudden terrorist explosion killed ${player.name}!`
+            );
+          return {
+            ...player,
+            isAlive: false,
+          };
+        } else {
+          // The player is already dead, do nothing
+          return player;
+        }
       }
       return player;
     });

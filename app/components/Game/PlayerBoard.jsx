@@ -1,6 +1,6 @@
 "use client";
 
-import { burnPlayers } from "@/app/lib/charactersActions";
+import { burnPlayers, explodeBomb } from "@/app/lib/charactersActions";
 
 const PlayerInfo = ({ playerToPlay }) => (
   <div className="bg-slate-950 rounded-xl shadow-lg p-4 my-4">
@@ -35,7 +35,7 @@ const PlayerBoard = ({
         player: playerToPlay.id,
       },
     ]);
-    console.log("some other action");
+    toNext();
   };
 
   const twClassesDiv =
@@ -74,10 +74,9 @@ const PlayerBoard = ({
                   </div>
                 )}
 
-              {/* If it's night, check for night actions and that need selection */}
+              {/* If it's night, check for night actions */}
               {!playerToPlay.isUnderArrest &&
                 playerToPlay.role.canPerform.nbrLeftToPerform !== 0 &&
-                playerToPlay.role.canPerform.needSelection &&
                 timeOfTheDay === "nighttime" &&
                 playerToPlay.role.canPerform.actionTime === "night" && (
                   <div
@@ -97,9 +96,8 @@ const PlayerBoard = ({
                   </div>
                 )}
 
-              {/* If it's day, check for day actions and that need selection */}
+              {/* If it's day, check for day actions */}
               {playerToPlay.role.canPerform.nbrLeftToPerform !== 0 &&
-                playerToPlay.role.canPerform.needSelection &&
                 timeOfTheDay === "daytime" &&
                 playerToPlay.role.canPerform.actionTime === "day" && (
                   <div
@@ -121,6 +119,28 @@ const PlayerBoard = ({
             </>
           )}
 
+          {/* Terrorist action to explode his bomb */}
+          {timeOfTheDay === "nighttime" &&
+            playerToPlay.role.name === "Terrorist" &&
+            playerToPlay.role.bombPower > 0 && (
+              <div
+                onClick={() => {
+                  explodeBomb(
+                    playerToPlay.role.bombPower,
+                    setUpdatedPlayersList,
+                    displayAction,
+                    toNext
+                  );
+                }}
+                className={twClassesDiv}>
+                <p className="text-xs text-gray-200">
+                  Explode Bomb, current power :{" "}
+                  {playerToPlay.role.bombPower}
+                </p>
+              </div>
+            )}
+
+          {/* Pyromaniac action to burn players */}
           {timeOfTheDay === "nighttime" &&
             playerToPlay.role.name === "Pyromaniac" &&
             playerToPlay.role.playersToSetOnFire.length > 0 && (
@@ -159,6 +179,7 @@ const PlayerBoard = ({
                   </p>
                 </div>
               )}
+            {/* DoubleVote action for Mayor */}
             {timeOfTheDay === "votetime" &&
               playerToPlay.role.name === "Mayor" &&
               playerToPlay.role.canVote && (

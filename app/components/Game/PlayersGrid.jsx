@@ -19,6 +19,7 @@ const PlayersGrid = ({
   toNext,
   isDoubleSelection,
   setIsDoubleSelection,
+  displayAction,
 }) => {
   const [selectedOtherPlayers, setSelectedOtherPlayers] = useState([]);
   const [displayInvestigation, setDisplayInvestigation] = useState(false);
@@ -73,8 +74,13 @@ const PlayersGrid = ({
 
   const handlePlayerClick = (player) => {
     if (!player.isAlive) {
-      console.log("This player is dead. Stop hitting its grave.");
-      return;
+      if (playerToPlay.role.name === "Grave Robber") {
+        registerActionThatNeedSelection(player);
+        return;
+      } else {
+        console.log("This player is dead. Stop hitting its grave.");
+        return;
+      }
     }
 
     if (player.id === playerToPlay.id) {
@@ -87,7 +93,10 @@ const PlayersGrid = ({
         const isMayor = playerToPlay.role.name === "Mayor";
         voteForVotetime(player.id, isMayor);
       } else {
-        if (
+        if (playerToPlay.role.name === "Grave Robber") {
+          console.log("this player is alive");
+          return;
+        } else if (
           playerToPlay.role.name === "Pyromaniac" &&
           playerToPlay.role.playersToSetOnFire.some(
             (pouredPlayer) => player.id === pouredPlayer.id
@@ -111,7 +120,8 @@ const PlayersGrid = ({
             setIsDoubleSelection,
             toNext,
             selectedOtherPlayers[0],
-            player
+            player,
+            displayAction
           );
         } else {
           // Two players have been selected, perform the double selection action

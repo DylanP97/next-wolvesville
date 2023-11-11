@@ -22,6 +22,8 @@ import {
   pourGasoline,
   muteVoter,
   unmuteVoter,
+  craftTheBomb,
+  robTheRole,
 } from "@/app/lib/charactersActions";
 import Image from "next/image";
 import daytime from "@/public/game/day-time.png";
@@ -45,6 +47,8 @@ const GameArea = ({ randomRoles }) => {
   const [isDoubleSelection, setIsDoubleSelection] = useState(false);
   const [winner, setWinner] = useState(false);
 
+  console.log(updatedPlayersList)
+
   const displayAction = (message) => {
     const newAction = document.createElement("li");
     newAction.classList.add("text-xs");
@@ -54,6 +58,10 @@ const GameArea = ({ randomRoles }) => {
 
   // instantaneous actions
   registeredActions.forEach((action) => {
+    if (action.type === "craft") {
+      craftTheBomb(action, setUpdatedPlayersList);
+      setRegisteredActions([...registeredActions.filter((a) => a !== action)]);
+    }
     if (action.type === "pouring") {
       pourGasoline(action, setUpdatedPlayersList);
       setRegisteredActions([...registeredActions.filter((a) => a !== action)]);
@@ -90,6 +98,16 @@ const GameArea = ({ randomRoles }) => {
     if (timeOfTheDay === "nighttime") {
       // end of night, beginning of day
       registeredActions.forEach((action) => {
+        if (action.type === "loot") {
+          robTheRole(
+            action,
+            setUpdatedPlayersList,
+            displayAction
+          );
+          setRegisteredActions([
+            ...registeredActions.filter((a) => a !== action),
+          ]);
+        }
         if (action.type === "murder") {
           murder(
             action,
@@ -243,6 +261,7 @@ const GameArea = ({ randomRoles }) => {
             updatedPlayersList={updatedPlayersList}
             setUpdatedPlayersList={setUpdatedPlayersList}
             timeOfTheDay={timeOfTheDay}
+            displayAction={displayAction}
           />
 
           <div className="xl:w-[20%]">

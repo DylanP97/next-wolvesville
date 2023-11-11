@@ -1,4 +1,8 @@
-import { killSelectedPlayer } from "./gameActions";
+import {
+  getPlayerById,
+  killRandomPlayer,
+  killSelectedPlayer,
+} from "./gameActions";
 
 export const shootBullet = (
   action,
@@ -164,19 +168,20 @@ export const murder = (
   setUpdatedPlayersList,
   displayAction
 ) => {
-  const wasHealed = checkIfWasHealed(
-    action.selectedPlayer,
-    setUpdatedPlayersList
+  const selectedPlayer = getPlayerById(
+    action.selectedPlayer.id,
+    updatedPlayersList
   );
+  const wasHealed = checkIfWasHealed(selectedPlayer, setUpdatedPlayersList);
   if (!wasHealed) {
-    killSelectedPlayer(action.selectedPlayer.id, setUpdatedPlayersList);
+    killSelectedPlayer(selectedPlayer.id, setUpdatedPlayersList);
     displayAction(
       `A serial killer killed ${
-        updatedPlayersList[action.selectedPlayer.id].name
+        updatedPlayersList[selectedPlayer.id].name
       } last night...`
     );
     checkIfIsInLove(
-      action.selectedPlayer,
+      selectedPlayer,
       updatedPlayersList,
       setUpdatedPlayersList,
       displayAction
@@ -188,21 +193,20 @@ export const murder = (
 
 export const checkIfWasHealed = (attackedPlayer, setUpdatedPlayersList) => {
   const wasHealed = attackedPlayer.isHealed;
-
-  setUpdatedPlayersList((prevPlayersList) => {
-    return prevPlayersList.map((player) => {
-      if (player.id === attackedPlayer.id) {
-        return {
-          ...player,
-          isHealed: false,
-        };
-      }
-      return player;
+  if (wasHealed) {
+    setUpdatedPlayersList((prevPlayersList) => {
+      return prevPlayersList.map((player) => {
+        if (player.id === attackedPlayer.id) {
+          return {
+            ...player,
+            isHealed: false,
+          };
+        }
+        return player;
+      });
     });
-  });
-
-  if (wasHealed) return true;
-  else {
+    return true;
+  } else {
     return;
   }
 };
@@ -228,13 +232,19 @@ export const investigatePlayers = (
   setIsDoubleSelection,
   toNext,
   otherSelectedPlayer,
-  otherSelected2Player
+  otherSelected2Player,
+  displayAction
 ) => {
   setInvestigatedPlayers([otherSelectedPlayer.id, otherSelected2Player.id]);
   const isDifferentTeam =
     otherSelectedPlayer.role.team !== otherSelected2Player.role.team;
   setInvestigationResult(isDifferentTeam ? "different" : "same");
   setDisplayInvestigation(true);
+  displayAction(
+    `${otherSelectedPlayer.name} and ${otherSelected2Player.name} are ${
+      isDifferentTeam ? "from different teams" : "from the same team"
+    }!`
+  );
   setTimeout(() => {
     setDisplayInvestigation(false);
     setIsDoubleSelection(false);
@@ -307,4 +317,57 @@ export const unmuteVoter = (action, setUpdatedPlayersList) => {
       return player;
     });
   });
+};
+
+export const craftTheBomb = (action, setUpdatedPlayersList) => {
+  setUpdatedPlayersList((prevPlayersList) => {
+    return prevPlayersList.map((player) => {
+      if (player.id === action.player) {
+        return {
+          ...player,
+          role: {
+            ...player.role,
+            canPerform: {
+              ...player.role.canPerform,
+              nbrLeftToPerform: player.role.canPerform.nbrLeftToPerform - 1,
+            },
+            bombPower: player.role.bombPower + 1,
+          },
+        };
+      }
+      return player;
+    });
+  });
+};
+
+export const explodeBomb = (
+  bombPower,
+  setUpdatedPlayersList,
+  displayAction,
+  toNext
+) => {
+  const isTerrorist = true;
+  for (let e = 0; e < bombPower; e++) {
+    killRandomPlayer(setUpdatedPlayersList, displayAction, isTerrorist);
+  }
+  toNext();
+};
+
+export const robTheRole = (
+  action,
+  setUpdatedPlayersList,
+  displayAction
+) => {
+  setUpdatedPlayersList((prevPlayersList) => {
+    return prevPlayersList.map((player) => {
+      if (player.id === action.player) {
+        return {
+          ...player,
+          role: action.selectedPlayer.role,
+        };
+      }
+      return player;
+    });
+  });
+  displayAction("A grave was looted last night...");
 };
