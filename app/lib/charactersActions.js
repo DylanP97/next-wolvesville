@@ -1,3 +1,4 @@
+import characters from "./characters";
 import {
   getPlayerById,
   killRandomPlayer,
@@ -353,11 +354,7 @@ export const explodeBomb = (
   toNext();
 };
 
-export const robTheRole = (
-  action,
-  setUpdatedPlayersList,
-  displayAction
-) => {
+export const robTheRole = (action, setUpdatedPlayersList, displayAction) => {
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
       if (player.id === action.player) {
@@ -370,4 +367,33 @@ export const robTheRole = (
     });
   });
   displayAction("A grave was looted last night...");
+};
+
+export const becomeAccomplice = (
+  playerToPlay,
+  selectedAccomplice,
+  setUpdatedPlayersList,
+  toNext
+) => {
+  const accompliceObject = characters.find((c) => c.name === "Accomplice");
+  setUpdatedPlayersList((prevPlayersList) => {
+    return prevPlayersList.map((player) => {
+      if (player.id === selectedAccomplice.id) {
+        return {
+          ...player,
+          role: accompliceObject,
+        };
+      } else if (player.id === playerToPlay.id) {
+        return {
+          ...player,
+          role: {
+            ...player.role,
+            partner: true,
+          },
+        };
+      }
+      return player;
+    });
+  });
+  toNext();
 };

@@ -254,7 +254,7 @@ const characters = [
     description:
       "You can choose from dead players. At the start of the next day? you will take on his role, and thus potentially change teams.",
   },
-  // 14
+  // done14
   {
     name: "Bandit",
     team: "bandits",
@@ -267,7 +267,7 @@ const characters = [
       actionTime: "night",
       lastNight: false,
     },
-    partner: null,
+    partner: undefined,
     image: rolesIcons["bandit"],
     description:
       "The bandit goal is to be the last one alive. He can choose a player to become its accomplice. A bandit can kill one person each two nights.",
@@ -285,7 +285,7 @@ const characters = [
       actionTime: "night",
       lastNight: false,
     },
-    partner: null,
+    partner: undefined,
     image: rolesIcons["accomplice"],
     description:
       "The accomplice is a role that appears during the game when a player is transformed when the bandit select him as its partner. A accomplice can kill one person each two nights.",

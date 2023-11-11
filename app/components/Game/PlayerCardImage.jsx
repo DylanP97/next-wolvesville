@@ -8,6 +8,7 @@ import forefinger from "@/public/game/forefinger.png";
 import same from "@/public/game/same.png";
 import different from "@/public/game/different.png";
 import spilled from "@/public/game/spilled.png";
+import accomplice from "@/public/roles/accomplice.png";
 
 const PlayerCardImage = ({
   timeOfTheDay,
@@ -76,6 +77,7 @@ const PlayerCardImage = ({
         (isSelectionMode || isDoubleSelection) &&
         timeOfTheDay !== "votetime" &&
         !displayInvestigation &&
+        playerToPlay.role.name !== "Bandit" &&
         playerToPlay.role.name !== "Pyromaniac" &&
         playerToPlay.role.name !== "Grave Robber" && (
           <Image
@@ -83,6 +85,25 @@ const PlayerCardImage = ({
             width={50}
             height={50}
             src={playerToPlay.role.canPerform.emoji.src}
+            alt={playerToPlay.role.canPerform.type}
+          />
+        )}
+
+      {player.id !== playerToPlay.id &&
+        player.isAlive &&
+        (isSelectionMode || isDoubleSelection) &&
+        timeOfTheDay !== "votetime" &&
+        !displayInvestigation &&
+        playerToPlay.role.name === "Bandit" && (
+          <Image
+            className="absolute z-10 animate-pulse"
+            width={50}
+            height={50}
+            src={
+              playerToPlay.role.partner
+                ? playerToPlay.role.canPerform.emoji.src
+                : accomplice
+            }
             alt={playerToPlay.role.canPerform.type}
           />
         )}

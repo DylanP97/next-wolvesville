@@ -4,7 +4,10 @@ import { useState } from "react";
 import { doubleVoteAgainst, voteAgainst } from "../../lib/gameActions";
 import PlayerCardImage from "./PlayerCardImage";
 import VoteCount from "./VoteCount";
-import { investigatePlayers } from "@/app/lib/charactersActions";
+import {
+  becomeAccomplice,
+  investigatePlayers,
+} from "@/app/lib/charactersActions";
 
 const PlayersGrid = ({
   playersList,
@@ -104,8 +107,12 @@ const PlayersGrid = ({
         ) {
           console.log("You already poured gasoline on this player.");
           return;
+        } else if (playerToPlay.role.name === "Bandit") {
+          if (!playerToPlay.role.partner) {
+            becomeAccomplice(playerToPlay, player, setUpdatedPlayersList, toNext);
+            return;
+          }
         }
-
         registerActionThatNeedSelection(player);
       }
     } else if (isDoubleSelection) {

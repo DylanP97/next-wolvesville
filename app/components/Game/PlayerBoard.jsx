@@ -88,7 +88,12 @@ const PlayerBoard = ({
                     className={twClassesDiv}>
                     <p className="text-xs text-gray-200">
                       {!isSelectionMode ? (
-                        playerToPlay.role.canPerform.label
+                        playerToPlay.role.name === "Bandit" &&
+                        !playerToPlay.partner ? (
+                          <>Select an accomplice</>
+                        ) : (
+                          playerToPlay.role.canPerform.label
+                        )
                       ) : (
                         <>Cancel selection</>
                       )}
@@ -134,8 +139,7 @@ const PlayerBoard = ({
                 }}
                 className={twClassesDiv}>
                 <p className="text-xs text-gray-200">
-                  Explode Bomb, current power :{" "}
-                  {playerToPlay.role.bombPower}
+                  Explode Bomb, current power : {playerToPlay.role.bombPower}
                 </p>
               </div>
             )}

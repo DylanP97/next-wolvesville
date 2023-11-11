@@ -47,8 +47,6 @@ const GameArea = ({ randomRoles }) => {
   const [isDoubleSelection, setIsDoubleSelection] = useState(false);
   const [winner, setWinner] = useState(false);
 
-  console.log(updatedPlayersList)
-
   const displayAction = (message) => {
     const newAction = document.createElement("li");
     newAction.classList.add("text-xs");
@@ -98,6 +96,9 @@ const GameArea = ({ randomRoles }) => {
     if (timeOfTheDay === "nighttime") {
       // end of night, beginning of day
       registeredActions.forEach((action) => {
+        // if (action.type === "eliminate") {
+          // make bandit eliminate action
+        // }
         if (action.type === "loot") {
           robTheRole(
             action,
