@@ -6,14 +6,12 @@ import {
   CardBody,
   Image,
   CardFooter,
-  Button,
   Divider,
 } from "@nextui-org/react";
-import Link from "next/link";
 
 const RoleCard = ({ character }) => {
   return (
-    <Card className="max-w-[400px] bg-gray-900 m-2 p-2 rounded-xl">
+    <Card className="w-[400px] h-40 bg-gray-900 m-2 p-2 rounded-xl">
       <CardHeader className="flex gap-3 p-2">
         <Image
           height={40}

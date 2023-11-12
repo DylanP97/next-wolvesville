@@ -1,5 +1,6 @@
 import { GeistSans, GeistMono } from "geist/font";
 import "./globals.css";
+import { Providers } from "./providers/providers";
 
 export const metadata = {
   title: "Wolvesville revisited",
@@ -14,9 +15,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={GeistSans.className}>
       <body>
-        <main className="flex h-screen w-screen flex-col items-center">
-          {children}
-        </main>
+        <Providers>
+          <main className="flex h-screen w-screen flex-col items-center">{children}</main>
+        </Providers>
       </body>
     </html>
   );

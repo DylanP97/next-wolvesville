@@ -2,6 +2,7 @@
 
 import { burnPlayers, explodeBomb } from "@/app/lib/gameActions";
 import PlayerInfos from "./PlayerInfos";
+import {Kbd} from "@nextui-org/react";
 
 const PlayerBoard = ({
   playerToPlay,
@@ -29,30 +30,23 @@ const PlayerBoard = ({
   };
 
   const twClassesDiv =
-    "z-20 border border-red bg-slate-600 hover:bg-slate-700 rounded-xl shadow-lg p-4 my-4 cursor-pointer";
+    "z-20 rounded-xl shadow-lg p-4 my-4 cursor-pointer";
 
-  const deadPlayers = updatedPlayersList.filter((player) => !player.isAlive);
-
-  console.log(deadPlayers);
+    const deadPlayers = updatedPlayersList.filter((player) => !player.isAlive);
 
   return (
     <div className="z-20">
       <div className="gap-4">
         <PlayerInfos playerToPlay={playerToPlay} />
         <div className="z-20 actions-board flex flex-row gap-4">
-          <div onClick={() => toNext()} className={twClassesDiv}>
-            <p className="text-xs text-gray-200">To next player</p>
-          </div>
           {playerToPlay.role.canPerform !== null && (
             <>
               {/* If it's night or day, check for actions that need double selection */}
               {!playerToPlay.isUnderArrest &&
                 playerToPlay.role.canPerform.nbrLeftToPerform !== 0 &&
                 playerToPlay.role.canPerform.needDoubleSelection &&
-                ((timeOfTheDay === "daytime" &&
-                  playerToPlay.role.canPerform.actionTime === "day") ||
-                  (timeOfTheDay === "nighttime" &&
-                    playerToPlay.role.canPerform.actionTime === "night")) && (
+                ((timeOfTheDay === "daytime" && playerToPlay.role.canPerform.actionTime === "day") ||
+                  (timeOfTheDay === "nighttime" && playerToPlay.role.canPerform.actionTime === "night")) && (
                   <div
                     datatype="doubleSelection"
                     onClick={() => {
@@ -60,11 +54,7 @@ const PlayerBoard = ({
                     }}
                     className={twClassesDiv}>
                     <p className="text-xs text-gray-200">
-                      {!isDoubleSelection ? (
-                        playerToPlay.role.canPerform.label
-                      ) : (
-                        <>Cancel selection</>
-                      )}
+                      {!isDoubleSelection ? playerToPlay.role.canPerform.label : <>Cancel selection</>}
                     </p>
                   </div>
                 )}
@@ -80,9 +70,7 @@ const PlayerBoard = ({
                   <div
                     datatype="night"
                     onClick={() => {
-                      playerToPlay.role.canPerform.needSelection
-                        ? setIsSelectionMode(!isSelectionMode)
-                        : registerSimpleAction();
+                      setIsSelectionMode(!isSelectionMode);
                     }}
                     className={twClassesDiv}>
                     <p className="text-xs text-gray-200">
@@ -141,11 +129,7 @@ const PlayerBoard = ({
                     }}
                     className={twClassesDiv}>
                     <p className="text-xs text-gray-200">
-                      {!isSelectionMode ? (
-                        playerToPlay.role.canPerform.label
-                      ) : (
-                        <>Cancel selection</>
-                      )}
+                      {!isSelectionMode ? playerToPlay.role.canPerform.label : <>Cancel selection</>}
                     </p>
                   </div>
                 )}
@@ -158,17 +142,10 @@ const PlayerBoard = ({
             playerToPlay.role.bombPower > 0 && (
               <div
                 onClick={() => {
-                  explodeBomb(
-                    playerToPlay.role.bombPower,
-                    setUpdatedPlayersList,
-                    displayAction,
-                    toNext
-                  );
+                  explodeBomb(playerToPlay.role.bombPower, setUpdatedPlayersList, displayAction, toNext);
                 }}
                 className={twClassesDiv}>
-                <p className="text-xs text-gray-200">
-                  Explode Bomb, current power : {playerToPlay.role.bombPower}
-                </p>
+                <p className="text-xs text-gray-200">Explode Bomb, current power : {playerToPlay.role.bombPower}</p>
               </div>
             )}
 
@@ -178,60 +155,45 @@ const PlayerBoard = ({
             playerToPlay.role.playersToSetOnFire.length > 0 && (
               <div
                 onClick={() => {
-                  burnPlayers(
-                    playerToPlay.role.playersToSetOnFire,
-                    setUpdatedPlayersList,
-                    displayAction,
-                    toNext
-                  );
+                  burnPlayers(playerToPlay.role.playersToSetOnFire, setUpdatedPlayersList, displayAction, toNext);
                 }}
                 className={twClassesDiv}>
-                <p className="text-xs text-gray-200">
-                  Burn {playerToPlay.role.playersToSetOnFire.length} players
-                </p>
+                <p className="text-xs text-gray-200">Burn {playerToPlay.role.playersToSetOnFire.length} players</p>
               </div>
             )}
 
           {/* If it's votetime, action to vote */}
           <div className="flex flex-row gap-2">
-            {timeOfTheDay === "votetime" &&
-              playerToPlay.role.name !== "Mayor" &&
-              playerToPlay.role.canVote && (
-                <div
-                  onClick={() => {
-                    setIsSelectionMode(!isSelectionMode);
-                  }}
-                  className={twClassesDiv}>
-                  <p className="text-xs text-gray-200">
-                    {!isSelectionMode ? (
-                      <>Select a player to vote against!</>
-                    ) : (
-                      <>Cancel selection</>
-                    )}
-                  </p>
-                </div>
-              )}
+            {timeOfTheDay === "votetime" && playerToPlay.role.name !== "Mayor" && playerToPlay.role.canVote && (
+              <div
+                onClick={() => {
+                  setIsSelectionMode(!isSelectionMode);
+                }}
+                className={twClassesDiv}>
+                <p className="text-xs text-gray-200">
+                  {!isSelectionMode ? <>Select a player to vote against!</> : <>Cancel selection</>}
+                </p>
+              </div>
+            )}
 
             {/* DoubleVote action for Mayor */}
-            {timeOfTheDay === "votetime" &&
-              playerToPlay.role.name === "Mayor" &&
-              playerToPlay.role.canVote && (
-                <div
-                  datatype="mayor"
-                  onClick={() => {
-                    setIsSelectionMode(!isSelectionMode);
-                  }}
-                  className={twClassesDiv}>
-                  <p className="text-xs text-gray-200">
-                    {!isSelectionMode ? (
-                      <>{playerToPlay.role.canPerform.label}</>
-                    ) : (
-                      <>Cancel selection</>
-                    )}
-                  </p>
-                </div>
-              )}
+            {timeOfTheDay === "votetime" && playerToPlay.role.name === "Mayor" && playerToPlay.role.canVote && (
+              <div
+                datatype="mayor"
+                onClick={() => {
+                  setIsSelectionMode(!isSelectionMode);
+                }}
+                className={twClassesDiv}>
+                <p className="text-xs text-gray-200">
+                  {!isSelectionMode ? <>{playerToPlay.role.canPerform.label}</> : <>Cancel selection</>}
+                </p>
+              </div>
+            )}
           </div>
+        </div>
+        <div onClick={() => toNext()} className={twClassesDiv + " " + "bg-slate-600 hover:bg-slate-400"}>
+          <p className="text-xs text-gray-200">To next player</p>
+          <Kbd className="m-2" keys={["enter"]}>Enter</Kbd>
         </div>
       </div>
     </div>

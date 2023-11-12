@@ -8,12 +8,8 @@ export const assignRolesToPlayers = (excludedRoles = []) => {
   const randomRoles = initialPlayersList.map((player, index) => {
     let randomCharacter;
     do {
-      randomCharacter =
-        characters[Math.floor(Math.random() * characters.length)];
-    } while (
-      assignedRoles.has(randomCharacter.name) ||
-      excludedRoles.includes(randomCharacter.name)
-    );
+      randomCharacter = characters[Math.floor(Math.random() * characters.length)];
+    } while (assignedRoles.has(randomCharacter.name) || excludedRoles.includes(randomCharacter.name));
     assignedRoles.add(randomCharacter.name);
     let randomName;
     randomName = shortName();
@@ -29,7 +25,7 @@ export const assignRolesToPlayers = (excludedRoles = []) => {
 
 export const getPlayerById = (playerId, updatedPlayersList) => {
   return updatedPlayersList.find((player) => player.id === playerId);
-}
+};
 
 export const killSelectedPlayer = (playerIdToKill, setUpdatedPlayersList) => {
   setUpdatedPlayersList((prevPlayersList) => {
@@ -45,20 +41,13 @@ export const killSelectedPlayer = (playerIdToKill, setUpdatedPlayersList) => {
   });
 };
 
-export const killRandomPlayer = (
-  setUpdatedPlayersList,
-  displayAction,
-  isTerrorist
-) => {
+export const killRandomPlayer = (setUpdatedPlayersList, displayAction, isTerrorist) => {
   const randomKilledIndex = Math.floor(Math.random() * 12);
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
       if (player.id === randomKilledIndex) {
         if (player.isAlive) {
-          isTerrorist &&
-            displayAction(
-              `A sudden terrorist explosion killed ${player.name}!`
-            );
+          isTerrorist && displayAction(`A sudden terrorist explosion killed ${player.name}!`);
           return {
             ...player,
             isAlive: false,
@@ -115,29 +104,20 @@ export const findPlayerWithMostVotes = (playersList) => {
   return playerWithMostVotes;
 };
 
-export const cleanUpRegisteredActionsConcerningDeadPlayers = (
-  updatedPlayersList,
-  setRegisteredActions
-) => {
+export const cleanUpRegisteredActionsConcerningDeadPlayers = (updatedPlayersList, setRegisteredActions) => {
   // if player is dead clean all his registered actions
   updatedPlayersList.forEach((player) => {
     if (!player.isAlive) {
       setRegisteredActions((registeredActionsList) => {
         return registeredActionsList.filter((action) => {
-          action.playerId !== player.id &&
-            action.selectedPlayer.id !== player.id;
+          action.playerId !== player.id && action.selectedPlayer.id !== player.id;
         });
       });
     }
   });
 };
 
-export const aftermathOfVote = (
-  displayAction,
-  updatedPlayersList,
-  setUpdatedPlayersList,
-  setWinner
-) => {
+export const aftermathOfVote = (displayAction, updatedPlayersList, setUpdatedPlayersList, setWinner) => {
   const mostVotedAgainstPlayer = findPlayerWithMostVotes(updatedPlayersList);
 
   // reset every player nbrOfVotes to 0
@@ -154,26 +134,14 @@ export const aftermathOfVote = (
       setWinner(mostVotedAgainstPlayer);
     } else {
       displayAction(
-        `The town decided to kill ${
-          updatedPlayersList[mostVotedAgainstPlayer.id].name
-        } has a result of the vote!`
+        `The town decided to kill ${updatedPlayersList[mostVotedAgainstPlayer.id].name} has a result of the vote!`
       );
-      checkIfIsInLove(
-        mostVotedAgainstPlayer,
-        updatedPlayersList,
-        setUpdatedPlayersList,
-        displayAction
-      );
+      checkIfIsInLove(mostVotedAgainstPlayer, updatedPlayersList, setUpdatedPlayersList, displayAction);
     }
   }
 };
 
-export const shootBullet = (
-  action,
-  updatedPlayersList,
-  setUpdatedPlayersList,
-  displayAction
-) => {
+export const shootBullet = (action, updatedPlayersList, setUpdatedPlayersList, displayAction) => {
   killSelectedPlayer(action.selectedPlayer.id, setUpdatedPlayersList);
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
@@ -192,23 +160,11 @@ export const shootBullet = (
       return player;
     });
   });
-  displayAction(
-    `The shooter has shot ${updatedPlayersList[action.selectedPlayer.id].name}!`
-  );
-  checkIfIsInLove(
-    action.selectedPlayer,
-    updatedPlayersList,
-    setUpdatedPlayersList,
-    displayAction
-  );
+  displayAction(`The shooter has shot ${updatedPlayersList[action.selectedPlayer.id].name}!`);
+  checkIfIsInLove(action.selectedPlayer, updatedPlayersList, setUpdatedPlayersList, displayAction);
 };
 
-export const arrestPlayer = (
-  action,
-  updatedPlayersList,
-  setUpdatedPlayersList,
-  displayAction
-) => {
+export const arrestPlayer = (action, updatedPlayersList, setUpdatedPlayersList, displayAction) => {
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
       if (player.id === action.selectedPlayer.id) {
@@ -220,11 +176,7 @@ export const arrestPlayer = (
       return player;
     });
   });
-  displayAction(
-    `The sheriff has handcuffed ${
-      updatedPlayersList[action.selectedPlayer.id].name
-    }!`
-  );
+  displayAction(`The sheriff has handcuffed ${updatedPlayersList[action.selectedPlayer.id].name}!`);
 };
 
 export const releasePrisoners = (setUpdatedPlayersList) => {
@@ -241,12 +193,7 @@ export const releasePrisoners = (setUpdatedPlayersList) => {
   });
 };
 
-export const revealPlayer = (
-  action,
-  updatedPlayersList,
-  setUpdatedPlayersList,
-  displayAction
-) => {
+export const revealPlayer = (action, updatedPlayersList, setUpdatedPlayersList, displayAction) => {
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
       if (player.id === action.selectedPlayer.id) {
@@ -271,25 +218,16 @@ export const revealPlayer = (
     });
   });
   displayAction(
-    `The seer's magical crystal ball unveiled the identity of ${
-      updatedPlayersList[action.selectedPlayer.id].name
-    }!`
+    `The seer's magical crystal ball unveiled the identity of ${updatedPlayersList[action.selectedPlayer.id].name}!`
   );
 };
 
-export const checkIfIsInLove = (
-  player,
-  updatedPlayersList,
-  setUpdatedPlayersList,
-  displayAction
-) => {
+export const checkIfIsInLove = (player, updatedPlayersList, setUpdatedPlayersList, displayAction) => {
   if (player.isInLove) {
     const lovers = findLovers(updatedPlayersList);
     const partner = lovers.find((partner) => partner.id !== player.id);
     killSelectedPlayer(partner.id, setUpdatedPlayersList);
-    displayAction(
-      `${partner.name} is dead because of its loving relation with ${player.name}!`
-    );
+    displayAction(`${partner.name} is dead because of its loving relation with ${player.name}!`);
   } else {
     return;
   }
@@ -326,30 +264,13 @@ export const linkLovers = (action, setUpdatedPlayersList) => {
   });
 };
 
-export const murder = (
-  action,
-  updatedPlayersList,
-  setUpdatedPlayersList,
-  displayAction
-) => {
-  const selectedPlayer = getPlayerById(
-    action.selectedPlayer.id,
-    updatedPlayersList
-  );
+export const murder = (action, updatedPlayersList, setUpdatedPlayersList, displayAction) => {
+  const selectedPlayer = getPlayerById(action.selectedPlayer.id, updatedPlayersList);
   const wasHealed = checkIfWasHealed(selectedPlayer, setUpdatedPlayersList);
   if (!wasHealed) {
     killSelectedPlayer(selectedPlayer.id, setUpdatedPlayersList);
-    displayAction(
-      `A serial killer killed ${
-        updatedPlayersList[selectedPlayer.id].name
-      } last night...`
-    );
-    checkIfIsInLove(
-      selectedPlayer,
-      updatedPlayersList,
-      setUpdatedPlayersList,
-      displayAction
-    );
+    displayAction(`A serial killer killed ${updatedPlayersList[selectedPlayer.id].name} last night...`);
+    checkIfIsInLove(selectedPlayer, updatedPlayersList, setUpdatedPlayersList, displayAction);
   } else {
     displayAction("Someone wounds were healed by the doctor tonight!");
   }
@@ -400,8 +321,7 @@ export const investigatePlayers = (
   displayAction
 ) => {
   setInvestigatedPlayers([otherSelectedPlayer.id, otherSelected2Player.id]);
-  const isDifferentTeam =
-    otherSelectedPlayer.role.team !== otherSelected2Player.role.team;
+  const isDifferentTeam = otherSelectedPlayer.role.team !== otherSelected2Player.role.team;
   setInvestigationResult(isDifferentTeam ? "different" : "same");
   setDisplayInvestigation(true);
   displayAction(
@@ -424,10 +344,7 @@ export const pourGasoline = (action, setUpdatedPlayersList) => {
           ...player,
           role: {
             ...player.role,
-            playersToSetOnFire: [
-              ...player.role.playersToSetOnFire,
-              action.selectedPlayer,
-            ],
+            playersToSetOnFire: [...player.role.playersToSetOnFire, action.selectedPlayer],
           },
         };
       }
@@ -436,12 +353,7 @@ export const pourGasoline = (action, setUpdatedPlayersList) => {
   });
 };
 
-export const burnPlayers = (
-  playersToSetOnFire,
-  setUpdatedPlayersList,
-  displayAction,
-  toNext
-) => {
+export const burnPlayers = (playersToSetOnFire, setUpdatedPlayersList, displayAction, toNext) => {
   playersToSetOnFire.map((player) => {
     killSelectedPlayer(player.id, setUpdatedPlayersList);
     displayAction(`A malicious fire burned ${player.name}!`);
@@ -504,12 +416,7 @@ export const craftTheBomb = (action, setUpdatedPlayersList) => {
   });
 };
 
-export const explodeBomb = (
-  bombPower,
-  setUpdatedPlayersList,
-  displayAction,
-  toNext
-) => {
+export const explodeBomb = (bombPower, setUpdatedPlayersList, displayAction, toNext) => {
   const isTerrorist = true;
   for (let e = 0; e < bombPower; e++) {
     killRandomPlayer(setUpdatedPlayersList, displayAction, isTerrorist);
@@ -532,12 +439,7 @@ export const robTheRole = (action, setUpdatedPlayersList, displayAction) => {
   displayAction("A grave was looted last night...");
 };
 
-export const becomeAccomplice = (
-  playerToPlay,
-  selectedAccomplice,
-  setUpdatedPlayersList,
-  toNext
-) => {
+export const becomeAccomplice = (playerToPlay, selectedAccomplice, setUpdatedPlayersList, toNext) => {
   const accompliceObject = characters.find((c) => c.name === "Accomplice");
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
@@ -561,30 +463,13 @@ export const becomeAccomplice = (
   toNext();
 };
 
-export const eliminate = (
-  action,
-  updatedPlayersList,
-  setUpdatedPlayersList,
-  displayAction
-) => {
-  const selectedPlayer = getPlayerById(
-    action.selectedPlayer.id,
-    updatedPlayersList
-  );
+export const eliminate = (action, updatedPlayersList, setUpdatedPlayersList, displayAction) => {
+  const selectedPlayer = getPlayerById(action.selectedPlayer.id, updatedPlayersList);
   const wasHealed = checkIfWasHealed(selectedPlayer, setUpdatedPlayersList);
   if (!wasHealed) {
     killSelectedPlayer(selectedPlayer.id, setUpdatedPlayersList);
-    displayAction(
-      `A bandit killed ${
-        updatedPlayersList[selectedPlayer.id].name
-      } last night...`
-    );
-    checkIfIsInLove(
-      selectedPlayer,
-      updatedPlayersList,
-      setUpdatedPlayersList,
-      displayAction
-    );
+    displayAction(`A bandit killed ${updatedPlayersList[selectedPlayer.id].name} last night...`);
+    checkIfIsInLove(selectedPlayer, updatedPlayersList, setUpdatedPlayersList, displayAction);
   } else {
     displayAction("Someone wounds were healed by the doctor tonight!");
   }

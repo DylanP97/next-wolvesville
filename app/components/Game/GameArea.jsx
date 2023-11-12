@@ -196,7 +196,7 @@ const GameArea = ({ randomRoles }) => {
           : timeOfTheDay === "votetime"
           ? "bg-orange-800"
           : "bg-slate-950"
-      } w-full h-full p-4 relative`}
+      } w-full h-full p-8 relative`}
       style={{ outline: "none" }}>
       <GameHeader timeOfTheDay={timeOfTheDay} dayCount={dayCount} playerToPlay={playerToPlay} />
       <Image

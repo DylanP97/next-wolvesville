@@ -12,12 +12,10 @@ const ProfileCard = () => {
   };
 
   return (
-    <div className="max-w-sm mx-auto bg-slate-700 rounded-xl overflow-hidden shadow-lg">
+    <div className="m-24 max-w-sm mx-auto bg-slate-700 rounded-xl overflow-hidden shadow-lg">
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">Edit Your Profile</div>
-        <p className="text-gray-700 text-base">
-          Welcome, {playerUserName || "Guest"}!
-        </p>
+        <p className="text-gray-700 text-base">Welcome, {playerUserName || "Guest"}!</p>
         <AvatarUI />
       </div>
       <div className="px-6 py-4">
