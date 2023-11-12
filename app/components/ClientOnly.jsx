@@ -1,8 +1,6 @@
 "use client";
 
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const ClientOnly = ({ children }) => {
   const [hasMounted, setHasMounted] = useState(false);

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import RoleCard from "./RoleCard";
 import characters from "../../lib/characters";
 

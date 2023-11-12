@@ -1,21 +1,9 @@
 "use client";
 
-import { burnPlayers, explodeBomb } from "@/app/lib/charactersActions";
-
-const PlayerInfo = ({ playerToPlay }) => (
-  <div className="bg-slate-950 rounded-xl shadow-lg p-4 my-4">
-    <p className="text-xs text-gray-200">
-      {playerToPlay.role.name} it&apos;s your time to play{" "}
-      {playerToPlay.isUnderArrest && <>you can do nothing while in jail</>}
-      {playerToPlay.role.canPerform === null && (
-        <>but you have no actions to do</>
-      )}
-    </p>
-  </div>
-);
+import { burnPlayers, explodeBomb } from "@/app/lib/gameActions";
+import PlayerInfos from "./PlayerInfos";
 
 const PlayerBoard = ({
-  timeOfTheDay,
   playerToPlay,
   registeredActions,
   setRegisteredActions,
@@ -24,7 +12,9 @@ const PlayerBoard = ({
   setIsSelectionMode,
   isDoubleSelection,
   setIsDoubleSelection,
+  updatedPlayersList,
   setUpdatedPlayersList,
+  timeOfTheDay,
   displayAction,
 }) => {
   const registerSimpleAction = () => {
@@ -41,10 +31,14 @@ const PlayerBoard = ({
   const twClassesDiv =
     "z-20 border border-red bg-slate-600 hover:bg-slate-700 rounded-xl shadow-lg p-4 my-4 cursor-pointer";
 
+  const deadPlayers = updatedPlayersList.filter((player) => !player.isAlive);
+
+  console.log(deadPlayers);
+
   return (
     <div className="z-20">
       <div className="gap-4">
-        <PlayerInfo playerToPlay={playerToPlay} />
+        <PlayerInfos playerToPlay={playerToPlay} />
         <div className="z-20 actions-board flex flex-row gap-4">
           <div onClick={() => toNext()} className={twClassesDiv}>
             <p className="text-xs text-gray-200">To next player</p>
@@ -60,6 +54,7 @@ const PlayerBoard = ({
                   (timeOfTheDay === "nighttime" &&
                     playerToPlay.role.canPerform.actionTime === "night")) && (
                   <div
+                    datatype="doubleSelection"
                     onClick={() => {
                       setIsDoubleSelection(!isDoubleSelection);
                     }}
@@ -74,12 +69,16 @@ const PlayerBoard = ({
                   </div>
                 )}
 
-              {/* If it's night, check for night actions */}
+              {/* If it's night, check for dead players for Grave Robber*/}
               {!playerToPlay.isUnderArrest &&
                 playerToPlay.role.canPerform.nbrLeftToPerform !== 0 &&
                 timeOfTheDay === "nighttime" &&
-                playerToPlay.role.canPerform.actionTime === "night" && (
+                !playerToPlay.role.canPerform.needDoubleSelection &&
+                playerToPlay.role.canPerform.actionTime === "night" &&
+                playerToPlay.role.name === "Grave Robber" &&
+                deadPlayers.length > 0 && (
                   <div
+                    datatype="night"
                     onClick={() => {
                       playerToPlay.role.canPerform.needSelection
                         ? setIsSelectionMode(!isSelectionMode)
@@ -88,8 +87,36 @@ const PlayerBoard = ({
                     className={twClassesDiv}>
                     <p className="text-xs text-gray-200">
                       {!isSelectionMode ? (
-                        playerToPlay.role.name === "Bandit" &&
-                        !playerToPlay.partner ? (
+                        playerToPlay.role.name === "Bandit" && !playerToPlay.partner ? (
+                          <>Select an accomplice</>
+                        ) : (
+                          playerToPlay.role.canPerform.label
+                        )
+                      ) : (
+                        <>Cancel selection</>
+                      )}
+                    </p>
+                  </div>
+                )}
+
+              {/* If it's night, check for night actions */}
+              {!playerToPlay.isUnderArrest &&
+                playerToPlay.role.canPerform.nbrLeftToPerform !== 0 &&
+                timeOfTheDay === "nighttime" &&
+                !playerToPlay.role.canPerform.needDoubleSelection &&
+                playerToPlay.role.canPerform.actionTime === "night" &&
+                playerToPlay.role.name !== "Grave Robber" && (
+                  <div
+                    datatype="night"
+                    onClick={() => {
+                      playerToPlay.role.canPerform.needSelection
+                        ? setIsSelectionMode(!isSelectionMode)
+                        : registerSimpleAction();
+                    }}
+                    className={twClassesDiv}>
+                    <p className="text-xs text-gray-200">
+                      {!isSelectionMode ? (
+                        playerToPlay.role.name === "Bandit" && !playerToPlay.partner ? (
                           <>Select an accomplice</>
                         ) : (
                           playerToPlay.role.canPerform.label
@@ -106,6 +133,7 @@ const PlayerBoard = ({
                 timeOfTheDay === "daytime" &&
                 playerToPlay.role.canPerform.actionTime === "day" && (
                   <div
+                    datatype="day"
                     onClick={() => {
                       playerToPlay.role.canPerform.needSelection
                         ? setIsSelectionMode(!isSelectionMode)
@@ -183,11 +211,13 @@ const PlayerBoard = ({
                   </p>
                 </div>
               )}
+
             {/* DoubleVote action for Mayor */}
             {timeOfTheDay === "votetime" &&
               playerToPlay.role.name === "Mayor" &&
               playerToPlay.role.canVote && (
                 <div
+                  datatype="mayor"
                   onClick={() => {
                     setIsSelectionMode(!isSelectionMode);
                   }}

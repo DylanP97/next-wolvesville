@@ -1,11 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
-import PlayersGrid from "../Game/PlayersGrid";
-import { Button, Link } from "@nextui-org/react";
-import RolesGrid from "../Roles/RolesGrid";
-import GameArea from "../Game/GameArea";
-import FeaturesList from "../About/FeaturesList";
 import NavigationMenu from "./NavigationMenu";
 
 const HomePage = () => {

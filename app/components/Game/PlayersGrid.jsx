@@ -4,24 +4,20 @@ import { useState } from "react";
 import { doubleVoteAgainst, voteAgainst } from "../../lib/gameActions";
 import PlayerCardImage from "./PlayerCardImage";
 import VoteCount from "./VoteCount";
-import {
-  becomeAccomplice,
-  investigatePlayers,
-} from "@/app/lib/charactersActions";
+import { becomeAccomplice, investigatePlayers } from "@/app/lib/gameActions";
 
 const PlayersGrid = ({
-  playersList,
   playerToPlay,
-  isSelectionMode,
-  setIsSelectionMode,
   registeredActions,
   setRegisteredActions,
-  timeOfTheDay,
-  updatedPlayersList,
-  setUpdatedPlayersList,
   toNext,
+  isSelectionMode,
+  setIsSelectionMode,
   isDoubleSelection,
   setIsDoubleSelection,
+  updatedPlayersList,
+  setUpdatedPlayersList,
+  timeOfTheDay,
   displayAction,
 }) => {
   const [selectedOtherPlayers, setSelectedOtherPlayers] = useState([]);
@@ -44,10 +40,7 @@ const PlayersGrid = ({
     toNext();
   };
 
-  const registerActionThatNeedDoubleSelection = (
-    otherSelectedPlayer,
-    otherSelected2Player
-  ) => {
+  const registerActionThatNeedDoubleSelection = (otherSelectedPlayer, otherSelected2Player) => {
     setRegisteredActions([
       ...registeredActions,
       {
@@ -101,9 +94,7 @@ const PlayersGrid = ({
           return;
         } else if (
           playerToPlay.role.name === "Pyromaniac" &&
-          playerToPlay.role.playersToSetOnFire.some(
-            (pouredPlayer) => player.id === pouredPlayer.id
-          )
+          playerToPlay.role.playersToSetOnFire.some((pouredPlayer) => player.id === pouredPlayer.id)
         ) {
           console.log("You already poured gasoline on this player.");
           return;
@@ -132,10 +123,7 @@ const PlayersGrid = ({
           );
         } else {
           // Two players have been selected, perform the double selection action
-          registerActionThatNeedDoubleSelection(
-            selectedOtherPlayers[0],
-            player
-          );
+          registerActionThatNeedDoubleSelection(selectedOtherPlayers[0], player);
           setSelectedOtherPlayers([]); // Reset selected players
         }
       }
@@ -148,7 +136,7 @@ const PlayersGrid = ({
   return (
     <div className="grid grid-cols-4 gap-6 my-6 place-items-center xl:w-[80%]">
       {/* mapping every players */}
-      {playersList.map((player) => (
+      {updatedPlayersList.map((player) => (
         <div
           className={`${
             player.isAlive
@@ -158,9 +146,7 @@ const PlayersGrid = ({
                   : "bg-slate-700"
                 : "bg-yellow-950"
               : "bg-black"
-          } ${
-            playerToPlay.id === player.id && "border border-slate"
-          } ${twClassesPlayerCard}`}
+          } ${playerToPlay.id === player.id && "border border-slate"} ${twClassesPlayerCard}`}
           key={player.name}
           onClick={() => handlePlayerClick(player)}>
           <VoteCount timeOfTheDay={timeOfTheDay} player={player} />
