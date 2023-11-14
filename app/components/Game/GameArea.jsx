@@ -131,13 +131,7 @@ const GameArea = ({ randomRoles }) => {
         }
       });
     }
-    setTimeOfTheDay(
-      timeOfTheDay === "daytime"
-        ? "votetime"
-        : timeOfTheDay === "votetime"
-        ? "nighttime"
-        : "daytime"
-    );
+    setTimeOfTheDay(timeOfTheDay === "daytime" ? "votetime" : timeOfTheDay === "votetime" ? "nighttime" : "daytime");
   };
 
   const toNext = (event = null) => {
@@ -188,14 +182,16 @@ const GameArea = ({ randomRoles }) => {
     <p className="w-full h-full m-auto p-8">We choose the roles for each player...</p>
   ) : (
     <section
-      onKeyDown={toNext}
+      onKeyDown={(event) => {
+        if (event.key === "1") {
+        } else if (event.key === "2") {
+        } else if (event.key === "Enter") {
+          toNext(event);
+        }
+      }}
       tabIndex={0}
       className={`${
-        timeOfTheDay === "daytime"
-          ? "bg-blue-500"
-          : timeOfTheDay === "votetime"
-          ? "bg-orange-800"
-          : "bg-slate-950"
+        timeOfTheDay === "daytime" ? "bg-blue-500" : timeOfTheDay === "votetime" ? "bg-orange-800" : "bg-slate-950"
       } w-full h-full p-8 relative`}
       style={{ outline: "none" }}>
       <GameHeader timeOfTheDay={timeOfTheDay} dayCount={dayCount} playerToPlay={playerToPlay} />

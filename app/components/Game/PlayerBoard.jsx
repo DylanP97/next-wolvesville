@@ -2,7 +2,64 @@
 
 import { burnPlayers, explodeBomb } from "@/app/lib/gameActions";
 import PlayerInfos from "./PlayerInfos";
-import {Kbd} from "@nextui-org/react";
+import { Kbd } from "@nextui-org/react";
+
+// Extracted Action Component
+const Action = ({ onClick, label, kbdComponent, bgColor }) => (
+  <div
+    onClick={onClick}
+    className={`z-20 rounded-xl shadow-lg p-4 my-4 cursor-pointer bg-${bgColor} hover:bg-${bgColor}-400`}>
+    <p className="text-xs text-gray-200">{label}</p>
+    {kbdComponent}
+  </div>
+);
+
+// Extracted DoubleSelectionAction Component
+const DoubleSelectionAction = ({ isDoubleSelection, onClick, label }) => (
+  <Action
+    onClick={onClick}
+    label={!isDoubleSelection ? label : "Cancel selection"}
+    kbdComponent={<Kbd className="m-2">1</Kbd>}
+    bgColor="cyan-600"
+  />
+);
+
+// Extracted NightAction Component
+const NightAction = ({ canPerform, setIsSelectionMode, isSelectionMode }) => (
+  <Action
+    onClick={() => {
+      canPerform.needSelection
+        ? setIsSelectionMode(!isSelectionMode)
+        : registerSimpleAction(registeredActions, setRegisteredActions, playerToPlay, toNext);
+    }}
+    label={!isSelectionMode ? canPerform.label : "Cancel selection"}
+    kbdComponent={<Kbd className="m-2">1</Kbd>}
+    bgColor="cyan-600"
+  />
+);
+
+const BanditAction = ({ isSelectionMode, setIsSelectionMode, registerSimpleAction, playerToPlay }) => (
+  <Action
+    onClick={() => {
+      playerToPlay.role.name === "Bandit" && !playerToPlay.partner
+        ? setIsSelectionMode(!isSelectionMode)
+        : registerSimpleAction();
+    }}
+    label={
+      !isSelectionMode ? (
+        playerToPlay.role.name === "Bandit" && !playerToPlay.partner ? (
+          <>Select an accomplice</>
+        ) : (
+          playerToPlay.role.canPerform.label
+        )
+      ) : (
+        <>Cancel selection</>
+      )
+    }
+    kbdComponent={<Kbd className="m-2">1</Kbd>}
+    bgColor="cyan-600"
+  />
+);
 
 const PlayerBoard = ({
   playerToPlay,
@@ -18,6 +75,14 @@ const PlayerBoard = ({
   timeOfTheDay,
   displayAction,
 }) => {
+  // Destructure props
+  const {
+    role: { canPerform, name, bombPower, playersToSetOnFire },
+    isUnderArrest,
+    partner,
+    canVote,
+  } = playerToPlay;
+
   const registerSimpleAction = () => {
     setRegisteredActions([
       ...registeredActions,
@@ -29,172 +94,140 @@ const PlayerBoard = ({
     toNext();
   };
 
-  const twClassesDiv =
-    "z-20 rounded-xl shadow-lg p-4 my-4 cursor-pointer";
-
-    const deadPlayers = updatedPlayersList.filter((player) => !player.isAlive);
+  const twClassesDiv = "z-20 rounded-xl shadow-lg p-4 my-4 cursor-pointer";
+  const deadPlayers = updatedPlayersList.filter((player) => !player.isAlive);
 
   return (
-    <div className="z-20">
+    <div className={twClassesDiv}>
       <div className="gap-4">
+        {/* PlayerInfos component */}
         <PlayerInfos playerToPlay={playerToPlay} />
+
         <div className="z-20 actions-board flex flex-row gap-4">
-          {playerToPlay.role.canPerform !== null && (
+          {/* Extracted Action Components */}
+          {canPerform !== null && (
             <>
-              {/* If it's night or day, check for actions that need double selection */}
-              {!playerToPlay.isUnderArrest &&
-                playerToPlay.role.canPerform.nbrLeftToPerform !== 0 &&
-                playerToPlay.role.canPerform.needDoubleSelection &&
-                ((timeOfTheDay === "daytime" && playerToPlay.role.canPerform.actionTime === "day") ||
-                  (timeOfTheDay === "nighttime" && playerToPlay.role.canPerform.actionTime === "night")) && (
-                  <div
-                    datatype="doubleSelection"
-                    onClick={() => {
-                      setIsDoubleSelection(!isDoubleSelection);
-                    }}
-                    className={twClassesDiv}>
-                    <p className="text-xs text-gray-200">
-                      {!isDoubleSelection ? playerToPlay.role.canPerform.label : <>Cancel selection</>}
-                    </p>
-                  </div>
+              {/* Double Selection */}
+              {!isUnderArrest &&
+                canPerform.nbrLeftToPerform !== 0 &&
+                canPerform.needDoubleSelection &&
+                ((timeOfTheDay === "daytime" && canPerform.actionTime === "day") ||
+                  (timeOfTheDay === "nighttime" && canPerform.actionTime === "night")) && (
+                  <DoubleSelectionAction
+                    isDoubleSelection={isDoubleSelection}
+                    onClick={() => setIsDoubleSelection(!isDoubleSelection)}
+                    label={canPerform.label}
+                  />
                 )}
 
-              {/* If it's night, check for dead players for Grave Robber*/}
-              {!playerToPlay.isUnderArrest &&
-                playerToPlay.role.canPerform.nbrLeftToPerform !== 0 &&
+              {/* Grave Robber Action */}
+              {!isUnderArrest &&
+                canPerform.nbrLeftToPerform !== 0 &&
                 timeOfTheDay === "nighttime" &&
-                !playerToPlay.role.canPerform.needDoubleSelection &&
-                playerToPlay.role.canPerform.actionTime === "night" &&
-                playerToPlay.role.name === "Grave Robber" &&
+                !canPerform.needDoubleSelection &&
+                canPerform.actionTime === "night" &&
+                name === "Grave Robber" &&
                 deadPlayers.length > 0 && (
-                  <div
-                    datatype="night"
-                    onClick={() => {
-                      setIsSelectionMode(!isSelectionMode);
-                    }}
-                    className={twClassesDiv}>
-                    <p className="text-xs text-gray-200">
-                      {!isSelectionMode ? (
-                        playerToPlay.role.name === "Bandit" && !playerToPlay.partner ? (
-                          <>Select an accomplice</>
-                        ) : (
-                          playerToPlay.role.canPerform.label
-                        )
-                      ) : (
-                        <>Cancel selection</>
-                      )}
-                    </p>
-                  </div>
+                  <NightAction
+                    canPerform={canPerform}
+                    setIsSelectionMode={setIsSelectionMode}
+                    isSelectionMode={isSelectionMode}
+                    registerSimpleAction={registerSimpleAction}
+                  />
                 )}
 
-              {/* If it's night, check for night actions */}
-              {!playerToPlay.isUnderArrest &&
-                playerToPlay.role.canPerform.nbrLeftToPerform !== 0 &&
+              {/* Other Night Actions */}
+              {!isUnderArrest &&
+                canPerform.nbrLeftToPerform !== 0 &&
                 timeOfTheDay === "nighttime" &&
-                !playerToPlay.role.canPerform.needDoubleSelection &&
-                playerToPlay.role.canPerform.actionTime === "night" &&
-                playerToPlay.role.name !== "Grave Robber" && (
-                  <div
-                    datatype="night"
-                    onClick={() => {
-                      playerToPlay.role.canPerform.needSelection
-                        ? setIsSelectionMode(!isSelectionMode)
-                        : registerSimpleAction();
-                    }}
-                    className={twClassesDiv}>
-                    <p className="text-xs text-gray-200">
-                      {!isSelectionMode ? (
-                        playerToPlay.role.name === "Bandit" && !playerToPlay.partner ? (
-                          <>Select an accomplice</>
-                        ) : (
-                          playerToPlay.role.canPerform.label
-                        )
-                      ) : (
-                        <>Cancel selection</>
-                      )}
-                    </p>
-                  </div>
+                !canPerform.needDoubleSelection &&
+                canPerform.actionTime === "night" &&
+                name !== "Grave Robber" && (
+                  <NightAction
+                    canPerform={canPerform}
+                    setIsSelectionMode={setIsSelectionMode}
+                    isSelectionMode={isSelectionMode}
+                  />
                 )}
 
-              {/* If it's day, check for day actions */}
-              {playerToPlay.role.canPerform.nbrLeftToPerform !== 0 &&
-                timeOfTheDay === "daytime" &&
-                playerToPlay.role.canPerform.actionTime === "day" && (
-                  <div
-                    datatype="day"
-                    onClick={() => {
-                      playerToPlay.role.canPerform.needSelection
-                        ? setIsSelectionMode(!isSelectionMode)
-                        : registerSimpleAction();
-                    }}
-                    className={twClassesDiv}>
-                    <p className="text-xs text-gray-200">
-                      {!isSelectionMode ? playerToPlay.role.canPerform.label : <>Cancel selection</>}
-                    </p>
-                  </div>
+              {/* Day Actions */}
+              {canPerform.nbrLeftToPerform !== 0 && timeOfTheDay === "daytime" && canPerform.actionTime === "day" && (
+                <NightAction
+                  canPerform={canPerform}
+                  setIsSelectionMode={setIsSelectionMode}
+                  isSelectionMode={isSelectionMode}
+                />
+              )}
+
+              {/* Bandit Action */}
+              {!isUnderArrest &&
+                canPerform.nbrLeftToPerform !== 0 &&
+                timeOfTheDay === "nighttime" &&
+                !canPerform.needDoubleSelection &&
+                canPerform.actionTime === "night" &&
+                name === "Bandit" && (
+                  <BanditAction
+                    isSelectionMode={isSelectionMode}
+                    setIsSelectionMode={setIsSelectionMode}
+                    registerSimpleAction={registerSimpleAction}
+                    playerToPlay={playerToPlay}
+                  />
                 )}
             </>
           )}
 
-          {/* Terrorist action to explode his bomb */}
-          {timeOfTheDay === "nighttime" &&
-            playerToPlay.role.name === "Terrorist" &&
-            playerToPlay.role.bombPower > 0 && (
-              <div
-                onClick={() => {
-                  explodeBomb(playerToPlay.role.bombPower, setUpdatedPlayersList, displayAction, toNext);
-                }}
-                className={twClassesDiv}>
-                <p className="text-xs text-gray-200">Explode Bomb, current power : {playerToPlay.role.bombPower}</p>
-              </div>
-            )}
+          {/* Explode Bomb Action */}
+          {timeOfTheDay === "nighttime" && name === "Terrorist" && bombPower > 0 && (
+            <Action
+              onClick={() => explodeBomb(bombPower, setUpdatedPlayersList, displayAction, toNext)}
+              label={`Explode Bomb, current power: can kill up to ${bombPower} person`}
+              kbdComponent={<Kbd className="m-2">2</Kbd>}
+              bgColor="teal-600"
+            />
+          )}
 
-          {/* Pyromaniac action to burn players */}
-          {timeOfTheDay === "nighttime" &&
-            playerToPlay.role.name === "Pyromaniac" &&
-            playerToPlay.role.playersToSetOnFire.length > 0 && (
-              <div
-                onClick={() => {
-                  burnPlayers(playerToPlay.role.playersToSetOnFire, setUpdatedPlayersList, displayAction, toNext);
-                }}
-                className={twClassesDiv}>
-                <p className="text-xs text-gray-200">Burn {playerToPlay.role.playersToSetOnFire.length} players</p>
-              </div>
-            )}
+          {/* Burn Players Action */}
+          {timeOfTheDay === "nighttime" && name === "Pyromaniac" && playersToSetOnFire.length > 0 && (
+            <Action
+              onClick={() => burnPlayers(playersToSetOnFire, setUpdatedPlayersList, displayAction, toNext)}
+              label={`Burn ${playersToSetOnFire.length} players`}
+              kbdComponent={<Kbd className="m-2">2</Kbd>}
+              bgColor="teal-600"
+            />
+          )}
 
-          {/* If it's votetime, action to vote */}
-          <div className="flex flex-row gap-2">
-            {timeOfTheDay === "votetime" && playerToPlay.role.name !== "Mayor" && playerToPlay.role.canVote && (
-              <div
-                onClick={() => {
-                  setIsSelectionMode(!isSelectionMode);
-                }}
-                className={twClassesDiv}>
-                <p className="text-xs text-gray-200">
-                  {!isSelectionMode ? <>Select a player to vote against!</> : <>Cancel selection</>}
-                </p>
-              </div>
-            )}
+          {/* Vote Action */}
+          {timeOfTheDay === "votetime" && name !== "Mayor" && canVote && (
+            <Action
+              onClick={() => setIsSelectionMode(!isSelectionMode)}
+              label={!isSelectionMode ? "Select a player to vote against!" : "Cancel selection"}
+              kbdComponent={<Kbd className="m-2">1</Kbd>}
+              bgColor="cyan-600"
+            />
+          )}
 
-            {/* DoubleVote action for Mayor */}
-            {timeOfTheDay === "votetime" && playerToPlay.role.name === "Mayor" && playerToPlay.role.canVote && (
-              <div
-                datatype="mayor"
-                onClick={() => {
-                  setIsSelectionMode(!isSelectionMode);
-                }}
-                className={twClassesDiv}>
-                <p className="text-xs text-gray-200">
-                  {!isSelectionMode ? <>{playerToPlay.role.canPerform.label}</> : <>Cancel selection</>}
-                </p>
-              </div>
-            )}
-          </div>
+          {/* DoubleVote Action for Mayor */}
+          {timeOfTheDay === "votetime" && name === "Mayor" && canVote && (
+            <Action
+              onClick={() => setIsSelectionMode(!isSelectionMode)}
+              label={!isSelectionMode ? canPerform.label : "Cancel selection"}
+              kbdComponent={<Kbd className="m-2">1</Kbd>}
+              bgColor="cyan-600"
+            />
+          )}
         </div>
-        <div onClick={() => toNext()} className={twClassesDiv + " " + "bg-slate-600 hover:bg-slate-400"}>
-          <p className="text-xs text-gray-200">To next player</p>
-          <Kbd className="m-2" keys={["enter"]}>Enter</Kbd>
-        </div>
+
+        {/* To next player action */}
+        <Action
+          onClick={() => toNext()}
+          label="To next player"
+          kbdComponent={
+            <Kbd className="m-2" keys={["enter"]}>
+              Enter
+            </Kbd>
+          }
+          bgColor="slate-600"
+        />
       </div>
     </div>
   );

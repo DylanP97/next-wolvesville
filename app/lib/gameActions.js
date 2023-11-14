@@ -27,6 +27,8 @@ export const getPlayerById = (playerId, updatedPlayersList) => {
   return updatedPlayersList.find((player) => player.id === playerId);
 };
 
+
+
 export const killSelectedPlayer = (playerIdToKill, setUpdatedPlayersList) => {
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
