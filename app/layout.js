@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={GeistSans.className}>
       <body>
         <Providers>
-          <main className="flex h-screen w-screen flex-col items-center">{children}</main>
+          <main className="flex flex-col items-center">{children}</main>
         </Providers>
       </body>
     </html>

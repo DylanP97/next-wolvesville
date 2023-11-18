@@ -1,47 +1,69 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import AvatarUI from "./AvatarUI";
+import { CardHeader, Input } from "@nextui-org/react";
+import { Card, CardBody } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 
 const ProfileCard = () => {
   const [playerUserName, setPlayerUserName] = useState("");
+  const [playerEmail, setPlayerEmail] = useState("");
   const [playerAvatar, setPlayerAvatar] = useState("");
 
   const handleNameSubmit = () => {
     // You can add functionality here to handle the name submission
   };
 
+  const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+
+  const isInvalid = useMemo(() => {
+    if (playerEmail === "") return false;
+
+    return validateEmail(playerEmail) ? false : true;
+  }, [playerEmail]);
+
   return (
-    <div className="m-24 max-w-sm mx-auto bg-slate-700 rounded-xl overflow-hidden shadow-lg">
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">Edit Your Profile</div>
+    <Card>
+      <CardHeader className="flex flex-col gap-3">
+        <div className="font-bold text-xl">Edit Your Profile</div>
         <p className="text-gray-700 text-base">Welcome, {playerUserName || "Guest"}!</p>
-        <AvatarUI />
-      </div>
-      <div className="px-6 py-4">
-        <label>Username</label>
-        <input
-          type="text"
-          className="w-full my-2 py-2 px-3 border rounded-md"
-          placeholder="Enter your username"
-          value={playerUserName}
-          onChange={(e) => setPlayerUserName(e.target.value)}
-        />
-        <label>Avatar</label>
-        <input
-          type="file"
-          className="w-full my-2 py-2 px-3 border rounded-md"
-          placeholder="Upload your avatar"
-          value={playerAvatar}
-          onChange={(e) => setPlayerAvatar(e.target.value)}
-        />
-        <button
-          className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleNameSubmit}>
-          Submit
-        </button>
-      </div>
-    </div>
+        <AvatarUI heightAndWidth={140} />
+      </CardHeader>
+      <CardBody>
+        <div className="px-6 py-4">
+          <Input
+            type="text"
+            label="Username"
+            variant="bordered"
+            value={playerUserName}
+            onValueChange={setPlayerUserName}
+            className="max-w-xs"
+          />
+          <br />
+          <Input
+            type="email"
+            label="Email"
+            variant="bordered"
+            value={playerEmail}
+            defaultValue="junior2nextui.org"
+            onValueChange={setPlayerEmail}
+            isInvalid={isInvalid}
+            color={isInvalid && "error"}
+            errorMessage={isInvalid && "Please enter a valid email"}
+            className="max-w-xs"
+          />
+          <br />
+          <Button
+            color="primary"
+            variant="ghost"
+            className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handleNameSubmit}>
+            Submit
+          </Button>
+        </div>
+      </CardBody>
+    </Card>
   );
 };
 

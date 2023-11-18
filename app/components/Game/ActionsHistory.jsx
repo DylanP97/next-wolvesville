@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-const ActionsHistory = ({
-    actionsHistoryListRef
-}) => {
+import { ScrollShadow } from "@nextui-org/react";
 
+const ActionsHistory = ({ actionsHistoryListRef }) => {
   return (
-    <div className="bg-slate-900 rounded-xl shadow-lg p-4 my-4">
-      <p className="text-white text-xs">Actions history / Chatbox</p>
+    <ScrollShadow
+      hideScrollBar
+      className="w-[100%] h-[200px] bg-slate-900 p-4 my-4 rounded-lg max-h-72">
       <ul className="actions-list" ref={actionsHistoryListRef}></ul>
-    </div>
+    </ScrollShadow>
   );
 };
 

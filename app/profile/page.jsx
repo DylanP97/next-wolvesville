@@ -1,10 +1,11 @@
 import ProfileCard from "../components/Profile/ProfileCard";
 
 const ProfilePage = () => {
-
   return (
-    <ProfileCard />
-  )
-}
+    <section className="h-screen w-screen flex justify-center items-center">
+      <ProfileCard />
+    </section>
+  );
+};
 
 export default ProfilePage;

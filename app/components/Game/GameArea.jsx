@@ -27,6 +27,7 @@ import daytime from "@/public/game/day-time.png";
 import votetime from "@/public/game/vote-time.png";
 import nighttime from "@/public/game/night-time.png";
 import WinnerOverlay from "./WinnerOverlay";
+import PlayerInfos from "./PlayerInfos";
 
 const GameArea = ({ randomRoles }) => {
   const [gameIsInitialized, setGameIsInitialized] = useState(false);
@@ -47,11 +48,15 @@ const GameArea = ({ randomRoles }) => {
     daytime,
   };
 
-  const displayAction = (message) => {
+  const displayAction = (message, itsANewDay) => {
     const newAction = document.createElement("li");
     newAction.classList.add("text-xs");
     newAction.innerText = message;
-    actionsHistoryListRef.current.appendChild(newAction);
+    if (itsANewDay) {
+      const divider = document.createElement("hr");
+      actionsHistoryListRef.current.prepend(divider);
+    }
+    actionsHistoryListRef.current.prepend(newAction);
   };
 
   const handleInstantaneousActions = (action) => {
@@ -87,7 +92,7 @@ const GameArea = ({ randomRoles }) => {
 
   const changeTimeOfTheDay = () => {
     if (timeOfTheDay === "nighttime") {
-      // end of night, beginning of day
+      // daytime
       registeredActions.forEach((action) => {
         if (action.type === "eliminate") {
           eliminate(action, updatedPlayersList, setUpdatedPlayersList, displayAction);
@@ -104,10 +109,10 @@ const GameArea = ({ randomRoles }) => {
       });
       releasePrisoners(setUpdatedPlayersList);
       setDayCount((prevDayCount) => prevDayCount + 1);
-      displayAction(`Day ${dayCount + 1} has come... discuss with the village`);
+      displayAction(`Day ${dayCount + 1} has come... discuss with the village`, true);
     }
+    // votetime
     if (timeOfTheDay === "daytime") {
-      // end of daytime, beginning of votetime
       registeredActions.forEach((action) => {
         if (action.type === "mute") {
           muteVoter(action, setUpdatedPlayersList);
@@ -115,10 +120,8 @@ const GameArea = ({ randomRoles }) => {
       });
       displayAction(`Its time to vote!`);
     }
+    // nighttime
     if (timeOfTheDay === "votetime") {
-      // end of votetime, beginning of nighttime
-
-      displayAction(`beware its night...`);
       aftermathOfVote(displayAction, updatedPlayersList, setUpdatedPlayersList, setWinner);
       cleanUpRegisteredActionsConcerningDeadPlayers(updatedPlayersList, setRegisteredActions);
       registeredActions.forEach((action) => {
@@ -130,6 +133,7 @@ const GameArea = ({ randomRoles }) => {
           setRegisteredActions([...registeredActions.filter((a) => a !== action)]);
         }
       });
+      displayAction(`Its night...`);
     }
     setTimeOfTheDay(timeOfTheDay === "daytime" ? "votetime" : timeOfTheDay === "votetime" ? "nighttime" : "daytime");
   };
@@ -178,6 +182,12 @@ const GameArea = ({ randomRoles }) => {
     }
   }, [randomRoles]);
 
+  useEffect(() => {
+    if (gameIsInitialized) {
+      displayAction(`It's night, the game has begun...`);
+    }
+  }, [gameIsInitialized]);
+
   return !gameIsInitialized ? (
     <p className="w-full h-full m-auto p-8">We choose the roles for each player...</p>
   ) : (
@@ -191,8 +201,8 @@ const GameArea = ({ randomRoles }) => {
       }}
       tabIndex={0}
       className={`${
-        timeOfTheDay === "daytime" ? "bg-blue-500" : timeOfTheDay === "votetime" ? "bg-orange-800" : "bg-slate-950"
-      } w-full h-full p-8 relative`}
+        timeOfTheDay === "daytime" ? "bg-sky-500" : timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-sky-950"
+      } h-screen w-screen p-8 relative`}
       style={{ outline: "none" }}>
       <GameHeader timeOfTheDay={timeOfTheDay} dayCount={dayCount} playerToPlay={playerToPlay} />
       <Image
@@ -208,8 +218,9 @@ const GameArea = ({ randomRoles }) => {
         <div className="xl:flex xl:flex-row">
           <PlayersGrid {...sharedProps} />
           <div className="xl:w-[20%]">
-            <PlayerBoard {...sharedProps} />
+            <PlayerInfos playerToPlay={playerToPlay} />
             <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
+            <PlayerBoard {...sharedProps} />
           </div>
         </div>
       )}
