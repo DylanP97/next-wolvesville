@@ -21,6 +21,7 @@ import {
   craftTheBomb,
   robTheRole,
   eliminate,
+  throwHolyWater
 } from "@/app/lib/gameActions";
 import Image from "next/image";
 import daytime from "@/public/game/day-time.png";
@@ -94,6 +95,10 @@ const GameArea = ({ randomRoles }) => {
     if (timeOfTheDay === "nighttime") {
       // daytime
       registeredActions.forEach((action) => {
+        if (action.type === "throw") {
+          throwHolyWater(action, updatedPlayersList, setUpdatedPlayersList, displayAction);
+          setRegisteredActions([...registeredActions.filter((a) => a !== action)]);
+        }
         if (action.type === "eliminate") {
           eliminate(action, updatedPlayersList, setUpdatedPlayersList, displayAction);
           setRegisteredActions([...registeredActions.filter((a) => a !== action)]);

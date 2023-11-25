@@ -1,64 +1,11 @@
 "use client";
 
-import { burnPlayers, explodeBomb } from "@/app/lib/gameActions";
+import { burnPlayers, explodeBomb, registerSimpleAction } from "@/app/lib/gameActions";
 import { Kbd } from "@nextui-org/react";
-
-// Extracted Action Component
-const Action = ({ onClick, label, kbdComponent, bgColor }) => (
-  <div
-    onClick={onClick}
-    className={`z-20 rounded-xl shadow-lg p-4 my-4 cursor-pointer bg-${bgColor} hover:bg-${bgColor}-400`}>
-    <p className="text-xs text-gray-200">{label}</p>
-    {kbdComponent}
-  </div>
-);
-
-// Extracted DoubleSelectionAction Component
-const DoubleSelectionAction = ({ isDoubleSelection, onClick, label }) => (
-  <Action
-    onClick={onClick}
-    label={!isDoubleSelection ? label : "Cancel selection"}
-    kbdComponent={<Kbd className="m-2">1</Kbd>}
-    bgColor="cyan-600"
-  />
-);
-
-// Extracted NightAction Component
-const NightAction = ({ canPerform, setIsSelectionMode, isSelectionMode }) => (
-  <Action
-    onClick={() => {
-      canPerform.needSelection
-        ? setIsSelectionMode(!isSelectionMode)
-        : registerSimpleAction(registeredActions, setRegisteredActions, playerToPlay, toNext);
-    }}
-    label={!isSelectionMode ? canPerform.label : "Cancel selection"}
-    kbdComponent={<Kbd className="m-2">1</Kbd>}
-    bgColor="cyan-600"
-  />
-);
-
-const BanditAction = ({ isSelectionMode, setIsSelectionMode, registerSimpleAction, playerToPlay }) => (
-  <Action
-    onClick={() => {
-      playerToPlay.role.name === "Bandit" && !playerToPlay.partner
-        ? setIsSelectionMode(!isSelectionMode)
-        : registerSimpleAction();
-    }}
-    label={
-      !isSelectionMode ? (
-        playerToPlay.role.name === "Bandit" && !playerToPlay.partner ? (
-          <>Select an accomplice</>
-        ) : (
-          playerToPlay.role.canPerform.label
-        )
-      ) : (
-        <>Cancel selection</>
-      )
-    }
-    kbdComponent={<Kbd className="m-2">1</Kbd>}
-    bgColor="cyan-600"
-  />
-);
+import Action from "./Action";
+import ActionSetter from "./action-types/ActionSetter";
+import DoubleSelectionAction from "./action-types/DoubleSelectionAction";
+import BanditAction from "./action-types/BanditAction";
 
 const PlayerBoard = ({
   playerToPlay,
@@ -74,93 +21,91 @@ const PlayerBoard = ({
   timeOfTheDay,
   displayAction,
 }) => {
-  // Destructure props
+  const deadPlayers = updatedPlayersList.filter((player) => !player.isAlive);
+
   const {
-    role: { canVote, canPerform, name, bombPower, playersToSetOnFire, partner },
+    role: { canVote, canPerform, name, bombPower, playersToSetOnFire, partner } = {}, // Default to an empty object if role is not defined
     isUnderArrest,
   } = playerToPlay;
 
-  const registerSimpleAction = () => {
-    setRegisteredActions([
-      ...registeredActions,
-      {
-        type: playerToPlay.role.canPerform.type,
-        player: playerToPlay.id,
-      },
-    ]);
-    toNext();
-  };
-
-  const deadPlayers = updatedPlayersList.filter((player) => !player.isAlive);
+  // Check if canPerform is defined before further destructuring
+  const {
+    label = undefined,
+    needSelection = undefined,
+    needDoubleSelection = undefined,
+    actionTime = undefined,
+    nbrLeftToPerform = undefined,
+  } = canPerform || {};
 
   return (
     <div className="gap-4">
       <div className="z-20 actions-board flex flex-row gap-4">
-        {/* Extracted Action Components */}
-        {canPerform !== null && (
+        {playerToPlay.role.canPerform && (
           <>
-            {/* Double Selection */}
+            {/* ************************************************************************************* */}
+
+            {/* For Action Setter */}
             {!isUnderArrest &&
-              canPerform.nbrLeftToPerform !== 0 &&
-              canPerform.needDoubleSelection &&
-              ((timeOfTheDay === "daytime" && canPerform.actionTime === "day") ||
-                (timeOfTheDay === "nighttime" && canPerform.actionTime === "night")) && (
-                <DoubleSelectionAction
-                  isDoubleSelection={isDoubleSelection}
-                  onClick={() => setIsDoubleSelection(!isDoubleSelection)}
-                  label={canPerform.label}
+              (!nbrLeftToPerform || nbrLeftToPerform > 0) &&
+              !needDoubleSelection &&
+              ((timeOfTheDay === "daytime" && actionTime === "day") ||
+                (timeOfTheDay === "nighttime" && actionTime === "night")) &&
+              name !== "Grave Robber" && (
+                <ActionSetter
+                  label={label}
+                  needSelection={needSelection}
+                  setIsSelectionMode={setIsSelectionMode}
+                  isSelectionMode={isSelectionMode}
+                  registerSimpleAction={registerSimpleAction}
+                  registeredActions={registeredActions}
+                  setRegisteredActions={setRegisteredActions}
+                  dataname="night"
+                  playerToPlay={playerToPlay}
+                  toNext={toNext}
                 />
               )}
 
             {/* ************************************************************************************* */}
 
-            {/* Other Night Actions */}
             {!isUnderArrest &&
-              canPerform.nbrLeftToPerform !== (0 || undefined) &&
-              timeOfTheDay === "nighttime" &&
-              !canPerform.needDoubleSelection &&
-              canPerform.actionTime === "night" &&
-              name !== "Grave Robber" && (
-                <NightAction
-                  canPerform={canPerform}
-                  setIsSelectionMode={setIsSelectionMode}
-                  isSelectionMode={isSelectionMode}
+              (!nbrLeftToPerform || nbrLeftToPerform > 0) &&
+              needDoubleSelection &&
+              ((timeOfTheDay === "daytime" && actionTime === "day") ||
+                (timeOfTheDay === "nighttime" && actionTime === "night")) && (
+                <DoubleSelectionAction
+                  isDoubleSelection={isDoubleSelection}
+                  onClick={() => setIsDoubleSelection(!isDoubleSelection)}
+                  label={label}
                 />
               )}
-
-            {/* Day Actions */}
-            {canPerform.nbrLeftToPerform !== 0 && timeOfTheDay === "daytime" && canPerform.actionTime === "day" && (
-              <NightAction
-                canPerform={canPerform}
-                setIsSelectionMode={setIsSelectionMode}
-                isSelectionMode={isSelectionMode}
-              />
-            )}
 
             {/* ************************************************************************************* */}
 
             {/* Grave Robber Action */}
             {!isUnderArrest &&
-              canPerform.nbrLeftToPerform !== 0 &&
+              (!nbrLeftToPerform || nbrLeftToPerform > 0) &&
               timeOfTheDay === "nighttime" &&
-              !canPerform.needDoubleSelection &&
-              canPerform.actionTime === "night" &&
+              !needDoubleSelection &&
+              actionTime === "night" &&
               name === "Grave Robber" &&
               deadPlayers.length > 0 && (
-                <NightAction
-                  canPerform={canPerform}
+                <ActionSetter
+                  label={label}
+                  needSelection={needSelection}
                   setIsSelectionMode={setIsSelectionMode}
                   isSelectionMode={isSelectionMode}
                   registerSimpleAction={registerSimpleAction}
+                  registeredActions={registeredActions}
+                  setRegisteredActions={setRegisteredActions}
+                  dataname="graverobber"
                 />
               )}
 
-            {/* Bandit Action */}
             {!isUnderArrest &&
-              canPerform.nbrLeftToPerform !== 0 &&
+              (!nbrLeftToPerform || nbrLeftToPerform > 0) &&
               timeOfTheDay === "nighttime" &&
-              !canPerform.needDoubleSelection &&
-              canPerform.actionTime === "night" &&
+              !needDoubleSelection &&
+              actionTime === "night" &&
               name === "Bandit" && (
                 <BanditAction
                   isSelectionMode={isSelectionMode}
@@ -181,6 +126,7 @@ const PlayerBoard = ({
             label={`Explode Bomb, current power: can kill up to ${bombPower} person`}
             kbdComponent={<Kbd className="m-2">2</Kbd>}
             bgColor="teal-600"
+            dataname="explode"
           />
         )}
 
@@ -191,10 +137,9 @@ const PlayerBoard = ({
             label={`Burn ${playersToSetOnFire.length} players`}
             kbdComponent={<Kbd className="m-2">2</Kbd>}
             bgColor="teal-600"
+            dataname="burn"
           />
         )}
-
-        {/* ************************************************************************************* */}
 
         {/* Vote Action */}
         {timeOfTheDay === "votetime" && name !== "Mayor" && canVote && (
@@ -203,6 +148,7 @@ const PlayerBoard = ({
             label={!isSelectionMode ? "Select a player to vote against!" : "Cancel selection"}
             kbdComponent={<Kbd className="m-2">1</Kbd>}
             bgColor="cyan-600"
+            dataname="vote"
           />
         )}
 
@@ -210,16 +156,14 @@ const PlayerBoard = ({
         {timeOfTheDay === "votetime" && name === "Mayor" && canVote && (
           <Action
             onClick={() => setIsSelectionMode(!isSelectionMode)}
-            label={!isSelectionMode ? canPerform.label : "Cancel selection"}
+            label={!isSelectionMode ? label : "Cancel selection"}
             kbdComponent={<Kbd className="m-2">1</Kbd>}
             bgColor="cyan-600"
+            dataname="doublevotemayor"
           />
         )}
       </div>
 
-      {/* ************************************************************************************* */}
-
-      {/* To next player action */}
       <Action
         onClick={() => toNext()}
         label="To next player"
@@ -229,6 +173,7 @@ const PlayerBoard = ({
           </Kbd>
         }
         bgColor="slate-600"
+        dataname="next"
       />
     </div>
   );

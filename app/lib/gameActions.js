@@ -27,8 +27,6 @@ export const getPlayerById = (playerId, updatedPlayersList) => {
   return updatedPlayersList.find((player) => player.id === playerId);
 };
 
-
-
 export const killSelectedPlayer = (playerIdToKill, setUpdatedPlayersList) => {
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
@@ -475,4 +473,36 @@ export const eliminate = (action, updatedPlayersList, setUpdatedPlayersList, dis
   } else {
     displayAction("Someone wounds were healed by the doctor tonight!");
   }
+};
+
+export const throwHolyWater = (action, updatedPlayersList, setUpdatedPlayersList, displayAction) => {
+  const selectedPlayer = getPlayerById(action.selectedPlayer.id, updatedPlayersList);
+  const isVillain = checkIfVillain();
+
+  if (isVillain) {
+    killSelectedPlayer(selectedPlayer.id, setUpdatedPlayersList);
+    displayAction(`The priest threw its holy water on ${updatedPlayersList[selectedPlayer.id].name}... and the evil player is dead`);
+    checkIfIsInLove(selectedPlayer, updatedPlayersList, setUpdatedPlayersList, displayAction);
+  } else {
+    killSelectedPlayer(player.id, setUpdatedPlayersList);
+    displayAction(`The priest threw its holy water on a good villager and die because of it!`);
+    checkIfIsInLove(selectedPlayer, updatedPlayersList, setUpdatedPlayersList, displayAction);
+  }
+};
+
+export const checkIfVillain = (selectedPlayer) => {
+  if (selectedPlayer.role.team !== "village") return true;
+  else return false;
+};
+
+
+export const registerSimpleAction = () => {
+  setRegisteredActions([
+    ...registeredActions,
+    {
+      type: playerToPlay.role.canPerform.type,
+      player: playerToPlay.id,
+    },
+  ]);
+  toNext();
 };

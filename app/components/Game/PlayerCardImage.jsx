@@ -37,7 +37,7 @@ const PlayerCardImage = ({
           src={tombstone}
           alt="role"
         />
-      ) : player.isRevealed ? (
+      ) : !player.isRevealed ? (
         <Image
           width={60}
           height={60}

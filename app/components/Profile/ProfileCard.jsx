@@ -5,15 +5,19 @@ import AvatarUI from "./AvatarUI";
 import { CardHeader, Input } from "@nextui-org/react";
 import { Card, CardBody } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
+import { schema } from "@dicebear/core";
+import { avataaars } from "@dicebear/collection";
 
 const ProfileCard = () => {
   const [playerUserName, setPlayerUserName] = useState("");
   const [playerEmail, setPlayerEmail] = useState("");
-  const [playerAvatar, setPlayerAvatar] = useState("");
 
-  const handleNameSubmit = () => {
-    // You can add functionality here to handle the name submission
+  const options = {
+    ...schema.properties,
+    ...avataaars.schema.properties,
   };
+
+  console.log(options.hairColor);
 
   const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
 
@@ -58,7 +62,8 @@ const ProfileCard = () => {
             color="primary"
             variant="ghost"
             className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handleNameSubmit}>
+            // onClick={handleNameSubmit}
+          >
             Submit
           </Button>
         </div>

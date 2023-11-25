@@ -19,7 +19,7 @@ const characters = [
     team: "solo",
     canVote: true,
     canPerform: {
-      label: "Select someone to kill tonight",
+      label: "Select someone to murder tonight",
       emoji: knife,
       type: "murder",
       needSelection: true,
@@ -28,7 +28,6 @@ const characters = [
     image: rolesIcons["serialKiller"],
     description: "The serial killer can kill one person every night!",
   },
-  // done0
   {
     name: "Seer",
     team: "village",
@@ -45,7 +44,6 @@ const characters = [
     description:
       "The Seer possesses the unique ability to unveil the true nature of a player. During the day, the Seer can select a player to reveal its role instantly. The Seer can only perform this action once per game.",
   },
-  // done1
   {
     name: "Cupid",
     team: "village",
@@ -63,7 +61,6 @@ const characters = [
     description:
       "Cupid is the matchmaker of the town, with the power to create a bond of love between two players. During the night, Cupid can choose two players to link together, making them 'lovers.' If one of the lovers is killed, the other will also perish from heartbreak.",
   },
-  // done2
   {
     name: "Sheriff",
     team: "village",
@@ -79,7 +76,6 @@ const characters = [
     description:
       "The sheriff can decide to arrest the person he wants each day. The arrested person would be in jail for one night.",
   },
-  // done3
   {
     name: "Doctor",
     team: "village",
@@ -95,7 +91,6 @@ const characters = [
     description:
       "The doctor can protect the person he wants each night. If the selected player is attacked during the night, he will be healed.",
   },
-  // done4
   {
     name: "Shooter",
     team: "village",
@@ -112,7 +107,6 @@ const characters = [
     description:
       "The shooter has two bullets and can shoot instantaneously the person he wants during the day.",
   },
-  // done5
   {
     name: "Detective",
     team: "village",
@@ -129,7 +123,6 @@ const characters = [
     description:
       "The detective can check two persons and see if they are in the same or different team during the night.",
   },
-  // done6
   {
     name: "Mayor",
     team: "village",
@@ -144,7 +137,6 @@ const characters = [
     image: rolesIcons["mayor"],
     description: "The mayor vote counts double.",
   },
-  // done7
   {
     name: "Grumpy Grandma",
     team: "village",
@@ -161,7 +153,6 @@ const characters = [
     description:
       "The grumpy grandma can prevent a player from voting three times in a game.",
   },
-  // done8
   {
     name: "Fool",
     team: "solo",
@@ -171,7 +162,6 @@ const characters = [
     description:
       "The fool goal is that the people vote for him during the day! If that happens he wins the game.",
   },
-  // done9
   {
     name: "Pyromaniac",
     team: "solo",
@@ -188,7 +178,6 @@ const characters = [
     description:
       "The pyromaniac can choose to burn the person he wants each night. The burned person will die tonight.",
   },
-  // done10
   {
     name: "Terrorist",
     team: "solo",
@@ -206,7 +195,6 @@ const characters = [
     description:
       "The terrorist can choose to manufacture a bomb each night or choose to blow it up the night he wants. He might die with the explosion. The more nights he crafts its bomb the more damage it will do. The bomb can kill randomly any player.",
   },
-  // done11
   {
     name: "Ghost Lady",
     team: "solo",
@@ -221,7 +209,6 @@ const characters = [
     image: rolesIcons["ghostLady"],
     description: "",
   },
-  // 12
   {
     name: "Priest",
     team: "village",
@@ -238,7 +225,6 @@ const characters = [
     description:
       "Once per game, the Priest can throw holy water at a player. If this player is against the village, he will die. Otherwise, it is the Priest who dies.",
   },
-  // 13
   {
     name: "Grave Robber",
     team: "village",
@@ -254,7 +240,6 @@ const characters = [
     description:
       "You can choose from dead players. At the start of the next day? you will take on his role, and thus potentially change teams.",
   },
-  // done14
   {
     name: "Bandit",
     team: "bandits",
@@ -272,7 +257,6 @@ const characters = [
     description:
       "The bandit goal is to be the last one alive. He can choose a player to become its accomplice. A bandit can kill one person each two nights.",
   },
-  // 15
   {
     name: "Accomplice",
     team: "bandits",
@@ -290,7 +274,7 @@ const characters = [
     description:
       "The accomplice is a role that appears during the game when a player is transformed when the bandit select him as its partner. A accomplice can kill one person each two nights.",
   },
-  // 16 (optionnal, don't begin the game)
+  // accomplice is a seventeenth role which is optional
 ];
 
 export default characters;
