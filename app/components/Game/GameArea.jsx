@@ -21,7 +21,8 @@ import {
   craftTheBomb,
   robTheRole,
   eliminate,
-  throwHolyWater
+  throwHolyWater,
+  removeOneToNbrLeftToPerform,
 } from "@/app/lib/gameActions";
 import Image from "next/image";
 import daytime from "@/public/game/day-time.png";
@@ -64,36 +65,39 @@ const GameArea = ({ randomRoles }) => {
     switch (action.type) {
       case "craft":
         craftTheBomb(action, setUpdatedPlayersList);
+        setRegisteredActions(registeredActions.filter((a) => a !== action));
         break;
       case "pouring":
         pourGasoline(action, setUpdatedPlayersList);
+        setRegisteredActions(registeredActions.filter((a) => a !== action));
         break;
       case "heal":
         heal(action, setUpdatedPlayersList);
+        setRegisteredActions(registeredActions.filter((a) => a !== action));
         break;
       case "shoot":
         shootBullet(action, updatedPlayersList, setUpdatedPlayersList, displayAction);
+        setRegisteredActions(registeredActions.filter((a) => a !== action));
         break;
       case "love":
         linkLovers(action, setUpdatedPlayersList);
+        setRegisteredActions(registeredActions.filter((a) => a !== action));
         break;
       case "reveal":
         revealPlayer(action, updatedPlayersList, setUpdatedPlayersList, displayAction);
+        setRegisteredActions(registeredActions.filter((a) => a !== action));
         break;
       default:
         break;
     }
   };
 
-  // Handle instantaneous actions
   registeredActions.forEach((action) => {
     handleInstantaneousActions(action);
-    setRegisteredActions(registeredActions.filter((a) => a !== action));
   });
 
   const changeTimeOfTheDay = () => {
     if (timeOfTheDay === "nighttime") {
-      // daytime
       registeredActions.forEach((action) => {
         if (action.type === "throw") {
           throwHolyWater(action, updatedPlayersList, setUpdatedPlayersList, displayAction);
@@ -116,7 +120,6 @@ const GameArea = ({ randomRoles }) => {
       setDayCount((prevDayCount) => prevDayCount + 1);
       displayAction(`Day ${dayCount + 1} has come... discuss with the village`, true);
     }
-    // votetime
     if (timeOfTheDay === "daytime") {
       registeredActions.forEach((action) => {
         if (action.type === "mute") {
@@ -125,7 +128,6 @@ const GameArea = ({ randomRoles }) => {
       });
       displayAction(`Its time to vote!`);
     }
-    // nighttime
     if (timeOfTheDay === "votetime") {
       aftermathOfVote(displayAction, updatedPlayersList, setUpdatedPlayersList, setWinner);
       cleanUpRegisteredActionsConcerningDeadPlayers(updatedPlayersList, setRegisteredActions);

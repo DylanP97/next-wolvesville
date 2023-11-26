@@ -61,9 +61,7 @@ const PlayersGrid = ({
   };
 
   const voteForVotetime = (playerId, isMayor) => {
-    isMayor
-      ? doubleVoteAgainst(playerId, setUpdatedPlayersList)
-      : voteAgainst(playerId, setUpdatedPlayersList);
+    isMayor ? doubleVoteAgainst(playerId, setUpdatedPlayersList) : voteAgainst(playerId, setUpdatedPlayersList);
     setIsSelectionMode(false);
     toNext();
   };
@@ -81,6 +79,11 @@ const PlayersGrid = ({
 
     if (player.id === playerToPlay.id) {
       console.log("Don't select yourself!");
+      return;
+    }
+
+    if (player.isUnderArrest) {
+      console.log("this player is locked up in jail you can't get near");
       return;
     }
 
@@ -130,8 +133,7 @@ const PlayersGrid = ({
     }
   };
 
-  const twClassesPlayerCard =
-    "w-48 h-36 p-4 rounded-3xl flex flex-col justify-center items-center relative gap-2";
+  const twClassesPlayerCard = "w-48 h-36 p-4 rounded-3xl flex flex-col justify-center items-center relative gap-2";
 
   return (
     <div className="grid grid-cols-4 gap-6 my-6 place-items-center xl:w-[80%]">

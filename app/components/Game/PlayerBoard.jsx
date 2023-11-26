@@ -5,7 +5,7 @@ import { Kbd } from "@nextui-org/react";
 import Action from "./Action";
 import ActionSetter from "./action-types/ActionSetter";
 import DoubleSelectionAction from "./action-types/DoubleSelectionAction";
-import BanditAction from "./action-types/BanditAction";
+import BanditSelectAccompliceAction from "./action-types/BanditSelectAccompliceAction";
 
 const PlayerBoard = ({
   playerToPlay,
@@ -46,11 +46,11 @@ const PlayerBoard = ({
 
             {/* For Action Setter */}
             {!isUnderArrest &&
-              (!nbrLeftToPerform || nbrLeftToPerform > 0) &&
               !needDoubleSelection &&
+              (nbrLeftToPerform === undefined || nbrLeftToPerform > 0) &&
               ((timeOfTheDay === "daytime" && actionTime === "day") ||
                 (timeOfTheDay === "nighttime" && actionTime === "night")) &&
-              name !== "Grave Robber" && (
+              (name !== "Grave Robber" || (name === "Grave Robber" && deadPlayers.length > 0)) && (
                 <ActionSetter
                   label={label}
                   needSelection={needSelection}
@@ -68,7 +68,7 @@ const PlayerBoard = ({
             {/* ************************************************************************************* */}
 
             {!isUnderArrest &&
-              (!nbrLeftToPerform || nbrLeftToPerform > 0) &&
+              (nbrLeftToPerform === undefined || nbrLeftToPerform > 0) &&
               needDoubleSelection &&
               ((timeOfTheDay === "daytime" && actionTime === "day") ||
                 (timeOfTheDay === "nighttime" && actionTime === "night")) && (
@@ -81,33 +81,13 @@ const PlayerBoard = ({
 
             {/* ************************************************************************************* */}
 
-            {/* Grave Robber Action */}
             {!isUnderArrest &&
-              (!nbrLeftToPerform || nbrLeftToPerform > 0) &&
-              timeOfTheDay === "nighttime" &&
-              !needDoubleSelection &&
-              actionTime === "night" &&
-              name === "Grave Robber" &&
-              deadPlayers.length > 0 && (
-                <ActionSetter
-                  label={label}
-                  needSelection={needSelection}
-                  setIsSelectionMode={setIsSelectionMode}
-                  isSelectionMode={isSelectionMode}
-                  registerSimpleAction={registerSimpleAction}
-                  registeredActions={registeredActions}
-                  setRegisteredActions={setRegisteredActions}
-                  dataname="graverobber"
-                />
-              )}
-
-            {!isUnderArrest &&
-              (!nbrLeftToPerform || nbrLeftToPerform > 0) &&
+              (nbrLeftToPerform === undefined || nbrLeftToPerform > 0) &&
               timeOfTheDay === "nighttime" &&
               !needDoubleSelection &&
               actionTime === "night" &&
               name === "Bandit" && (
-                <BanditAction
+                <BanditSelectAccompliceAction
                   isSelectionMode={isSelectionMode}
                   setIsSelectionMode={setIsSelectionMode}
                   registerSimpleAction={registerSimpleAction}
@@ -125,7 +105,7 @@ const PlayerBoard = ({
             onClick={() => explodeBomb(bombPower, setUpdatedPlayersList, displayAction, toNext)}
             label={`Explode Bomb, current power: can kill up to ${bombPower} person`}
             kbdComponent={<Kbd className="m-2">2</Kbd>}
-            bgColor="teal-600"
+            bgColor="bg-black-950"
             dataname="explode"
           />
         )}
@@ -136,7 +116,7 @@ const PlayerBoard = ({
             onClick={() => burnPlayers(playersToSetOnFire, setUpdatedPlayersList, displayAction, toNext)}
             label={`Burn ${playersToSetOnFire.length} players`}
             kbdComponent={<Kbd className="m-2">2</Kbd>}
-            bgColor="teal-600"
+            bgColor="bg-orange-900"
             dataname="burn"
           />
         )}
@@ -147,7 +127,7 @@ const PlayerBoard = ({
             onClick={() => setIsSelectionMode(!isSelectionMode)}
             label={!isSelectionMode ? "Select a player to vote against!" : "Cancel selection"}
             kbdComponent={<Kbd className="m-2">1</Kbd>}
-            bgColor="cyan-600"
+            bgColor="bg-cyan-900"
             dataname="vote"
           />
         )}
@@ -158,7 +138,7 @@ const PlayerBoard = ({
             onClick={() => setIsSelectionMode(!isSelectionMode)}
             label={!isSelectionMode ? label : "Cancel selection"}
             kbdComponent={<Kbd className="m-2">1</Kbd>}
-            bgColor="cyan-600"
+            bgColor="bg-cyan-700"
             dataname="doublevotemayor"
           />
         )}
@@ -172,7 +152,7 @@ const PlayerBoard = ({
             Enter
           </Kbd>
         }
-        bgColor="slate-600"
+        bgColor="bg-slate-950"
         dataname="next"
       />
     </div>

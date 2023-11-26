@@ -187,8 +187,9 @@ export const releasePrisoners = (setUpdatedPlayersList) => {
           ...player,
           isUnderArrest: false,
         };
+      } else {
+        return player;
       }
-      return player;
     });
   });
 };
@@ -476,17 +477,36 @@ export const eliminate = (action, updatedPlayersList, setUpdatedPlayersList, dis
 };
 
 export const throwHolyWater = (action, updatedPlayersList, setUpdatedPlayersList, displayAction) => {
-  const selectedPlayer = getPlayerById(action.selectedPlayer.id, updatedPlayersList);
-  const isVillain = checkIfVillain();
-
-  if (isVillain) {
-    killSelectedPlayer(selectedPlayer.id, setUpdatedPlayersList);
-    displayAction(`The priest threw its holy water on ${updatedPlayersList[selectedPlayer.id].name}... and the evil player is dead`);
-    checkIfIsInLove(selectedPlayer, updatedPlayersList, setUpdatedPlayersList, displayAction);
-  } else {
-    killSelectedPlayer(player.id, setUpdatedPlayersList);
+  const isVillain = checkIfVillain(action.selectedPlayer);
+  if (!isVillain) {
+    killSelectedPlayer(action.player, setUpdatedPlayersList);
     displayAction(`The priest threw its holy water on a good villager and die because of it!`);
-    checkIfIsInLove(selectedPlayer, updatedPlayersList, setUpdatedPlayersList, displayAction);
+    checkIfIsInLove(action.selectedPlayer, updatedPlayersList, setUpdatedPlayersList, displayAction);
+  } else {
+    killSelectedPlayer(action.selectedPlayer.id, setUpdatedPlayersList);
+    setUpdatedPlayersList((prevPlayersList) => {
+      return prevPlayersList.map((player) => {
+        if (player.id === action.player) {
+          return {
+            ...player,
+            role: {
+              ...player.role,
+              canPerform: {
+                ...player.role.canPerform,
+                nbrLeftToPerform: player.role.canPerform.nbrLeftToPerform - 1,
+              },
+            },
+          };
+        }
+        return player;
+      });
+    });
+    displayAction(
+      `The priest threw its holy water on ${
+        updatedPlayersList[action.selectedPlayer.id].name
+      }... and the evil player is dead`
+    );
+    checkIfIsInLove(action.selectedPlayer, updatedPlayersList, setUpdatedPlayersList, displayAction);
   }
 };
 
@@ -494,7 +514,6 @@ export const checkIfVillain = (selectedPlayer) => {
   if (selectedPlayer.role.team !== "village") return true;
   else return false;
 };
-
 
 export const registerSimpleAction = () => {
   setRegisteredActions([

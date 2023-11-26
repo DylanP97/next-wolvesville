@@ -23,7 +23,7 @@ const ActionSetter = ({
     }}
     label={!isSelectionMode ? label : "Cancel selection"}
     kbdComponent={<Kbd className="m-2">1</Kbd>}
-    bgColor="cyan-600"
+    bgColor="bg-blue-700"
     dataname={dataname}
   />
 );

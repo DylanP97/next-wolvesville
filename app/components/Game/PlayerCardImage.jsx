@@ -21,22 +21,14 @@ const PlayerCardImage = ({
   investigatedPlayers,
 }) => {
   const checkIfAlreadyPouredWithGasoline = () => {
-    const isPoured = playerToPlay.role.playersToSetOnFire.some(
-      (pouredPlayer) => player.id === pouredPlayer.id
-    );
+    const isPoured = playerToPlay.role.playersToSetOnFire.some((pouredPlayer) => player.id === pouredPlayer.id);
     return !isPoured;
   };
 
   return (
     <>
       {!player.isAlive ? (
-        <Image
-          className="absolute"
-          width={60}
-          height={60}
-          src={tombstone}
-          alt="role"
-        />
+        <Image className="absolute" width={60} height={60} src={tombstone} alt="role" />
       ) : !player.isRevealed ? (
         <Image
           width={60}
@@ -49,30 +41,14 @@ const PlayerCardImage = ({
         <AvatarUI selection={isDoubleSelection || isSelectionMode} />
       )}
 
-      {player.isUnderArrest && (
-        <Image
-          className="absolute"
-          width={100}
-          height={100}
-          src={prison}
-          alt="prison"
-        />
+      {player.isUnderArrest && <Image className="absolute" width={100} height={100} src={prison} alt="prison" />}
+
+      {player.id !== playerToPlay.id && player.isAlive && isSelectionMode && timeOfTheDay === "votetime" && (
+        <Image className="absolute z-10 animate-pulse" width={50} height={50} src={forefinger} alt="forefinger" />
       )}
 
       {player.id !== playerToPlay.id &&
-        player.isAlive &&
-        isSelectionMode &&
-        timeOfTheDay === "votetime" && (
-          <Image
-            className="absolute z-10 animate-pulse"
-            width={50}
-            height={50}
-            src={forefinger}
-            alt="forefinger"
-          />
-        )}
-
-      {player.id !== playerToPlay.id &&
+        !player.isUnderArrest &&
         player.isAlive &&
         (isSelectionMode || isDoubleSelection) &&
         timeOfTheDay !== "votetime" &&
@@ -99,34 +75,22 @@ const PlayerCardImage = ({
             className="absolute z-10 animate-pulse"
             width={50}
             height={50}
-            src={
-              playerToPlay.role.partner
-                ? playerToPlay.role.canPerform.emoji.src
-                : accomplice
-            }
+            src={playerToPlay.role.partner ? playerToPlay.role.canPerform.emoji.src : accomplice}
             alt={playerToPlay.role.canPerform.type}
           />
         )}
 
       {player.id !== playerToPlay.id &&
-        player.isAlive &&
+        player.isAlive && !player.isUnderArrest &&
         (isSelectionMode || isDoubleSelection) &&
         timeOfTheDay !== "votetime" &&
         !displayInvestigation &&
         playerToPlay.role.name === "Pyromaniac" && (
           <Image
-            className={`${
-              checkIfAlreadyPouredWithGasoline()
-                ? "animate-pulse"
-                : "animate-none"
-            } absolute z-10`}
+            className={`${checkIfAlreadyPouredWithGasoline() ? "animate-pulse" : "animate-none"} absolute z-10`}
             width={60}
             height={60}
-            src={
-              checkIfAlreadyPouredWithGasoline()
-                ? playerToPlay.role.canPerform.emoji.src
-                : spilled
-            }
+            src={checkIfAlreadyPouredWithGasoline() ? playerToPlay.role.canPerform.emoji.src : spilled}
             alt={playerToPlay.role.canPerform.type}
           />
         )}
@@ -146,17 +110,15 @@ const PlayerCardImage = ({
           />
         )}
 
-      {investigatedPlayers &&
-        investigatedPlayers.includes(player.id) &&
-        displayInvestigation && (
-          <Image
-            className="absolute z-10 animate-pulse"
-            width={50}
-            height={50}
-            src={investigationResult === "same" ? same : different}
-            alt="investigation-result"
-          />
-        )}
+      {investigatedPlayers && investigatedPlayers.includes(player.id) && displayInvestigation && (
+        <Image
+          className="absolute z-10 animate-pulse"
+          width={50}
+          height={50}
+          src={investigationResult === "same" ? same : different}
+          alt="investigation-result"
+        />
+      )}
     </>
   );
 };

@@ -3,7 +3,7 @@
 import { Kbd } from "@nextui-org/react";
 import Action from "../Action";
 
-const BanditAction = ({ isSelectionMode, setIsSelectionMode, registerSimpleAction, playerToPlay }) => (
+const BanditSelectAccompliceAction = ({ isSelectionMode, setIsSelectionMode, registerSimpleAction, playerToPlay }) => (
   <Action
     onClick={() => {
       playerToPlay.role.name === "Bandit" && !playerToPlay.partner
@@ -22,9 +22,9 @@ const BanditAction = ({ isSelectionMode, setIsSelectionMode, registerSimpleActio
       )
     }
     kbdComponent={<Kbd className="m-2">1</Kbd>}
-    bgColor="cyan-600"
+    bgColor="bg-cyan-600"
     dataname="bandit"
   />
 );
 
-export default BanditAction;
+export default BanditSelectAccompliceAction;
