@@ -311,30 +311,17 @@ export const heal = (action, setUpdatedPlayersList) => {
   });
 };
 
-export const investigatePlayers = (
-  setInvestigatedPlayers,
-  setInvestigationResult,
-  setDisplayInvestigation,
-  setIsDoubleSelection,
-  toNext,
-  otherSelectedPlayer,
-  otherSelected2Player,
-  displayAction
-) => {
-  setInvestigatedPlayers([otherSelectedPlayer.id, otherSelected2Player.id]);
-  const isDifferentTeam = otherSelectedPlayer.role.team !== otherSelected2Player.role.team;
-  setInvestigationResult(isDifferentTeam ? "different" : "same");
-  setDisplayInvestigation(true);
+export const investigatePlayers = (action, displayAction, updatedPlayersList) => {
+  const investigatedPlayer1 = getPlayerById(action.selectedPlayer, updatedPlayersList);
+  const investigatedPlayer2 = getPlayerById(action.selectedPlayer2, updatedPlayersList);
+  console.log(investigatedPlayer1)
+  console.log(investigatedPlayer2)
+  const isDifferentTeam = investigatedPlayer1.role.team !== investigatedPlayer2.role.team;
   displayAction(
-    `${otherSelectedPlayer.name} and ${otherSelected2Player.name} are ${
+    `${investigatedPlayer1.name} and ${investigatedPlayer2.name} are ${
       isDifferentTeam ? "from different teams" : "from the same team"
     }!`
   );
-  setTimeout(() => {
-    setDisplayInvestigation(false);
-    setIsDoubleSelection(false);
-    toNext();
-  }, 3000);
 };
 
 export const pourGasoline = (action, setUpdatedPlayersList) => {

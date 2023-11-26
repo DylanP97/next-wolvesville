@@ -42,9 +42,7 @@ const PlayerBoard = ({
       <div className="z-20 actions-board flex flex-row gap-4">
         {playerToPlay.role.canPerform && (
           <>
-            {/* ************************************************************************************* */}
 
-            {/* For Action Setter */}
             {!isUnderArrest &&
               !needDoubleSelection &&
               (nbrLeftToPerform === undefined || nbrLeftToPerform > 0) &&
@@ -99,7 +97,6 @@ const PlayerBoard = ({
 
         {/* ************************************************************************************* */}
 
-        {/* Explode Bomb Action */}
         {timeOfTheDay === "nighttime" && name === "Terrorist" && bombPower > 0 && (
           <Action
             onClick={() => explodeBomb(bombPower, setUpdatedPlayersList, displayAction, toNext)}
@@ -110,7 +107,6 @@ const PlayerBoard = ({
           />
         )}
 
-        {/* Burn Players Action */}
         {timeOfTheDay === "nighttime" && name === "Pyromaniac" && playersToSetOnFire.length > 0 && (
           <Action
             onClick={() => burnPlayers(playersToSetOnFire, setUpdatedPlayersList, displayAction, toNext)}
@@ -121,7 +117,6 @@ const PlayerBoard = ({
           />
         )}
 
-        {/* Vote Action */}
         {timeOfTheDay === "votetime" && name !== "Mayor" && canVote && (
           <Action
             onClick={() => setIsSelectionMode(!isSelectionMode)}
@@ -132,7 +127,6 @@ const PlayerBoard = ({
           />
         )}
 
-        {/* DoubleVote Action for Mayor */}
         {timeOfTheDay === "votetime" && name === "Mayor" && canVote && (
           <Action
             onClick={() => setIsSelectionMode(!isSelectionMode)}

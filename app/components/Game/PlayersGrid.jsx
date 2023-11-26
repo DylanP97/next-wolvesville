@@ -4,7 +4,7 @@ import { useState } from "react";
 import { doubleVoteAgainst, voteAgainst } from "../../lib/gameActions";
 import PlayerCardImage from "./PlayerCardImage";
 import VoteCount from "./VoteCount";
-import { becomeAccomplice, investigatePlayers } from "@/app/lib/gameActions";
+import { becomeAccomplice } from "@/app/lib/gameActions";
 
 const PlayersGrid = ({
   playerToPlay,
@@ -21,9 +21,6 @@ const PlayersGrid = ({
   displayAction,
 }) => {
   const [selectedOtherPlayers, setSelectedOtherPlayers] = useState([]);
-  const [displayInvestigation, setDisplayInvestigation] = useState(false);
-  const [investigationResult, setInvestigationResult] = useState(null);
-  const [investigatedPlayers, setInvestigatedPlayers] = useState(null);
 
   const registerActionThatNeedSelection = (otherSelectedPlayer) => {
     setRegisteredActions([
@@ -41,21 +38,34 @@ const PlayersGrid = ({
   };
 
   const registerActionThatNeedDoubleSelection = (otherSelectedPlayer, otherSelected2Player) => {
-    setRegisteredActions([
-      ...registeredActions,
-      {
-        type: playerToPlay.role.canPerform.type,
-        player: playerToPlay.id,
-        selectedPlayer: otherSelectedPlayer.id,
-        actionTime: playerToPlay.role.canPerform.actionTime,
-      },
-      {
-        type: playerToPlay.role.canPerform.type,
-        player: playerToPlay.id,
-        selectedPlayer: otherSelected2Player.id,
-        actionTime: playerToPlay.role.canPerform.actionTime,
-      },
-    ]);
+    if (playerToPlay.role.name === "Detective") {
+      setRegisteredActions([
+        ...registeredActions,
+        {
+          type: playerToPlay.role.canPerform.type,
+          player: playerToPlay.id,
+          selectedPlayer: otherSelectedPlayer.id,
+          selectedPlayer2: otherSelected2Player.id,
+          actionTime: playerToPlay.role.canPerform.actionTime,
+        },
+      ])
+    } else {
+      setRegisteredActions([
+        ...registeredActions,
+        {
+          type: playerToPlay.role.canPerform.type,
+          player: playerToPlay.id,
+          selectedPlayer: otherSelectedPlayer.id,
+          actionTime: playerToPlay.role.canPerform.actionTime,
+        },
+        {
+          type: playerToPlay.role.canPerform.type,
+          player: playerToPlay.id,
+          selectedPlayer: otherSelected2Player.id,
+          actionTime: playerToPlay.role.canPerform.actionTime,
+        },
+      ]);
+    }
     setIsDoubleSelection(false);
     toNext();
   };
@@ -113,22 +123,9 @@ const PlayersGrid = ({
       if (selectedOtherPlayers.length === 0) {
         setSelectedOtherPlayers([player]);
       } else if (selectedOtherPlayers.length === 1) {
-        if (playerToPlay.role.canPerform.type === "investigate") {
-          investigatePlayers(
-            setInvestigatedPlayers,
-            setInvestigationResult,
-            setDisplayInvestigation,
-            setIsDoubleSelection,
-            toNext,
-            selectedOtherPlayers[0],
-            player,
-            displayAction
-          );
-        } else {
-          // Two players have been selected, perform the double selection action
-          registerActionThatNeedDoubleSelection(selectedOtherPlayers[0], player);
-          setSelectedOtherPlayers([]); // Reset selected players
-        }
+        // Two players have been selected, perform the double selection action
+        registerActionThatNeedDoubleSelection(selectedOtherPlayers[0], player);
+        setSelectedOtherPlayers([]); // Reset selected players
       }
     }
   };
@@ -137,7 +134,6 @@ const PlayersGrid = ({
 
   return (
     <div className="grid grid-cols-4 gap-6 my-6 place-items-center xl:w-[80%]">
-      {/* mapping every players */}
       {updatedPlayersList.map((player) => (
         <div
           className={`${
@@ -160,9 +156,6 @@ const PlayersGrid = ({
             playerToPlay={playerToPlay}
             isDoubleSelection={isDoubleSelection}
             isSelectionMode={isSelectionMode}
-            displayInvestigation={displayInvestigation}
-            investigationResult={investigationResult}
-            investigatedPlayers={investigatedPlayers}
           />
 
           <p className="text-xs text-center">{player.name}</p>

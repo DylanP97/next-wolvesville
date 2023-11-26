@@ -16,9 +16,6 @@ const PlayerCardImage = ({
   playerToPlay,
   isDoubleSelection,
   isSelectionMode,
-  displayInvestigation,
-  investigationResult,
-  investigatedPlayers,
 }) => {
   const checkIfAlreadyPouredWithGasoline = () => {
     const isPoured = playerToPlay.role.playersToSetOnFire.some((pouredPlayer) => player.id === pouredPlayer.id);
@@ -52,7 +49,6 @@ const PlayerCardImage = ({
         player.isAlive &&
         (isSelectionMode || isDoubleSelection) &&
         timeOfTheDay !== "votetime" &&
-        !displayInvestigation &&
         playerToPlay.role.name !== "Bandit" &&
         playerToPlay.role.name !== "Pyromaniac" &&
         playerToPlay.role.name !== "Grave Robber" && (
@@ -69,7 +65,6 @@ const PlayerCardImage = ({
         player.isAlive &&
         (isSelectionMode || isDoubleSelection) &&
         timeOfTheDay !== "votetime" &&
-        !displayInvestigation &&
         playerToPlay.role.name === "Bandit" && (
           <Image
             className="absolute z-10 animate-pulse"
@@ -84,7 +79,6 @@ const PlayerCardImage = ({
         player.isAlive && !player.isUnderArrest &&
         (isSelectionMode || isDoubleSelection) &&
         timeOfTheDay !== "votetime" &&
-        !displayInvestigation &&
         playerToPlay.role.name === "Pyromaniac" && (
           <Image
             className={`${checkIfAlreadyPouredWithGasoline() ? "animate-pulse" : "animate-none"} absolute z-10`}
@@ -99,7 +93,6 @@ const PlayerCardImage = ({
         !player.isAlive &&
         (isSelectionMode || isDoubleSelection) &&
         timeOfTheDay === "nighttime" &&
-        !displayInvestigation &&
         playerToPlay.role.name === "Grave Robber" && (
           <Image
             className="absolute z-10 animate-pulse"
@@ -109,16 +102,6 @@ const PlayerCardImage = ({
             alt={playerToPlay.role.canPerform.type}
           />
         )}
-
-      {investigatedPlayers && investigatedPlayers.includes(player.id) && displayInvestigation && (
-        <Image
-          className="absolute z-10 animate-pulse"
-          width={50}
-          height={50}
-          src={investigationResult === "same" ? same : different}
-          alt="investigation-result"
-        />
-      )}
     </>
   );
 };

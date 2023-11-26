@@ -22,7 +22,7 @@ import {
   robTheRole,
   eliminate,
   throwHolyWater,
-  removeOneToNbrLeftToPerform,
+  investigatePlayers,
 } from "@/app/lib/gameActions";
 import Image from "next/image";
 import daytime from "@/public/game/day-time.png";
@@ -99,6 +99,10 @@ const GameArea = ({ randomRoles }) => {
   const changeTimeOfTheDay = () => {
     if (timeOfTheDay === "nighttime") {
       registeredActions.forEach((action) => {
+        if (action.type === "investigate") {
+          investigatePlayers(action, displayAction, updatedPlayersList);
+          setRegisteredActions([...registeredActions.filter((a) => a !== action)]);
+        }
         if (action.type === "throw") {
           throwHolyWater(action, updatedPlayersList, setUpdatedPlayersList, displayAction);
           setRegisteredActions([...registeredActions.filter((a) => a !== action)]);
