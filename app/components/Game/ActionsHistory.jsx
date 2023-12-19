@@ -7,7 +7,7 @@ const ActionsHistory = ({ actionsHistoryListRef }) => {
     <ScrollShadow
       hideScrollBar
       className="w-[100%] h-[200px] bg-slate-900 p-4 my-4 rounded-lg max-h-72">
-      <ul className="actions-list" ref={actionsHistoryListRef}></ul>
+      <ul className="actions-list text-white" ref={actionsHistoryListRef}></ul>
     </ScrollShadow>
   );
 };

@@ -17,8 +17,6 @@ const ProfileCard = () => {
     ...avataaars.schema.properties,
   };
 
-  console.log(options.hairColor);
-
   const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
 
   const isInvalid = useMemo(() => {
@@ -50,7 +48,7 @@ const ProfileCard = () => {
             label="Email"
             variant="bordered"
             value={playerEmail}
-            defaultValue="junior2nextui.org"
+            defaultValue="johndoe@email.com"
             onValueChange={setPlayerEmail}
             isInvalid={isInvalid}
             color={isInvalid && "error"}
@@ -61,7 +59,7 @@ const ProfileCard = () => {
           <Button
             color="primary"
             variant="ghost"
-            className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             // onClick={handleNameSubmit}
           >
             Submit

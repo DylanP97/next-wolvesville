@@ -112,7 +112,7 @@ const characters = [
     team: "village",
     canVote: true,
     canPerform: {
-      label: "Select two players to check if they are in the same side or not.",
+      label: "Select two players to check if they are in the same team.",
       emoji: loupe,
       type: "investigate",
       needSelection: false,

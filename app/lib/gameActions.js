@@ -441,7 +441,7 @@ export const becomeAccomplice = (playerToPlay, selectedAccomplice, setUpdatedPla
           ...player,
           role: {
             ...player.role,
-            partner: true,
+            partner: true
           },
         };
       }

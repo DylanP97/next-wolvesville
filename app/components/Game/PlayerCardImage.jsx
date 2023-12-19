@@ -16,7 +16,9 @@ const PlayerCardImage = ({
   playerToPlay,
   isDoubleSelection,
   isSelectionMode,
+  selectedActionButton,
 }) => {
+
   const checkIfAlreadyPouredWithGasoline = () => {
     const isPoured = playerToPlay.role.playersToSetOnFire.some((pouredPlayer) => player.id === pouredPlayer.id);
     return !isPoured;
@@ -26,7 +28,7 @@ const PlayerCardImage = ({
     <>
       {!player.isAlive ? (
         <Image className="absolute" width={60} height={60} src={tombstone} alt="role" />
-      ) : !player.isRevealed ? (
+      ) : player.isRevealed ? (
         <Image
           width={60}
           height={60}
@@ -70,10 +72,11 @@ const PlayerCardImage = ({
             className="absolute z-10 animate-pulse"
             width={50}
             height={50}
-            src={playerToPlay.role.partner ? playerToPlay.role.canPerform.emoji.src : accomplice}
+            src={selectedActionButton !== 2 ? playerToPlay.role.canPerform.emoji.src : accomplice}
             alt={playerToPlay.role.canPerform.type}
           />
         )}
+        
 
       {player.id !== playerToPlay.id &&
         player.isAlive && !player.isUnderArrest &&

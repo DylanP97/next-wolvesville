@@ -20,6 +20,7 @@ const PlayerBoard = ({
   setUpdatedPlayersList,
   timeOfTheDay,
   displayAction,
+  setSelectedActionButton
 }) => {
   const deadPlayers = updatedPlayersList.filter((player) => !player.isAlive);
 
@@ -39,7 +40,7 @@ const PlayerBoard = ({
 
   return (
     <div className="gap-4">
-      <div className="z-20 actions-board flex flex-row gap-4">
+      <div className="z-20 actions-board grid grid-cols-2 gap-4">
         {playerToPlay.role.canPerform && (
           <>
 
@@ -60,6 +61,7 @@ const PlayerBoard = ({
                   dataname="night"
                   playerToPlay={playerToPlay}
                   toNext={toNext}
+                  setSelectedActionButton={setSelectedActionButton}
                 />
               )}
 
@@ -80,16 +82,16 @@ const PlayerBoard = ({
             {/* ************************************************************************************* */}
 
             {!isUnderArrest &&
-              (nbrLeftToPerform === undefined || nbrLeftToPerform > 0) &&
               timeOfTheDay === "nighttime" &&
               !needDoubleSelection &&
               actionTime === "night" &&
-              name === "Bandit" && (
+              name === "Bandit" &&
+              partner === undefined && (
                 <BanditSelectAccompliceAction
                   isSelectionMode={isSelectionMode}
                   setIsSelectionMode={setIsSelectionMode}
-                  registerSimpleAction={registerSimpleAction}
                   playerToPlay={playerToPlay}
+                  setSelectedActionButton={setSelectedActionButton}
                 />
               )}
           </>

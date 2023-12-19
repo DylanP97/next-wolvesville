@@ -40,6 +40,7 @@ const GameArea = ({ randomRoles }) => {
   const [aliveList, setAliveList] = useState(null);
   const [playerToPlay, setPlayerToPlay] = useState(null);
   const [registeredActions, setRegisteredActions] = useState([]);
+  const [selectedActionButton, setSelectedActionButton] = useState(1);
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [isDoubleSelection, setIsDoubleSelection] = useState(false);
   const [winner, setWinner] = useState(false);
@@ -159,6 +160,7 @@ const GameArea = ({ randomRoles }) => {
       } else setPlayerToPlay(nextPlayer);
       setIsDoubleSelection(false);
       setIsSelectionMode(false);
+      setSelectedActionButton(1)
     }
   };
 
@@ -175,6 +177,8 @@ const GameArea = ({ randomRoles }) => {
     setUpdatedPlayersList,
     timeOfTheDay,
     displayAction,
+    selectedActionButton,
+    setSelectedActionButton,
   };
 
   useEffect(() => {
@@ -213,7 +217,7 @@ const GameArea = ({ randomRoles }) => {
       tabIndex={0}
       className={`${
         timeOfTheDay === "daytime" ? "bg-sky-500" : timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-sky-950"
-      } h-screen w-screen p-8 relative`}
+      } h-full w-screen p-8 relative`}
       style={{ outline: "none" }}>
       <GameHeader timeOfTheDay={timeOfTheDay} dayCount={dayCount} playerToPlay={playerToPlay} />
       <Image

@@ -19,6 +19,7 @@ const PlayersGrid = ({
   setUpdatedPlayersList,
   timeOfTheDay,
   displayAction,
+  selectedActionButton
 }) => {
   const [selectedOtherPlayers, setSelectedOtherPlayers] = useState([]);
 
@@ -156,9 +157,10 @@ const PlayersGrid = ({
             playerToPlay={playerToPlay}
             isDoubleSelection={isDoubleSelection}
             isSelectionMode={isSelectionMode}
+            selectedActionButton={selectedActionButton}
           />
 
-          <p className="text-xs text-center">{player.name}</p>
+          <p className="text-xs text-white text-center">{player.name}</p>
         </div>
       ))}
     </div>
