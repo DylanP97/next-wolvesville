@@ -1,40 +1,54 @@
 import rolesIcons from "@/public/roles";
-import loupe from "@/public/game/loupe.png";
-import target from "@/public/game/target.png";
-import knife from "@/public/game/knife.png";
-import handcuffs from "@/public/game/handcuffs.png";
-import bowAndArrow from "@/public/game/bow-and-arrow.png";
-import bandAid from "@/public/game/band-aid.png";
-import crystalBall from "@/public/game/crystal-ball.png";
-import pouring from "@/public/roles/pyromaniac.png";
-import forefinger from "@/public/game/forefinger.png";
-import mute from "@/public/game/mute.png";
-import holyWater from "@/public/game/holy-water.png";
-import shovel from "@/public/game/shovel.png";
-import whiteFlame from "@/public/game/white-flame.png";
+import selectionIcons from "@/public/selection";
 
 const characters = [
+  // village
+  // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   {
-    name: "Serial Killer",
-    team: "solo",
+    name: "Villager",
+    team: ["village"],
+    canVote: true,
+    canPerform: null,
+    image: rolesIcons["villager"],
+    description: "The villager is a normal person. They can vote, but can't perform any special action.",
+  },
+  {
+    name: "Jailer",
+    team: ["village"],
     canVote: true,
     canPerform: {
-      label: "Select someone to murder tonight",
-      emoji: knife,
-      type: "murder",
+      label: "Handcuff a player for the next night",
+      emoji: selectionIcons['handcuffs'],
+      type: "arrest",
       needSelection: true,
-      actionTime: "night",
+      actionTime: "day",
     },
-    image: rolesIcons["serialKiller"],
-    description: "The serial killer can kill one person every night!",
+    image: rolesIcons["jailer"],
+    description:
+    "The jailer can decide to arrest the person he wants each day. The arrested person will be in jail for one night.",
+  },
+  {
+    name: "Gunner",
+    team: ["village"],
+    canVote: true,
+    canPerform: {
+      label: "Select someone to shoot",
+      emoji: selectionIcons['target'],
+      type: "shoot",
+      needSelection: true,
+      actionTime: "day",
+      nbrLeftToPerform: 2,
+    },
+    image: rolesIcons["gunner"],
+    description: "The gunner has two bullets and can shoot instantaneously the person he wants during the day.",
   },
   {
     name: "Seer",
-    team: "village",
+    team: ["village"],
     canVote: true,
     canPerform: {
       label: "Choose a player to reveal it's role.",
-      emoji: crystalBall,
+      emoji: selectionIcons['reveal'],
       type: "reveal",
       needSelection: true,
       actionTime: "day",
@@ -46,11 +60,11 @@ const characters = [
   },
   {
     name: "Cupid",
-    team: "village",
+    team: ["village", "lovers"],
     canVote: true,
     canPerform: {
       label: "Link two players together in love",
-      emoji: bowAndArrow,
+      emoji: selectionIcons['bowAndArrow'],
       type: "love",
       needSelection: false,
       needDoubleSelection: true,
@@ -62,27 +76,12 @@ const characters = [
       "Cupid is the matchmaker of the town, with the power to create a bond of love between two players. During the night, Cupid can choose two players to link together, making them 'lovers.' If one of the lovers is killed, the other will also perish from heartbreak.",
   },
   {
-    name: "Sheriff",
-    team: "village",
-    canVote: true,
-    canPerform: {
-      label: "Handcuff a player for the next night",
-      emoji: handcuffs,
-      type: "arrest",
-      needSelection: true,
-      actionTime: "day",
-    },
-    image: rolesIcons["sheriff"],
-    description:
-      "The sheriff can decide to arrest the person he wants each day. The arrested person would be in jail for one night.",
-  },
-  {
     name: "Doctor",
-    team: "village",
+    team: ["village"],
     canVote: true,
     canPerform: {
       label: "Select someone to heal tonight",
-      emoji: bandAid,
+      emoji: selectionIcons['bandAid'],
       type: "heal",
       needSelection: true,
       actionTime: "night",
@@ -92,28 +91,12 @@ const characters = [
       "The doctor can protect the person he wants each night. If the selected player is attacked during the night, he will be healed.",
   },
   {
-    name: "Shooter",
-    team: "village",
-    canVote: true,
-    canPerform: {
-      label: "Select someone to shoot",
-      emoji: target,
-      type: "shoot",
-      needSelection: true,
-      actionTime: "day",
-      nbrLeftToPerform: 2,
-    },
-    image: rolesIcons["shooter"],
-    description:
-      "The shooter has two bullets and can shoot instantaneously the person he wants during the day.",
-  },
-  {
     name: "Detective",
-    team: "village",
+    team: ["village"],
     canVote: true,
     canPerform: {
       label: "Select two players to check if they are in the same team.",
-      emoji: loupe,
+      emoji: selectionIcons['magnifyingGlass'],
       type: "investigate",
       needSelection: false,
       needDoubleSelection: true,
@@ -125,11 +108,11 @@ const characters = [
   },
   {
     name: "Mayor",
-    team: "village",
+    team: ["village"],
     canVote: true,
     canPerform: {
       label: "Choose a player to double vote against.",
-      emoji: forefinger,
+      emoji: selectionIcons['voteAgainstIcon'],
       type: "doubleVote",
       needSelection: true,
       actionTime: "vote",
@@ -139,83 +122,26 @@ const characters = [
   },
   {
     name: "Grumpy Grandma",
-    team: "village",
+    team: ["village"],
     canVote: true,
     canPerform: {
       label: "Choose a player to prevent him to vote",
-      emoji: mute,
+      emoji: selectionIcons['mute'],
       type: "mute",
       needSelection: true,
       actionTime: "day",
       nbrLeftToPerform: 3,
     },
     image: rolesIcons["grumpyGrandma"],
-    description:
-      "The grumpy grandma can prevent a player from voting three times in a game.",
-  },
-  {
-    name: "Fool",
-    team: "solo",
-    canVote: true,
-    canPerform: null,
-    image: rolesIcons["fool"],
-    description:
-      "The fool goal is that the people vote for him during the day! If that happens he wins the game.",
-  },
-  {
-    name: "Pyromaniac",
-    team: "solo",
-    canVote: true,
-    canPerform: {
-      label: "Select someone to pour liquid at",
-      emoji: pouring,
-      type: "pouring",
-      needSelection: true,
-      actionTime: "night",
-    },
-    playersToSetOnFire: [],
-    image: rolesIcons["pyromaniac"],
-    description:
-      "The pyromaniac can choose to burn the person he wants each night. The burned person will die tonight.",
-  },
-  {
-    name: "Terrorist",
-    team: "solo",
-    canVote: true,
-    canPerform: {
-      label: "Craft the bomb",
-      emoji: null,
-      type: "craft",
-      needSelection: false,
-      actionTime: "night",
-      nbrLeftToPerform: 6,
-    },
-    bombPower: 0,
-    image: rolesIcons["terrorist"],
-    description:
-      "The terrorist can choose to manufacture a bomb each night or choose to blow it up the night he wants. He might die with the explosion. The more nights he crafts its bomb the more damage it will do. The bomb can kill randomly any player.",
-  },
-  {
-    name: "Ghost Lady",
-    team: "solo",
-    canVote: true,
-    canPerform: {
-      label: "Select someone to visit tonight",
-      emoji: whiteFlame,
-      type: "",
-      needSelection: true,
-      actionTime: "night",
-    },
-    image: rolesIcons["ghostLady"],
-    description: "",
+    description: "The grumpy grandma can prevent a player from voting three times in a game.",
   },
   {
     name: "Priest",
-    team: "village",
+    team: ["village"],
     canVote: true,
     canPerform: {
       label: "Select a player to throw the holy water at",
-      emoji: holyWater,
+      emoji: selectionIcons['holyWater'],
       type: "throw",
       needSelection: true,
       actionTime: "night",
@@ -227,11 +153,11 @@ const characters = [
   },
   {
     name: "Grave Robber",
-    team: "village",
+    team: ["village"],
     canVote: true,
     canPerform: {
       label: "Select someone to loot its grave",
-      emoji: shovel,
+      emoji: selectionIcons['shovel'],
       type: "loot",
       needSelection: true,
       actionTime: "night",
@@ -240,13 +166,67 @@ const characters = [
     description:
       "You can choose from dead players. At the start of the next day? you will take on his role, and thus potentially change teams.",
   },
+  // solo or other players
+  // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  {
+    name: "Serial Killer",
+    team: ["serialKiller"],
+    canVote: true,
+    canPerform: {
+      label: "Select someone to murder tonight",
+      emoji: selectionIcons['knife'],
+      type: "murder",
+      needSelection: true,
+      actionTime: "night",
+    },
+    image: rolesIcons["serialKiller"],
+    description: "The serial killer can kill one person every night!",
+  },
+  {
+    name: "Fool",
+    team: ["fool"],
+    canVote: true,
+    canPerform: null,
+    image: rolesIcons["fool"],
+    description: "The fool goal is that the people vote for him during the day! If that happens he wins the game.",
+  },
+  {
+    name: "Pyromaniac",
+    team: ["pyromaniac"],
+    canVote: true,
+    canPerform: {
+      label: "Select someone to pour liquid at",
+      emoji: selectionIcons['pouring'],
+      type: "pouring",
+      needSelection: true,
+      actionTime: "night",
+    },
+    playersToSetOnFire: [],
+    image: rolesIcons["pyromaniac"],
+    description:
+      "The pyromaniac can choose to burn the person he wants each night. The burned person will die tonight.",
+  },
+  {
+    name: "Ghost Lady",
+    team: ["ghostLady"],
+    canVote: true,
+    canPerform: {
+      label: "Select someone to visit tonight",
+      emoji: selectionIcons['whiteFlame'],
+      type: "",
+      needSelection: true,
+      actionTime: "night",
+    },
+    image: rolesIcons["ghostLady"],
+    description: "",
+  },
   {
     name: "Bandit",
-    team: "bandits",
+    team: ["bandits"],
     canVote: true,
     canPerform: {
       label: "Select someone to kill tonight.",
-      emoji: knife,
+      emoji: selectionIcons['knife'],
       type: "eliminate",
       needSelection: true,
       actionTime: "night",
@@ -259,11 +239,11 @@ const characters = [
   },
   {
     name: "Accomplice",
-    team: "bandits",
+    team: ["bandits"],
     canVote: true,
     canPerform: {
       label: "Select someone to kill tonight.",
-      emoji: knife,
+      emoji: selectionIcons['knife'],
       type: "eliminate",
       needSelection: true,
       actionTime: "night",
@@ -274,7 +254,99 @@ const characters = [
     description:
       "The accomplice is a role that appears during the game when a player is transformed when the bandit select him as its partner. A accomplice can kill one person each two nights.",
   },
-  // accomplice is a seventeenth role which is optional
+  // werewolves
+  // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  {
+    name: "Alpha Werewolf",
+    team: ["werewolves"],
+    canVote: true,
+    canPerform: {
+      label: "Select a player to kill tonight.",
+      emoji: selectionIcons['wolfPaw'],
+      type: "devours",
+      needSelection: true,
+      actionTime: "night",
+    },
+    image: rolesIcons["alphaWerewolf"],
+    description:
+      "The Alpha Wolf is a normal werewolf except that his vote counts double. He also has the particularity of having an unknown and not obscure aura. Only clairvoyants can see its role.",
+  },
+  {
+    name: "Cursed",
+    team: ["village"],
+    canVote: true,
+    canPerform: {
+      label: "Select a player to kill tonight.",
+      emoji: selectionIcons['wolfPaw'],
+      type: "devours",
+      needSelection: true,
+      actionTime: "night",
+    },
+    isTranformedIntoWolf: false,
+    image: rolesIcons["cursed"],
+    description:
+      "This role has no particular power. He is part of the village and wins with the village. But he can get bitten and join the werewolves. He will be a simple werewolf.",
+  },
+  {
+    name: "Junior Werewolf",
+    team: ["werewolves"],
+    canVote: true,
+    canPerform: {
+      label: "Select a player to kill tonight.",
+      emoji: selectionIcons['wolfPaw'],
+      type: "devours",
+      needSelection: true,
+      actionTime: "night",
+    },
+    image: rolesIcons["juniorWerewolf"],
+    description:
+      "You are a young werewolf. Thanks to your charm you can choose another player to kill when you die. He can choose a player in any phase of the game, if he commits suicide his target will not die.",
+  },
+  {
+    name: "Nightmare Werewolf",
+    team: ["werewolves"],
+    canVote: true,
+    canPerform: {
+      label: "Select a player to kill tonight.",
+      emoji: selectionIcons['wolfPaw'],
+      type: "devours",
+      needSelection: true,
+      actionTime: "night",
+    },
+    image: rolesIcons["nightmareWerewolf"],
+    description:
+      "Twice per game, during the day, you can select a player who will 'go to sleep' during the following night. This player will then not be able to use his abilities.",
+  },
+  {
+    name: "Wolf Seer",
+    team: ["werewolves"],
+    canVote: true,
+    canPerform: {
+      label: "Select a player to reveal tonight.",
+      emoji: selectionIcons['wolfPaw'],
+      type: "reveal",
+      needSelection: true,
+      actionTime: "night",
+    },
+    image: rolesIcons["wolfSeer"],
+    description:
+      "Each night you can select a player to discover their role. If you are the last werewolf alive or if you give up your ability, you become a regular werewolf.",
+  },
+  {
+    name: "Wolf Shaman",
+    team: ["werewolves"],
+    canVote: true,
+    canPerform: {
+      label: "Select a player to heal tonight.",
+      emoji: selectionIcons['wolfPaw'],
+      type: "heal",
+      needSelection: true,
+      actionTime: "night",
+    },
+    image: rolesIcons["wolfShaman"],
+    description:
+      "Like other wolves, the Wolf Shaman can vote for a player to kill and speak with other wolves at night. During the day, he can enchant another player (non-wolf) who will appear as a Wolf Shaman to aura clairvoyants. The Wolf-Shaman can no longer use his power if he is the last wolf alive, and cannot enchant the first night.",
+  },
 ];
 
 export default characters;
