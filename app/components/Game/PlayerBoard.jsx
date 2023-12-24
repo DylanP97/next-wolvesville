@@ -40,7 +40,7 @@ const PlayerBoard = ({
 
   return (
     <div className="gap-4">
-      <div className="z-20 actions-board grid grid-cols-2 gap-4">
+      <div className="z-20 actions-board grid grid-cols-2 gap-4 my-2">
         {playerToPlay.role.canPerform && (
           <>
 

@@ -13,7 +13,7 @@ import magnifyingGlass from "./magnifying-glass.png";
 import mayorReveal from "./mayor-reveal.png";
 import mute from "./mute.png";
 import pouring from "./pouring.png";
-import resuscutation from "./resuscutation.png";
+import resuscitation from "./resuscitation.png";
 import reveal from "./reveal.png";
 import shovel from "./shovel.png";
 import target from "./target.png";
@@ -36,7 +36,7 @@ const selectionIcons = {
     mayorReveal: mayorReveal,
     mute: mute,
     pouring: pouring,
-    resuscutation: resuscutation,
+    resuscitation: resuscitation,
     reveal: reveal,
     shovel: shovel,
     target: target,

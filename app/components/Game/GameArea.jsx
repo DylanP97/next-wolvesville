@@ -217,7 +217,7 @@ const GameArea = ({ randomRoles }) => {
       tabIndex={0}
       className={`${
         timeOfTheDay === "daytime" ? "bg-sky-500" : timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-sky-950"
-      } h-full w-screen p-8 relative`}
+      } h-screen w-screen p-4 relative`}
       style={{ outline: "none" }}>
       <GameHeader timeOfTheDay={timeOfTheDay} dayCount={dayCount} playerToPlay={playerToPlay} />
       <Image

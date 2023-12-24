@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import AvatarUI from "../Profile/AvatarUI";
+
 import tombstone from "@/public/game/tombstone.png";
 import prison from "@/public/game/prison.png";
-import forefinger from "@/public/game/forefinger.png";
-import same from "@/public/game/same.png";
-import different from "@/public/game/different.png";
+import voteAgainstIcon from "@/public/selection/vote-against-icon.png";
 import spilled from "@/public/game/spilled.png";
 import accomplice from "@/public/roles/accomplice.png";
 
@@ -28,7 +27,7 @@ const PlayerCardImage = ({
     <>
       {!player.isAlive ? (
         <Image className="absolute" width={60} height={60} src={tombstone} alt="role" />
-      ) : player.isRevealed ? (
+      ) : !player.isRevealed ? (
         <Image
           width={60}
           height={60}
@@ -39,11 +38,15 @@ const PlayerCardImage = ({
       ) : (
         <AvatarUI selection={isDoubleSelection || isSelectionMode} />
       )}
-
+      
+      {/* add prison bars */}
       {player.isUnderArrest && <Image className="absolute" width={100} height={100} src={prison} alt="prison" />}
 
+      {/* selection mode ⏬ */}
+
+      {/* add votetime finger pointing image */}
       {player.id !== playerToPlay.id && player.isAlive && isSelectionMode && timeOfTheDay === "votetime" && (
-        <Image className="absolute z-10 animate-pulse" width={50} height={50} src={forefinger} alt="forefinger" />
+        <Image className="absolute z-10 animate-pulse" width={50} height={50} src={voteAgainstIcon} alt="voteAgainstIcon" />
       )}
 
       {player.id !== playerToPlay.id &&

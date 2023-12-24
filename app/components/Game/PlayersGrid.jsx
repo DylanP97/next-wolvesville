@@ -18,8 +18,7 @@ const PlayersGrid = ({
   updatedPlayersList,
   setUpdatedPlayersList,
   timeOfTheDay,
-  displayAction,
-  selectedActionButton
+  selectedActionButton,
 }) => {
   const [selectedOtherPlayers, setSelectedOtherPlayers] = useState([]);
 
@@ -49,7 +48,7 @@ const PlayersGrid = ({
           selectedPlayer2: otherSelected2Player.id,
           actionTime: playerToPlay.role.canPerform.actionTime,
         },
-      ])
+      ]);
     } else {
       setRegisteredActions([
         ...registeredActions,
@@ -131,10 +130,8 @@ const PlayersGrid = ({
     }
   };
 
-  const twClassesPlayerCard = "w-48 h-36 p-4 rounded-3xl flex flex-col justify-center items-center relative gap-2";
-
   return (
-    <div className="grid grid-cols-4 gap-6 my-6 place-items-center xl:w-[80%]">
+    <div className="grid grid-cols-4 xl:grid-cols-4 gap-2 xl:gap-6 my-2 place-items-center xl:w-[80%]">
       {updatedPlayersList.map((player) => (
         <div
           className={`${
@@ -142,25 +139,33 @@ const PlayersGrid = ({
               ? player.id !== playerToPlay.id
                 ? isSelectionMode || isDoubleSelection
                   ? "bg-slate-800 hover:bg-red-800 cursor-pointer"
-                  : "bg-slate-700"
+                  : "bg-transparent-50 bg-cyan-900"
                 : "bg-yellow-950"
               : "bg-black"
-          } ${playerToPlay.id === player.id && "border border-slate"} ${twClassesPlayerCard}`}
+          } ${
+            playerToPlay.id === player.id && "outline-1 outline outline-white"
+          } w-full md:w-48 h-full md:h-full flex flex-col justify-center items-center relative rounded-xl md:rounded-3xl`}
           key={player.name}
           onClick={() => handlePlayerClick(player)}>
           <VoteCount timeOfTheDay={timeOfTheDay} player={player} />
 
           {/* Your player avatar displayed conditionals */}
-          <PlayerCardImage
-            timeOfTheDay={timeOfTheDay}
-            player={player}
-            playerToPlay={playerToPlay}
-            isDoubleSelection={isDoubleSelection}
-            isSelectionMode={isSelectionMode}
-            selectedActionButton={selectedActionButton}
-          />
+          <div className="justify-self-center py-2 justify-self-center">
+            <PlayerCardImage
+              timeOfTheDay={timeOfTheDay}
+              player={player}
+              playerToPlay={playerToPlay}
+              isDoubleSelection={isDoubleSelection}
+              isSelectionMode={isSelectionMode}
+              selectedActionButton={selectedActionButton}
+            />
+          </div>
 
-          <p className="text-xs text-white text-center">{player.name}</p>
+          <div className="justify-self-end w-full overflow-hidden p-1">
+            <p className="text-[10px] font-extralight	 md:text-xs text-white text-center whitespace-nowrap overflow-ellipsis">
+              {player.name}
+            </p>
+          </div>
         </div>
       ))}
     </div>
