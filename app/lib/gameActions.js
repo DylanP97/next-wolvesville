@@ -2,7 +2,13 @@ import characters from "./characters";
 import { shortName } from "@/app/lib/randomUsername";
 import initialPlayersList from "./playerListTemplate";
 
-export const assignRolesToPlayers = (excludedRoles = []) => {
+export const giveRandomName = () => {
+  let randomName;
+  randomName = shortName();
+  return randomName;
+}
+
+export const assignRolesToPlayersRandomly = (excludedRoles = []) => {
   const assignedRoles = new Set();
 
   const randomRoles = initialPlayersList.map((player, index) => {
@@ -314,8 +320,8 @@ export const heal = (action, setUpdatedPlayersList) => {
 export const investigatePlayers = (action, displayAction, updatedPlayersList) => {
   const investigatedPlayer1 = getPlayerById(action.selectedPlayer, updatedPlayersList);
   const investigatedPlayer2 = getPlayerById(action.selectedPlayer2, updatedPlayersList);
-  console.log(investigatedPlayer1)
-  console.log(investigatedPlayer2)
+  console.log(investigatedPlayer1);
+  console.log(investigatedPlayer2);
   const isDifferentTeam = investigatedPlayer1.role.team !== investigatedPlayer2.role.team;
   displayAction(
     `${investigatedPlayer1.name} and ${investigatedPlayer2.name} are ${
@@ -441,7 +447,7 @@ export const becomeAccomplice = (playerToPlay, selectedAccomplice, setUpdatedPla
           ...player,
           role: {
             ...player.role,
-            partner: true
+            partner: true,
           },
         };
       }

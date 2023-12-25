@@ -31,12 +31,11 @@ import nighttime from "@/public/game/night-time.png";
 import WinnerOverlay from "./WinnerOverlay";
 import PlayerInfos from "./PlayerInfos";
 
-const GameArea = ({ randomRoles }) => {
+const GameArea = ({ updatedPlayersList, setUpdatedPlayersList }) => {
   const [gameIsInitialized, setGameIsInitialized] = useState(false);
   const [timeOfTheDay, setTimeOfTheDay] = useState(null);
   const [dayCount, setDayCount] = useState(0);
   const actionsHistoryListRef = useRef(null);
-  const [updatedPlayersList, setUpdatedPlayersList] = useState(null);
   const [aliveList, setAliveList] = useState(null);
   const [playerToPlay, setPlayerToPlay] = useState(null);
   const [registeredActions, setRegisteredActions] = useState([]);
@@ -160,7 +159,7 @@ const GameArea = ({ randomRoles }) => {
       } else setPlayerToPlay(nextPlayer);
       setIsDoubleSelection(false);
       setIsSelectionMode(false);
-      setSelectedActionButton(1)
+      setSelectedActionButton(1);
     }
   };
 
@@ -181,6 +180,18 @@ const GameArea = ({ randomRoles }) => {
     setSelectedActionButton,
   };
 
+  if (!gameIsInitialized) {
+    setPlayerToPlay(updatedPlayersList[0]);
+    setTimeOfTheDay("nighttime");
+    setGameIsInitialized(true);
+  }
+
+  useEffect(() => {
+    if (gameIsInitialized) {
+      displayAction(`It's night, the game has begun...`);
+    }
+  }, []);  
+  
   useEffect(() => {
     if (updatedPlayersList) {
       const onlyAliveList = updatedPlayersList.filter((player) => player.isAlive);
@@ -188,24 +199,7 @@ const GameArea = ({ randomRoles }) => {
     }
   }, [updatedPlayersList]);
 
-  useEffect(() => {
-    if (randomRoles) {
-      setUpdatedPlayersList(randomRoles);
-      setPlayerToPlay(randomRoles[0]);
-      setTimeOfTheDay("nighttime");
-      setGameIsInitialized(true);
-    }
-  }, [randomRoles]);
-
-  useEffect(() => {
-    if (gameIsInitialized) {
-      displayAction(`It's night, the game has begun...`);
-    }
-  }, [gameIsInitialized]);
-
-  return !gameIsInitialized ? (
-    <p className="w-full h-full m-auto p-8">We choose the roles for each player...</p>
-  ) : (
+  return (
     <section
       onKeyDown={(event) => {
         if (event.key === "1") {
@@ -216,7 +210,7 @@ const GameArea = ({ randomRoles }) => {
       }}
       tabIndex={0}
       className={`${
-        timeOfTheDay === "daytime" ? "bg-sky-500" : timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-sky-950"
+        timeOfTheDay === "daytime" ? "bg-sky-500" : timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-black"
       } h-screen w-screen p-4 relative`}
       style={{ outline: "none" }}>
       <GameHeader timeOfTheDay={timeOfTheDay} dayCount={dayCount} playerToPlay={playerToPlay} />
@@ -229,7 +223,7 @@ const GameArea = ({ randomRoles }) => {
         style={{ width: "auto", height: "auto" }}
         className="absolute top-44 right-80 opacity-20"
       />
-      {gameIsInitialized && (
+      {gameIsInitialized ? (
         <div className="xl:flex xl:flex-row">
           <PlayersGrid {...sharedProps} />
           <div className="xl:w-[20%]">
@@ -238,10 +232,11 @@ const GameArea = ({ randomRoles }) => {
             <PlayerBoard {...sharedProps} />
           </div>
         </div>
+      ) : (
+        <p>Game is initializing...</p>
       )}
       {winner && <WinnerOverlay winner={winner} />}
     </section>
   );
 };
-
 export default GameArea;

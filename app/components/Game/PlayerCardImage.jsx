@@ -29,11 +29,11 @@ const PlayerCardImage = ({
         <Image className="absolute" width={60} height={60} src={tombstone} alt="role" />
       ) : !player.isRevealed ? (
         <Image
-          width={60}
-          height={60}
+          width={100}
+          height={100}
           src={player.role.image && player.role.image.src}
           alt="role"
-          className={isDoubleSelection || isSelectionMode ? "opacity-50" : ""}
+          className={`h-16 w-16 ${isDoubleSelection || isSelectionMode ? "opacity-50" : ""}`}
         />
       ) : (
         <AvatarUI selection={isDoubleSelection || isSelectionMode} />

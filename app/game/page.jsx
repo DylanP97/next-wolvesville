@@ -1,11 +1,7 @@
-import GameArea from "../components/Game/GameArea";
-import { assignRolesToPlayers } from "../lib/gameActions";
+import GameStages from "../components/Game/GameStages";
 
 const GamePage = async () => {
-  const excludedRoles = ["Accomplice"];
-  const randomRoles = await assignRolesToPlayers(excludedRoles);
-
-  return <GameArea randomRoles={randomRoles} />;
+  return <GameStages />;
 };
 
 export default GamePage;
