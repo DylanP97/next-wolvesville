@@ -6,7 +6,7 @@ const SelectNumberOfPlayers = ({
   setStep,
   setNbrOfPlayers,
   nbrOfPlayers,
-  setUpdatedPlayersList,
+  setPlayersList,
 }) => {
   class Player {
     constructor(id, name, avatar, role) {
@@ -25,7 +25,7 @@ const SelectNumberOfPlayers = ({
     setNbrOfPlayers(nbrOfPlayers);
     for (let i = 0; i < nbrOfPlayers; i++) {
       new Player(i);
-      setUpdatedPlayersList(updatedPlayersList => [...updatedPlayersList, new Player(i)]);
+      setPlayersList(playersList => [...playersList, new Player(i)]);
     }
     setStep(1);
   };

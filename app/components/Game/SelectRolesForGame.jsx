@@ -7,7 +7,7 @@ import { useState } from "react";
 import { shuffle } from "lodash";
 import { giveRandomName } from "@/app/lib/gameActions";
 
-const SelectRolesForGame = ({ setStep, nbrOfPlayers, updatedPlayersList, setUpdatedPlayersList }) => {
+const SelectRolesForGame = ({ setStep, nbrOfPlayers, playersList, setPlayersList }) => {
   const [selectedRoles, setSelectedRoles] = useState([]);
 
   const submitSelectedRoles = () => {
@@ -15,8 +15,8 @@ const SelectRolesForGame = ({ setStep, nbrOfPlayers, updatedPlayersList, setUpda
       alert(`You must select ${nbrOfPlayers} roles`);
     } else {
       const shuffledRoles = shuffle(selectedRoles);
-      setUpdatedPlayersList(
-        updatedPlayersList.map((player, index) => {
+      setPlayersList(
+        playersList.map((player, index) => {
           player.role = shuffledRoles[index];
           player.name = giveRandomName();
           return player;

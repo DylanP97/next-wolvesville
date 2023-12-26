@@ -20,7 +20,7 @@ const PlayerBoard = ({
   setUpdatedPlayersList,
   timeOfTheDay,
   displayAction,
-  setSelectedActionButton
+  setSelectedActionButton,
 }) => {
   const deadPlayers = updatedPlayersList.filter((player) => !player.isAlive);
 
@@ -40,10 +40,20 @@ const PlayerBoard = ({
 
   return (
     <div className="gap-4">
+      <Action
+        onClick={() => toNext()}
+        label="To next player"
+        kbdComponent={
+          <Kbd className="m-2" keys={["enter"]}>
+            Enter
+          </Kbd>
+        }
+        bgColor="bg-slate-950"
+        dataname="next"
+      />
       <div className="z-20 actions-board grid grid-cols-2 gap-4 my-2">
         {playerToPlay.role.canPerform && (
           <>
-
             {!isUnderArrest &&
               !needDoubleSelection &&
               (nbrLeftToPerform === undefined || nbrLeftToPerform > 0) &&
@@ -139,18 +149,6 @@ const PlayerBoard = ({
           />
         )}
       </div>
-
-      <Action
-        onClick={() => toNext()}
-        label="To next player"
-        kbdComponent={
-          <Kbd className="m-2" keys={["enter"]}>
-            Enter
-          </Kbd>
-        }
-        bgColor="bg-slate-950"
-        dataname="next"
-      />
     </div>
   );
 };

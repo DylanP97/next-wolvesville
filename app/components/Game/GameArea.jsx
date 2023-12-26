@@ -32,12 +32,13 @@ import WinnerOverlay from "./WinnerOverlay";
 import PlayerInfos from "./PlayerInfos";
 import teams from "@/app/lib/teams";
 
-const GameArea = ({ updatedPlayersList, setUpdatedPlayersList }) => {
+const GameArea = ({ playersList }) => {
+  const [updatedPlayersList, setUpdatedPlayersList] = useState(playersList);
   const [timeOfTheDay, setTimeOfTheDay] = useState("nighttime");
   const [dayCount, setDayCount] = useState(0);
   const actionsHistoryListRef = useRef(null);
   const [aliveList, setAliveList] = useState(null);
-  const [playerToPlay, setPlayerToPlay] = useState(updatedPlayersList[0]);
+  const [playerToPlay, setPlayerToPlay] = useState(playersList[0]);
   const [registeredActions, setRegisteredActions] = useState([]);
   const [selectedActionButton, setSelectedActionButton] = useState(1);
   const [isSelectionMode, setIsSelectionMode] = useState(false);
@@ -152,7 +153,7 @@ const GameArea = ({ updatedPlayersList, setUpdatedPlayersList }) => {
       displayAction(`Its time to vote!`);
     }
     if (timeOfTheDay === "votetime") {
-      aftermathOfVote(displayAction, updatedPlayersList, setUpdatedPlayersList, setWinner);
+      aftermathOfVote(displayAction, updatedPlayersList, setUpdatedPlayersList, setWinningTeam);
       cleanUpRegisteredActionsConcerningDeadPlayers(updatedPlayersList, setRegisteredActions);
       registeredActions.forEach((action) => {
         if (action.type === "arrest") {
