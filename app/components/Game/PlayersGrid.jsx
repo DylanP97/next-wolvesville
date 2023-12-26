@@ -131,7 +131,7 @@ const PlayersGrid = ({
   };
 
   return (
-    <div className="grid grid-cols-4 xl:grid-cols-4 gap-2 xl:gap-6 my-2 place-items-center xl:w-[80%]">
+    <div className="grid grid-cols-4 gap-2 xl:gap-6 my-2 place-items-center xl:w-[80%] xl:h-[100%]">
       {updatedPlayersList.map((player) => (
         <div
           className={`${

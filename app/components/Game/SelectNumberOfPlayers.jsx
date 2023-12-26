@@ -40,6 +40,7 @@ const SelectNumberOfPlayers = ({
           size="lg"
           min={4}
           max={16}
+          onChange={(event) => setNbrOfPlayers(Number(event.target.value))}
           endContent={
             <div className="pointer-events-none flex items-center">
               <span className="text-default-400 text-small"> players</span>

@@ -21,6 +21,7 @@ import juniorWerewolf from "./junior-werewolf.png";
 import nightmareWerewolf from "./nightmare-werewolf.png";
 import wolfSeer from "./wolf-seer.png";
 import wolfShaman from "./wolf-shaman.png";
+import werewolf from "./werewolf.png";
 
 // solo / others
 import serialKiller from "./serial-killer.png";
@@ -62,6 +63,7 @@ const rolesIcons = {
   nightmareWerewolf: nightmareWerewolf,
   wolfSeer: wolfSeer,
   wolfShaman: wolfShaman,
+  werewolf: werewolf,
 };
 
 export default rolesIcons;

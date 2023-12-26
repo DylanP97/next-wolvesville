@@ -170,7 +170,7 @@ const characters = [
   // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   {
     name: "Serial Killer",
-    team: ["serialKiller"],
+    team: ["serial killer"],
     canVote: true,
     canPerform: {
       label: "Select someone to murder tonight",
@@ -208,7 +208,7 @@ const characters = [
   },
   {
     name: "Ghost Lady",
-    team: ["ghostLady"],
+    team: ["ghost lady"],
     canVote: true,
     canPerform: {
       label: "Select someone to visit tonight",

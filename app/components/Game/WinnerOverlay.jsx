@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 
-const WinnerOverlay = ({ winner }) => {
+const WinnerOverlay = ({ winningTeam }) => {
+
   return (
     <div
       className="winner-overlay"
@@ -10,9 +11,8 @@ const WinnerOverlay = ({ winner }) => {
         zIndex: 999,
       }}>
       <div className="winner-message flex flex-col justify-center align-center">
-        <Image src={winner.role.image} alt="winner" height={200} width={200} />
-        <p>The {winner.role.name} won!</p>
-        <p>{winner.name}</p>
+        <Image src={winningTeam.image} alt="winner" height={200} width={200} className="m-4" />
+        <p>The {winningTeam.name} won!</p>
       </div>
     </div>
   );

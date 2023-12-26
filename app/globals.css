@@ -44,8 +44,9 @@ body {
 }
 
 .winner-message {
-  background: #fff;
-  color: black;
+  background: #000000;
+  border: white 1px solid;
+  color: rgb(255, 255, 255);
   padding: 20px;
   border-radius: 8px;
   text-align: center;

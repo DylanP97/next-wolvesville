@@ -30,19 +30,38 @@ import votetime from "@/public/game/vote-time.png";
 import nighttime from "@/public/game/night-time.png";
 import WinnerOverlay from "./WinnerOverlay";
 import PlayerInfos from "./PlayerInfos";
+import teams from "@/app/lib/teams";
 
 const GameArea = ({ updatedPlayersList, setUpdatedPlayersList }) => {
-  const [gameIsInitialized, setGameIsInitialized] = useState(false);
-  const [timeOfTheDay, setTimeOfTheDay] = useState(null);
+  const [timeOfTheDay, setTimeOfTheDay] = useState("nighttime");
   const [dayCount, setDayCount] = useState(0);
   const actionsHistoryListRef = useRef(null);
   const [aliveList, setAliveList] = useState(null);
-  const [playerToPlay, setPlayerToPlay] = useState(null);
+  const [playerToPlay, setPlayerToPlay] = useState(updatedPlayersList[0]);
   const [registeredActions, setRegisteredActions] = useState([]);
   const [selectedActionButton, setSelectedActionButton] = useState(1);
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [isDoubleSelection, setIsDoubleSelection] = useState(false);
-  const [winner, setWinner] = useState(false);
+  const [winningTeam, setWinningTeam] = useState(null);
+
+  const checkForWinner = (aliveList) => {
+    const firstPlayerTeam = aliveList[0].role.team.join();
+    let opponentFound = false;
+
+    for (let i = 1; i < aliveList.length; i++) {
+      const currentPlayerTeam = aliveList[i].role.team.join();
+      if (currentPlayerTeam !== firstPlayerTeam) {
+        opponentFound = true;
+        console.log("there is no winner still, the game continues!")
+        break;
+      }
+    }
+
+    if (!opponentFound) {
+      let wArr = teams.filter((t) => t.name === firstPlayerTeam)
+      setWinningTeam(wArr[0])
+    }
+  };
 
   const timeOfDayImages = {
     nighttime,
@@ -156,10 +175,13 @@ const GameArea = ({ updatedPlayersList, setUpdatedPlayersList }) => {
       if (!nextPlayer) {
         changeTimeOfTheDay();
         setPlayerToPlay(aliveList[0]);
-      } else setPlayerToPlay(nextPlayer);
-      setIsDoubleSelection(false);
-      setIsSelectionMode(false);
-      setSelectedActionButton(1);
+      } else {
+        setIsDoubleSelection(false);
+        setIsSelectionMode(false);
+        setSelectedActionButton(1);
+        setPlayerToPlay(nextPlayer);
+      }
+      checkForWinner(aliveList);
     }
   };
 
@@ -180,24 +202,16 @@ const GameArea = ({ updatedPlayersList, setUpdatedPlayersList }) => {
     setSelectedActionButton,
   };
 
-  if (!gameIsInitialized) {
-    setPlayerToPlay(updatedPlayersList[0]);
-    setTimeOfTheDay("nighttime");
-    setGameIsInitialized(true);
-  }
-
-  useEffect(() => {
-    if (gameIsInitialized) {
-      displayAction(`It's night, the game has begun...`);
-    }
-  }, []);  
-  
   useEffect(() => {
     if (updatedPlayersList) {
       const onlyAliveList = updatedPlayersList.filter((player) => player.isAlive);
       setAliveList(onlyAliveList);
     }
   }, [updatedPlayersList]);
+
+  useEffect(() => {
+    displayAction(`It's night, the game has begun...`);
+  }, []);
 
   return (
     <section
@@ -223,19 +237,16 @@ const GameArea = ({ updatedPlayersList, setUpdatedPlayersList }) => {
         style={{ width: "auto", height: "auto" }}
         className="absolute top-44 right-80 opacity-20"
       />
-      {gameIsInitialized ? (
-        <div className="xl:flex xl:flex-row">
-          <PlayersGrid {...sharedProps} />
-          <div className="xl:w-[20%]">
-            <PlayerInfos playerToPlay={playerToPlay} />
-            <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
-            <PlayerBoard {...sharedProps} />
-          </div>
+
+      <div className="xl:flex xl:flex-row">
+        <PlayersGrid {...sharedProps} />
+        <div className="xl:w-[20%]">
+          <PlayerInfos playerToPlay={playerToPlay} />
+          <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
+          <PlayerBoard {...sharedProps} />
         </div>
-      ) : (
-        <p>Game is initializing...</p>
-      )}
-      {winner && <WinnerOverlay winner={winner} />}
+      </div>
+      {winningTeam && <WinnerOverlay winningTeam={winningTeam} />}
     </section>
   );
 };
