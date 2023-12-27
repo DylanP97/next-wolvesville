@@ -39,7 +39,9 @@ const SelectRolesForGame = ({ setStep, nbrOfPlayers, playersList, setPlayersList
           if (character.name !== "Accomplice")
             return (
               <Checkbox key={character.name} value={character}>
-                <span className="text-white">{character.name}</span>
+                <span className="text-white">
+                  {character.name} {" ("}{character.team.join(', ')}{") "}
+                </span>
               </Checkbox>
             );
         })}

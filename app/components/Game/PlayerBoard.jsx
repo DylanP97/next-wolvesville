@@ -51,104 +51,102 @@ const PlayerBoard = ({
         bgColor="bg-slate-950"
         dataname="next"
       />
-      <div className="z-20 actions-board grid grid-cols-2 gap-4 my-2">
-        {playerToPlay.role.canPerform && (
-          <>
-            {!isUnderArrest &&
-              !needDoubleSelection &&
-              (nbrLeftToPerform === undefined || nbrLeftToPerform > 0) &&
-              ((timeOfTheDay === "daytime" && actionTime === "day") ||
-                (timeOfTheDay === "nighttime" && actionTime === "night")) &&
-              (name !== "Grave Robber" || (name === "Grave Robber" && deadPlayers.length > 0)) && (
-                <ActionSetter
-                  label={label}
-                  needSelection={needSelection}
-                  setIsSelectionMode={setIsSelectionMode}
-                  isSelectionMode={isSelectionMode}
-                  registerSimpleAction={registerSimpleAction}
-                  registeredActions={registeredActions}
-                  setRegisteredActions={setRegisteredActions}
-                  dataname="night"
-                  playerToPlay={playerToPlay}
-                  toNext={toNext}
-                  setSelectedActionButton={setSelectedActionButton}
-                />
-              )}
+      {playerToPlay.role.canPerform && (
+        <>
+          {!isUnderArrest &&
+            !needDoubleSelection &&
+            (nbrLeftToPerform === undefined || nbrLeftToPerform > 0) &&
+            ((timeOfTheDay === "daytime" && actionTime === "day") ||
+              (timeOfTheDay === "nighttime" && actionTime === "night")) &&
+            (name !== "Grave Robber" || (name === "Grave Robber" && deadPlayers.length > 0)) && (
+              <ActionSetter
+                label={label}
+                needSelection={needSelection}
+                setIsSelectionMode={setIsSelectionMode}
+                isSelectionMode={isSelectionMode}
+                registerSimpleAction={registerSimpleAction}
+                registeredActions={registeredActions}
+                setRegisteredActions={setRegisteredActions}
+                dataname="night"
+                playerToPlay={playerToPlay}
+                toNext={toNext}
+                setSelectedActionButton={setSelectedActionButton}
+              />
+            )}
 
-            {/* ************************************************************************************* */}
+          {/* ************************************************************************************* */}
 
-            {!isUnderArrest &&
-              (nbrLeftToPerform === undefined || nbrLeftToPerform > 0) &&
-              needDoubleSelection &&
-              ((timeOfTheDay === "daytime" && actionTime === "day") ||
-                (timeOfTheDay === "nighttime" && actionTime === "night")) && (
-                <DoubleSelectionAction
-                  isDoubleSelection={isDoubleSelection}
-                  onClick={() => setIsDoubleSelection(!isDoubleSelection)}
-                  label={label}
-                />
-              )}
+          {!isUnderArrest &&
+            (nbrLeftToPerform === undefined || nbrLeftToPerform > 0) &&
+            needDoubleSelection &&
+            ((timeOfTheDay === "daytime" && actionTime === "day") ||
+              (timeOfTheDay === "nighttime" && actionTime === "night")) && (
+              <DoubleSelectionAction
+                isDoubleSelection={isDoubleSelection}
+                onClick={() => setIsDoubleSelection(!isDoubleSelection)}
+                label={label}
+              />
+            )}
 
-            {/* ************************************************************************************* */}
+          {/* ************************************************************************************* */}
 
-            {!isUnderArrest &&
-              timeOfTheDay === "nighttime" &&
-              !needDoubleSelection &&
-              actionTime === "night" &&
-              name === "Bandit" &&
-              partner === undefined && (
-                <BanditSelectAccompliceAction
-                  isSelectionMode={isSelectionMode}
-                  setIsSelectionMode={setIsSelectionMode}
-                  playerToPlay={playerToPlay}
-                  setSelectedActionButton={setSelectedActionButton}
-                />
-              )}
-          </>
-        )}
+          {!isUnderArrest &&
+            timeOfTheDay === "nighttime" &&
+            !needDoubleSelection &&
+            actionTime === "night" &&
+            name === "Bandit" &&
+            partner === undefined && (
+              <BanditSelectAccompliceAction
+                isSelectionMode={isSelectionMode}
+                setIsSelectionMode={setIsSelectionMode}
+                playerToPlay={playerToPlay}
+                setSelectedActionButton={setSelectedActionButton}
+              />
+            )}
+        </>
+      )}
 
-        {/* ************************************************************************************* */}
+      {/* ************************************************************************************* */}
 
-        {timeOfTheDay === "nighttime" && name === "Terrorist" && bombPower > 0 && (
-          <Action
-            onClick={() => explodeBomb(bombPower, setUpdatedPlayersList, displayAction, toNext)}
-            label={`Explode Bomb, current power: can kill up to ${bombPower} person`}
-            kbdComponent={<Kbd className="m-2">2</Kbd>}
-            bgColor="bg-black-950"
-            dataname="explode"
-          />
-        )}
+      {timeOfTheDay === "nighttime" && name === "Terrorist" && bombPower > 0 && (
+        <Action
+          onClick={() => explodeBomb(bombPower, setUpdatedPlayersList, displayAction, toNext)}
+          label={`Explode Bomb, current power: can kill up to ${bombPower} person`}
+          kbdComponent={<Kbd className="m-2">2</Kbd>}
+          bgColor="bg-black-950"
+          dataname="explode"
+        />
+      )}
 
-        {timeOfTheDay === "nighttime" && name === "Pyromaniac" && playersToSetOnFire.length > 0 && (
-          <Action
-            onClick={() => burnPlayers(playersToSetOnFire, setUpdatedPlayersList, displayAction, toNext)}
-            label={`Burn ${playersToSetOnFire.length} players`}
-            kbdComponent={<Kbd className="m-2">2</Kbd>}
-            bgColor="bg-orange-900"
-            dataname="burn"
-          />
-        )}
+      {timeOfTheDay === "nighttime" && name === "Pyromaniac" && playersToSetOnFire.length > 0 && (
+        <Action
+          onClick={() => burnPlayers(playersToSetOnFire, setUpdatedPlayersList, displayAction, toNext)}
+          label={`Burn ${playersToSetOnFire.length} players`}
+          kbdComponent={<Kbd className="m-2">2</Kbd>}
+          bgColor="bg-orange-900"
+          dataname="burn"
+        />
+      )}
 
-        {timeOfTheDay === "votetime" && name !== "Mayor" && canVote && (
-          <Action
-            onClick={() => setIsSelectionMode(!isSelectionMode)}
-            label={!isSelectionMode ? "Select a player to vote against!" : "Cancel selection"}
-            kbdComponent={<Kbd className="m-2">1</Kbd>}
-            bgColor="bg-cyan-900"
-            dataname="vote"
-          />
-        )}
+      {timeOfTheDay === "votetime" && name !== "Mayor" && canVote && (
+        <Action
+          onClick={() => setIsSelectionMode(!isSelectionMode)}
+          label={!isSelectionMode ? "Select a player to vote against!" : "Cancel selection"}
+          kbdComponent={<Kbd className="m-2">1</Kbd>}
+          bgColor="bg-cyan-900"
+          dataname="vote"
+        />
+      )}
 
-        {timeOfTheDay === "votetime" && name === "Mayor" && canVote && (
-          <Action
-            onClick={() => setIsSelectionMode(!isSelectionMode)}
-            label={!isSelectionMode ? label : "Cancel selection"}
-            kbdComponent={<Kbd className="m-2">1</Kbd>}
-            bgColor="bg-cyan-700"
-            dataname="doublevotemayor"
-          />
-        )}
-      </div>
+      {timeOfTheDay === "votetime" && name === "Mayor" && canVote && (
+        <Action
+          onClick={() => setIsSelectionMode(!isSelectionMode)}
+          label={!isSelectionMode ? label : "Cancel selection"}
+          kbdComponent={<Kbd className="m-2">1</Kbd>}
+          bgColor="bg-cyan-700"
+          dataname="doublevotemayor"
+        />
+      )}
     </div>
   );
 };

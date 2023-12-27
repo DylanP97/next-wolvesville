@@ -6,7 +6,7 @@ export const giveRandomName = () => {
   let randomName;
   randomName = shortName();
   return randomName;
-}
+};
 
 export const assignRolesToPlayersRandomly = (excludedRoles = []) => {
   const assignedRoles = new Set();
@@ -96,6 +96,34 @@ export const doubleVoteAgainst = (playerId, setUpdatedPlayersList) => {
   });
 };
 
+export const wolfVoteAgainst = (playerId, setUpdatedPlayersList) => {
+  setUpdatedPlayersList((prevPlayersList) => {
+    return prevPlayersList.map((player) => {
+      if (player.id === playerId) {
+        return {
+          ...player,
+          wolfVoteAgainst: player.voteAgainst + 1,
+        };
+      }
+      return player;
+    });
+  });
+};
+
+export const wolfDoubleVoteAgainst = (playerId, setUpdatedPlayersList) => {
+  setUpdatedPlayersList((prevPlayersList) => {
+    return prevPlayersList.map((player) => {
+      if (player.id === playerId) {
+        return {
+          ...player,
+          wolfVoteAgainst: player.voteAgainst + 2,
+        };
+      }
+      return player;
+    });
+  });
+};
+
 export const findPlayerWithMostVotes = (playersList) => {
   let playerWithMostVotes = null;
   let maxVotes = 0;
@@ -103,6 +131,20 @@ export const findPlayerWithMostVotes = (playersList) => {
   for (const player of playersList) {
     if (player.voteAgainst > maxVotes) {
       maxVotes = player.voteAgainst;
+      playerWithMostVotes = player;
+    }
+  }
+
+  return playerWithMostVotes;
+};
+
+export const findPlayerWithMostWolvesVotes = (playersList) => {
+  let playerWithMostVotes = null;
+  let maxVotes = 0;
+
+  for (const player of playersList) {
+    if (player.wolfVoteAgainst > maxVotes) {
+      maxVotes = player.wolfVoteAgainst;
       playerWithMostVotes = player;
     }
   }
@@ -121,6 +163,25 @@ export const cleanUpRegisteredActionsConcerningDeadPlayers = (updatedPlayersList
       });
     }
   });
+};
+
+export const aftermathOfNightWolvesAttack = (displayAction, updatedPlayersList, setUpdatedPlayersList) => {
+  const mostVotedAgainstPlayer = findPlayerWithMostWolvesVotes(updatedPlayersList);
+  
+  // reset every player nbrOfWolvesVotes to 0
+  updatedPlayersList.forEach((player) => {
+    player.voteAgainst = 0;
+  });
+
+  if (!mostVotedAgainstPlayer) {
+    displayAction(`The wolves killed nobody last night!`);
+  } else {
+    killSelectedPlayer(mostVotedAgainstPlayer.id, setUpdatedPlayersList);
+    displayAction(
+      `The wolves killed ${updatedPlayersList[mostVotedAgainstPlayer.id].name} last night!`
+    );
+    checkIfIsInLove(mostVotedAgainstPlayer, updatedPlayersList, setUpdatedPlayersList, displayAction);
+  }
 };
 
 export const aftermathOfVote = (displayAction, updatedPlayersList, setUpdatedPlayersList, setWinner) => {

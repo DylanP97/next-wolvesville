@@ -17,7 +17,6 @@ const PlayerCardImage = ({
   isSelectionMode,
   selectedActionButton,
 }) => {
-
   const checkIfAlreadyPouredWithGasoline = () => {
     const isPoured = playerToPlay.role.playersToSetOnFire.some((pouredPlayer) => player.id === pouredPlayer.id);
     return !isPoured;
@@ -27,7 +26,7 @@ const PlayerCardImage = ({
     <>
       {!player.isAlive ? (
         <Image className="absolute" width={60} height={60} src={tombstone} alt="role" />
-      ) : !player.isRevealed ? (
+      ) : player.isRevealed ? (
         <Image
           width={100}
           height={100}
@@ -38,7 +37,7 @@ const PlayerCardImage = ({
       ) : (
         <AvatarUI selection={isDoubleSelection || isSelectionMode} />
       )}
-      
+
       {/* add prison bars */}
       {player.isUnderArrest && <Image className="absolute" width={100} height={100} src={prison} alt="prison" />}
 
@@ -46,9 +45,16 @@ const PlayerCardImage = ({
 
       {/* add votetime finger pointing image */}
       {player.id !== playerToPlay.id && player.isAlive && isSelectionMode && timeOfTheDay === "votetime" && (
-        <Image className="absolute z-10 animate-pulse" width={50} height={50} src={voteAgainstIcon} alt="voteAgainstIcon" />
+        <Image
+          className="absolute z-10 animate-pulse"
+          width={50}
+          height={50}
+          src={voteAgainstIcon}
+          alt="voteAgainstIcon"
+        />
       )}
 
+      {/* Basic selection action */}
       {player.id !== playerToPlay.id &&
         !player.isUnderArrest &&
         player.isAlive &&
@@ -56,7 +62,8 @@ const PlayerCardImage = ({
         timeOfTheDay !== "votetime" &&
         playerToPlay.role.name !== "Bandit" &&
         playerToPlay.role.name !== "Pyromaniac" &&
-        playerToPlay.role.name !== "Grave Robber" && (
+        playerToPlay.role.name !== "Grave Robber" &&
+        playerToPlay.role.team.join() !== "werewolves" && (
           <Image
             className="absolute z-10 animate-pulse"
             width={50}
@@ -66,6 +73,24 @@ const PlayerCardImage = ({
           />
         )}
 
+      {/* The werewolves will select among players that are not werewolves */}
+      {player.id !== playerToPlay.id &&
+        !player.isUnderArrest &&
+        player.isAlive &&
+        (isSelectionMode || isDoubleSelection) &&
+        timeOfTheDay === "nighttime" &&
+        player.role.team.join() !== "werewolves" &&
+        playerToPlay.role.team.join() === "werewolves" && (
+          <Image
+            className="absolute z-10 animate-pulse"
+            width={50}
+            height={50}
+            src={playerToPlay.role.canPerform.emoji.src}
+            alt={playerToPlay.role.canPerform.type}
+          />
+        )}
+
+      {/* The bandit will select either its accomplice or someone to kill */}
       {player.id !== playerToPlay.id &&
         player.isAlive &&
         (isSelectionMode || isDoubleSelection) &&
@@ -79,10 +104,11 @@ const PlayerCardImage = ({
             alt={playerToPlay.role.canPerform.type}
           />
         )}
-        
 
+      {/* The Pyro will select among players that aren't already poured with gasoline */}
       {player.id !== playerToPlay.id &&
-        player.isAlive && !player.isUnderArrest &&
+        player.isAlive &&
+        !player.isUnderArrest &&
         (isSelectionMode || isDoubleSelection) &&
         timeOfTheDay !== "votetime" &&
         playerToPlay.role.name === "Pyromaniac" && (
@@ -95,6 +121,7 @@ const PlayerCardImage = ({
           />
         )}
 
+      {/* The Grave Robber will select among the dead players */}
       {player.id !== playerToPlay.id &&
         !player.isAlive &&
         (isSelectionMode || isDoubleSelection) &&

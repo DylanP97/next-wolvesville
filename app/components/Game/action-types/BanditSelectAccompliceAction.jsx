@@ -24,7 +24,7 @@ return (
         <>Cancel selection</>
       )
     }
-    kbdComponent={<Kbd className="m-2">1</Kbd>}
+    kbdComponent={<Kbd className="m-2">2</Kbd>}
     bgColor="bg-cyan-600"
     dataname="bandit"
   />

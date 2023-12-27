@@ -23,16 +23,16 @@ import {
   eliminate,
   throwHolyWater,
   investigatePlayers,
+  aftermathOfNightWolvesAttack,
 } from "@/app/lib/gameActions";
-import Image from "next/image";
-import daytime from "@/public/game/day-time.png";
-import votetime from "@/public/game/vote-time.png";
-import nighttime from "@/public/game/night-time.png";
 import WinnerOverlay from "./WinnerOverlay";
 import PlayerInfos from "./PlayerInfos";
 import teams from "@/app/lib/teams";
+import { Button } from "@nextui-org/react";
+import Background from "./Background";
 
 const GameArea = ({ playersList }) => {
+  const [gameStarted, setGameStarted] = useState(false);
   const [updatedPlayersList, setUpdatedPlayersList] = useState(playersList);
   const [timeOfTheDay, setTimeOfTheDay] = useState("nighttime");
   const [dayCount, setDayCount] = useState(0);
@@ -45,6 +45,9 @@ const GameArea = ({ playersList }) => {
   const [isDoubleSelection, setIsDoubleSelection] = useState(false);
   const [winningTeam, setWinningTeam] = useState(null);
 
+  console.log(registeredActions);
+  console.log(updatedPlayersList);
+
   const checkForWinner = (aliveList) => {
     const firstPlayerTeam = aliveList[0].role.team.join();
     let opponentFound = false;
@@ -53,21 +56,15 @@ const GameArea = ({ playersList }) => {
       const currentPlayerTeam = aliveList[i].role.team.join();
       if (currentPlayerTeam !== firstPlayerTeam) {
         opponentFound = true;
-        console.log("there is no winner still, the game continues!")
+        console.log("there is no winner still, the game continues!");
         break;
       }
     }
 
     if (!opponentFound) {
-      let wArr = teams.filter((t) => t.name === firstPlayerTeam)
-      setWinningTeam(wArr[0])
+      let wArr = teams.filter((t) => t.name === firstPlayerTeam);
+      setWinningTeam(wArr[0]);
     }
-  };
-
-  const timeOfDayImages = {
-    nighttime,
-    votetime,
-    daytime,
   };
 
   const displayAction = (message, itsANewDay) => {
@@ -118,6 +115,8 @@ const GameArea = ({ playersList }) => {
 
   const changeTimeOfTheDay = () => {
     if (timeOfTheDay === "nighttime") {
+      aftermathOfNightWolvesAttack(displayAction, updatedPlayersList, setUpdatedPlayersList);
+      cleanUpRegisteredActionsConcerningDeadPlayers(updatedPlayersList, setRegisteredActions);
       registeredActions.forEach((action) => {
         if (action.type === "investigate") {
           investigatePlayers(action, displayAction, updatedPlayersList);
@@ -166,6 +165,7 @@ const GameArea = ({ playersList }) => {
       });
       displayAction(`Its night...`);
     }
+    checkForWinner(aliveList);
     setTimeOfTheDay(timeOfTheDay === "daytime" ? "votetime" : timeOfTheDay === "votetime" ? "nighttime" : "daytime");
   };
 
@@ -184,6 +184,12 @@ const GameArea = ({ playersList }) => {
       }
       checkForWinner(aliveList);
     }
+  };
+
+  const handleStartGame = () => {
+    checkForWinner(aliveList);
+    setGameStarted(true);
+    displayAction(`It's night, the game has begun...`);
   };
 
   const sharedProps = {
@@ -210,17 +216,15 @@ const GameArea = ({ playersList }) => {
     }
   }, [updatedPlayersList]);
 
-  useEffect(() => {
-    displayAction(`It's night, the game has begun...`);
-  }, []);
-
   return (
     <section
       onKeyDown={(event) => {
-        if (event.key === "1") {
-        } else if (event.key === "2") {
-        } else if (event.key === "Enter") {
-          toNext(event);
+        if (gameStarted) {
+          if (event.key === "1") {
+          } else if (event.key === "2") {
+          } else if (event.key === "Enter") {
+            toNext(event);
+          }
         }
       }}
       tabIndex={0}
@@ -228,25 +232,24 @@ const GameArea = ({ playersList }) => {
         timeOfTheDay === "daytime" ? "bg-sky-500" : timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-black"
       } h-screen w-screen p-4 relative`}
       style={{ outline: "none" }}>
-      <GameHeader timeOfTheDay={timeOfTheDay} dayCount={dayCount} playerToPlay={playerToPlay} />
-      <Image
-        src={timeOfDayImages[timeOfTheDay]}
-        alt="bg-time"
-        width={500}
-        height={500}
-        priority
-        style={{ width: "auto", height: "auto" }}
-        className="absolute top-44 right-80 opacity-20"
-      />
-
+      <GameHeader timeOfTheDay={timeOfTheDay} dayCount={dayCount} />
+      <Background timeOfTheDay={timeOfTheDay} />
       <div className="xl:flex xl:flex-row">
-        <PlayersGrid {...sharedProps} />
         <div className="xl:w-[20%]">
-          <PlayerInfos playerToPlay={playerToPlay} />
+          {gameStarted && <PlayerInfos playerToPlay={playerToPlay} />}
           <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
-          <PlayerBoard {...sharedProps} />
+          {gameStarted && <PlayerBoard {...sharedProps} />}
+          {!gameStarted && (
+            <div className=" xl:w-[80%] xl:h-[100%]">
+              <Button className="w-full" variant="ghost" color="primary" onClick={() => handleStartGame()}>
+                Start Game
+              </Button>
+            </div>
+          )}
         </div>
+        {gameStarted && <PlayersGrid {...sharedProps} />}
       </div>
+
       {winningTeam && <WinnerOverlay winningTeam={winningTeam} />}
     </section>
   );

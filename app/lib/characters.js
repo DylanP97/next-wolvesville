@@ -17,7 +17,7 @@ const characters = [
     team: ["village"],
     canVote: true,
     canPerform: {
-      label: "Handcuff a player for the next night",
+      label: "Handcuff a player",
       emoji: selectionIcons['handcuffs'],
       type: "arrest",
       needSelection: true,
@@ -80,7 +80,7 @@ const characters = [
     team: ["village"],
     canVote: true,
     canPerform: {
-      label: "Select someone to heal tonight",
+      label: "Select someone to heal",
       emoji: selectionIcons['bandAid'],
       type: "heal",
       needSelection: true,
@@ -95,7 +95,7 @@ const characters = [
     team: ["village"],
     canVote: true,
     canPerform: {
-      label: "Select two players to check if they are in the same team.",
+      label: "Investigate two players.",
       emoji: selectionIcons['magnifyingGlass'],
       type: "investigate",
       needSelection: false,
@@ -140,7 +140,7 @@ const characters = [
     team: ["village"],
     canVote: true,
     canPerform: {
-      label: "Select a player to throw the holy water at",
+      label: "Throw the holy water",
       emoji: selectionIcons['holyWater'],
       type: "throw",
       needSelection: true,
@@ -225,7 +225,7 @@ const characters = [
     team: ["bandits"],
     canVote: true,
     canPerform: {
-      label: "Select someone to kill tonight.",
+      label: "Select someone to kill.",
       emoji: selectionIcons['knife'],
       type: "eliminate",
       needSelection: true,
@@ -242,7 +242,7 @@ const characters = [
     team: ["bandits"],
     canVote: true,
     canPerform: {
-      label: "Select someone to kill tonight.",
+      label: "Select someone to kill.",
       emoji: selectionIcons['knife'],
       type: "eliminate",
       needSelection: true,
@@ -261,7 +261,7 @@ const characters = [
     team: ["werewolves"],
     canVote: true,
     canPerform: {
-      label: "Select a player to kill tonight.",
+      label: "Select a player to kill.",
       emoji: selectionIcons['wolfPaw'],
       type: "devours",
       needSelection: true,
@@ -276,7 +276,7 @@ const characters = [
     team: ["village"],
     canVote: true,
     canPerform: {
-      label: "Select a player to kill tonight.",
+      label: "Select a player to kill.",
       emoji: selectionIcons['wolfPaw'],
       type: "devours",
       needSelection: true,
@@ -292,7 +292,7 @@ const characters = [
     team: ["werewolves"],
     canVote: true,
     canPerform: {
-      label: "Select a player to kill tonight.",
+      label: "Select a player to kill.",
       emoji: selectionIcons['wolfPaw'],
       type: "devours",
       needSelection: true,
@@ -307,7 +307,7 @@ const characters = [
     team: ["werewolves"],
     canVote: true,
     canPerform: {
-      label: "Select a player to kill tonight.",
+      label: "Select a player to kill.",
       emoji: selectionIcons['wolfPaw'],
       type: "devours",
       needSelection: true,
@@ -322,9 +322,9 @@ const characters = [
     team: ["werewolves"],
     canVote: true,
     canPerform: {
-      label: "Select a player to reveal tonight.",
+      label: "Select a player to kill.",
       emoji: selectionIcons['wolfPaw'],
-      type: "reveal",
+      type: "devours",
       needSelection: true,
       actionTime: "night",
     },
@@ -337,9 +337,9 @@ const characters = [
     team: ["werewolves"],
     canVote: true,
     canPerform: {
-      label: "Select a player to heal tonight.",
+      label: "Select a player to kill.",
       emoji: selectionIcons['wolfPaw'],
-      type: "heal",
+      type: "devours",
       needSelection: true,
       actionTime: "night",
     },

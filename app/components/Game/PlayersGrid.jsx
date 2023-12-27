@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { doubleVoteAgainst, voteAgainst } from "../../lib/gameActions";
+import { doubleVoteAgainst, voteAgainst, wolfDoubleVoteAgainst, wolfVoteAgainst } from "../../lib/gameActions";
 import PlayerCardImage from "./PlayerCardImage";
 import VoteCount from "./VoteCount";
 import { becomeAccomplice } from "@/app/lib/gameActions";
@@ -33,7 +33,6 @@ const PlayersGrid = ({
       },
     ]);
     setIsSelectionMode(false);
-
     toNext();
   };
 
@@ -93,7 +92,7 @@ const PlayersGrid = ({
     }
 
     if (player.isUnderArrest) {
-      console.log("this player is locked up in jail you can't get near");
+      console.log("this player is locked up in jail. You can't get select him.");
       return;
     }
 
@@ -102,7 +101,14 @@ const PlayersGrid = ({
         const isMayor = playerToPlay.role.name === "Mayor";
         voteForVotetime(player.id, isMayor);
       } else {
-        if (playerToPlay.role.name === "Grave Robber") {
+        if (playerToPlay.role.team.join() === "werewolves") {
+          playerToPlay.role.name === "Alpha Werewolf"
+            ? wolfDoubleVoteAgainst(player.id, setUpdatedPlayersList)
+            : wolfVoteAgainst(player.id, setUpdatedPlayersList);
+          setIsSelectionMode(false);
+          toNext();
+          return;
+        } else if (playerToPlay.role.name === "Grave Robber") {
           console.log("this player is alive");
           return;
         } else if (
@@ -150,7 +156,7 @@ const PlayersGrid = ({
           <VoteCount timeOfTheDay={timeOfTheDay} player={player} />
 
           {/* Your player avatar displayed conditionals */}
-          <div className="justify-self-center py-2 justify-self-center">
+          <div className="flex justify-center items-center py-2">
             <PlayerCardImage
               timeOfTheDay={timeOfTheDay}
               player={player}
