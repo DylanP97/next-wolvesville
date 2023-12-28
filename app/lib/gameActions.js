@@ -1,4 +1,4 @@
-import characters from "./characters";
+import roles from "./roles";
 import { shortName } from "@/app/lib/randomUsername";
 import initialPlayersList from "./playerListTemplate";
 
@@ -14,7 +14,7 @@ export const assignRolesToPlayersRandomly = (excludedRoles = []) => {
   const randomRoles = initialPlayersList.map((player, index) => {
     let randomCharacter;
     do {
-      randomCharacter = characters[Math.floor(Math.random() * characters.length)];
+      randomCharacter = roles[Math.floor(Math.random() * roles.length)];
     } while (assignedRoles.has(randomCharacter.name) || excludedRoles.includes(randomCharacter.name));
     assignedRoles.add(randomCharacter.name);
     let randomName;
@@ -495,7 +495,7 @@ export const robTheRole = (action, setUpdatedPlayersList, displayAction) => {
 };
 
 export const becomeAccomplice = (playerToPlay, selectedAccomplice, setUpdatedPlayersList, toNext) => {
-  const accompliceObject = characters.find((c) => c.name === "Accomplice");
+  const accompliceObject = roles.find((c) => c.name === "Accomplice");
   setUpdatedPlayersList((prevPlayersList) => {
     return prevPlayersList.map((player) => {
       if (player.id === selectedAccomplice.id) {

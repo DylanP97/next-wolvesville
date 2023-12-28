@@ -1,6 +1,7 @@
 "use client";
 
 import NavigationMenu from "./NavigationMenu";
+import WebSocketComponent from "../WebSocketComponent";
 
 const HomePage = () => {
   return (
@@ -11,6 +12,7 @@ const HomePage = () => {
         Check the original game here
       </a>
       <NavigationMenu />
+      <WebSocketComponent />
     </div>
   );
 };
