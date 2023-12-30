@@ -1,5 +1,5 @@
-import rolesIcons from "@/public/roles";
-import selectionIcons from "@/public/selection";
+import rolesIcons from "../../public/roles";
+import selectionIcons from "../../public/selection";
 
 const roles = [
   // village
@@ -349,4 +349,4 @@ const roles = [
   },
 ];
 
-export default characters;
+export default roles;

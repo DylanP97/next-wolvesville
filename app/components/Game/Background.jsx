@@ -1,9 +1,9 @@
 'use client'
 
 import Image from "next/image";
-import daytime from "@/public/game/day-time.png";
-import votetime from "@/public/game/vote-time.png";
-import nighttime from "@/public/game/night-time.png";
+import daytime from "../../../public/game/day-time.png";
+import votetime from "../../../public/game/vote-time.png";
+import nighttime from "../../../public/game/night-time.png";
 
 const Background = ({
     timeOfTheDay

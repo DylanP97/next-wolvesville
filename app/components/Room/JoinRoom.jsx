@@ -5,13 +5,11 @@ import React from "react";
 
 const JoinRoom = ({ currentRooms }) => {
   const joinRoom = () => {
-    if (room !== "") {
-      socket.emit("join_room", room);
-    }
+    console.log("joinRoom function");
   };
 
   return (
-    <div className="min-h-screen h-full w-full bg-black p-4">
+    <div className="w-full bg-black p-4">
       <h1 className="text-white text-3xl font-bold">Join a room</h1>
       {!currentRooms ? (
         <div className="m-4">

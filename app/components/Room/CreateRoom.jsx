@@ -7,11 +7,11 @@ const CreateRoom = () => {
   const [roomName, setRoomName] = useState("");
 
   const submitNewRoom = (roomName) => {
-    console.log("submitNewRoom " + roomName);
+    console.log("create room " + roomName);
   };
 
   return (
-    <div className="min-h-screen h-full w-full bg-black p-4">
+    <div className="w-full bg-black p-4">
       <h1 className="text-white text-3xl font-bold">Create a new room</h1>
       <div className="m-4">
         <label className="text-white">Enter room name : </label>
