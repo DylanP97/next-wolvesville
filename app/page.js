@@ -6,13 +6,13 @@ import Connexion from "./components/Home/Connexion";
 import { useAuth } from "./providers/AuthProvider";
 
 export default function Home() {
-  const { username, isConnected } = useAuth();
+  const { username, isConnected, socketId } = useAuth();
 
   return (
     <div>
       {isConnected ? (
         <>
-          <AppHeader username={username} />
+          <AppHeader username={username} socketId={socketId} />
           <HomePage />
         </>
       ) : (

@@ -33,7 +33,6 @@ const Connexion = () => {
 
         if (response.ok) {
           const userData = await response.json();
-          console.log(userData);
           setAuthInfo(userData.username, true);
         }
       } catch (error) {
@@ -69,7 +68,7 @@ const Connexion = () => {
               isRequired
               type="text"
               label="Username"
-              defaultValue={username}
+              value={username}
               className="max-w-xs p-2"
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -82,7 +81,7 @@ const Connexion = () => {
             isRequired
             type="email"
             label="Email"
-            defaultValue={email}
+            value={email}
             className="max-w-xs p-2"
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -94,7 +93,7 @@ const Connexion = () => {
             isRequired
             type="password"
             label="Password"
-            defaultValue={password}
+            value={password}
             className="max-w-xs p-2"
             onChange={(e) => setPassword(e.target.value)}
           />
