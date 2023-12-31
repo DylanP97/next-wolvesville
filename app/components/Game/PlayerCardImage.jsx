@@ -3,11 +3,11 @@
 import Image from "next/image";
 import AvatarUI from "../Profile/AvatarUI";
 
-import tombstone from "@/public/game/tombstone.png";
-import prison from "@/public/game/prison.png";
-import voteAgainstIcon from "@/public/selection/vote-against-icon.png";
-import spilled from "@/public/game/spilled.png";
-import accomplice from "@/public/roles/accomplice.png";
+import tombstone from "../../../public/game/tombstone.png";
+import prison from "../../../public/game/prison.png";
+import voteAgainstIcon from "../../../public/selection/vote-against-icon.png";
+import spilled from "../../../public/game/spilled.png";
+import accomplice from "../../../public/roles/accomplice.png";
 
 const PlayerCardImage = ({
   timeOfTheDay,

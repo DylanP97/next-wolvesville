@@ -4,7 +4,7 @@ import { useState } from "react";
 import { doubleVoteAgainst, voteAgainst, wolfDoubleVoteAgainst, wolfVoteAgainst } from "../../lib/gameActions";
 import PlayerCardImage from "./PlayerCardImage";
 import VoteCount from "./VoteCount";
-import { becomeAccomplice } from "@/app/lib/gameActions";
+import { becomeAccomplice } from "../../lib/gameActions";
 
 const PlayersGrid = ({
   playerToPlay,

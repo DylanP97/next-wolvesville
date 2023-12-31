@@ -24,10 +24,10 @@ import {
   throwHolyWater,
   investigatePlayers,
   aftermathOfNightWolvesAttack,
-} from "@/app/lib/gameActions";
+} from "../../lib/gameActions";
 import WinnerOverlay from "./WinnerOverlay";
 import PlayerInfos from "./PlayerInfos";
-import teams from "@/app/lib/teams";
+import teams from "../../lib/teams";
 import { Button } from "@nextui-org/react";
 import Background from "./Background";
 

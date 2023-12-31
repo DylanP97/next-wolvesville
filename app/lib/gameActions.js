@@ -1,5 +1,5 @@
 import roles from "./roles";
-import { shortName } from "@/app/lib/randomUsername";
+import { shortName } from "./randomUsername";
 import initialPlayersList from "./playerListTemplate";
 
 export const giveRandomName = () => {
@@ -167,7 +167,7 @@ export const cleanUpRegisteredActionsConcerningDeadPlayers = (updatedPlayersList
 
 export const aftermathOfNightWolvesAttack = (displayAction, updatedPlayersList, setUpdatedPlayersList) => {
   const mostVotedAgainstPlayer = findPlayerWithMostWolvesVotes(updatedPlayersList);
-  
+
   // reset every player nbrOfWolvesVotes to 0
   updatedPlayersList.forEach((player) => {
     player.voteAgainst = 0;
@@ -177,9 +177,7 @@ export const aftermathOfNightWolvesAttack = (displayAction, updatedPlayersList, 
     displayAction(`The wolves killed nobody last night!`);
   } else {
     killSelectedPlayer(mostVotedAgainstPlayer.id, setUpdatedPlayersList);
-    displayAction(
-      `The wolves killed ${updatedPlayersList[mostVotedAgainstPlayer.id].name} last night!`
-    );
+    displayAction(`The wolves killed ${updatedPlayersList[mostVotedAgainstPlayer.id].name} last night!`);
     checkIfIsInLove(mostVotedAgainstPlayer, updatedPlayersList, setUpdatedPlayersList, displayAction);
   }
 };

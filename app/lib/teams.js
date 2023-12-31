@@ -1,5 +1,5 @@
 
-import rolesIcons from "@/public/roles";
+import rolesIcons from "../../public/roles";
 
 const teams = [
     {

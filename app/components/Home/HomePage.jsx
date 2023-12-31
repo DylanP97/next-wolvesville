@@ -11,6 +11,7 @@ const HomePage = () => {
   const { username, isConnected, socketId } = useAuth();
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const socket = io("http://localhost:5000");
@@ -30,9 +31,24 @@ const HomePage = () => {
     };
   }, []);
 
-  const handleSendMessage = (message) => {
+  useEffect(() => {
     if (socket) {
+      socket.on("chat message", (data) => {
+        setMessages((prevMessages) => [...prevMessages, { message: data.msg, userId: data.userId }]);
+      });
+    }
+
+    return () => {
+      if (socket) {
+        socket.off("chat message");
+      }
+    };
+  }, [socket]);
+
+  const handleSendMessage = (message) => {
+    if (socket && message.trim() !== "") {
       socket.emit("chat message", `${message}`);
+      setMessage("");
     }
   };
 
@@ -46,9 +62,16 @@ const HomePage = () => {
       <NavigationMenu />
       <hr />
       <div className="p-2">
+        <div>
+          {messages.map((data, index) => (
+            <div className="text-white" key={index}>
+              {data.message} send by {data.userId}
+            </div>
+          ))}
+        </div>
         <input type="text" placeholder="Enter your message" onChange={(event) => setMessage(event.target.value)} />
         <br />
-        <Button onClick={handleSendMessage(message)}>Send Message</Button>
+        <Button onClick={() => handleSendMessage(message)}>Send Message</Button>
       </div>
     </div>
   );

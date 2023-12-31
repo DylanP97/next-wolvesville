@@ -1,11 +1,11 @@
 "use client";
 
-import characters from "@/app/lib/characters";
+import roles from "../../lib/roles";
 import { Button } from "@nextui-org/react";
 import { CheckboxGroup, Checkbox } from "@nextui-org/react";
 import { useState } from "react";
 import { shuffle } from "lodash";
-import { giveRandomName } from "@/app/lib/gameActions";
+import { giveRandomName } from "../../lib/gameActions";
 
 const SelectRolesForGame = ({ setStep, nbrOfPlayers, playersList, setPlayersList }) => {
   const [selectedRoles, setSelectedRoles] = useState([]);
@@ -35,7 +35,7 @@ const SelectRolesForGame = ({ setStep, nbrOfPlayers, playersList, setPlayersList
         defaultValue={["Villager", "Alpha Werewolf"]}
         value={selectedRoles}
         onValueChange={setSelectedRoles}>
-        {characters.map((character, index) => {
+        {roles.map((character, index) => {
           if (character.name !== "Accomplice")
             return (
               <Checkbox key={character.name} value={character}>

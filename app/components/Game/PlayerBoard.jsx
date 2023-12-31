@@ -1,6 +1,6 @@
 "use client";
 
-import { burnPlayers, explodeBomb, registerSimpleAction } from "@/app/lib/gameActions";
+import { burnPlayers, explodeBomb, registerSimpleAction } from "../../lib/gameActions";
 import { Kbd } from "@nextui-org/react";
 import Action from "./Action";
 import ActionSetter from "./action-types/ActionSetter";
