@@ -1,56 +1,33 @@
 "use client";
 
 import NavigationMenu from "./NavigationMenu";
-import io from "socket.io-client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@nextui-org/react";
-import { useAuth } from "../../providers/AuthProvider";
 
 const HomePage = () => {
-  const { setAuthInfo } = useAuth();
-  const { username, isConnected, socketId } = useAuth();
-  const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    const socket = io("http://localhost:5000");
+  // useEffect(() => {
+  //   if (socket) {
+  //     socket.on("chat message", (data) => {
+  //       setMessages((prevMessages) => [...prevMessages, { message: data.msg, userId: data.userId }]);
+  //     });
+  //   }
 
-    socket.on("connect", () => {
-      console.log("Connected to server");
-      console.log(socket.id);
-      setAuthInfo(username, true, socket.id);
-    });
+  //   return () => {
+  //     if (socket) {
+  //       socket.off("chat message");
+  //     }
+  //   };
+  // }, [socket]);
 
-    setSocket(socket);
-
-    return () => {
-      if (socket) {
-        socket.disconnect();
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (socket) {
-      socket.on("chat message", (data) => {
-        setMessages((prevMessages) => [...prevMessages, { message: data.msg, userId: data.userId }]);
-      });
-    }
-
-    return () => {
-      if (socket) {
-        socket.off("chat message");
-      }
-    };
-  }, [socket]);
-
-  const handleSendMessage = (message) => {
-    if (socket && message.trim() !== "") {
-      socket.emit("chat message", `${message}`);
-      setMessage("");
-    }
-  };
+  // const handleSendMessage = (message) => {
+  //   if (socket && message.trim() !== "") {
+  //     socket.emit("chat message", `${message}`);
+  //     setMessage("");
+  //   }
+  // };
 
   return (
     <div>

@@ -2,9 +2,14 @@
 
 import { Button, Divider } from "@nextui-org/react";
 import React from "react";
+import { useRoomContext } from './RoomContext';
 
-const JoinRoom = ({ currentRooms }) => {
+const JoinRoom = ( ) => {
+  const { rooms } = useRoomContext();
+
   const joinRoom = () => {
+    // Emit an event to notify the server about the join request
+    socket.emit("joinRoom", roomId);
     console.log("joinRoom function");
   };
 
@@ -16,7 +21,7 @@ const JoinRoom = ({ currentRooms }) => {
           <p className="text-white">There are no rooms to join currently</p>
         </div>
       ) : (
-        currentRooms.map((room) => {
+        rooms.map((room) => {
           return (
             <div className="m-4" key={room.id}>
               <p>{room.id}</p>
