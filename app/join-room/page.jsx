@@ -1,7 +1,21 @@
+"use client"
+
+import Connexion from "../components/Home/Connexion";
 import JoinRoom from "../components/Room/JoinRoom";
+import { useAuth } from "../providers/AuthProvider";
 
-const JoinRoomPage = async () => {
-  return <JoinRoom />;
-};
+export default function JoinRoomPage() {
+  const { username, isConnected, socketId } = useAuth();
 
-export default JoinRoomPage;
+  return (
+    <div>
+      {isConnected ? (
+        <>
+          <JoinRoom />;
+        </>
+      ) : (
+        <Connexion />
+      )}
+    </div>
+  );
+}

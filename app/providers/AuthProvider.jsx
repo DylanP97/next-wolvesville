@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     
   }, [authState.isConnected]);
 
-  return <AuthContext.Provider value={{ ...authState, setAuthInfo }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ ...authState, setAuthInfo, socket }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

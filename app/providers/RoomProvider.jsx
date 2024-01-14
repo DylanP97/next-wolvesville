@@ -10,6 +10,8 @@ export const RoomProvider = ({ children }) => {
     setRooms([...rooms, room]);
   };
 
+  console.log(rooms);
+
   return (
     <RoomContext.Provider value={{ rooms, addRoom }}>
       {children}

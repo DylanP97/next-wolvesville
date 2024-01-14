@@ -1,10 +1,10 @@
 "use client";
 
-import { Button, Divider } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
 import React from "react";
-import { useRoomContext } from './RoomContext';
+import { useRoomContext } from "../../providers/RoomProvider";
 
-const JoinRoom = ( ) => {
+const JoinRoom = () => {
   const { rooms } = useRoomContext();
 
   const joinRoom = () => {
@@ -16,23 +16,28 @@ const JoinRoom = ( ) => {
   return (
     <div className="w-full bg-black p-4">
       <h1 className="text-white text-3xl font-bold">Join a room</h1>
-      {!currentRooms ? (
+      {rooms.length === 0 ? (
         <div className="m-4">
           <p className="text-white">There are no rooms to join currently</p>
         </div>
       ) : (
         rooms.map((room) => {
           return (
-            <div className="m-4" key={room.id}>
-              <p>{room.id}</p>
+            <Card key={room.id} className="m-4">
+              <CardBody>
+                <p>Room Id: {room.id}</p>
+                <p>Room name: {room.name}</p>
+                <p>Room creator: {room.createdBy}</p>
+              </CardBody>
+              <Divider className="my-2" />
               <Button color="secondary" variant="ghost" onClick={() => joinRoom(room.id)}>
                 Join Room
               </Button>
-            </div>
+            </Card>
           );
         })
       )}
-      <Button color="secondary" variant="ghost" onClick={() => window.history.back()}>
+      <Button color="primary" variant="ghost" onClick={() => window.history.back()}>
         Go Back
       </Button>
     </div>

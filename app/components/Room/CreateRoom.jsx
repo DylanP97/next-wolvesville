@@ -3,15 +3,18 @@
 import { Button, Divider } from "@nextui-org/react";
 import { useState } from "react";
 import { useRoomContext } from "../../providers/RoomProvider";
+import { useAuth } from "../../providers/AuthProvider";
 
 const CreateRoom = () => {
   const { addRoom } = useRoomContext();
   const [roomName, setRoomName] = useState("");
+  const { username, socket } = useAuth();
 
   const submitNewRoom = (roomName) => {
     const newRoom = {
       id: Date.now(), // You can use a better way to generate unique IDs
       name: roomName,
+      createdBy: username,
     };
     
     // Emit an event to notify the server about the new room

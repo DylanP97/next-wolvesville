@@ -16,7 +16,7 @@ const RoleCard = ({ role }) => {
       </CardHeader>
       <Divider />
       <CardBody>
-        <p>{role.description}</p>
+        <p className="text-sm">{role.description}</p>
       </CardBody>
       <CardFooter></CardFooter>
     </Card>
