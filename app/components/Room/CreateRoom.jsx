@@ -2,13 +2,11 @@
 
 import { Button, Divider } from "@nextui-org/react";
 import { useState } from "react";
-import { useRoomContext } from "../../providers/RoomProvider";
 import { useAuth } from "../../providers/AuthProvider";
 
 const CreateRoom = () => {
-  const { addRoom } = useRoomContext();
   const [roomName, setRoomName] = useState("");
-  const { username, socket } = useAuth();
+  const { username, socket, addRoom } = useAuth();
 
   const submitNewRoom = (roomName) => {
     const newRoom = {
@@ -17,7 +15,6 @@ const CreateRoom = () => {
       createdBy: username,
     };
     
-    // Emit an event to notify the server about the new room
     socket.emit("createRoom", newRoom);
 
     addRoom(newRoom);

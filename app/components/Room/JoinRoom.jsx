@@ -2,10 +2,10 @@
 
 import { Button, Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
 import React from "react";
-import { useRoomContext } from "../../providers/RoomProvider";
+import { useAuth } from "../../providers/AuthProvider";
 
 const JoinRoom = () => {
-  const { rooms } = useRoomContext();
+  const { rooms } = useAuth();
 
   const joinRoom = () => {
     // Emit an event to notify the server about the join request

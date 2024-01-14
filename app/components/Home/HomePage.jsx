@@ -1,8 +1,7 @@
 "use client";
 
 import NavigationMenu from "./NavigationMenu";
-import React, { useState } from "react";
-import { Button } from "@nextui-org/react";
+import React from "react";
 
 const HomePage = () => {
 

@@ -7,9 +7,9 @@ export function Providers({ children }) {
   return (
     <NextUIProvider>
       <AuthProvider>
-        <RoomProvider>
+        {/* <RoomProvider> */}
           {children}
-        </RoomProvider>
+        {/* </RoomProvider> */}
       </AuthProvider>
     </NextUIProvider>
   );
