@@ -6,19 +6,19 @@ import { useAuth } from "../../providers/AuthProvider";
 
 const CreateRoom = () => {
   const [roomName, setRoomName] = useState("");
-  const { username, socket, addRoom } = useAuth();
+  const { username, socket, addRoom, socketId } = useAuth();
 
   const submitNewRoom = (roomName) => {
     const newRoom = {
-      id: Date.now(), // You can use a better way to generate unique IDs
+      id: Date.now(),
       name: roomName,
       createdBy: username,
+      usersInTheRoom: [{username, socketId}]
     };
     
     socket.emit("createRoom", newRoom);
 
     addRoom(newRoom);
-    console.log("room created name: " + roomName);
   };
 
   return (

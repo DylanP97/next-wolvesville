@@ -5,12 +5,10 @@ import React from "react";
 import { useAuth } from "../../providers/AuthProvider";
 
 const JoinRoom = () => {
-  const { rooms } = useAuth();
+  const { rooms, username, socketId, socket } = useAuth();
 
-  const joinRoom = () => {
-    // Emit an event to notify the server about the join request
-    socket.emit("joinRoom", roomId);
-    console.log("joinRoom function");
+  const joinRoom = (roomId, userJoining) => {
+    socket.emit("joinRoom", roomId, userJoining);
   };
 
   return (
@@ -28,9 +26,15 @@ const JoinRoom = () => {
                 <p>Room Id: {room.id}</p>
                 <p>Room name: {room.name}</p>
                 <p>Room creator: {room.createdBy}</p>
+                <h3>Users currently in the room :</h3>
+                {
+                  room.usersInTheRoom.map((userInRoom, index) => {
+                    return <p key={"uitr"+index}>{userInRoom.username}</p>
+                  })
+                }
               </CardBody>
               <Divider className="my-2" />
-              <Button color="secondary" variant="ghost" onClick={() => joinRoom(room.id)}>
+              <Button color="secondary" variant="ghost" onClick={() => joinRoom(room.id, {username, socketId})}>
                 Join Room
               </Button>
             </Card>

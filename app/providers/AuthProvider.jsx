@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log(authState.isConnected);
     if (authState.isConnected) {
       const socket = io("http://localhost:5000");
 
@@ -38,11 +37,9 @@ export const AuthProvider = ({ children }) => {
 
       socket.on("updateUsers", (updatedUsers) => {
         setConnectedUsers(updatedUsers)
-        console.log("Updated users:", updatedUsers);
       });
 
       socket.on("updateRooms", (updatedRooms) => {
-        console.log("Updated rooms:", updatedRooms);
         setRooms(updatedRooms)
       });
 
@@ -54,7 +51,7 @@ export const AuthProvider = ({ children }) => {
         }
       };
     }
-  }, [authState.isConnected, rooms]);
+  }, [authState.isConnected]);
 
   return <AuthContext.Provider value={{ ...authState, setAuthInfo, socket, rooms, addRoom, connectedUsers }}>{children}</AuthContext.Provider>;
 };
