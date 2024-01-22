@@ -1,8 +1,11 @@
 "use client";
 
-import { Button } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
+import { useAuth } from "../../providers/AuthProvider";
 
-const ConnectedUsers = ({ connectedUsers }) => {
+const ConnectedUsers = () => {
+  const { connectedUsers } = useAuth();
+
   return (
     <div className="min-h-screen h-full w-full bg-black p-4">
       <h1 className="text-white text-3xl font-bold">Connected Users List</h1>
@@ -13,9 +16,12 @@ const ConnectedUsers = ({ connectedUsers }) => {
       ) : (
         connectedUsers.map((user, index) => {
           return (
-            <p key={index} className="text-xs text-white">
-              {user.name}
-            </p>
+            <Card key={index} className="m-4">
+              <CardBody>
+                <p>User Id: {user.socketId}</p>
+                <p>User name: {user.username}</p>
+              </CardBody>
+            </Card>
           );
         })
       )}

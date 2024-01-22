@@ -34,7 +34,7 @@ const JoinRoom = () => {
                 Join Room
               </Button>
             </Card>
-          );
+          )
         })
       )}
       <Button color="primary" variant="ghost" onClick={() => window.history.back()}>

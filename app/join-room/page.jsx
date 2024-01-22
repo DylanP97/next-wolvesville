@@ -11,7 +11,7 @@ export default function JoinRoomPage() {
     <div>
       {isConnected ? (
         <>
-          <JoinRoom />;
+          <JoinRoom />
         </>
       ) : (
         <Connexion />

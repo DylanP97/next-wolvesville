@@ -8,6 +8,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [rooms, setRooms] = useState([]);
+  const [connectedUsers, setConnectedUsers] = useState([])
   const [authState, setAuthState] = useState({
     username: null,
     isConnected: false,
@@ -26,9 +27,18 @@ export const AuthProvider = ({ children }) => {
     console.log(authState.isConnected);
     if (authState.isConnected) {
       const socket = io("http://localhost:5000");
+
+      let user = {username: authState.username}
       
       socket.on("connect", () => {
+        user = {...user, socketId: socket.id}
         setAuthInfo(authState.username, true, socket.id);
+        socket.emit("sendNewConnectedUser", user);
+      });
+
+      socket.on("updateUsers", (updatedUsers) => {
+        setConnectedUsers(updatedUsers)
+        console.log("Updated users:", updatedUsers);
       });
 
       socket.on("updateRooms", (updatedRooms) => {
@@ -46,7 +56,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [authState.isConnected, rooms]);
 
-  return <AuthContext.Provider value={{ ...authState, setAuthInfo, socket, rooms, addRoom }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ ...authState, setAuthInfo, socket, rooms, addRoom, connectedUsers }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
