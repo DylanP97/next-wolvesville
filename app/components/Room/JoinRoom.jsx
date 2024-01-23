@@ -34,9 +34,13 @@ const JoinRoom = () => {
                 }
               </CardBody>
               <Divider className="my-2" />
-              <Button color="secondary" variant="ghost" onClick={() => joinRoom(room.id, {username, socketId})}>
-                Join Room
-              </Button>
+              {
+                room.usersInTheRoom.length < room.nbrOfPlayers && (
+                  <Button color="secondary" variant="ghost" onClick={() => joinRoom(room.id, {username, socketId})}>
+                    Join Room
+                  </Button>
+                )
+              }
             </Card>
           )
         })
