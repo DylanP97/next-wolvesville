@@ -1,17 +1,24 @@
 "use client"
 
-import Connexion from "../components/Home/Connexion";
 import ConnectedUsers from "../components/Room/ConnectedUsers";
+import Connexion from "../components/Home/Connexion";
+import GamePage from "../components/Game/GamePage";
 import { useAuth } from "../providers/AuthProvider";
 
 export default function ConnectedUsersPage() {
-  const { username, isConnected, socketId } = useAuth();
+  const { isConnected, isInAGame } = useAuth();
 
   return (
     <div>
       {isConnected ? (
         <>
-          <ConnectedUsers />;
+          {
+            isInAGame ? (
+              <GamePage />
+            ) : (
+              <ConnectedUsers />
+            )
+          }
         </>
       ) : (
         <Connexion />

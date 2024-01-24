@@ -13,6 +13,8 @@ export const AuthProvider = ({ children }) => {
     username: null,
     isConnected: false,
     socketId: null,
+    isInAGame: false,
+    roomPlaying: null
   });
 
   const addRoom = (room) => {
@@ -27,10 +29,10 @@ export const AuthProvider = ({ children }) => {
     if (authState.isConnected) {
       const socket = io("http://localhost:5000");
 
-      let user = {username: authState.username}
-      
+      let user = { username: authState.username }
+
       socket.on("connect", () => {
-        user = {...user, socketId: socket.id}
+        user = { ...user, socketId: socket.id }
         setAuthInfo(authState.username, true, socket.id);
         socket.emit("sendNewConnectedUser", user);
       });
@@ -41,6 +43,18 @@ export const AuthProvider = ({ children }) => {
 
       socket.on("updateRooms", (updatedRooms) => {
         setRooms(updatedRooms)
+
+        // chercher si le username est dans une des rooms qui est isLaunched
+        const launchedRooms = updatedRooms.filter((room) => room.isLaunched)
+        console.log(launchedRooms)
+        if (launchedRooms) {
+          let isInAGame = launchedRooms.some((room) => room.usersInTheRoom.some((usr) => usr.username == username))
+          if (isInAGame) {
+            setAuthState(...authState, isInAGame);
+            roomPlaying = launchedRooms.find((room) => room.usersInTheRoom.some((usr) => usr.username == username))
+            setAuthState(...authState, roomPlaying);
+          } 
+        }
       });
 
       setSocket(socket);

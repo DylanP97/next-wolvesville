@@ -1,11 +1,31 @@
-import ProfileCard from "../components/Profile/ProfileCard";
+"use client"
 
-const ProfilePage = () => {
+import ProfileCard from "../components/Profile/ProfileCard";
+import Connexion from "../components/Home/Connexion";
+import GamePage from "../components/Game/GamePage";
+import { useAuth } from "../providers/AuthProvider";
+
+export default function ProfilePage() {
+  const { isConnected, isInAGame } = useAuth();
+
   return (
-    <section className="flex justify-center items-center">
-      <ProfileCard />
-    </section>
+    <div>
+      {isConnected ? (
+        <>
+          {
+            isInAGame ? (
+              <GamePage />
+            ) : (
+              <section className="flex justify-center items-center">
+                <ProfileCard />
+              </section>
+            )
+          }
+        </>
+      ) : (
+        <Connexion />
+      )
+      }
+    </div>
   );
 };
-
-export default ProfilePage;

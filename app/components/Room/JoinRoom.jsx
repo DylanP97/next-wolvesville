@@ -11,6 +11,11 @@ const JoinRoom = () => {
     socket.emit("joinRoom", roomId, userJoining);
   };
 
+  const launchRoom = (room) => {
+    socket.emit('launchRoom', room.id)
+    // window.location.assign('/game')
+  }
+  
   return (
     <div className="w-full bg-black p-4">
       <h1 className="text-white text-3xl font-bold">Join a room</h1>
@@ -20,24 +25,34 @@ const JoinRoom = () => {
         </div>
       ) : (
         rooms.map((room) => {
+          let usersInTheRoom = room.usersInTheRoom
           return (
             <Card key={room.id} className="m-4">
               <CardBody>
-                <p>Room Id: {room.id}</p>
-                <p>Room name: {room.name}</p>
-                <p>Room creator: {room.createdBy}</p>
-                <h3>Users currently in the room :</h3>
+                <p>id: {room.id}</p>
+                <p>name: {room.name}</p>
+                <p>creator: {room.createdBy}</p>
+                <p>nbr of players: {room.nbrOfPlayers}</p>
+                <p>currently in the room :</p>
                 {
-                  room.usersInTheRoom.map((userInRoom, index) => {
-                    return <p key={"uitr"+index}>{userInRoom.username}</p>
-                  })
+                  usersInTheRoom.map((userInRoom, index) => <p key={"uitr"+index}>{userInRoom.username}</p>)
                 }
               </CardBody>
-              <Divider className="my-2" />
               {
-                room.usersInTheRoom.length < room.nbrOfPlayers && (
+                usersInTheRoom.length < room.nbrOfPlayers &&
+                usersInTheRoom.some((usr) => usr.username != username) && (
                   <Button color="secondary" variant="ghost" onClick={() => joinRoom(room.id, {username, socketId})}>
                     Join Room
+                  </Button>
+                )
+              }
+              {
+                usersInTheRoom.length == room.nbrOfPlayers && <p>The room is full</p>
+              }
+              {
+                (usersInTheRoom.length == room.nbrOfPlayers) && (username == room.createdBy) && (
+                  <Button color="secondary" variant="ghost" onClick={() => launchRoom(room)}>
+                    Launch Room
                   </Button>
                 )
               }

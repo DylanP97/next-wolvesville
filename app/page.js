@@ -6,14 +6,22 @@ import Connexion from "./components/Home/Connexion";
 import { useAuth } from "./providers/AuthProvider";
 
 export default function Home() {
-  const { username, isConnected, socketId } = useAuth();
+  const { username, isConnected, socketId, isInAGame, roomPlaying } = useAuth();
 
   return (
     <div>
       {isConnected ? (
         <>
-          <AppHeader username={username} socketId={socketId} />
-          <HomePage />
+          {
+            isInAGame ? (
+              <GamePage />
+            ) : (
+              <>
+                <AppHeader username={username} socketId={socketId} />
+                <HomePage />
+              </>
+            )
+          }
         </>
       ) : (
         <Connexion />

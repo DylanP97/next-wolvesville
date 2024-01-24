@@ -11,19 +11,17 @@ const CreateRoom = () => {
   const [selectedRoles, setSelectedRoles] = useState([]);
   const { username, socket, addRoom, socketId } = useAuth();
 
-  const submitNewRoom = (roomName) => {
-    const newRoom = {
-      id: Date.now(),
-      name: roomName,
-      createdBy: username,
-      nbrOfPlayers: nbrOfPlayers,
-      selectedRoles: selectedRoles,
-      usersInTheRoom: [{ username, socketId }]
-    };
-
-    socket.emit("createRoom", newRoom);
-
-    addRoom(newRoom);
+  const submitNewRoom = () => {
+      const newRoom = {
+        id: Date.now(),
+        name: roomName,
+        createdBy: username,
+        nbrOfPlayers: nbrOfPlayers,
+        selectedRoles: selectedRoles,
+        usersInTheRoom: [{ username, socketId }]
+      };
+      socket.emit("createRoom", newRoom);  
+      addRoom(newRoom);
   };
 
   return (
@@ -74,8 +72,8 @@ const CreateRoom = () => {
           })}
         </CheckboxGroup>
         <Divider className="my-2" />
-        {selectedRoles.length === nbrOfPlayers && (
-          <Button color="secondary" variant="ghost" onClick={() => submitNewRoom(roomName)}>
+        {selectedRoles.length === nbrOfPlayers && roomName && (
+          <Button color="secondary" variant="ghost" onClick={() => submitNewRoom()}>
             Create Room
           </Button>
         )}

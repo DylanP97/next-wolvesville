@@ -1,10 +1,28 @@
-import RolesGrid from "../components/Roles/RolesGrid"
+"use client"
 
-const RolePage = () => {
+import RolesGrid from "../components/Roles/RolesGrid"
+import Connexion from "../components/Home/Connexion";
+import GamePage from "../components/Game/GamePage";
+import { useAuth } from "../providers/AuthProvider";
+
+export default function RolePage() {
+  const { isConnected, isInAGame } = useAuth();
 
   return (
-    <RolesGrid />
+    <div>
+      {isConnected ? (
+        <>
+          {
+            isInAGame ? (
+              <GamePage />
+            ) : (
+              <RolesGrid />
+            )
+          }
+        </>
+      ) : (
+        <Connexion />
+      )}
+    </div>
   )
 }
-
-export default RolePage;

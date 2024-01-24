@@ -45,9 +45,6 @@ const GameArea = ({ playersList }) => {
   const [isDoubleSelection, setIsDoubleSelection] = useState(false);
   const [winningTeam, setWinningTeam] = useState(null);
 
-  console.log(registeredActions);
-  console.log(updatedPlayersList);
-
   const checkForWinner = (aliveList) => {
     const firstPlayerTeam = aliveList[0].role.team.join();
     let opponentFound = false;

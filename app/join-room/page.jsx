@@ -2,16 +2,23 @@
 
 import Connexion from "../components/Home/Connexion";
 import JoinRoom from "../components/Room/JoinRoom";
+import GamePage from "../components/Game/GamePage";
 import { useAuth } from "../providers/AuthProvider";
 
 export default function JoinRoomPage() {
-  const { username, isConnected, socketId } = useAuth();
+  const { isConnected, isInAGame } = useAuth();
 
   return (
     <div>
       {isConnected ? (
         <>
-          <JoinRoom />
+          {
+            isInAGame ? (
+              <GamePage />
+            ) : (
+              <JoinRoom />
+            )
+          }
         </>
       ) : (
         <Connexion />
