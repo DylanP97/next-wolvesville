@@ -13,18 +13,17 @@ export const AuthProvider = ({ children }) => {
     username: null,
     isConnected: false,
     socketId: null,
-    isInAGame: false,
-    roomPlaying: null
+    isInRoom: null,
   });
 
   const addRoom = (room) => {
     setRooms([...rooms, room]);
   };
 
-  const setAuthInfo = (username, isConnected, socketId) => {
-    setAuthState({ username, isConnected, socketId });
+  const setAuthInfo = (username, isConnected, socketId, isInRoom) => {
+    setAuthState({ username, isConnected, socketId, isInRoom });
   };
-
+  
   useEffect(() => {
     if (authState.isConnected) {
       const socket = io("http://localhost:5000");
@@ -37,24 +36,13 @@ export const AuthProvider = ({ children }) => {
         socket.emit("sendNewConnectedUser", user);
       });
 
-      socket.on("updateUsers", (updatedUsers) => {
+      socket.on("updateUsers", (updatedUsers, roomId) => {
+        setAuthInfo(authState.username, true, socket.id, roomId)
         setConnectedUsers(updatedUsers)
       });
 
       socket.on("updateRooms", (updatedRooms) => {
         setRooms(updatedRooms)
-
-        // chercher si le username est dans une des rooms qui est isLaunched
-        const launchedRooms = updatedRooms.filter((room) => room.isLaunched)
-        console.log(launchedRooms)
-        if (launchedRooms) {
-          let isInAGame = launchedRooms.some((room) => room.usersInTheRoom.some((usr) => usr.username == username))
-          if (isInAGame) {
-            setAuthState(...authState, isInAGame);
-            roomPlaying = launchedRooms.find((room) => room.usersInTheRoom.some((usr) => usr.username == username))
-            setAuthState(...authState, roomPlaying);
-          } 
-        }
       });
 
       setSocket(socket);

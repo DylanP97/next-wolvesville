@@ -9,10 +9,11 @@ const GamePage = () => {
   const [playersList, setPlayersList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { roomPlaying } = useAuth();
+  const { isInRoom, rooms } = useAuth();
+  const roomPlaying = rooms.find((room) => room.id == isInRoom);
 
   class Player {
-    constructor(id, name, role) {
+    constructor(id, name, role, avatar) {
       this.id = id || 0;
       this.name = name || "";
       this.role = role || "";
@@ -40,6 +41,7 @@ const GamePage = () => {
     setIsLoading(false)
   }, [])
 
+  console.log(playersList)
 
   return (
     <div>

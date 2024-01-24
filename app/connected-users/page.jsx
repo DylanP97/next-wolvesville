@@ -6,14 +6,14 @@ import GamePage from "../components/Game/GamePage";
 import { useAuth } from "../providers/AuthProvider";
 
 export default function ConnectedUsersPage() {
-  const { isConnected, isInAGame } = useAuth();
+  const { isConnected, isInRoom } = useAuth();
 
   return (
     <div>
       {isConnected ? (
         <>
           {
-            isInAGame ? (
+            isInRoom ? (
               <GamePage />
             ) : (
               <ConnectedUsers />

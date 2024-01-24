@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, Divider } from "@nextui-org/react";
 import React from "react";
 import { useAuth } from "../../providers/AuthProvider";
 
@@ -11,11 +11,14 @@ const JoinRoom = () => {
     socket.emit("joinRoom", roomId, userJoining);
   };
 
-  const launchRoom = (room) => {
-    socket.emit('launchRoom', room.id)
-    // window.location.assign('/game')
+  const launchRoom = (roomId) => {
+    socket.emit('launchRoom', roomId)
   }
-  
+
+  const deleteRoom = (roomId) => {
+    socket.emit('deleteRoom', roomId)
+  }
+
   return (
     <div className="w-full bg-black p-4">
       <h1 className="text-white text-3xl font-bold">Join a room</h1>
@@ -35,27 +38,36 @@ const JoinRoom = () => {
                 <p>nbr of players: {room.nbrOfPlayers}</p>
                 <p>currently in the room :</p>
                 {
-                  usersInTheRoom.map((userInRoom, index) => <p key={"uitr"+index}>{userInRoom.username}</p>)
+                  usersInTheRoom.map((userInRoom, index) => <p key={"uitr" + index}>{userInRoom.username}</p>)
                 }
               </CardBody>
-              {
-                usersInTheRoom.length < room.nbrOfPlayers &&
-                usersInTheRoom.some((usr) => usr.username != username) && (
-                  <Button color="secondary" variant="ghost" onClick={() => joinRoom(room.id, {username, socketId})}>
-                    Join Room
-                  </Button>
-                )
-              }
-              {
-                usersInTheRoom.length == room.nbrOfPlayers && <p>The room is full</p>
-              }
-              {
-                (usersInTheRoom.length == room.nbrOfPlayers) && (username == room.createdBy) && (
-                  <Button color="secondary" variant="ghost" onClick={() => launchRoom(room)}>
-                    Launch Room
-                  </Button>
-                )
-              }
+              <CardFooter>
+                {
+                  usersInTheRoom.length < room.nbrOfPlayers &&
+                  usersInTheRoom.some((usr) => usr.username != username) && (
+                    <Button color="secondary" variant="ghost" onClick={() => joinRoom(room.id, { username, socketId })}>
+                      Join Room
+                    </Button>
+                  )
+                }
+                {
+                  usersInTheRoom.length == room.nbrOfPlayers && <p className="p-2" >The room is full</p>
+                }
+                {
+                  (usersInTheRoom.length == room.nbrOfPlayers) && (username == room.createdBy) && (
+                    <Button color="secondary" variant="ghost" onClick={() => launchRoom(room.id)}>
+                      Launch Room
+                    </Button>
+                  )
+                }
+                {
+                  (username == room.createdBy) && (
+                    <Button color="secondary" variant="ghost" onClick={() => deleteRoom(room.id)}>
+                      Delete Room
+                    </Button>
+                  )
+                }
+              </CardFooter>
             </Card>
           )
         })
