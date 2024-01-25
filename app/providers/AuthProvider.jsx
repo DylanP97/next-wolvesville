@@ -13,18 +13,18 @@ export const AuthProvider = ({ children }) => {
     username: null,
     isConnected: false,
     socketId: null,
-    isInRoom: null,
   });
+  const [isInRoom, setIsInRoom] = useState(null)
   const [isPlaying, setIsPlaying] = useState(false)
 
   const addRoom = (room) => {
     setRooms([...rooms, room]);
   };
 
-  const setAuthInfo = (username, isConnected, socketId, isInRoom) => {
-    setAuthState({ username, isConnected, socketId, isInRoom});
+  const setAuthInfo = (username, isConnected, socketId) => {
+    setAuthState({ username, isConnected, socketId });
   };
-  
+
   useEffect(() => {
     if (authState.isConnected) {
       const socket = io("http://localhost:5000");
@@ -36,18 +36,11 @@ export const AuthProvider = ({ children }) => {
         setAuthInfo(authState.username, true, socket.id);
         socket.emit("sendNewConnectedUser", user);
       });
-      
+
       socket.on("updateUsers", (updatedUsers) => {
         setConnectedUsers(updatedUsers)
-        
-        // adding roomNbr to the auth state
-        const user = updatedUsers.find((user) => user.username == authState.username);
-        if (user) {
-          let roomUserIsIn = user.isInRoom
-          if (roomUserIsIn) {
-            setAuthInfo(authState.username, true, socket.id, roomUserIsIn)
-          }
-        }
+        let user = updatedUsers.find((user) => user.username == authState.username);
+        setIsInRoom(user.isInRoom)
       });
 
       socket.on("updateRooms", (updatedRooms) => {
@@ -55,6 +48,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       socket.on("launchRoom", () => {
+        console.log("i received launchRoom")
         setIsPlaying(true)
       })
 
@@ -68,7 +62,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [authState.isConnected]);
 
-  return <AuthContext.Provider value={{ ...authState, setAuthInfo, socket, rooms, addRoom, connectedUsers, isPlaying }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ ...authState, setAuthInfo, socket, rooms, addRoom, connectedUsers, isInRoom, isPlaying }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

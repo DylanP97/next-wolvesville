@@ -11,8 +11,9 @@ export default function GamePage() {
   const [playersList, setPlayersList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isWaitingPlayers, setIsWaitingPlayers] = useState(true);
-  const [roomPlaying, setRoomPlaying] = useState(rooms.find((room) => room.id == isInRoom));
-  const [usersInTheRoom, setUsersInTheRoom] = useState(roomPlaying.usersInTheRoom)
+
+  const roomPlaying = rooms.find((room) => room.id == isInRoom);
+  const usersInTheRoom = roomPlaying.usersInTheRoom
 
   class Player {
     constructor(id, name, role, avatar) {
@@ -28,7 +29,7 @@ export default function GamePage() {
   }
 
   console.log("usersInTheRoom : ", usersInTheRoom)
-  
+
   useEffect(() => {
     if (usersInTheRoom.length == roomPlaying.nbrOfPlayers) {
       setIsWaitingPlayers(false)
@@ -49,7 +50,7 @@ export default function GamePage() {
     }
   }, [usersInTheRoom])
 
-  // console.log(playersList)
+  console.log("playersList : ", playersList)
 
   return (
     <div>

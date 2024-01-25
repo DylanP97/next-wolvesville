@@ -20,6 +20,9 @@ const ConnectedUsers = () => {
               <CardBody>
                 <p>User Id: {user.socketId}</p>
                 <p>User name: {user.username}</p>
+                {
+                  user.isInARoom && <p>Is in a Room: {user.isInARoom}</p>
+                }
               </CardBody>
             </Card>
           );
