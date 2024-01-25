@@ -4,6 +4,7 @@ import { Input, Button, Divider, CheckboxGroup, Checkbox } from "@nextui-org/rea
 import { useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
 import roles from "../../lib/roles";
+import { redirect } from "next/navigation";
 
 const CreateRoom = () => {
   const [roomName, setRoomName] = useState("");
@@ -22,6 +23,7 @@ const CreateRoom = () => {
       };
       socket.emit("createRoom", newRoom);  
       addRoom(newRoom);
+      redirect("/game")
   };
 
   return (

@@ -15,13 +15,14 @@ export const AuthProvider = ({ children }) => {
     socketId: null,
     isInRoom: null,
   });
+  const [isPlaying, setIsPlaying] = useState(false)
 
   const addRoom = (room) => {
     setRooms([...rooms, room]);
   };
 
   const setAuthInfo = (username, isConnected, socketId, isInRoom) => {
-    setAuthState({ username, isConnected, socketId, isInRoom });
+    setAuthState({ username, isConnected, socketId, isInRoom});
   };
   
   useEffect(() => {
@@ -35,15 +36,27 @@ export const AuthProvider = ({ children }) => {
         setAuthInfo(authState.username, true, socket.id);
         socket.emit("sendNewConnectedUser", user);
       });
-
-      socket.on("updateUsers", (updatedUsers, roomId) => {
-        setAuthInfo(authState.username, true, socket.id, roomId)
+      
+      socket.on("updateUsers", (updatedUsers) => {
         setConnectedUsers(updatedUsers)
+        
+        // adding roomNbr to the auth state
+        const user = updatedUsers.find((user) => user.username == authState.username);
+        if (user) {
+          let roomUserIsIn = user.isInRoom
+          if (roomUserIsIn) {
+            setAuthInfo(authState.username, true, socket.id, roomUserIsIn)
+          }
+        }
       });
 
       socket.on("updateRooms", (updatedRooms) => {
         setRooms(updatedRooms)
       });
+
+      socket.on("launchRoom", () => {
+        setIsPlaying(true)
+      })
 
       setSocket(socket);
 
@@ -55,7 +68,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [authState.isConnected]);
 
-  return <AuthContext.Provider value={{ ...authState, setAuthInfo, socket, rooms, addRoom, connectedUsers }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ ...authState, setAuthInfo, socket, rooms, addRoom, connectedUsers, isPlaying }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

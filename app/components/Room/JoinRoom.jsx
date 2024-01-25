@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, CardBody, CardFooter, CardHeader, Divider } from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
 import React from "react";
 import { useAuth } from "../../providers/AuthProvider";
 
@@ -10,10 +10,6 @@ const JoinRoom = () => {
   const joinRoom = (roomId, userJoining) => {
     socket.emit("joinRoom", roomId, userJoining);
   };
-
-  const launchRoom = (roomId) => {
-    socket.emit('launchRoom', roomId)
-  }
 
   const deleteRoom = (roomId) => {
     socket.emit('deleteRoom', roomId)
@@ -31,8 +27,10 @@ const JoinRoom = () => {
           let usersInTheRoom = room.usersInTheRoom
           return (
             <Card key={room.id} className="m-4">
-              <CardBody>
+              <CardHeader>
                 <p>id: {room.id}</p>
+              </CardHeader>
+              <CardBody>
                 <p>name: {room.name}</p>
                 <p>creator: {room.createdBy}</p>
                 <p>nbr of players: {room.nbrOfPlayers}</p>
@@ -52,13 +50,6 @@ const JoinRoom = () => {
                 }
                 {
                   usersInTheRoom.length == room.nbrOfPlayers && <p className="p-2" >The room is full</p>
-                }
-                {
-                  (usersInTheRoom.length == room.nbrOfPlayers) && (username == room.createdBy) && (
-                    <Button color="secondary" variant="ghost" onClick={() => launchRoom(room.id)}>
-                      Launch Room
-                    </Button>
-                  )
                 }
                 {
                   (username == room.createdBy) && (

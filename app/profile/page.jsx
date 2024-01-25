@@ -2,26 +2,20 @@
 
 import ProfileCard from "../components/Profile/ProfileCard";
 import Connexion from "../components/Home/Connexion";
-import GamePage from "../components/Game/GamePage";
 import { useAuth } from "../providers/AuthProvider";
+import { redirect } from "next/navigation";
 
 export default function ProfilePage() {
-  const { isConnected, isInRoom } = useAuth();
+  const { isConnected, isInRoom, isPlaying} = useAuth();
+
+  if (isConnected && isInRoom && isPlaying) return redirect("/game");
 
   return (
     <div>
       {isConnected ? (
-        <>
-          {
-            isInRoom ? (
-              <GamePage />
-            ) : (
-              <section className="flex justify-center items-center">
-                <ProfileCard />
-              </section>
-            )
-          }
-        </>
+        <section className="flex justify-center items-center">
+          <ProfileCard />
+        </section>
       ) : (
         <Connexion />
       )
