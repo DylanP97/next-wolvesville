@@ -9,8 +9,6 @@ import { redirect } from "next/navigation";
 export default function Home() {
   const { username, isConnected, socketId, isInRoom, isPlaying } = useAuth();
 
-  console.log("isInRoom : " + isInRoom)
-  console.log("isPlaying : " + isPlaying)
   if (isConnected && isInRoom && isPlaying) return redirect("/game");
 
   return (

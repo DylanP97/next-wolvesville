@@ -32,37 +32,19 @@ import { Button } from "@nextui-org/react";
 import Background from "./Background";
 
 const GameArea = ({ playersList }) => {
+  const actionsHistoryListRef = useRef(null);
+  const [selectedActionButton, setSelectedActionButton] = useState(1);
+  const [isSelectionMode, setIsSelectionMode] = useState(false);
+  const [isDoubleSelection, setIsDoubleSelection] = useState(false);
+  
   const [gameStarted, setGameStarted] = useState(false);
   const [updatedPlayersList, setUpdatedPlayersList] = useState(playersList);
   const [timeOfTheDay, setTimeOfTheDay] = useState("nighttime");
   const [dayCount, setDayCount] = useState(0);
-  const actionsHistoryListRef = useRef(null);
   const [aliveList, setAliveList] = useState(null);
   const [playerToPlay, setPlayerToPlay] = useState(playersList[0]);
   const [registeredActions, setRegisteredActions] = useState([]);
-  const [selectedActionButton, setSelectedActionButton] = useState(1);
-  const [isSelectionMode, setIsSelectionMode] = useState(false);
-  const [isDoubleSelection, setIsDoubleSelection] = useState(false);
   const [winningTeam, setWinningTeam] = useState(null);
-
-  const checkForWinner = (aliveList) => {
-    const firstPlayerTeam = aliveList[0].role.team.join();
-    let opponentFound = false;
-
-    for (let i = 1; i < aliveList.length; i++) {
-      const currentPlayerTeam = aliveList[i].role.team.join();
-      if (currentPlayerTeam !== firstPlayerTeam) {
-        opponentFound = true;
-        console.log("there is no winner still, the game continues!");
-        break;
-      }
-    }
-
-    if (!opponentFound) {
-      let wArr = teams.filter((t) => t.name === firstPlayerTeam);
-      setWinningTeam(wArr[0]);
-    }
-  };
 
   const displayAction = (message, itsANewDay) => {
     const newAction = document.createElement("li");
@@ -210,7 +192,7 @@ const GameArea = ({ playersList }) => {
     if (updatedPlayersList) {
       const onlyAliveList = updatedPlayersList.filter((player) => player.isAlive);
       setAliveList(onlyAliveList);
-    }
+    };
   }, [updatedPlayersList]);
 
   return (
