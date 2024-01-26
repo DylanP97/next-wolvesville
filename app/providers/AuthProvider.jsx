@@ -48,7 +48,8 @@ export const AuthProvider = ({ children }) => {
         setRooms(updatedRooms)
       });
 
-      socket.on("launchRoom", (game) => {
+      socket.on("launchRoom", (roomId) => {
+        let game = rooms.find((room) => room.id === roomId);
         setGame(game);
         setIsPlaying(true);
       });

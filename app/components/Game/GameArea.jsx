@@ -37,14 +37,13 @@ const GameArea = ({ playersList }) => {
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [isDoubleSelection, setIsDoubleSelection] = useState(false);
   
-  const [gameStarted, setGameStarted] = useState(false);
-  const [updatedPlayersList, setUpdatedPlayersList] = useState(playersList);
-  const [timeOfTheDay, setTimeOfTheDay] = useState("nighttime");
-  const [dayCount, setDayCount] = useState(0);
-  const [aliveList, setAliveList] = useState(null);
-  const [playerToPlay, setPlayerToPlay] = useState(playersList[0]);
-  const [registeredActions, setRegisteredActions] = useState([]);
-  const [winningTeam, setWinningTeam] = useState(null);
+  // const [updatedPlayersList, setUpdatedPlayersList] = useState(playersList);
+  // const [timeOfTheDay, setTimeOfTheDay] = useState("nighttime");
+  // const [dayCount, setDayCount] = useState(0);
+  // const [aliveList, setAliveList] = useState(null);
+  // const [playerToPlay, setPlayerToPlay] = useState(playersList[0]);
+  // const [registeredActions, setRegisteredActions] = useState([]);
+  // const [winningTeam, setWinningTeam] = useState(null);
 
   const displayAction = (message, itsANewDay) => {
     const newAction = document.createElement("li");
@@ -167,7 +166,7 @@ const GameArea = ({ playersList }) => {
 
   const handleStartGame = () => {
     checkForWinner(aliveList);
-    setGameStarted(true);
+    // setGameStarted(true);
     displayAction(`It's night, the game has begun...`);
   };
 
@@ -215,18 +214,11 @@ const GameArea = ({ playersList }) => {
       <Background timeOfTheDay={timeOfTheDay} />
       <div className="xl:flex xl:flex-row">
         <div className="xl:w-[20%]">
-          {gameStarted && <PlayerInfos playerToPlay={playerToPlay} />}
+          <PlayerInfos playerToPlay={playerToPlay} />
           <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
-          {gameStarted && <PlayerBoard {...sharedProps} />}
-          {!gameStarted && (
-            <div className=" xl:w-[80%] xl:h-[100%]">
-              <Button className="w-full" variant="ghost" color="primary" onClick={() => handleStartGame()}>
-                Start Game
-              </Button>
-            </div>
-          )}
+          <PlayerBoard {...sharedProps} />
         </div>
-        {gameStarted && <PlayersGrid {...sharedProps} />}
+        <PlayersGrid {...sharedProps} />
       </div>
 
       {winningTeam && <WinnerOverlay winningTeam={winningTeam} />}
