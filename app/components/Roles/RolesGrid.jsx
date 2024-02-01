@@ -1,15 +1,36 @@
 "use client";
 
 import RoleCard from "./RoleCard";
-import roles from "../../lib/roles";
 import { Button, Divider } from "@nextui-org/react";
+import { useEffect, useState } from "react";
 
 const RolesGrid = () => {
+  const [availableRoles, setAvailableRoles] = useState([]);
+
+  useEffect(() => {
+    // Fetch available roles from the server
+    const fetchRoles = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/roles");
+        if (response.ok) {
+          const rolesData = await response.json();
+          setAvailableRoles(rolesData);
+        } else {
+          console.error("Failed to fetch roles");
+        }
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+      }
+    };
+
+    fetchRoles();
+  }, []);
+
   return (
     <section className="mb-10">
       <h1 className="text-white text-3xl font-bold p-4">List of Roles</h1>
       <div className="w-full grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4">
-        {roles.map((role) => (
+        {availableRoles.map((role) => (
           <RoleCard key={role.name} role={role} />
         ))}
       </div>

@@ -3,11 +3,11 @@
 import Image from "next/image";
 import AvatarUI from "../Profile/AvatarUI";
 
-import tombstone from "../../../public/game/tombstone.png";
-import prison from "../../../public/game/prison.png";
-import voteAgainstIcon from "../../../public/selection/vote-against-icon.png";
-import spilled from "../../../public/game/spilled.png";
-import accomplice from "../../../public/roles/accomplice.png";
+import tombstone from "https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706535348/tombstone_fq163l.png";
+import prison from "https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706535348/prison_dpuqr4.png";
+import voteAgainstIcon from "https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706531453/selection/vote-against-icon_mgkchv.png";
+import spilled from "https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706535328/spilled_tsishg.png";
+import accomplice from "https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706531395/roles/accomplice_kfsf0u.png";
 
 const PlayerCardImage = ({
   timeOfTheDay,
@@ -30,7 +30,7 @@ const PlayerCardImage = ({
         <Image
           width={100}
           height={100}
-          src={player.role.image && player.role.image.src}
+          src={player.role.image}
           alt="role"
           className={`h-16 w-16 ${isDoubleSelection || isSelectionMode ? "opacity-50" : ""}`}
         />

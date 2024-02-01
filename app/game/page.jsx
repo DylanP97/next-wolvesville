@@ -1,16 +1,36 @@
 "use client";
 
-import GameArea from "../components/Game/GameArea";
+import { useEffect, useState } from "react";
 import Connexion from "../components/Home/Connexion";
 import { useAuth } from "../providers/AuthProvider";
+import NewGameArea from "../components/Game/NewGameArea";
 
 export default function GamePage() {
-  const { isConnected, game } = useAuth();
+  const [availableTeams, setAvailableTeams] = useState([]);
+  const { isConnected } = useAuth();
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/teams");
+        if (response.ok) {
+          const teamsData = await response.json();
+          setAvailableTeams(teamsData);
+        } else {
+          console.error("Failed to fetch teams");
+        }
+      } catch (error) {
+        console.error("Error fetching teams:", error);
+      }
+    };
+
+    fetchTeams();
+  }, []);
 
   return (
     <div>
       {isConnected ? (
-        <GameArea playersList={game.playersList} />
+        <NewGameArea teams={availableTeams} />
       ) : (
         <Connexion />
       )}

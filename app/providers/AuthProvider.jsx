@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
   const setAuthInfo = (username, isConnected, socketId) => {
     setAuthState({ username, isConnected, socketId });
   };
-
+  
   useEffect(() => {
     if (authState.isConnected) {
       const socket = io("http://localhost:5000");
@@ -41,18 +41,21 @@ export const AuthProvider = ({ children }) => {
       socket.on("updateUsers", (updatedUsers) => {
         setConnectedUsers(updatedUsers)
         let user = updatedUsers.find((user) => user.username == authState.username);
-        setIsInRoom(user.isInRoom)
+        if (user.isInRoom) setIsInRoom(user.isInRoom)
       });
 
       socket.on("updateRooms", (updatedRooms) => {
         setRooms(updatedRooms)
       });
-
-      socket.on("launchRoom", (roomId) => {
-        let game = rooms.find((room) => room.id === roomId);
+      
+      socket.on("launchRoom", (game) => {
         setGame(game);
         setIsPlaying(true);
       });
+
+      socket.on("updateGame", (updatedGame) => {
+        setGame(updatedGame);
+      })
 
       setSocket(socket);
 
