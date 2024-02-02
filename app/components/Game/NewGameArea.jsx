@@ -2,17 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
+import Background from "./Background";
+import WinnerOverlay from "./WinnerOverlay";
 
 const NewGameArea = ({ teams }) => {
     const { game, socket } = useAuth();
-    console.log("game : ")
-    console.log(game.playersList)
     const [playersList, setPlayersList] = useState(game.playersList);
 
     useEffect(() => {
-        console.log("hello useeffect")
-        console.log(game.playersList)
         setPlayersList(game.playersList);
+        socket.emit("checkForWinner", game.id);
     }, [game]);
 
     const killPlayer = (name) => {
@@ -20,7 +19,11 @@ const NewGameArea = ({ teams }) => {
     };
 
     return (
-        <div>
+        <section
+            className={`${game.timeOfTheDay === "daytime" ? "bg-sky-500" : game.timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-black"
+                } h-screen w-screen p-4 relative`}
+            style={{ outline: "none" }}>
+            <Background timeOfTheDay={game.timeOfTheDay} />
             <p className="text-white">{game.timeOfTheDay}</p>
             <p className="text-white">{game.dayCount}</p>
             {
@@ -37,7 +40,8 @@ const NewGameArea = ({ teams }) => {
                     )
                 })
             }
-        </div>
+            {game.winningTeam && <WinnerOverlay winningTeam={game.winningTeam} />}
+        </section>
     );
 };
 
