@@ -17,7 +17,7 @@ const AvatarUI = ({ selection, heightAndWidth }) => {
 
   return (
     <Image
-      className={selection ? "opacity-50" : ""}
+      // className={selection ? "opacity-50" : ""}
       height={heightAndWidth || 60}
       width={heightAndWidth || 60}
       src={avatar}
