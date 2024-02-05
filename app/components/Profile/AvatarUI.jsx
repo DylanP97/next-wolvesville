@@ -11,7 +11,7 @@ const AvatarUI = ({ selection, heightAndWidth }) => {
     // Create a new avatar using the random seed
     return createAvatar(avataaars, {
       seed: randomSeed, // Use the random seed as the avatar's seed
-      size: 128,
+      size: 64,
     }).toDataUriSync();
   }, []);
 

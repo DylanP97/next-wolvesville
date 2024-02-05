@@ -28,12 +28,12 @@ export default function GamePage() {
   }, []);
 
   return (
-    <div>
+    <>
       {isConnected ? (
         <NewGameArea teams={availableTeams} />
       ) : (
         <Connexion />
       )}
-    </div>
+    </>
   )
 };

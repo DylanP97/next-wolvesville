@@ -43,27 +43,26 @@ const NewGameArea = ({ teams }) => {
     return (
         <section
             className={`${game.timeOfTheDay === "daytime" ? "bg-sky-500" : game.timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-black"
-                } h-screen w-screen p-4 relative`}
+                } h-screen w-screen p-4 absolute top-0`}
             style={{ outline: "none" }}>
-            <GameHeader timeOfTheDay={game.timeOfTheDay} dayCount={game.dayCount} />
+            <GameHeader timeOfTheDay={game.timeOfTheDay} dayCount={game.dayCount} timeCounter={game.timeCounter} />
             <Background timeOfTheDay={game.timeOfTheDay} />
             <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
             <PlayerInfos clientPlayer={clientPlayer} />
-            <div className="grid grid-cols-4 gap-2 xl:gap-6 my-2 place-items-center xl:w-[80%] xl:h-[100%]">
+            <div className="grid grid-cols-4 gap-2 my-2 place-items-center xl:w-[80%]">
 
                 {
                     playersList.map((player) => {
                         return (
-                            <div key={player.id} className="p-3">
+                            <div key={player.id} className="p-3 w-fullf flex flex-col ">
                                 {!player.isAlive ? (
                                     <Image className="absolute" width={60} height={60} src={tombstone} alt="role" />
                                 ) : player.isRevealed ? (
                                     <Image
-                                        width={100}
-                                        height={100}
+                                        width={60}
+                                        height={60}
                                         src={player.role.image}
                                         alt="role"
-                                        className={`h-16 w-16 `}
                                     />
                                 ) : (
                                     <AvatarUI />
