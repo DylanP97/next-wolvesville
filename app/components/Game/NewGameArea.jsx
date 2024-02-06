@@ -10,7 +10,7 @@ import GameHeader from "./GameHeader";
 import Image from "next/image";
 import AvatarUI from "../Profile/AvatarUI";
 import tombstone from "../../../public/game/tombstone.png"
-import { Button } from "@nextui-org/react";
+import { Button, Card } from "@nextui-org/react";
 
 const NewGameArea = ({ teams }) => {
     const { game, socket, username } = useAuth();
@@ -27,6 +27,10 @@ const NewGameArea = ({ teams }) => {
 
     const killPlayer = (name) => {
         socket.emit("playerKill", game.id, name);
+    };
+
+    const revealPlayer = (name) => {
+        socket.emit("playerReveal", game.id, name);
     };
 
     const displayAction = (message, itsANewDay) => {
@@ -50,11 +54,10 @@ const NewGameArea = ({ teams }) => {
             <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
             <PlayerInfos clientPlayer={clientPlayer} />
             <div className="grid grid-cols-4 gap-2 my-2 place-items-center xl:w-[80%]">
-
                 {
                     playersList.map((player) => {
                         return (
-                            <div key={player.id} className="p-3 w-fullf flex flex-col ">
+                            <Card key={player.id} className="p-3 w-full flex flex-col ">
                                 {!player.isAlive ? (
                                     <Image className="absolute" width={60} height={60} src={tombstone} alt="role" />
                                 ) : player.isRevealed ? (
@@ -67,13 +70,11 @@ const NewGameArea = ({ teams }) => {
                                 ) : (
                                     <AvatarUI />
                                 )}
-                                <p className="text-white">{player.name}</p>
-                                <p className="text-white">{player.role.name}</p>
-                                {
-                                    player.isAlive ? <p className="text-white">vivant </p> : <p className="text-white">mort </p>
-                                }
+                                <p className="text-black">{player.name}</p>
+                                <p className="text-black">{player.role.name}</p>
                                 <Button className="m-2" variant="ghost" color="secondary" onClick={() => killPlayer(player.name)}>Kill me</Button>
-                            </div>
+                                <Button className="m-2" variant="ghost" color="secondary" onClick={() => revealPlayer(player.name)}>Reveal me</Button>
+                            </Card>
                         )
                     })
                 }

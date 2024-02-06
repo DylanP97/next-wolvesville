@@ -99,15 +99,17 @@ const Connexion = () => {
           />
         </div>
 
-        <Button variant="ghost" color="primary" className="m-2" type="submit">
-          {isLogin ? "Login" : "Signup"}
-        </Button>
+        <div>
+          <Button variant="ghost" color="secondary" className="w-[95%] m-2" type="submit">
+            {isLogin ? "Login" : "Signup"}
+          </Button>
+        </div>
       </form>
 
       <div className="p-2 m-2 b-1 border border-black ">
-        <p>
+        <p className="text-white">
           {isLogin ? "Don't have an account? " : "Already have an account? "}
-          <span onClick={handleSwitch} style={{ cursor: "pointer", color: "blue" }}>
+          <span onClick={handleSwitch} style={{ cursor: "pointer", color: "violet" }}>
             {isLogin ? "Signup" : "Login"}
           </span>
         </p>
