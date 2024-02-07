@@ -1,7 +1,7 @@
 "use client"
 
-import ConnectedUsers from "../components/Room/ConnectedUsers";
-import Connexion from "../components/Home/Connexion";
+import ConnectedUsers from "./ConnectedUsers";
+import Connexion from "../components/Connexion";
 import { useAuth } from "../providers/AuthProvider";
 import { redirect } from "next/navigation";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
-import { useAuth } from "../../providers/AuthProvider";
+import { useAuth } from "../providers/AuthProvider";
 
 const ConnectedUsers = () => {
   const { connectedUsers } = useAuth();

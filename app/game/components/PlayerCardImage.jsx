@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import AvatarUI from "../Profile/AvatarUI";
+import AvatarUI from "../../profile/Profile/AvatarUI";
 
 import tombstone from "https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706535348/tombstone_fq163l.png";
 import prison from "https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706535348/prison_dpuqr4.png";

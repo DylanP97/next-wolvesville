@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import PlayersGrid from "./PlayersGrid";
-import PlayerBoard from "./PlayerBoard";
+import PlayersGrid from "../../components/Game/PlayersGrid";
+import PlayerBoard from "../../components/Game/PlayerBoard";
 import ActionsHistory from "./ActionsHistory";
 import GameHeader from "./GameHeader";
 import {
@@ -26,7 +26,7 @@ import {
   aftermathOfNightWolvesAttack,
 } from "../../lib/gameActions";
 import WinnerOverlay from "./WinnerOverlay";
-import PlayerInfos from "./PlayerInfos";
+import PlayerInfos from "../../components/Game/PlayerInfos";
 import { Button } from "@nextui-org/react";
 import Background from "./Background";
 

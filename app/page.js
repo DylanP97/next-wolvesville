@@ -1,8 +1,8 @@
 "use client";
 
 import AppHeader from "./components/AppHeader";
-import HomePage from "./components/Home/HomePage";
-import Connexion from "./components/Home/Connexion";
+import HomePage from "./components/HomePage";
+import Connexion from "./components/Connexion";
 import { useAuth } from "./providers/AuthProvider";
 import { redirect } from "next/navigation";
 

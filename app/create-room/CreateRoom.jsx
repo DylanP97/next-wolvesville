@@ -2,7 +2,7 @@
 
 import { Input, Button, Divider, CheckboxGroup, Checkbox } from "@nextui-org/react";
 import { useState, useEffect } from "react";
-import { useAuth } from "../../providers/AuthProvider";
+import { useAuth } from "../providers/AuthProvider";
 import Link from "next/link";
 
 const CreateRoom = () => {

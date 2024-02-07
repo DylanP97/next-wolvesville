@@ -14,13 +14,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={GeistSans.className}>
-      <body>
-        <Providers>
-          <div className="flex flex-col w-screen min-h-screen h-full">
-            <main className="flex flex-col items-center p-10">{children}</main>
-          </div>
-        </Providers>
-      </body>
+      <Providers>
+        <body className="flex flex-col items-center w-screen min-h-screen h-full">
+          {children}
+        </body>
+      </Providers>
     </html>
   );
 }

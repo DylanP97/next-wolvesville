@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button, Input } from "@nextui-org/react";
-import { useAuth } from "../../providers/AuthProvider";
+import { useAuth } from "../providers/AuthProvider";
 
 const Connexion = () => {
   const { setAuthInfo } = useAuth();
