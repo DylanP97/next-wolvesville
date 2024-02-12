@@ -59,7 +59,8 @@ const Connexion = () => {
   };
 
   return (
-    <div>
+    <div className="h-screen flex flex-col justify-center items-center">
+      <h1 className="text-white my-2">{isLogin ? "Login with your account" : "Register a new account"}</h1>
       <form onSubmit={handleSubmit}>
         {!isLogin && (
           <div>

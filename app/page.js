@@ -1,6 +1,5 @@
 "use client";
 
-import AppHeader from "./components/AppHeader";
 import HomePage from "./components/HomePage";
 import Connexion from "./components/Connexion";
 import { useAuth } from "./providers/AuthProvider";
@@ -15,8 +14,7 @@ export default function Home() {
     <div>
       {isConnected ? (
         <>
-          <AppHeader username={username} socketId={socketId} />
-          <HomePage />
+          <HomePage username={username} socketId={socketId} />
         </>
       ) : (
         <Connexion />

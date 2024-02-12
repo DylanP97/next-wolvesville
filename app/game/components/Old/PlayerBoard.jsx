@@ -2,10 +2,10 @@
 
 import { burnPlayers, explodeBomb, registerSimpleAction } from "../../lib/gameActions";
 import { Kbd } from "@nextui-org/react";
-import Action from "./Action";
-import ActionSetter from "./action-types/ActionSetter";
-import DoubleSelectionAction from "./action-types/DoubleSelectionAction";
-import BanditSelectAccompliceAction from "./action-types/BanditSelectAccompliceAction";
+import Action from "../Action";
+import ActionSetter from "../action-types/ActionSetter";
+import DoubleSelectionAction from "../action-types/DoubleSelectionAction";
+import BanditSelectAccompliceAction from "../action-types/BanditSelectAccompliceAction";
 
 const PlayerBoard = ({
   playerToPlay,

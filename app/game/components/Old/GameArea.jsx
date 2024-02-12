@@ -3,8 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import PlayersGrid from "../../components/Game/PlayersGrid";
 import PlayerBoard from "../../components/Game/PlayerBoard";
-import ActionsHistory from "./ActionsHistory";
-import GameHeader from "./GameHeader";
+import ActionsHistory from "../ActionsHistory";
+import GameHeader from "../GameHeader";
 import {
   aftermathOfVote,
   cleanUpRegisteredActionsConcerningDeadPlayers,
@@ -25,10 +25,10 @@ import {
   investigatePlayers,
   aftermathOfNightWolvesAttack,
 } from "../../lib/gameActions";
-import WinnerOverlay from "./WinnerOverlay";
+import WinnerOverlay from "../WinnerOverlay";
 import PlayerInfos from "../../components/Game/PlayerInfos";
 import { Button } from "@nextui-org/react";
-import Background from "./Background";
+import Background from "../Background";
 
 const GameArea = ({ playersList }) => {
   const actionsHistoryListRef = useRef(null);

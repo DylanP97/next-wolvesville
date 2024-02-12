@@ -53,13 +53,11 @@ const CreateRoom = () => {
             <h1 className="text-white">
               The room has been created...
             </h1>
-            <Divider className="my-2" />
-            <Button onClick={() => window.location.assign('/join-room')}>Go To Join Room</Button>
           </>
         ) : (
           <>
             <h1 className="text-white text-3xl font-bold">Create a new room</h1>
-            <div className="m-4">
+            <div className="m-4 flex flex-col">
               <Input
                 color="secondary"
                 isRequired
@@ -86,30 +84,29 @@ const CreateRoom = () => {
                 }
               />
               <Divider className="my-2" />
-              <CheckboxGroup
-                className="my-4"
-                label={`Select ${nbrOfPlayers} roles`}
-                defaultValue={["Villager", "Alpha Werewolf"]}
-                value={selectedRoles}
-                onValueChange={setSelectedRoles}>
-                {availableRoles.map((character, index) => {
-                  if (character.name !== "Accomplice")
-                    return (
-                      <Checkbox key={character.name} value={character}>
-                        <span className="text-white">
-                          {character.name} {" ("}{character.team.join(', ')}{") "}
-                        </span>
-                      </Checkbox>
-                    );
-                })}
-              </CheckboxGroup>
-              <Divider className="my-2" />
               {selectedRoles.length === nbrOfPlayers && roomName && (
                 <Button color="secondary" variant="ghost" onClick={() => submitNewRoom()}>
                   Create Room
                 </Button>
               )}
             </div>
+            <CheckboxGroup
+              className="my-4"
+              label={`Select ${nbrOfPlayers} roles`}
+              defaultValue={["Villager", "Alpha Werewolf"]}
+              value={selectedRoles}
+              onValueChange={setSelectedRoles}>
+              {availableRoles.map((character, index) => {
+                if (character.name !== "Accomplice")
+                  return (
+                    <Checkbox key={character.name} value={character} size="sm">
+                      <span className="text-white text-sm">
+                        {character.name} {" ("}{character.team.join(', ')}{") "}
+                      </span>
+                    </Checkbox>
+                  );
+              })}
+            </CheckboxGroup>
           </>
         )
       }

@@ -3,10 +3,14 @@
 import NavigationMenu from "./NavigationMenu";
 import React from "react";
 
-const HomePage = () => {
+const HomePage = ({ username, socketId }) => {
 
   return (
-    <div>
+    <div className="h-screen pt-8">
+      <header className="p-2">
+        <p className="text-white">Username: {username}</p>
+        <p className="text-white">SocketId: {socketId}</p>
+      </header>
       <h1 className="text-4xl font-bold my-6 text-white">Wolvesville</h1>
       <p className="text-white">Welcome to my own version of Wolvesville!</p>
       <a target="_blank" className="text-white hover:text-blue-400" href="https://www.wolvesville.com">

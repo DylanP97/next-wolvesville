@@ -6,8 +6,6 @@ import { useEffect, useMemo, useState } from "react";
 const AvatarUI = ({ selection, heightAndWidth, accessories, accessoriesColor, clothesColor, clothing, clothingGraphic, eyebrows, eyes, facialHair, facialHairColor, hairColor, hatColor, mouth, skinColor, top }) => {
   const [avatar, setAvatar] = useState();
 
-  console.log(skinColor)
-
   useEffect(() => {
     let a = createAvatar(avataaars, {
       accessories: [accessories],
