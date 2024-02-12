@@ -27,14 +27,14 @@ const RolesGrid = () => {
   }, []);
 
   return (
-    <section className="mb-10">
+    <section className="mb-10 p-5">
       <h1 className="text-white text-3xl font-bold p-4">List of Roles</h1>
-      <div className="w-full grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4">
+      <div className="w-full grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 p-5">
         {availableRoles.map((role) => (
           <RoleCard key={role.name} role={role} />
         ))}
       </div>
-      <Divider className="my-2" />
+      <Divider className="my-4" />
       <Button color="primary" variant="ghost" onClick={() => window.history.back()}>
         Go Back
       </Button>

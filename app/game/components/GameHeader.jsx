@@ -2,7 +2,7 @@
 
 const GameHeader = ({ timeOfTheDay, dayCount, timeCounter }) => {
   return (
-    <div className="bg-slate-900 text-white rounded-xl shadow-lg p-4 my-4">
+    <div className="bg-slate-900 text-white rounded-xl shadow-lg p-4 my-2">
       <p className="text-xs text-white">
         {timeOfTheDay === "daytime" ? (
           <>☀️ Daytime n°{dayCount} - {timeCounter / 1000}s left</>

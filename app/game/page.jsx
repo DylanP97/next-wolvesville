@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Connexion from "../components/Home/Connexion";
+import Connexion from "../components/Connexion";
 import { useAuth } from "../providers/AuthProvider";
-import NewGameArea from "../components/Game/NewGameArea";
+import NewGameArea from "./components/NewGameArea";
 
 export default function GamePage() {
   const [availableTeams, setAvailableTeams] = useState([]);

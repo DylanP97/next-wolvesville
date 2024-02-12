@@ -2,23 +2,23 @@
 
 import Image from "next/image";
 
-const PlayerInfos = ({ clientPlayer }) => {
+const PlayerInfos = ({ clientPlayer, timeOfTheDay }) => {
 
   console.log(clientPlayer)
 
   return (
-    <div className="bg-slate-950 rounded-xl shadow-lg p-4 mt-4 mb-2">
+    <div className="bg-slate-950 rounded-xl shadow-lg p-4 my-2 h-[120px] relative overflow-hidden">
       <p className="text-xs text-gray-200">{clientPlayer.name}</p>
       <p className="text-xs text-gray-200">Your role is {clientPlayer.role.name}</p>
       <p className="text-xs text-gray-200">{clientPlayer.role.description}</p>
       <Image
         src={clientPlayer.role.image}
         alt="bg-time"
-        width={50}
-        height={50}
+        width={130}
+        height={130}
         priority
         style={{ width: "auto", height: "auto" }}
-        className="m-2"
+        className="m-2 absolute bottom-[-80px] left-[-80px] opacity-50 "
       />
     </div>
   )

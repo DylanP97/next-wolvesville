@@ -16,18 +16,18 @@ const AvatarUI = ({ selection, heightAndWidth, accessories, accessoriesColor, cl
       backgroundColor: ["65c9ff"],
       backgroundType: ["solid"],
       clothesColor: [clothesColor || "262e33"],
-      clothing: [clothing || "blazerAndShirt"],
+      clothing: [clothing || "graphicShirt"],
       clothingGraphic: [clothingGraphic],
-      eyebrows: [eyebrows],
+      eyebrows: [eyebrows || "default"],
       eyes: [eyes || "default"],
       facialHair: [facialHair],
       facialHairColor: [facialHairColor],
       facialHairProbability: 100,
-      hairColor: [hairColor],
+      hairColor: [hairColor || "4a312c"],
       hatColor: [hatColor],
       mouth: [mouth || "default"],
-      skinColor: [skinColor || "#d08b5b"],
-      top: [top],
+      skinColor: [skinColor || "ffdbb4"],
+      top: [top || "shortRound"],
       topProbability: 100,
       size: 64,
     }).toDataUriSync();
@@ -36,7 +36,6 @@ const AvatarUI = ({ selection, heightAndWidth, accessories, accessoriesColor, cl
   }, [accessories, accessoriesColor, clothesColor, clothing, clothingGraphic, eyebrows, eyes, facialHair, facialHairColor, hairColor, hatColor, mouth, skinColor, top]);
 
   return (
-    <div className="bg-white flex justify-center">
       <Image
         // className={selection ? "opacity-50" : ""}
         height={heightAndWidth || 60}
@@ -44,7 +43,6 @@ const AvatarUI = ({ selection, heightAndWidth, accessories, accessoriesColor, cl
         src={avatar}
         alt="Avatar"
       />
-    </div>
   );
 };
 

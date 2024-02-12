@@ -8,9 +8,10 @@ import ActionsHistory from "./ActionsHistory";
 import PlayerInfos from "./PlayerInfos";
 import GameHeader from "./GameHeader";
 import Image from "next/image";
-import AvatarUI from "../Profile/AvatarUI";
+import AvatarUI from "../../profile/Profile/AvatarUI";
 import tombstone from "../../../public/game/tombstone.png"
 import { Button, Card } from "@nextui-org/react";
+import PlayingCommands from "./PlayingCommands";
 
 const NewGameArea = ({ teams }) => {
     const { game, socket, username } = useAuth();
@@ -47,12 +48,14 @@ const NewGameArea = ({ teams }) => {
     return (
         <section
             className={`${game.timeOfTheDay === "daytime" ? "bg-sky-500" : game.timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-black"
-                } h-screen w-screen p-4 absolute top-0`}
+                } h-screen w-screen p-4 absolute top-0 left-0`}
             style={{ outline: "none" }}>
             <GameHeader timeOfTheDay={game.timeOfTheDay} dayCount={game.dayCount} timeCounter={game.timeCounter} />
             <Background timeOfTheDay={game.timeOfTheDay} />
-            <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
-            <PlayerInfos clientPlayer={clientPlayer} />
+            <div className="flex flex-row gap-2">
+                <ActionsHistory actionsHistoryListRef={actionsHistoryListRef} />
+                <PlayerInfos clientPlayer={clientPlayer} />
+            </div>
             <div className="grid grid-cols-4 gap-2 my-2 place-items-center xl:w-[80%]">
                 {
                     playersList.map((player) => {
@@ -71,7 +74,6 @@ const NewGameArea = ({ teams }) => {
                                     <AvatarUI />
                                 )}
                                 <p className="text-black">{player.name}</p>
-                                <p className="text-black">{player.role.name}</p>
                                 <Button className="m-2" variant="ghost" color="secondary" onClick={() => killPlayer(player.name)}>Kill me</Button>
                                 <Button className="m-2" variant="ghost" color="secondary" onClick={() => revealPlayer(player.name)}>Reveal me</Button>
                             </Card>
@@ -79,6 +81,7 @@ const NewGameArea = ({ teams }) => {
                     })
                 }
             </div>
+            <PlayingCommands clientPlayer={clientPlayer} timeOfTheDay={game.timeOfTheDay} />
             {game.winningTeam && <WinnerOverlay winningTeam={game.winningTeam} />}
         </section>
     );

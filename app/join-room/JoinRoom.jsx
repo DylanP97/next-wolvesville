@@ -53,7 +53,7 @@ const JoinRoom = () => {
                 }
                 {
                   (username == room.createdBy) && (
-                    <Button color="secondary" variant="ghost" onClick={() => deleteRoom(room.id)}>
+                    <Button color="danger" variant="ghost" onClick={() => deleteRoom(room.id)}>
                       Delete Room
                     </Button>
                   )
