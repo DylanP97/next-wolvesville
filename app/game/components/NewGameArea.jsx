@@ -11,13 +11,13 @@ import PlayingCommands from "./PlayingCommands";
 import NewPlayersGrid from "./NewPlayersGrid";
 import Chatbox from "./Chatbox";
 
-const NewGameArea = ({ teams }) => {
+const NewGameArea = ({ }) => {
     const { game, socket, username } = useAuth();
     const actionsHistoryListRef = useRef(null);
-    const clientPlayer = game.playersList.find((p) => p.name == username)
+    const clientPlayer = game.playersList.find((p) => p.name == username);
     const [playersList, setPlayersList] = useState(game.playersList);
     const [messagesHistory, setMessagesHistory] = useState(game.messagesHistory);
-    const [isSelection, setIsSelection] = useState(false);
+    const [isSelection, setIsSelection] = useState("");
 
     useEffect(() => {
         setPlayersList(game.playersList);
@@ -26,16 +26,8 @@ const NewGameArea = ({ teams }) => {
     }, [game]);
 
     useEffect(() => {
-        setIsSelection(false)
+        setIsSelection("")
     }, [game.timeOfTheDay])
-
-    const killPlayer = (name) => {
-        socket.emit("playerKill", game.id, name);
-    };
-
-    const revealPlayer = (name) => {
-        socket.emit("playerReveal", game.id, name);
-    };
 
     return (
         <section
@@ -48,7 +40,7 @@ const NewGameArea = ({ teams }) => {
                 <ActionsHistory messagesHistory={messagesHistory} actionsHistoryListRef={actionsHistoryListRef} />
                 <PlayerInfos clientPlayer={clientPlayer} />
             </div>
-            <NewPlayersGrid isSelection={isSelection} playersList={playersList} />
+            <NewPlayersGrid isSelection={isSelection} setIsSelection={setIsSelection} playersList={playersList} clientPlayer={clientPlayer} />
             <Chatbox />
             <PlayingCommands clientPlayer={clientPlayer} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} />
             {game.winningTeam && <WinnerOverlay winningTeam={game.winningTeam} />}

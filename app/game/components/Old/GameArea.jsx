@@ -5,29 +5,8 @@ import PlayersGrid from "../../components/Game/PlayersGrid";
 import PlayerBoard from "../../components/Game/PlayerBoard";
 import ActionsHistory from "../ActionsHistory";
 import GameHeader from "../GameHeader";
-import {
-  aftermathOfVote,
-  cleanUpRegisteredActionsConcerningDeadPlayers,
-  arrestPlayer,
-  linkLovers,
-  murder,
-  releasePrisoners,
-  revealPlayer,
-  shootBullet,
-  heal,
-  pourGasoline,
-  muteVoter,
-  unmuteVoter,
-  craftTheBomb,
-  robTheRole,
-  eliminate,
-  throwHolyWater,
-  investigatePlayers,
-  aftermathOfNightWolvesAttack,
-} from "../../lib/gameActions";
 import WinnerOverlay from "../WinnerOverlay";
 import PlayerInfos from "../../components/Game/PlayerInfos";
-import { Button } from "@nextui-org/react";
 import Background from "../Background";
 
 const GameArea = ({ playersList }) => {
