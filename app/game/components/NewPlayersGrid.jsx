@@ -10,60 +10,71 @@ const NewPlayersGrid = ({
     isSelection,
     setIsSelection,
     playersList,
-    clientPlayer
+    clientPlayer,
+    isBlocked,
+    setIsBlocked
 }) => {
     const { socket } = useAuth();
 
     const handlePlayerClick = (selectedPlayer) => {
-        if (!selectedPlayer.isAlive) {
-            console.log("This player is dead. Stop hitting its grave.");
-            return;
-        }
 
-        if (selectedPlayer.id === clientPlayer.id) {
-            console.log("Don't select yourself!");
-            return;
-        }
-
-        if (selectedPlayer.isUnderArrest) {
-            console.log("this player is locked up in jail. You can't get select him.");
-            return;
-        }
-
-        if (isSelection) {
-            if (timeOfTheDay === "votetime") {
-                // const isMayor = playerToPlay.role.name === "Mayor";
-                // voteForVotetime(selectedPlayer.id, isMayor);
-                return;
-            } else {
-                socket.emit("registerAction", {
-                    type: clientPlayer.role.canPerform.type,
-                    player: clientPlayer.id,
-                    selectedPlayerId: selectedPlayer.id,
-                    actionTime: clientPlayer.role.canPerform.actionTime,
-                });
-                setIsSelection("");
+        if (isSelection && !isBlocked) {
+            if (!selectedPlayer.isAlive) {
+                console.log("This player is dead. Stop hitting its grave.");
                 return;
             }
+
+            if (selectedPlayer.id === clientPlayer.id) {
+                console.log("Don't select yourself!");
+                return;
+            }
+
+            if (selectedPlayer.isUnderArrest) {
+                console.log("this player is locked up in jail. You can't get select him.");
+                return;
+            }
+
+            if (isSelection) {
+                if (timeOfTheDay === "votetime") {
+                    // const isMayor = playerToPlay.role.name === "Mayor";
+                    // voteForVotetime(selectedPlayer.id, isMayor);
+                    return;
+                } else {
+                    socket.emit("registerAction", {
+                        type: clientPlayer.role.canPerform.type,
+                        player: clientPlayer.id,
+                        selectedPlayerId: selectedPlayer.id,
+                        actionTime: clientPlayer.role.canPerform.actionTime,
+                    });
+                    setIsSelection("");
+                    setIsBlocked(true);
+                    return;
+                }
+            }
+        } else {
+            console.log("Selection mode isn't active ")
+            return;
         }
+
     };
 
     return (
-        <div className="flex flex-row gap-2 my-4 place-items-center xl:w-[80%]">
+        <div className={`${isSelection ? "" : ""} flex flex-row gap-2 my-4 place-items-center xl:w-[80%]`}>
             {
                 playersList.map((player) => {
                     return (
                         <Card key={player.id}
-                            className={`${player.isAlive
-                                ? player.id !== clientPlayer.id
-                                    ? isSelection
-                                    // || isDoubleSelection
-                                        ? "bg-slate-800 hover:bg-red-800 cursor-pointer"
-                                        : "bg-transparent-50 bg-cyan-900"
-                                    : "bg-yellow-950"
-                                : "bg-black"
-                                } ${clientPlayer.id === player.id && "outline-1 outline outline-white"
-                                } w-full md:w-48 h-full md:h-full flex flex-col justify-center items-center relative rounded-xl md:rounded-3xl`}
+                            className={`${clientPlayer.id !== player.id ?
+                                    player.isAlive
+                                        ? isSelection && !isBlocked
+                                            ? "bg-red-800 hover:bg-red-500 cursor-pointer animate-pulse"
+                                            : "bg-slate-900"
+                                        : "bg-green-500"
+                                    : "bg-black border-2 border-solid border-pink-500"
+                                }
+                                
+                                
+                                w-full md:w-48 h-full md:h-full flex flex-col justify-center items-center relative rounded-xl md:rounded-3xl`}
                             onClick={() => handlePlayerClick(player)}
                         >
                             {!player.isAlive ? (
@@ -78,7 +89,7 @@ const NewPlayersGrid = ({
                             ) : (
                                 <AvatarUI heightAndWidth={100} />
                             )}
-                            <p className="text-black text-xs mt-2">{player.name}</p>
+                            <p className={`${isSelection && player.id !== clientPlayer.id ? "text-black" : "text-white"} text-xs mt-2`}>{player.name}</p>
                         </Card>
                     )
                 })

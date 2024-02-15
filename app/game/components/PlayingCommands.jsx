@@ -3,7 +3,7 @@
 import voteAgainstIcon from "../../../public/game/vote-time.png";
 import { Image } from "@nextui-org/react";
 
-const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelection }) => {
+const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelection, isBlocked, setIsBlocked }) => {
 
     const {
         role: { canVote, canPerform, name, bombPower, playersToSetOnFire, partner } = {},
@@ -21,7 +21,12 @@ const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelecti
 
 
     const handleClick = (actionType) => {
-        setIsSelection(actionType);
+        if (!isBlocked) {
+            if (!isSelection) setIsSelection(actionType)
+            else setIsSelection("")
+        } else {
+            console.log("you already select something now selection mode is blocked")
+        }
     }
 
     return (
@@ -29,7 +34,7 @@ const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelecti
             {clientPlayer.role.canPerform && !isUnderArrest && !needDoubleSelection && (nbrLeftToPerform === undefined || nbrLeftToPerform > 0) &&
                 ((timeOfTheDay === "daytime" && actionTime === "day") || (timeOfTheDay === "nighttime" && actionTime === "night")) &&
                 (name !== "Grave Robber" || (name === "Grave Robber" && deadPlayers.length > 0)) && (
-                    <div onClick={() => handleClick(label)} className="w-[50px] p-[5px] cursor-pointer hover:bg-slate-500 rounded-xl flex justify-center items-center">
+                    <div onClick={() => handleClick(label)} className={`${isSelection ? 'bg-slate-900' : 'bg-green-600'} w-[50px] p-[5px] cursor-pointer rounded-xl flex justify-center items-center`}>
                         <Image
                             src={emoji}
                             alt={label}
@@ -40,7 +45,7 @@ const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelecti
                     </div>
                 )}
             {timeOfTheDay === "votetime" && name !== "Mayor" && canVote && (
-                <div onClick={() => handleClick(label)} className="w-[50px] p-[5px] cursor-pointer hover:bg-slate-500 rounded-xl flex justify-center items-center">
+                <div onClick={() => handleClick(label)} className={`${isSelection ? 'bg-slate-900' : 'bg-red-600'} w-[50px] p-[5px] cursor-pointer rounded-xl flex justify-center items-center`}>
                     <Image
                         src={voteAgainstIcon.src}
                         alt="voteAgainst"
