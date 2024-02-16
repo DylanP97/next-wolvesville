@@ -17,8 +17,8 @@ const NewGameArea = ({ }) => {
     const clientPlayer = game.playersList.find((p) => p.name == username);
     const [playersList, setPlayersList] = useState(game.playersList);
     const [messagesHistory, setMessagesHistory] = useState(game.messagesHistory);
-    const [isSelection, setIsSelection] = useState("");
-    const [isBlocked, setIsBlocked] = useState("");
+    const [isSelection, setIsSelection] = useState(false);
+    const [isBlocked, setIsBlocked] = useState(false);
 
     useEffect(() => {
         setPlayersList(game.playersList);
@@ -27,7 +27,7 @@ const NewGameArea = ({ }) => {
     }, [game]);
 
     useEffect(() => {
-        setIsSelection("")
+        setIsSelection(false)
         setIsBlocked(false)
     }, [game.timeOfTheDay])
 
@@ -42,7 +42,7 @@ const NewGameArea = ({ }) => {
                 <ActionsHistory messagesHistory={messagesHistory} actionsHistoryListRef={actionsHistoryListRef} />
                 <PlayerInfos clientPlayer={clientPlayer} />
             </div>
-            <NewPlayersGrid isSelection={isSelection} setIsSelection={setIsSelection} playersList={playersList} clientPlayer={clientPlayer} />
+            <NewPlayersGrid gameId={game.id} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} playersList={playersList} clientPlayer={clientPlayer} />
             <Chatbox />
             <PlayingCommands clientPlayer={clientPlayer} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} />
             {game.winningTeam && <WinnerOverlay winningTeam={game.winningTeam} />}

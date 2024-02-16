@@ -7,6 +7,8 @@ import { Button, Card } from "@nextui-org/react";
 import { useAuth } from "../../providers/AuthProvider";
 
 const NewPlayersGrid = ({
+    gameId,
+    timeOfTheDay,
     isSelection,
     setIsSelection,
     playersList,
@@ -17,25 +19,27 @@ const NewPlayersGrid = ({
     const { socket } = useAuth();
 
     const handlePlayerClick = (selectedPlayer) => {
+        console.log("isBlocked : ", isBlocked)
 
-        if (isSelection && !isBlocked) {
-            if (!selectedPlayer.isAlive) {
-                console.log("This player is dead. Stop hitting its grave.");
-                return;
-            }
-
-            if (selectedPlayer.id === clientPlayer.id) {
-                console.log("Don't select yourself!");
-                return;
-            }
-
-            if (selectedPlayer.isUnderArrest) {
-                console.log("this player is locked up in jail. You can't get select him.");
-                return;
-            }
-
+        if (!isBlocked) {
             if (isSelection) {
+                if (!selectedPlayer.isAlive) {
+                    console.log("This player is dead. Stop hitting its grave.");
+                    return;
+                }
+
+                if (selectedPlayer.id === clientPlayer.id) {
+                    console.log("Don't select yourself!");
+                    return;
+                }
+
+                if (selectedPlayer.isUnderArrest) {
+                    console.log("this player is locked up in jail. You can't get select him.");
+                    return;
+                }
+
                 if (timeOfTheDay === "votetime") {
+                    console.log("it's votetime")
                     // const isMayor = playerToPlay.role.name === "Mayor";
                     // voteForVotetime(selectedPlayer.id, isMayor);
                     return;
@@ -45,17 +49,18 @@ const NewPlayersGrid = ({
                         player: clientPlayer.id,
                         selectedPlayerId: selectedPlayer.id,
                         actionTime: clientPlayer.role.canPerform.actionTime,
-                    });
-                    setIsSelection("");
-                    setIsBlocked(true);
+                    }, gameId);
+                    setIsBlocked(true)
+                    setIsSelection(false);
                     return;
                 }
+            } else {
+                console.log("Selection mode isn't active ")
+                return;
             }
         } else {
-            console.log("Selection mode isn't active ")
-            return;
+            console.log("its blocked ")
         }
-
     };
 
     return (
@@ -63,26 +68,24 @@ const NewPlayersGrid = ({
             {
                 playersList.map((player) => {
                     return (
-                        <Card key={player.id}
-                            className={`${clientPlayer.id !== player.id ?
-                                    player.isAlive
-                                        ? isSelection && !isBlocked
-                                            ? "bg-red-800 hover:bg-red-500 cursor-pointer animate-pulse"
-                                            : "bg-slate-900"
-                                        : "bg-green-500"
-                                    : "bg-black border-2 border-solid border-pink-500"
-                                }
-                                
-                                
-                                w-full md:w-48 h-full md:h-full flex flex-col justify-center items-center relative rounded-xl md:rounded-3xl`}
+                        <div key={player.id}
                             onClick={() => handlePlayerClick(player)}
+                            className={`${player.isAlive
+                                ? clientPlayer.id !== player.id
+                                    ? isSelection && !isBlocked
+                                        ? "bg-red-800 cursor-pointer animate-pulse"
+                                        : "bg-gray-800"
+                                    : "bg-gray-900 border-2 border-solid border-pink-500"
+                                : "bg-black"
+                                }
+                                w-full md:w-48 h-full md:h-full flex flex-col justify-center items-center relative rounded-xl md:rounded-3xl`}
                         >
                             {!player.isAlive ? (
-                                <Image className="" width={60} height={60} src={tombstone} alt="role" />
+                                <Image className="" width={100} height={100} src={tombstone} alt="role" />
                             ) : player.isRevealed ? (
                                 <Image
-                                    width={60}
-                                    height={60}
+                                    width={100}
+                                    height={100}
                                     src={player.role.image}
                                     alt="role"
                                 />
@@ -90,7 +93,7 @@ const NewPlayersGrid = ({
                                 <AvatarUI heightAndWidth={100} />
                             )}
                             <p className={`${isSelection && player.id !== clientPlayer.id ? "text-black" : "text-white"} text-xs mt-2`}>{player.name}</p>
-                        </Card>
+                        </div>
                     )
                 })
             }

@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Input } from "@nextui-org/react";
 import { useAuth } from "../providers/AuthProvider";
+import { defaultAvatar } from "../lib/utils"
 
 const Connexion = () => {
   const { setAuthInfo } = useAuth();
@@ -28,12 +29,9 @@ const Connexion = () => {
           },
           body: JSON.stringify({ email, password }),
         });
-
-        console.log("Login response:", response);
-
         if (response.ok) {
           const userData = await response.json();
-          setAuthInfo(userData.username, true);
+          setAuthInfo(userData.username, userData.avatar, true);
         }
       } catch (error) {
         console.error("Login error:", error);
@@ -45,7 +43,7 @@ const Connexion = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ username, email, password }),
+          body: JSON.stringify({ username, email, password, defaultAvatar }),
         });
 
         console.log("Signup response:", response);

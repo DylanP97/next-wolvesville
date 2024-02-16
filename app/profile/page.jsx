@@ -6,14 +6,14 @@ import { useAuth } from "../providers/AuthProvider";
 import { redirect } from "next/navigation";
 
 export default function ProfilePage() {
-  const { isConnected, isInRoom, isPlaying, username } = useAuth();
+  const { isConnected, isInRoom, isPlaying, username, avatar } = useAuth();
 
   if (isConnected && isInRoom && isPlaying) return redirect("/game");
 
   return (
     <>
       {isConnected ? (
-        <ProfileCard username={username} />
+        <ProfileCard username={username} avatar={avatar} />
       ) : (
         <Connexion />
       )}

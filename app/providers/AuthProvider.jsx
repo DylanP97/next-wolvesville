@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [connectedUsers, setConnectedUsers] = useState([])
   const [authState, setAuthState] = useState({
     username: null,
+    avatar: null,
     isConnected: false,
     socketId: null,
   });
@@ -22,19 +23,18 @@ export const AuthProvider = ({ children }) => {
     setRooms([...rooms, room]);
   };
 
-  const setAuthInfo = (username, isConnected, socketId) => {
-    setAuthState({ username, isConnected, socketId });
+  const setAuthInfo = (username, avatar, isConnected, socketId) => {
+    setAuthState({ username, avatar, isConnected, socketId });
   };
   
   useEffect(() => {
     if (authState.isConnected) {
       const socket = io("http://localhost:5000");
-
-      let user = { username: authState.username }
+      let user = { username: authState.username, avatar: authState.avatar }
 
       socket.on("connect", () => {
-        user = { ...user, socketId: socket.id }
-        setAuthInfo(authState.username, true, socket.id);
+        user = { ...user, socketId: socket.id };
+        setAuthInfo(authState.username, authState.avatar, true, socket.id);
         socket.emit("sendNewConnectedUser", user);
       });
 

@@ -1,55 +1,71 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import AvatarUI from "./AvatarUI";
 import ProfileSelection from "./ProfileSelection"
-import { Tabs, Tab, Card, CardBody, Input } from "@nextui-org/react";
+import { Tabs, Tab } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { schema } from "@dicebear/core";
 import { avataaars } from "@dicebear/collection";
+import { useAuth } from "../../providers/AuthProvider";
 
-const ProfileCard = ({ username }) => {
-  const [playerEmail, setPlayerEmail] = useState("");
-  const [size, setSize] = useState(null);
-  const [accessories, setAccessories] = useState(null);
-  const [accessoriesColor, setAccessoriesColor] = useState(null);
-  const [backgroundType, setBackgroundType] = useState(null);
-  const [clothesColor, setClothesColor] = useState(null);
-  const [clothing, setClothing] = useState(null);
-  const [clothingGraphic, setClothingGraphic] = useState(null);
-  const [eyebrows, setEyebrows] = useState(null);
-  const [eyes, setEyes] = useState(null);
-  const [facialHair, setFacialHair] = useState(null);
-  const [facialHairColor, setFacialHairColor] = useState(null);
-  const [hairColor, setHairColor] = useState(null);
-  const [hatColor, setHatColor] = useState(null);
-  const [mouth, setMouth] = useState(null);
-  const [skinColor, setSkinColor] = useState(null);
-  const [top, setTop] = useState(null);
+const ProfileCard = ({ username, avatar }) => {
+  const [accessories, setAccessories] = useState(avatar.accessories);
+  const [accessoriesColor, setAccessoriesColor] = useState(avatar.accessoriesColor);
+  const [clothesColor, setClothesColor] = useState(avatar.clothesColor);
+  const [clothing, setClothing] = useState(avatar.clothing);
+  const [clothingGraphic, setClothingGraphic] = useState(avatar.clothingGraphic);
+  const [eyebrows, setEyebrows] = useState(avatar.eyebrows);
+  const [eyes, setEyes] = useState(avatar.eyes);
+  const [facialHair, setFacialHair] = useState(avatar.facialHair);
+  const [facialHairColor, setFacialHairColor] = useState(avatar.facialHairColor);
+  const [hairColor, setHairColor] = useState(avatar.hairColor);
+  const [hatColor, setHatColor] = useState(avatar.hatColor);
+  const [mouth, setMouth] = useState(avatar.mouth);
+  const [size, setSize] = useState(avatar.size);
+  const [skinColor, setSkinColor] = useState(avatar.skinColor);
+  const [top, setTop] = useState(avatar.top);
+
+  const { setAuthInfo } = useAuth();
 
   const options = {
     ...schema.properties,
     ...avataaars.schema.properties,
   };
 
-  const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+  const handleSubmit = async () => {
+    const apiUrl = "http://localhost:5000";
 
-  const isInvalid = useMemo(() => {
-    if (playerEmail === "") return false;
-
-    return validateEmail(playerEmail) ? false : true;
-  }, [playerEmail]);
+    try {
+      const response = await fetch(`${apiUrl}/api/user/editProfile`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          avatar: {
+            accessories, accessoriesColor, clothesColor, clothing, clothingGraphic, eyebrows, eyes, facialHair, facialHairColor, hairColor, hatColor, mouth, size, skinColor, top
+          }
+        }),
+      });
+      if (response.ok) {
+        const userData = await response.json();
+        setAuthInfo(userData.username, userData.avatar, true);
+      };
+    } catch (error) {
+      console.error("Login error:", error);
+    };
+  };
 
   return (
     <section className="w-full p-5 flex flex-col justify-center items-center">
       <div className="flex flex-col gap-3 m-4">
         <h1 className="font-bold text-xl text-white">Edit Your Profile {username || "Guest"}</h1>
         <div className={`bg-white rounded-3xl flex justify-center`}>
-          <AvatarUI heightAndWidth={140} size={size} accessories={accessories} accessoriesColor={accessoriesColor} clothesColor={clothesColor} clothing={clothing} clothingGraphic={clothingGraphic} eyebrows={eyebrows} eyes={eyes} facialHair={facialHair}
-            facialHairColor={facialHairColor} hairColor={hairColor} hatColor={hatColor} mouth={mouth} skinColor={skinColor} top={top} />
+          <AvatarUI heightAndWidth={140} accessories={accessories} accessoriesColor={accessoriesColor} clothesColor={clothesColor} clothing={clothing} clothingGraphic={clothingGraphic} eyebrows={eyebrows} eyes={eyes} facialHair={facialHair}
+            facialHairColor={facialHairColor} hairColor={hairColor} hatColor={hatColor} mouth={mouth} size={size} skinColor={skinColor} top={top} />
         </div>
       </div>
-
       <div className="flex w-full flex-col">
         <Tabs aria-label="Options">
           <Tab key="accessories" title="👓">
@@ -78,8 +94,6 @@ const ProfileCard = ({ username }) => {
           </Tab>
         </Tabs>
       </div>
-
-
       <div className="m-4 flex flex-col items-center w-full">
         {/* <Input
             type="text"
@@ -88,26 +102,14 @@ const ProfileCard = ({ username }) => {
             value={username}
             onValueChange={setUsername}
             className="max-w-xs"
-          />
-          <br />
-          <Input
-            type="email"
-            label="Email"
-            variant="bordered"
-            value={playerEmail}
-            defaultValue="johndoe@email.com"
-            onValueChange={setPlayerEmail}
-            isInvalid={isInvalid}
-            color={isInvalid && "error"}
-            errorMessage={isInvalid && "Please enter a valid email"}
-            className="max-w-xs"
-          /> */}
+          /> 
+        */}
         <br />
         <Button
           color="primary"
           variant="ghost"
           className="mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        // onClick={handleNameSubmit}
+          onClick={handleSubmit}
         >
           Submit
         </Button>
