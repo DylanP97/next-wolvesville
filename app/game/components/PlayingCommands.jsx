@@ -3,7 +3,7 @@
 import voteAgainstIcon from "../../../public/game/vote-time.png";
 import { Image } from "@nextui-org/react";
 
-const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelection, isBlocked, setIsBlocked }) => {
+const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelection, isBlocked, setIsBlocked, actionType, setActionType }) => {
 
     const {
         role: { canVote, canPerform, name, bombPower, playersToSetOnFire, partner } = {},
@@ -20,10 +20,10 @@ const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelecti
         nbrLeftToPerform = undefined,
     } = canPerform || {};
 
-
-    const handleClick = () => {
+    const handleClick = (action) => {
         if (!isBlocked) {
             setIsSelection(!isSelection)
+            setActionType(action)
         } else {
             console.log("you already select something now selection mode is blocked")
         }
@@ -46,7 +46,7 @@ const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelecti
                     </div>
                 )}
             {timeOfTheDay === "votetime" && name !== "Mayor" && canVote && (
-                <div onClick={() => handleClick(label)} className={`${isSelection ? 'bg-slate-900' : 'bg-red-600'} w-[50px] p-[5px] cursor-pointer rounded-xl flex justify-center items-center`}>
+                <div onClick={() => handleClick("vote")} className={`${isSelection ? 'bg-slate-900' : 'bg-red-600'} w-[50px] p-[5px] cursor-pointer rounded-xl flex justify-center items-center`}>
                     <Image
                         src={voteAgainstIcon.src}
                         alt="voteAgainst"
@@ -55,8 +55,10 @@ const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelecti
                         style={{ width: "auto", height: "auto" }}
                     />
                 </div>
-
             )}
+            {
+                isBlocked && <p>You made your selection.</p>
+            }
         </div>
     )
 }

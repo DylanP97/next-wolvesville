@@ -9,12 +9,14 @@ import { useAuth } from "../../providers/AuthProvider";
 const NewPlayersGrid = ({
     gameId,
     timeOfTheDay,
-    isSelection,
-    setIsSelection,
     playersList,
     clientPlayer,
+    isSelection,
+    setIsSelection,
     isBlocked,
-    setIsBlocked
+    setIsBlocked,
+    actionType,
+    setActionType
 }) => {
     const { socket } = useAuth();
 
@@ -40,8 +42,8 @@ const NewPlayersGrid = ({
 
                 if (timeOfTheDay === "votetime") {
                     console.log("it's votetime")
-                    // const isMayor = playerToPlay.role.name === "Mayor";
-                    // voteForVotetime(selectedPlayer.id, isMayor);
+                    const isMayor = clientPlayer.role.name === "Mayor";
+                    socket.emit("addVote", selectedPlayer.id, isMayor ? 2 : 1)
                     return;
                 } else {
                     socket.emit("registerAction", {
@@ -84,9 +86,9 @@ const NewPlayersGrid = ({
                                 <Image className="" width={100} height={100} src={tombstone} alt="role" />
                             ) : player.isRevealed ? (
                                 <Image
+                                    src={player.role.image}
                                     width={100}
                                     height={100}
-                                    src={player.role.image}
                                     alt="role"
                                 />
                             ) : (
