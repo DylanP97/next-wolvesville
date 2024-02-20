@@ -1,14 +1,16 @@
 "use client";
 
-import { Button, Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader, Divider, Link, User } from "@nextui-org/react";
 import { useAuth } from "../providers/AuthProvider";
+import { Avatar } from "@nextui-org/react";
 
 const ConnectedUsers = () => {
-  const { connectedUsers } = useAuth();
+  const { connectedUsers, avatar } = useAuth();
+  console.log(avatar)
 
   return (
     <div className="min-h-screen h-full w-full bg-black p-4">
-      <h1 className="text-white text-3xl font-bold">Connected Users List</h1>
+      <h1 className="text-white text-3xl font-bold mb-6">Connected Users List</h1>
       {!connectedUsers ? (
         <div className="m-4">
           <p className="text-white">There are no users connected currently</p>
@@ -16,19 +18,24 @@ const ConnectedUsers = () => {
       ) : (
         connectedUsers.map((user, index) => {
           return (
-            <Card key={index} className="m-4">
-              <CardBody>
-                <p>User Id: {user.socketId}</p>
-                <p>User name: {user.username}</p>
-                {
-                  user.isInARoom && <p>Is in a Room: {user.isInARoom}</p>
-                }
-              </CardBody>
-            </Card>
+            <User
+              className="bg-white p-4"
+              name={user.username}
+              description={(
+                <>
+                  <p>{user.socketId}</p>
+                  {user.isInARoom && <p>Is in a Room: {user.isInARoom}</p>}
+                </>
+              )}
+              avatarProps={{
+                src: ""
+              }}
+            />
           );
         })
       )}
-      <Button color="secondary" variant="ghost" onClick={() => window.history.back()}>
+      <br />
+      <Button className="mt-6" color="secondary" variant="ghost" onClick={() => window.history.back()}>
         Go Back
       </Button>
     </div>

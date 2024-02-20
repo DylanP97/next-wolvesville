@@ -1,10 +1,11 @@
 import { createAvatar } from "@dicebear/core";
 import { avataaars } from "@dicebear/collection";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { CircularProgress } from "@nextui-org/react";
 
 const AvatarUI = ({ selection, heightAndWidth, accessories, accessoriesColor, clothesColor, clothing, clothingGraphic, eyebrows, eyes, facialHair, facialHairColor, hairColor, hatColor, mouth, skinColor, top }) => {
-  const [avatar, setAvatar] = useState();
+  const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
     let a = createAvatar(avataaars, {
@@ -33,15 +34,14 @@ const AvatarUI = ({ selection, heightAndWidth, accessories, accessoriesColor, cl
     setAvatar(a);
   }, [accessories, accessoriesColor, clothesColor, clothing, clothingGraphic, eyebrows, eyes, facialHair, facialHairColor, hairColor, hatColor, mouth, skinColor, top]);
 
-  return (
-      <Image
-        // className={selection ? "opacity-50" : ""}
-        height={heightAndWidth || 60}
-        width={heightAndWidth || 60}
-        src={avatar}
-        alt="Avatar"
-      />
-  );
+  return avatar ? (
+    <Image
+      height={heightAndWidth || 60}
+      width={heightAndWidth || 60}
+      src={avatar}
+      alt="Avatar"
+    />
+  ) : <CircularProgress color="secondary" aria-label="Loading..." />
 };
 
 export default AvatarUI;

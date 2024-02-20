@@ -6,7 +6,7 @@ import { useAuth } from "../providers/AuthProvider";
 import { redirect } from "next/navigation";
 
 export default function ConnectedUsersPage() {
-  const { isConnected, isInRoom, isPlaying} = useAuth();
+  const { isConnected, isInRoom, isPlaying } = useAuth();
 
   if (isConnected && isInRoom && isPlaying) return redirect("/game");
 

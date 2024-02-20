@@ -23,7 +23,6 @@ export default function GamePage() {
         console.error("Error fetching teams:", error);
       }
     };
-
     fetchTeams();
   }, []);
 

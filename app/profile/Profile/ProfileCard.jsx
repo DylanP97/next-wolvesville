@@ -9,7 +9,7 @@ import { schema } from "@dicebear/core";
 import { avataaars } from "@dicebear/collection";
 import { useAuth } from "../../providers/AuthProvider";
 
-const ProfileCard = ({ username, avatar }) => {
+const ProfileCard = ({ username, avatar, socketId }) => {
   const [accessories, setAccessories] = useState(avatar.accessories);
   const [accessoriesColor, setAccessoriesColor] = useState(avatar.accessoriesColor);
   const [clothesColor, setClothesColor] = useState(avatar.clothesColor);
@@ -43,6 +43,7 @@ const ProfileCard = ({ username, avatar }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          username: username,
           avatar: {
             accessories, accessoriesColor, clothesColor, clothing, clothingGraphic, eyebrows, eyes, facialHair, facialHairColor, hairColor, hatColor, mouth, size, skinColor, top
           }
@@ -50,7 +51,7 @@ const ProfileCard = ({ username, avatar }) => {
       });
       if (response.ok) {
         const userData = await response.json();
-        setAuthInfo(userData.username, userData.avatar, true);
+        setAuthInfo(userData.username, userData.avatar, true, socketId);
       };
     } catch (error) {
       console.error("Login error:", error);
@@ -67,48 +68,38 @@ const ProfileCard = ({ username, avatar }) => {
         </div>
       </div>
       <div className="flex w-full flex-col">
-        <Tabs aria-label="Options">
-          <Tab key="accessories" title="👓">
-            <ProfileSelection options={options.accessories.default} state={setAccessories} label={"accessories"} />
-            <ProfileSelection options={options.accessoriesColor.default} state={setAccessoriesColor} label={"accessories color"} />
-            <ProfileSelection options={options.hatColor.default} state={setHatColor} label={"hat color"} />
+        <Tabs aria-label="Options" className="justify-center">
+          <Tab key="head" title="👓">
+            <ProfileSelection options={options.accessories.default.concat(["nothing"])} state={setAccessories} label={"accessories"} value={accessories} />
+            <ProfileSelection options={options.accessoriesColor.default} state={setAccessoriesColor} label={"accessories color"} value={accessoriesColor} />
+            <ProfileSelection options={options.top.default.concat(["bald"])} state={setTop} label={"top"} value={top} />
+            <ProfileSelection options={options.hatColor.default} state={setHatColor} label={"hat color"} value={hatColor} />
+            <ProfileSelection options={options.hairColor.default} state={setHairColor} label={"hair color"} value={hairColor} />
           </Tab>
           <Tab key="clothes" title="👕">
-            <ProfileSelection options={options.clothesColor.default} state={setClothesColor} label={"clothes color"} />
-            <ProfileSelection options={options.clothing.default} state={setClothing} label={"clothing"} />
-            <ProfileSelection options={options.clothingGraphic.default} state={setClothingGraphic} label={"clothing graphic"} />
+            <ProfileSelection options={options.clothing.default} state={setClothing} label={"clothing"} value={clothing} />
+            <ProfileSelection options={options.clothesColor.default} state={setClothesColor} label={"clothes color"} value={clothesColor} />
+            <ProfileSelection options={options.clothingGraphic.default.concat(["nothing"])} state={setClothingGraphic} label={"clothing graphic"} value={clothingGraphic} />
           </Tab>
           <Tab key="body" title="👨">
-            <ProfileSelection options={options.facialHair.default} state={setFacialHair} label={"facial hair"} />
-            <ProfileSelection options={options.facialHairColor.default} state={setFacialHairColor} label={"facial hair color"} />
-            <ProfileSelection options={options.mouth.default} state={setMouth} label={"mouth"} />
-            <ProfileSelection options={options.skinColor.default} state={setSkinColor} label={"skin color"} />
-          </Tab>
-          <Tab key="hair" title="🙆">
-            <ProfileSelection options={options.top.default} state={setTop} label={"top"} />
-            <ProfileSelection options={options.hairColor.default} state={setHairColor} label={"hair color"} />
+            <ProfileSelection options={options.facialHair.default.concat(["nothing"])} state={setFacialHair} label={"facial hair"} value={facialHair} />
+            <ProfileSelection options={options.facialHairColor.default} state={setFacialHairColor} label={"facial hair color"} value={facialHairColor} />
+            <ProfileSelection options={options.mouth.default} state={setMouth} label={"mouth"} value={mouth} />
+            <ProfileSelection options={options.skinColor.default} state={setSkinColor} label={"skin color"} value={skinColor} />
           </Tab>
           <Tab key="eyes" title="👁️">
-            <ProfileSelection options={options.eyebrows.default} state={setEyebrows} label={"eyebrows"} />
-            <ProfileSelection options={options.eyes.default} state={setEyes} label={"eyes"} />
+            <ProfileSelection options={options.eyebrows.default} state={setEyebrows} label={"eyebrows"} value={eyebrows} />
+            <ProfileSelection options={options.eyes.default} state={setEyes} label={"eyes"} value={eyes} />
           </Tab>
         </Tabs>
       </div>
-      <div className="m-4 flex flex-col items-center w-full">
-        {/* <Input
-            type="text"
-            label="Username"
-            variant="bordered"
-            value={username}
-            onValueChange={setUsername}
-            className="max-w-xs"
-          /> 
-        */}
-        <br />
+      <div className="flex gap-2">
+        <Button color="secondary" variant="ghost" onClick={() => window.history.back()}>
+          Go Back
+        </Button>
         <Button
           color="primary"
           variant="ghost"
-          className="mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={handleSubmit}
         >
           Submit

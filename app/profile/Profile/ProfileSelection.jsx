@@ -2,15 +2,16 @@
 
 import { Select, SelectItem } from "@nextui-org/react";
 
-const ProfileSelection = ({ options, state, label }) => {
+const ProfileSelection = ({ options, state, label, value }) => {
     return (
         <Select
             label={`Select ${label}`}
-            className="max-w-xs h-14 w-full my-2"
+            variant="underline"
+            className="max-w-xs h-20 w-full my-2"
         >
             {options.map((option) => {
                 return (
-                    <SelectItem key={option} value={option} onClick={() => state(option)}>
+                    <SelectItem key={option} value={value} onClick={() => state(option)}>
                         {option}
                     </SelectItem>
                 )

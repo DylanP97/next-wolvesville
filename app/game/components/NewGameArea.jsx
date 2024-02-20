@@ -33,6 +33,8 @@ const NewGameArea = ({ }) => {
         setActionType("");
     }, [game.timeOfTheDay])
 
+    console.log(clientPlayer)
+
     return (
         <section
             className={`${game.timeOfTheDay === "daytime" ? "bg-sky-500" : game.timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-black"
