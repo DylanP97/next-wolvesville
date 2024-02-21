@@ -21,8 +21,6 @@ const NewPlayersGrid = ({
     const { socket } = useAuth();
 
     const handlePlayerClick = (selectedPlayer) => {
-        console.log("isBlocked : ", isBlocked)
-
         if (!isBlocked) {
             if (isSelection) {
                 if (!selectedPlayer.isAlive) {
@@ -40,10 +38,12 @@ const NewPlayersGrid = ({
                     return;
                 }
 
-                if (timeOfTheDay === "votetime") {
-                    console.log("it's votetime")
-                    const isMayor = clientPlayer.role.name === "Mayor";
-                    socket.emit("addVote", selectedPlayer.id, isMayor ? 2 : 1)
+                if (timeOfTheDay == "votetime" && actionType == "vote") {
+                    const isMayor = clientPlayer.role.name === "Mayor" ? 2 : 1;
+                    socket.emit("addVote", selectedPlayer.id, isMayor, gameId)
+                    setIsBlocked(true);
+                    setIsSelection(false);
+                    console.log("hello ;)))))")
                     return;
                 } else {
                     socket.emit("registerAction", {
@@ -61,7 +61,7 @@ const NewPlayersGrid = ({
                 return;
             }
         } else {
-            console.log("its blocked ")
+            console.log("selection's blocked ")
         }
     };
 
@@ -92,7 +92,8 @@ const NewPlayersGrid = ({
                                     alt="role"
                                 />
                             ) : (
-                                <AvatarUI heightAndWidth={100} />
+                                <AvatarUI heightAndWidth={100} accessories={player.avatar.accessories} accessoriesColor={player.avatar.accessoriesColor} clothesColor={player.avatar.clothesColor} clothing={player.avatar.clothing} clothingGraphic={player.avatar.clothingGraphic} eyebrows={player.avatar.eyebrows} eyes={player.avatar.eyes} facialHair={player.avatar.facialHair}
+                                facialHairColor={player.avatar.facialHairColor} hairColor={player.avatar.hairColor} hatColor={player.avatar.hatColor} mouth={player.avatar.mouth} size={player.avatar.size} skinColor={player.avatar.skinColor} top={player.avatar.top} />
                             )}
                             <p className={`${isSelection && player.id !== clientPlayer.id ? "text-black" : "text-white"} text-xs mt-2`}>{player.name}</p>
                         </div>

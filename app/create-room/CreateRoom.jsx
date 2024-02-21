@@ -3,13 +3,12 @@
 import { Input, Button, Divider, CheckboxGroup, Checkbox } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import { useAuth } from "../providers/AuthProvider";
-import Link from "next/link";
 
 const CreateRoom = () => {
   const [roomName, setRoomName] = useState("");
   const [nbrOfPlayers, setNbrOfPlayers] = useState(2);
   const [selectedRoles, setSelectedRoles] = useState([]);
-  const { username, socket, addRoom, socketId } = useAuth();
+  const { username, socket, addRoom, socketId, avatar } = useAuth();
   const [availableRoles, setAvailableRoles] = useState([]);
   const [created, setCreated] = useState(false)
 
@@ -38,7 +37,7 @@ const CreateRoom = () => {
       createdBy: username,
       nbrOfPlayers: nbrOfPlayers,
       selectedRoles: selectedRoles,
-      usersInTheRoom: [{ username, socketId }]
+      usersInTheRoom: [{ username, socketId, avatar }]
     };
     socket.emit("createRoom", newRoom);
     addRoom(newRoom);

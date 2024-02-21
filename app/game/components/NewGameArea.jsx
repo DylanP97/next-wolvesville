@@ -22,6 +22,11 @@ const NewGameArea = ({ }) => {
     const [actionType, setActionType] = useState("");
 
     useEffect(() => {
+        if (game.timeOfTheDay == "votetime") {
+            playersList.map((p) => {
+                console.log(p.name + " " + p.voteAgainst)
+            })
+        }
         setPlayersList(game.playersList);
         setMessagesHistory(game.messagesHistory);
         socket.emit("checkForWinner", game.id);
@@ -32,8 +37,6 @@ const NewGameArea = ({ }) => {
         setIsBlocked(false);
         setActionType("");
     }, [game.timeOfTheDay])
-
-    console.log(clientPlayer)
 
     return (
         <section
@@ -50,6 +53,14 @@ const NewGameArea = ({ }) => {
             <Chatbox />
             <PlayingCommands clientPlayer={clientPlayer} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} actionType={actionType} setActionType={setActionType} />
             {game.winningTeam && <WinnerOverlay winningTeam={game.winningTeam} />}
+
+            {
+                playersList.map((ply, ind) => {
+                    return (
+                        <p key={"pvote" + ind}>{ply.name} : {ply.voteAgainst || 0}</p>
+                    )
+                })
+            }
         </section>
     );
 };

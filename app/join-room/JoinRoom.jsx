@@ -5,7 +5,7 @@ import React from "react";
 import { useAuth } from "../providers/AuthProvider";
 
 const JoinRoom = () => {
-  const { rooms, username, socketId, socket } = useAuth();
+  const { rooms, username, socketId, avatar, socket } = useAuth();
 
   const joinRoom = (roomId, userJoining) => {
     socket.emit("joinRoom", roomId, userJoining);
@@ -13,7 +13,8 @@ const JoinRoom = () => {
 
   const deleteRoom = (roomId) => {
     socket.emit('deleteRoom', roomId)
-  }
+  };
+
 
   return (
     <div className="w-full bg-black p-4">
@@ -42,8 +43,8 @@ const JoinRoom = () => {
               <CardFooter>
                 {
                   usersInTheRoom.length < room.nbrOfPlayers &&
-                  usersInTheRoom.some((usr) => usr.username != username) && (
-                    <Button color="secondary" variant="ghost" onClick={() => joinRoom(room.id, { username, socketId })}>
+                  !usersInTheRoom.some((usr) => usr.username === username) && (
+                    <Button color="secondary" variant="ghost" onClick={() => joinRoom(room.id, { username, socketId, avatar })}>
                       Join Room
                     </Button>
                   )

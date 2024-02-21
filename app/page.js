@@ -14,7 +14,7 @@ export default function Home() {
     <div>
       {isConnected ? (
         <>
-          <HomePage username={username} socketId={socketId} />
+          <HomePage username={username} socketId={socketId} isInRoom={isInRoom} />
         </>
       ) : (
         <Connexion />

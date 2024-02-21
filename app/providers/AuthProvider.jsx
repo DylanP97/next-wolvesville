@@ -39,9 +39,9 @@ export const AuthProvider = ({ children }) => {
       });
 
       socket.on("updateUsers", (updatedUsers) => {
-        setConnectedUsers(updatedUsers)
         let user = updatedUsers.find((user) => user.username == authState.username);
         if (user.isInRoom) setIsInRoom(user.isInRoom)
+        setConnectedUsers(updatedUsers)
       });
 
       socket.on("updateRooms", (updatedRooms) => {
