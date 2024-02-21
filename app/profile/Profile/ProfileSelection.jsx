@@ -7,7 +7,7 @@ const ProfileSelection = ({ options, state, label, value }) => {
         <Select
             label={`Select ${label}`}
             variant="underline"
-            className="max-w-xs h-20 w-full my-2"
+            className="w-full my-1 w-full"
         >
             {options.map((option) => {
                 return (

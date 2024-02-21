@@ -83,11 +83,6 @@ const CreateRoom = () => {
                 }
               />
               <Divider className="my-2" />
-              {selectedRoles.length === nbrOfPlayers && roomName && (
-                <Button color="secondary" variant="ghost" onClick={() => submitNewRoom()}>
-                  Create Room
-                </Button>
-              )}
             </div>
             <CheckboxGroup
               className="my-4"
@@ -110,9 +105,16 @@ const CreateRoom = () => {
         )
       }
       <Divider className="my-2" />
-      <Button color="primary" variant="ghost" onClick={() => window.history.back()}>
-        Go Back
-      </Button>
+      <div className="flex gap-2">
+        {!created && selectedRoles.length === nbrOfPlayers && roomName && (
+          <Button color="secondary" variant="ghost" onClick={() => submitNewRoom()}>
+            Create Room
+          </Button>
+        )}
+        <Button color="primary" variant="ghost" onClick={() => window.history.back()}>
+          Go Back
+        </Button>
+      </div>
     </div>
   );
 };

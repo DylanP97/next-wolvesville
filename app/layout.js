@@ -1,6 +1,8 @@
 import "./globals.css";
 import { GeistSans } from "geist/font";
 import { Providers } from "./providers/providers";
+import LogoutButton from "./components/LogoutButton"
+import ClientOnly from "./components/ClientOnly"
 
 export const metadata = {
   title: "Wolvesville",
@@ -15,10 +17,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={GeistSans.className}>
       <body className="flex flex-col items-center w-screen min-h-screen h-full">
+        <ClientOnly>
+          <LogoutButton />
+        </ClientOnly>
         <Providers>
           {children}
         </Providers>
       </body>
-    </html>
+    </html >
   );
 }

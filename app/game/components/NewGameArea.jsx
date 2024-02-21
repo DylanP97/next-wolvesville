@@ -53,13 +53,8 @@ const NewGameArea = ({ }) => {
             <Chatbox />
             <PlayingCommands clientPlayer={clientPlayer} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} actionType={actionType} setActionType={setActionType} />
             {game.winningTeam && <WinnerOverlay winningTeam={game.winningTeam} />}
-
             {
-                playersList.map((ply, ind) => {
-                    return (
-                        <p key={"pvote" + ind}>{ply.name} : {ply.voteAgainst || 0}</p>
-                    )
-                })
+                isBlocked && <p className="text-white mt-2">You made your selection.</p>
             }
         </section>
     );

@@ -45,7 +45,7 @@ const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelecti
                         />
                     </div>
                 )}
-            {timeOfTheDay === "votetime" && name !== "Mayor" && canVote && (
+            {timeOfTheDay === "votetime" && canVote && (
                 <div onClick={() => handleClick("vote")} className={`${isSelection ? 'bg-slate-900' : 'bg-red-600'} w-[50px] p-[5px] cursor-pointer rounded-xl flex justify-center items-center`}>
                     <Image
                         src={voteAgainstIcon.src}
@@ -56,9 +56,6 @@ const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelecti
                     />
                 </div>
             )}
-            {
-                isBlocked && <p>You made your selection.</p>
-            }
         </div>
     )
 }

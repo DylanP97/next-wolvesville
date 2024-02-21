@@ -10,21 +10,23 @@ import { avataaars } from "@dicebear/collection";
 import { useAuth } from "../../providers/AuthProvider";
 
 const ProfileCard = ({ username, avatar, socketId }) => {
-  const [accessories, setAccessories] = useState(avatar.accessories);
-  const [accessoriesColor, setAccessoriesColor] = useState(avatar.accessoriesColor);
-  const [clothesColor, setClothesColor] = useState(avatar.clothesColor);
-  const [clothing, setClothing] = useState(avatar.clothing);
-  const [clothingGraphic, setClothingGraphic] = useState(avatar.clothingGraphic);
-  const [eyebrows, setEyebrows] = useState(avatar.eyebrows);
-  const [eyes, setEyes] = useState(avatar.eyes);
-  const [facialHair, setFacialHair] = useState(avatar.facialHair);
-  const [facialHairColor, setFacialHairColor] = useState(avatar.facialHairColor);
-  const [hairColor, setHairColor] = useState(avatar.hairColor);
-  const [hatColor, setHatColor] = useState(avatar.hatColor);
-  const [mouth, setMouth] = useState(avatar.mouth);
-  const [size, setSize] = useState(avatar.size);
-  const [skinColor, setSkinColor] = useState(avatar.skinColor);
-  const [top, setTop] = useState(avatar.top);
+  const [accessories, setAccessories] = useState(avatar?.accessories);
+  const [accessoriesColor, setAccessoriesColor] = useState(avatar?.accessoriesColor);
+  const [clothesColor, setClothesColor] = useState(avatar?.clothesColor);
+  const [clothing, setClothing] = useState(avatar?.clothing);
+  const [clothingGraphic, setClothingGraphic] = useState(avatar?.clothingGraphic);
+  const [eyebrows, setEyebrows] = useState(avatar?.eyebrows);
+  const [eyes, setEyes] = useState(avatar?.eyes);
+  const [facialHair, setFacialHair] = useState(avatar?.facialHair);
+  const [facialHairColor, setFacialHairColor] = useState(avatar?.facialHairColor);
+  const [hairColor, setHairColor] = useState(avatar?.hairColor);
+  const [hatColor, setHatColor] = useState(avatar?.hatColor);
+  const [mouth, setMouth] = useState(avatar?.mouth);
+  const [size, setSize] = useState(avatar?.size);
+  const [skinColor, setSkinColor] = useState(avatar?.skinColor);
+  const [top, setTop] = useState(avatar?.top);
+
+  const [response, setResponse] = useState("");
 
   const { setAuthInfo } = useAuth();
 
@@ -51,15 +53,17 @@ const ProfileCard = ({ username, avatar, socketId }) => {
       });
       if (response.ok) {
         const userData = await response.json();
+        setResponse(userData.message)
         setAuthInfo(userData.username, userData.avatar, true, socketId);
       };
     } catch (error) {
+      setResponse(userData.message)
       console.error("Login error:", error);
     };
   };
 
   return (
-    <section className="w-full p-5 flex flex-col justify-center items-center">
+    <section className="w-[400px] p-5 flex flex-col justify-center items-center">
       <div className="flex flex-col gap-3 m-4">
         <h1 className="font-bold text-xl text-white">Edit Your Profile {username || "Guest"}</h1>
         <div className={`bg-white rounded-3xl flex justify-center`}>
@@ -105,6 +109,7 @@ const ProfileCard = ({ username, avatar, socketId }) => {
           Submit
         </Button>
       </div>
+      <p className="text-white text-sm mt-4">{response}</p>
     </section>
   );
 };
