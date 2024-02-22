@@ -13,22 +13,18 @@ import Chatbox from "./Chatbox";
 
 const NewGameArea = ({ }) => {
     const { game, socket, username } = useAuth();
-    const actionsHistoryListRef = useRef(null);
     const clientPlayer = game.playersList.find((p) => p.name == username);
     const [playersList, setPlayersList] = useState(game.playersList);
     const [messagesHistory, setMessagesHistory] = useState(game.messagesHistory);
+    const [wolvesMessagesHistory, setWolvesMessagesHistory] = useState(game.wolvesMessagesHistory);
     const [isSelection, setIsSelection] = useState(false);
     const [isBlocked, setIsBlocked] = useState(false);
     const [actionType, setActionType] = useState("");
 
     useEffect(() => {
-        if (game.timeOfTheDay == "votetime") {
-            playersList.map((p) => {
-                console.log(p.name + " " + p.voteAgainst)
-            })
-        }
         setPlayersList(game.playersList);
         setMessagesHistory(game.messagesHistory);
+        setWolvesMessagesHistory(game.wolvesMessagesHistory);
         socket.emit("checkForWinner", game.id);
     }, [game]);
 
@@ -45,12 +41,16 @@ const NewGameArea = ({ }) => {
             style={{ outline: "none" }}>
             <GameHeader timeOfTheDay={game.timeOfTheDay} dayCount={game.dayCount} timeCounter={game.timeCounter} />
             <Background timeOfTheDay={game.timeOfTheDay} />
-            <div className="flex flex-row gap-2">
-                <ActionsHistory messagesHistory={messagesHistory} actionsHistoryListRef={actionsHistoryListRef} />
-                <PlayerInfos clientPlayer={clientPlayer} />
-            </div>
+            <PlayerInfos clientPlayer={clientPlayer} />
             <NewPlayersGrid gameId={game.id} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} playersList={playersList} clientPlayer={clientPlayer} actionType={actionType} setActionType={setActionType} />
-            <Chatbox />
+            {
+                game.timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" ? (
+                    <ActionsHistory messagesHistory={wolvesMessagesHistory} />
+                ) : (
+                    <ActionsHistory messagesHistory={messagesHistory} />
+                )
+            }
+            <Chatbox timeOfTheDay={game.timeOfTheDay} gameId={game.id} clientPlayer={clientPlayer} />
             <PlayingCommands clientPlayer={clientPlayer} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} actionType={actionType} setActionType={setActionType} />
             {game.winningTeam && <WinnerOverlay winningTeam={game.winningTeam} />}
             {

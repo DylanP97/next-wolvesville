@@ -16,7 +16,6 @@ const ConnectedUsers = () => {
         </div>
       ) : (
         connectedUsers.map((user, index) => {
-          console.log(user.isInRoom)
           return (
             <div
               key={"usercard" + index}
