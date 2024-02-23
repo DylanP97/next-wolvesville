@@ -10,6 +10,7 @@ import GameHeader from "./GameHeader";
 import PlayingCommands from "./PlayingCommands";
 import NewPlayersGrid from "./NewPlayersGrid";
 import Chatbox from "./Chatbox";
+import WolvesActionsHistory from "./WolvesActionsHistory";
 
 const NewGameArea = ({ }) => {
     const { game, socket, username } = useAuth();
@@ -43,10 +44,10 @@ const NewGameArea = ({ }) => {
             <Background timeOfTheDay={game.timeOfTheDay} />
             <PlayerInfos clientPlayer={clientPlayer} />
             <NewPlayersGrid gameId={game.id} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} playersList={playersList} clientPlayer={clientPlayer} actionType={actionType} setActionType={setActionType} />
-            <div className="w-full flex flex-row ">
-                <ActionsHistory messagesHistory={messagesHistory} />
+            <div className="flex flex-row gap-2">
+                <ActionsHistory key="all" messagesHistory={messagesHistory} />
                 {
-                    game.timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" && <ActionsHistory messagesHistory={wolvesMessagesHistory} />
+                    game.timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" && <WolvesActionsHistory key="wolves" messagesHistory={wolvesMessagesHistory} />
                 }
             </div>
             <Chatbox timeOfTheDay={game.timeOfTheDay} gameId={game.id} clientPlayer={clientPlayer} />
