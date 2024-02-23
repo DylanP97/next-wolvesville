@@ -9,7 +9,6 @@ const ActionsHistory = ({ messagesHistory }) => {
       <h2 className="text-white">General Chat ✉️</h2>
       <ScrollShadow
         hideScrollBar
-        size={20}
         className="w-full h-[120px] bg-slate-950 p-2 my-2 rounded-xl max-h-72">
         <ul className="actions-list text-white">
           {

@@ -1,7 +1,6 @@
 "use client";
 
 import { ScrollShadow } from "@nextui-org/react";
-import Image from "next/image";
 
 const WolvesActionsHistory = ({ messagesHistory }) => {
 
@@ -10,7 +9,6 @@ const WolvesActionsHistory = ({ messagesHistory }) => {
             <h2 className="text-white">Wolves' chat 🐺</h2>
             <ScrollShadow
                 hideScrollBar
-                autoScroll
                 className="w-full h-[120px] bg-gray-800 p-4 my-2 rounded-xl max-h-72">
                 <ul className="actions-list text-white">
                     {

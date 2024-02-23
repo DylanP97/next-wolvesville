@@ -1,5 +1,5 @@
 "use client";
-import { Button, Textarea } from "@nextui-org/react";
+import { Textarea } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
 import Image from "next/image";
@@ -13,7 +13,6 @@ const Chatbox = ({ timeOfTheDay, gameId, clientPlayer }) => {
 
     const sendMessage = (message) => {
         const isWolvesChat = (timeOfTheDay == "nighttime" && isWolf ? true : false)
-        console.log(isWolvesChat)
         socket.emit("sendMessage", message, gameId, username, isWolvesChat)
         setMessage("");
     }
@@ -23,7 +22,10 @@ const Chatbox = ({ timeOfTheDay, gameId, clientPlayer }) => {
     }, [timeOfTheDay])
 
     if (!isWolf && timeOfTheDay == "nighttime") {
-        return;
+        return (
+            <div>
+            </div>
+        )
     } else {
         return (
             <div className="flex flex-row w-full gap-2">

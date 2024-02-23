@@ -36,7 +36,7 @@ const ProfileCard = ({ username, avatar, socketId }) => {
   };
 
   const handleSubmit = async () => {
-    const apiUrl = "https://node-wolvesville.onrender.com";
+    const apiUrl = "http://localhost:5000";
 
     try {
       const response = await fetch(`${apiUrl}/api/user/editProfile`, {
