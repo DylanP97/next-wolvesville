@@ -38,7 +38,7 @@ const Chatbox = ({ timeOfTheDay, gameId, clientPlayer }) => {
                     className="h-20"
                     onChange={(e) => setMessage(e.target.value)}
                 />
-                <div onClick={() => sendMessage(message)} className="mt-2 cursor-pointer rounded-xl flex justify-center items-center py-[10px] px-[10px] w-[50px] h-[50px] bg-slate-900" color="primary">
+                <div onClick={() => sendMessage(message)} className="mt-2 cursor-pointer rounded-xl flex justify-center items-center py-[10px] px-[10px] w-[50px] h-[50px] bg-slate-900">
                     <Image
                         src={send}
                         alt="sendMessage"
