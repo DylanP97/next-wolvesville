@@ -43,13 +43,12 @@ const NewGameArea = ({ }) => {
             <Background timeOfTheDay={game.timeOfTheDay} />
             <PlayerInfos clientPlayer={clientPlayer} />
             <NewPlayersGrid gameId={game.id} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} playersList={playersList} clientPlayer={clientPlayer} actionType={actionType} setActionType={setActionType} />
-            {
-                game.timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" ? (
-                    <ActionsHistory messagesHistory={wolvesMessagesHistory} />
-                ) : (
-                    <ActionsHistory messagesHistory={messagesHistory} />
-                )
-            }
+            <div className="w-full flex flex-row ">
+                <ActionsHistory messagesHistory={messagesHistory} />
+                {
+                    game.timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" && <ActionsHistory messagesHistory={wolvesMessagesHistory} />
+                }
+            </div>
             <Chatbox timeOfTheDay={game.timeOfTheDay} gameId={game.id} clientPlayer={clientPlayer} />
             <PlayingCommands clientPlayer={clientPlayer} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} actionType={actionType} setActionType={setActionType} />
             {game.winningTeam && <WinnerOverlay winningTeam={game.winningTeam} />}

@@ -11,7 +11,7 @@ const RolesGrid = () => {
     // Fetch available roles from the server
     const fetchRoles = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/roles");
+        const response = await fetch("https://node-wolvesville.onrender.com/api/roles");
         if (response.ok) {
           const rolesData = await response.json();
           setAvailableRoles(rolesData);
