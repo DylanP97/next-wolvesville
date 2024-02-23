@@ -40,12 +40,21 @@ const NewPlayersGrid = ({
 
                 if (timeOfTheDay == "votetime" && actionType == "vote") {
                     const nbr = clientPlayer.role.name === "Mayor" ? 2 : 1;
-                    console.log(nbr)
                     socket.emit("addVote", selectedPlayer.id, nbr, gameId)
                     setIsBlocked(true);
                     setIsSelection(false);
                     return;
-                } else {
+                }
+
+                if (timeOfTheDay == "nighttime" && actionType == "devours") {
+                    const nbr = clientPlayer.role.name === "Alpha Werewolf" ? 2 : 1;
+                    socket.emit("addWolfVote", selectedPlayer.id, nbr, gameId)
+                    setIsBlocked(true);
+                    setIsSelection(false);
+                    return;
+                }
+
+                else {
                     if (actionType == "reveal") {
                         socket.emit("revealPlayer", {
                             type: clientPlayer.role.canPerform.type,
@@ -93,7 +102,16 @@ const NewPlayersGrid = ({
                         >
                             {
                                 timeOfTheDay == "votetime" && (
-                                    <Badge content={player.voteAgainst} color="primary" placement="top-right" />
+                                    <div className="bg-slate-800 absolute top-0 right-0 p-2">
+                                        <p className="text-white">{player.voteAgainst}</p>
+                                    </div>
+                                )
+                            }
+                            {
+                                timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" && (
+                                    <div className="bg-gray-950 absolute top-0 right-0 p-2">
+                                        <p className="text-white">{player.wolfVoteAgainst}</p>
+                                    </div>
                                 )
                             }
                             {!player.isAlive ? (

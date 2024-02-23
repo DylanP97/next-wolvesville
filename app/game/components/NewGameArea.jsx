@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
 import Background from "./Background";
 import WinnerOverlay from "./WinnerOverlay";
