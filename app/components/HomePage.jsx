@@ -6,7 +6,7 @@ import React from "react";
 const HomePage = ({ username, socketId, isInRoom }) => {
 
   return (
-    <div className="h-screen pt-8">
+    <div className="h-screen w-screen p-8">
       <header className="p-2">
         <p className="text-white">Username: {username}</p>
         <p className="text-white">SocketId: {socketId}</p>

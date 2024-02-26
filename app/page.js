@@ -11,14 +11,12 @@ export default function Home() {
   if (isConnected && isInRoom && isPlaying) return redirect("/game");
 
   return (
-    <div>
+    <>
       {isConnected ? (
-        <>
           <HomePage username={username} socketId={socketId} isInRoom={isInRoom} />
-        </>
       ) : (
         <Connexion />
       )}
-    </div>
+    </>
   );
 }

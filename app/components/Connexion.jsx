@@ -19,8 +19,6 @@ const Connexion = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("http://localhost:5000")
-
     if (isLogin) {
       try {
         const response = await fetch("http://localhost:5000" + "/api/user/login", {
@@ -58,7 +56,7 @@ const Connexion = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center">
+    <div className="h-screen w-screen flex flex-col justify-center items-center">
       <h1 className="text-white my-2">{isLogin ? "Login with your account" : "Register a new account"}</h1>
       <form onSubmit={handleSubmit}>
         {!isLogin && (

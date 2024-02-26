@@ -38,23 +38,21 @@ const NewGameArea = ({ }) => {
     return (
         <section
             className={`${game.timeOfTheDay === "daytime" ? "bg-sky-500" : game.timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-black"
-                } h-screen w-screen p-4 absolute top-0 left-0 relative`}
+                } h-screen w-screen absolute top-0 left-0 relative`}
             style={{ outline: "none" }}>
             <GameHeader timeOfTheDay={game.timeOfTheDay} dayCount={game.dayCount} timeCounter={game.timeCounter} />
             <Background timeOfTheDay={game.timeOfTheDay} />
             <PlayerInfos clientPlayer={clientPlayer} />
             <NewPlayersGrid gameId={game.id} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} playersList={playersList} clientPlayer={clientPlayer} actionType={actionType} setActionType={setActionType} />
-            <div className="flex flex-row gap-2">
-                <ActionsHistory key="all" messagesHistory={messagesHistory} />
-                {
-                    game.timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" && <WolvesActionsHistory key="wolves" messagesHistory={wolvesMessagesHistory} />
-                }
-            </div>
+            <ActionsHistory key="all" messagesHistory={messagesHistory} />
+            {
+                game.timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" && <WolvesActionsHistory key="wolves" messagesHistory={wolvesMessagesHistory} />
+            }
             <Chatbox timeOfTheDay={game.timeOfTheDay} gameId={game.id} clientPlayer={clientPlayer} />
             <PlayingCommands clientPlayer={clientPlayer} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} actionType={actionType} setActionType={setActionType} />
             {game.winningTeam && <WinnerOverlay winningTeam={game.winningTeam} />}
             {
-                isBlocked && <p className="text-white mt-2">You made your selection.</p>
+                isBlocked && <p className="text-white text-xs mt-2">You made your selection.</p>
             }
         </section>
     );

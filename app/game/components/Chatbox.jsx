@@ -1,5 +1,5 @@
 "use client";
-import { Textarea } from "@nextui-org/react";
+
 import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
 import Image from "next/image";
@@ -23,29 +23,26 @@ const Chatbox = ({ timeOfTheDay, gameId, clientPlayer }) => {
 
     if (!isWolf && timeOfTheDay == "nighttime") {
         return (
-            <div>
-            </div>
+            <>
+            </>
         )
     } else {
         return (
             <div className="flex flex-row w-full gap-2">
-                <Textarea
-                    color="secondary"
-                    variant="flat"
+                <textarea
                     isDisabled={timeOfTheDay == "nighttime" && false}
-                    label="Write a message here"
-                    labelPlacement="inside"
-                    placeholder=""
+                    placeholder="Write a message"
                     defaultValue=""
-                    className="h-20"
+                    value={message}
+                    className="outline-none border-none w-full p-2 h-[40px]"
                     onChange={(e) => setMessage(e.target.value)}
                 />
-                <div onClick={() => sendMessage(message)} className="mt-2 cursor-pointer rounded-xl flex justify-center items-center py-[10px] px-[10px] w-[50px] h-[50px] bg-slate-900">
+                <div onClick={() => sendMessage(message)} className="absolute right-0 cursor-pointer flex justify-center items-center p-[10px] w-[40px] h-[40px] bg-slate-900">
                     <Image
                         src={send}
                         alt="sendMessage"
-                        width={50}
-                        height={50}
+                        width={40}
+                        height={40}
                         style={{ width: "auto", height: "auto" }}
                     />
                 </div>

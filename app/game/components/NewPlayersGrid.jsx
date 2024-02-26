@@ -84,7 +84,7 @@ const NewPlayersGrid = ({
     };
 
     return (
-        <div className={`${isSelection ? "" : ""} flex flex-row gap-2 my-4 place-items-center xl:w-[80%]`}>
+        <div className={`${isSelection ? "" : ""} flex flex-row place-items-center w-full xl:w-[80%]`}>
             {
                 playersList.map((player) => {
                     return (
@@ -94,11 +94,11 @@ const NewPlayersGrid = ({
                                 ? clientPlayer.id !== player.id
                                     ? isSelection && !isBlocked
                                         ? "bg-red-800 cursor-pointer animate-pulse"
-                                        : "bg-gray-800"
-                                    : "bg-gray-900 border-2 border-solid border-pink-500"
+                                        : "bg-slate-800"
+                                    : "bg-slate-500"
                                 : "bg-black"
                                 }
-                                w-full md:w-40 h-full md:h-full flex flex-col justify-center items-center relative rounded-xl md:rounded-3xl p-2`}
+                                w-full md:w-40 h-full md:h-full flex flex-col justify-center items-center relative p-2`}
                         >
                             {
                                 timeOfTheDay == "votetime" && (

@@ -2,12 +2,11 @@
 
 import Image from "next/image";
 
-const PlayerInfos = ({ clientPlayer, timeOfTheDay }) => {
+const PlayerInfos = ({ clientPlayer }) => {
 
   return (
-    <div className="bg-slate-950 rounded-xl shadow-lg p-4 my-2 h-[100px] relative overflow-hidden w-full">
-      <p className="text-xs text-gray-200">{clientPlayer.name}</p>
-      <p className="text-xs text-gray-200">Your role is {clientPlayer.role.name}</p>
+    <div className="bg-slate-950 shadow-lg p-4 h-[100px] relative overflow-hidden w-full">
+      <p className="text-xs text-gray-200">{clientPlayer.name} - {clientPlayer.role.name}</p>
       <p className="text-xs text-gray-200">{clientPlayer.role.description}</p>
       <Image
         src={clientPlayer.role.image}
