@@ -47,10 +47,14 @@ const NewPlayersGrid = ({
                 }
 
                 if (timeOfTheDay == "nighttime" && actionType == "devours") {
-                    const nbr = clientPlayer.role.name === "Alpha Werewolf" ? 2 : 1;
-                    socket.emit("addWolfVote", selectedPlayer.id, nbr, gameId)
-                    setIsBlocked(true);
-                    setIsSelection(false);
+                    if (selectedPlayer.role.team.join() !== "werewolves") {
+                        const nbr = clientPlayer.role.name === "Alpha Werewolf" ? 2 : 1;
+                        socket.emit("addWolfVote", selectedPlayer.id, nbr, gameId)
+                        setIsBlocked(true);
+                        setIsSelection(false);
+                    } else {
+                        console.log("You can't select a wolf")
+                    }
                     return;
                 }
 
@@ -110,7 +114,7 @@ const NewPlayersGrid = ({
                             {
                                 timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" && (
                                     <div className="bg-gray-950 absolute top-0 right-0 p-2">
-                                        <p className="text-white">{player.wolfVoteAgainst}</p>
+                                        <p className="text-white">{player.wolfVoteAgainst || 0}</p>
                                     </div>
                                 )
                             }

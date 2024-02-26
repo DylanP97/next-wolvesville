@@ -5,7 +5,7 @@ import Image from "next/image";
 const PlayerInfos = ({ clientPlayer }) => {
 
   return (
-    <div className="bg-slate-950 shadow-lg p-4 h-[100px] relative overflow-hidden w-full">
+    <div className="bg-slate-950 shadow-lg p-4 h-[130px] relative overflow-hidden w-full">
       <p className="text-xs text-gray-200">{clientPlayer.name} - {clientPlayer.role.name}</p>
       <p className="text-xs text-gray-200">{clientPlayer.role.description}</p>
       <Image

@@ -43,10 +43,12 @@ const JoinRoom = () => {
               <CardFooter>
                 {
                   usersInTheRoom.length < room.nbrOfPlayers &&
-                  !usersInTheRoom.some((usr) => usr.username === username) && (
+                  !usersInTheRoom.some((usr) => usr.username === username) ? (
                     <Button color="secondary" variant="ghost" onClick={() => joinRoom(room.id, { username, socketId, avatar })}>
                       Join Room
                     </Button>
+                  ) : (
+                    <p>You have joined the room.</p>
                   )
                 }
                 {
