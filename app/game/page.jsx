@@ -12,7 +12,7 @@ export default function GamePage() {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await fetch("https://node-wolvesville.onrender.com" + "/api/teams");
+        const response = await fetch("http://localhost:5000" + "/api/teams");
         if (response.ok) {
           const teamsData = await response.json();
           setAvailableTeams(teamsData);

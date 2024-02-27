@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   
   useEffect(() => {
     if (authState.isConnected) {
-      const socket = io("https://node-wolvesville.onrender.com");
+      const socket = io("http://localhost:5000");
       let user = { username: authState.username, avatar: authState.avatar }
 
       socket.on("connect", () => {

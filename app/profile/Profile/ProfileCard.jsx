@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AvatarUI from "./AvatarUI";
 import ProfileSelection from "./ProfileSelection"
 import { Tabs, Tab } from "@nextui-org/react";
@@ -35,8 +35,26 @@ const ProfileCard = ({ username, avatar, socketId }) => {
     ...avataaars.schema.properties,
   };
 
+  useEffect(() => {
+    setAccessories(avatar?.accessories);
+    setAccessoriesColor(avatar?.accessoriesColor);
+    setClothesColor(avatar?.clothesColor);
+    setClothing(avatar?.clothing);
+    setClothingGraphic(avatar?.clothingGraphic);
+    setEyebrows(avatar?.eyebrows);
+    setEyes(avatar?.eyes);
+    setFacialHair(avatar?.facialHair);
+    setFacialHairColor(avatar?.facialHairColor);
+    setHairColor(avatar?.hairColor);
+    setHatColor(avatar?.hatColor);
+    setMouth(avatar?.mouth);
+    setSize(avatar?.size);
+    setSkinColor(avatar?.skinColor);
+    setTop(avatar?.top);
+  }, [avatar])
+
   const handleSubmit = async () => {
-    const apiUrl = "https://node-wolvesville.onrender.com";
+    const apiUrl = "http://localhost:5000";
 
     try {
       const response = await fetch(`${apiUrl}/api/user/editProfile`, {

@@ -11,7 +11,7 @@ const ProfileSelection = ({ options, state, label, value }) => {
         >
             {options.map((option) => {
                 return (
-                    <SelectItem key={option} value={value} onClick={() => state(option)}>
+                    <SelectItem key={option} value={value} onClick={() => state(option)} className="text-black">
                         {option}
                     </SelectItem>
                 )

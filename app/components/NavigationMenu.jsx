@@ -11,8 +11,6 @@ const NavigationMenu = () => {
     { label: "Edit Profile", path: "/profile" },
   ];
 
-
-
   return (
     <nav className="flex flex-col py-10 w-full">
       {paths.map((p, index) => (
