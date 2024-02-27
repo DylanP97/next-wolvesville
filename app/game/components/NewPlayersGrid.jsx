@@ -5,7 +5,6 @@ import AvatarUI from "../../profile/Profile/AvatarUI";
 import tombstone from "../../../public/game/tombstone.png"
 import prison from "../../../public/game/prison.png"
 import { useAuth } from "../../providers/AuthProvider";
-import { Badge } from "@nextui-org/react";
 
 const NewPlayersGrid = ({
     gameId,
@@ -20,7 +19,7 @@ const NewPlayersGrid = ({
     setActionType
 }) => {
     const { socket } = useAuth();
-    0
+    
     const handlePlayerClick = (selectedPlayer) => {
         if (!isBlocked) {
             if (isSelection) {
@@ -102,15 +101,14 @@ const NewPlayersGrid = ({
                                         : "bg-slate-800"
                                     : "bg-slate-500"
                                 : "bg-black"
-                                }
-                                w-full md:w-40 h-full md:h-full flex flex-col justify-center items-center relative p-2`}
+                                } w-full md:w-40 h-full md:h-full flex flex-col justify-center items-center relative p-2`}
                         >
                             {timeOfTheDay == "votetime" && (
                                 <div className="bg-slate-800 absolute top-0 right-0 p-2 aspect-square">
                                     <p className="text-white">{player.voteAgainst}</p>
                                 </div>
                             )}
-                            {timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" && (
+                            {timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" && !clientPlayer.isUnderArrest && (
                                 <div className="bg-gray-950 absolute top-0 right-0 p-2 aspect-square">
                                     <p className="text-white">{player.wolfVoteAgainst || 0}</p>
                                 </div>
@@ -120,16 +118,16 @@ const NewPlayersGrid = ({
                             ) : player.isUnderArrest ? (
                                 <Image className="" width={60} height={60} src={prison} alt="prison" />
                             ) : player.isRevealed ? (
-                                    <Image
-                                        src={player.role.image}
-                                        width={60}
-                                        height={60}
-                                        alt="role"
-                                    />
-                                ) : (
-                                    <AvatarUI heightAndWidth={60} accessories={player.avatar.accessories} accessoriesColor={player.avatar.accessoriesColor} clothesColor={player.avatar.clothesColor} clothing={player.avatar.clothing} clothingGraphic={player.avatar.clothingGraphic} eyebrows={player.avatar.eyebrows} eyes={player.avatar.eyes} facialHair={player.avatar.facialHair}
-                                        facialHairColor={player.avatar.facialHairColor} hairColor={player.avatar.hairColor} hatColor={player.avatar.hatColor} mouth={player.avatar.mouth} size={player.avatar.size} skinColor={player.avatar.skinColor} top={player.avatar.top} />
-                                )}
+                                <Image
+                                    src={player.role.image}
+                                    width={60}
+                                    height={60}
+                                    alt="role"
+                                />
+                            ) : (
+                                <AvatarUI heightAndWidth={60} accessories={player.avatar.accessories} accessoriesColor={player.avatar.accessoriesColor} clothesColor={player.avatar.clothesColor} clothing={player.avatar.clothing} clothingGraphic={player.avatar.clothingGraphic} eyebrows={player.avatar.eyebrows} eyes={player.avatar.eyes} facialHair={player.avatar.facialHair}
+                                    facialHairColor={player.avatar.facialHairColor} hairColor={player.avatar.hairColor} hatColor={player.avatar.hatColor} mouth={player.avatar.mouth} size={player.avatar.size} skinColor={player.avatar.skinColor} top={player.avatar.top} />
+                            )}
                             <p className={`${isSelection && player.id !== clientPlayer.id ? "text-black" : "text-white"} text-xs mt-2`}>{player.name}</p>
                         </div>
                     )

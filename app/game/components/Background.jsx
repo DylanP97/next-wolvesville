@@ -22,7 +22,7 @@ const Background = ({
       height={500}
       priority
       style={{ width: "auto", height: "auto" }}
-      className="absolute top-44 right-80 opacity-20"
+      className="absolute top-44 right-80 opacity-20 z-0"
     />
   );
 };
