@@ -6,6 +6,7 @@ const ProfileSelection = ({ options, state, label, value }) => {
     return (
         <Select
             label={`Select ${label}`}
+            placeholder={value}
             variant="underline"
             className="w-full my-1 w-full"
         >

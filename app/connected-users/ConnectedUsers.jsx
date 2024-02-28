@@ -8,8 +8,8 @@ const ConnectedUsers = () => {
   const { connectedUsers } = useAuth();
 
   return (
-    <div className="min-h-screen h-full w-full bg-black p-4">
-      <h1 className="text-white text-3xl font-bold mb-6">Connected Users List</h1>
+    <div className="h-screen h-full w-full bg-black p-4">
+      <h1 className="text-white text-3xl font-bold mb-6 mt-10">Connected Users List</h1>
       {!connectedUsers ? (
         <div className="m-4">
           <p className="text-white">There are no users connected currently</p>

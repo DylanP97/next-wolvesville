@@ -10,21 +10,21 @@ import { avataaars } from "@dicebear/collection";
 import { useAuth } from "../../providers/AuthProvider";
 
 const ProfileCard = ({ username, avatar, socketId }) => {
-  const [accessories, setAccessories] = useState(avatar?.accessories);
-  const [accessoriesColor, setAccessoriesColor] = useState(avatar?.accessoriesColor);
-  const [clothesColor, setClothesColor] = useState(avatar?.clothesColor);
-  const [clothing, setClothing] = useState(avatar?.clothing);
-  const [clothingGraphic, setClothingGraphic] = useState(avatar?.clothingGraphic);
-  const [eyebrows, setEyebrows] = useState(avatar?.eyebrows);
-  const [eyes, setEyes] = useState(avatar?.eyes);
-  const [facialHair, setFacialHair] = useState(avatar?.facialHair);
-  const [facialHairColor, setFacialHairColor] = useState(avatar?.facialHairColor);
-  const [hairColor, setHairColor] = useState(avatar?.hairColor);
-  const [hatColor, setHatColor] = useState(avatar?.hatColor);
-  const [mouth, setMouth] = useState(avatar?.mouth);
-  const [size, setSize] = useState(avatar?.size);
-  const [skinColor, setSkinColor] = useState(avatar?.skinColor);
-  const [top, setTop] = useState(avatar?.top);
+  const [accessories, setAccessories] = useState(avatar.accessories);
+  const [accessoriesColor, setAccessoriesColor] = useState(avatar.accessoriesColor);
+  const [clothesColor, setClothesColor] = useState(avatar.clothesColor);
+  const [clothing, setClothing] = useState(avatar.clothing);
+  const [clothingGraphic, setClothingGraphic] = useState(avatar.clothingGraphic);
+  const [eyebrows, setEyebrows] = useState(avatar.eyebrows);
+  const [eyes, setEyes] = useState(avatar.eyes);
+  const [facialHair, setFacialHair] = useState(avatar.facialHair);
+  const [facialHairColor, setFacialHairColor] = useState(avatar.facialHairColor);
+  const [hairColor, setHairColor] = useState(avatar.hairColor);
+  const [hatColor, setHatColor] = useState(avatar.hatColor);
+  const [mouth, setMouth] = useState(avatar.mouth);
+  const [size, setSize] = useState(avatar.size);
+  const [skinColor, setSkinColor] = useState(avatar.skinColor);
+  const [top, setTop] = useState(avatar.top);
 
   const [response, setResponse] = useState("");
 
@@ -36,25 +36,25 @@ const ProfileCard = ({ username, avatar, socketId }) => {
   };
 
   useEffect(() => {
-    setAccessories(avatar?.accessories);
-    setAccessoriesColor(avatar?.accessoriesColor);
-    setClothesColor(avatar?.clothesColor);
-    setClothing(avatar?.clothing);
-    setClothingGraphic(avatar?.clothingGraphic);
-    setEyebrows(avatar?.eyebrows);
-    setEyes(avatar?.eyes);
-    setFacialHair(avatar?.facialHair);
-    setFacialHairColor(avatar?.facialHairColor);
-    setHairColor(avatar?.hairColor);
-    setHatColor(avatar?.hatColor);
-    setMouth(avatar?.mouth);
-    setSize(avatar?.size);
-    setSkinColor(avatar?.skinColor);
-    setTop(avatar?.top);
+    // setAccessories(avatar?.accessories);
+    // setAccessoriesColor(avatar?.accessoriesColor);
+    // setClothesColor(avatar?.clothesColor);
+    // setClothing(avatar?.clothing);
+    // setClothingGraphic(avatar?.clothingGraphic);
+    // setEyebrows(avatar?.eyebrows);
+    // setEyes(avatar?.eyes);
+    // setFacialHair(avatar?.facialHair);
+    // setFacialHairColor(avatar?.facialHairColor);
+    // setHairColor(avatar?.hairColor);
+    // setHatColor(avatar?.hatColor);
+    // setMouth(avatar?.mouth);
+    // setSize(avatar?.size);
+    // setSkinColor(avatar?.skinColor);
+    // setTop(avatar?.top);
   }, [avatar])
 
   const handleSubmit = async () => {
-    const apiUrl = "https://node-wolvesville.onrender.com";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     try {
       const response = await fetch(`${apiUrl}/api/user/editProfile`, {
@@ -81,8 +81,8 @@ const ProfileCard = ({ username, avatar, socketId }) => {
   };
 
   return (
-    <section className="w-[400px] p-5 flex flex-col justify-center items-center">
-      <div className="flex flex-col gap-3 m-4">
+    <section className="w-screen h-screen p-5 flex flex-col justify-start items-center">
+      <div className="flex flex-col gap-3 m-4 mt-8">
         <h1 className="font-bold text-xl text-white">Edit Your Profile {username || "Guest"}</h1>
         <div className={`bg-white rounded-3xl flex justify-center`}>
           <AvatarUI heightAndWidth={140} accessories={accessories} accessoriesColor={accessoriesColor} clothesColor={clothesColor} clothing={clothing} clothingGraphic={clothingGraphic} eyebrows={eyebrows} eyes={eyes} facialHair={facialHair}

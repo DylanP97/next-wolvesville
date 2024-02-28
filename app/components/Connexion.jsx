@@ -21,7 +21,7 @@ const Connexion = () => {
 
     if (isLogin) {
       try {
-        const response = await fetch("https://node-wolvesville.onrender.com" + "/api/user/login", {
+        const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/user/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -37,7 +37,7 @@ const Connexion = () => {
       }
     } else {
       try {
-        const response = await fetch("https://node-wolvesville.onrender.com" + "/api/user/signup", {
+        const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/user/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -56,8 +56,8 @@ const Connexion = () => {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col justify-center items-center">
-      <h1 className="text-white my-2">{isLogin ? "Login with your account" : "Register a new account"}</h1>
+    <div className="bg-gradient-to-br from-indigo-900 from-10% via-indigo-700 via-30% to-blue-950 to-80% h-screen w-screen flex flex-col justify-center items-center">
+      <h1 className="font-bold text-white my-2 text-xl">{isLogin ? "Login with your account" : "Register a new account"}</h1>
       <form onSubmit={handleSubmit}>
         {!isLogin && (
           <div>
@@ -98,16 +98,16 @@ const Connexion = () => {
         </div>
 
         <div>
-          <Button variant="ghost" color="secondary" className="w-[95%] m-2" type="submit">
+          <Button variant="shadow" color="secondary" className="w-[95%] m-2" type="submit">
             {isLogin ? "Login" : "Signup"}
           </Button>
         </div>
       </form>
 
-      <div className="p-2 m-2 b-1 border border-black ">
+      <div className="p-2 m-2">
         <p className="text-white">
           {isLogin ? "Don't have an account? " : "Already have an account? "}
-          <span onClick={handleSwitch} style={{ cursor: "pointer", color: "violet" }}>
+          <span onClick={handleSwitch} style={{ cursor: "pointer", color: "pink", textDecoration: "underline" }}>
             {isLogin ? "Signup" : "Login"}
           </span>
         </p>

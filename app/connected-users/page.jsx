@@ -11,12 +11,12 @@ export default function ConnectedUsersPage() {
   if (isConnected && isInRoom && isPlaying) return redirect("/game");
 
   return (
-    <div>
+    <>
       {isConnected ? (
         <ConnectedUsers />
       ) : (
         <Connexion />
       )}
-    </div>
+    </>
   );
 }
