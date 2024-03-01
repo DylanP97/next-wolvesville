@@ -3,6 +3,7 @@
 import { Input, Button, Divider, CheckboxGroup, Checkbox } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import { useAuth } from "../providers/AuthProvider";
+import RoleCheckbox from "./RoleCheckbox";
 
 const CreateRoom = () => {
   const [roomName, setRoomName] = useState("");
@@ -84,23 +85,25 @@ const CreateRoom = () => {
               />
               <Divider className="my-2" />
             </div>
-            <CheckboxGroup
-              className="my-4"
-              label={`Select ${nbrOfPlayers} roles`}
-              defaultValue={["Villager", "Alpha Werewolf"]}
-              value={selectedRoles}
-              onValueChange={setSelectedRoles}>
-              {availableRoles.map((character, index) => {
-                if (character.name !== "Accomplice")
-                  return (
-                    <Checkbox key={character.name} value={character} size="sm">
-                      <span className="text-white text-sm">
-                        {character.name} {" ("}{character.team.join(', ')}{") "}
-                      </span>
-                    </Checkbox>
-                  );
-              })}
-            </CheckboxGroup>
+            {
+              availableRoles ? (
+                <CheckboxGroup
+                  className="m-4"
+                  label={`Select ${nbrOfPlayers} roles`}
+                  defaultValue={["Villager", "Alpha Werewolf"]}
+                  value={selectedRoles}
+                  onValueChange={setSelectedRoles}>
+                  {availableRoles.sort((a, b) => a.status - b.status).map((role) => {
+                    if (role.name !== "Accomplice")
+                      return (
+                        <RoleCheckbox role={role} key={"rch" + role.name} />
+                      );
+                  })}
+                </CheckboxGroup>
+              ) : (
+                <p>Loading roles...</p>
+              )
+            }
           </>
         )
       }

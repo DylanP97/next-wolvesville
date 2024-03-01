@@ -5,7 +5,7 @@ import NavigationMenu from "./NavigationMenu";
 const HomePage = ({ username, socketId, isInRoom }) => {
 
   return (
-    <div className="relative h-screen w-screen p-8">
+    <div className="relative h-screen w-screen p-8 bg-gradient-to-br from-indigo-900 from-10% via-indigo-700 via-30% to-blue-950 to-80%">
       <header className="p-2">
         <p className="text-white">Username: {username}</p>
         <p className="text-white">SocketId: {socketId}</p>

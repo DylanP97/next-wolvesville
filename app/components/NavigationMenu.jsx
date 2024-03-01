@@ -8,7 +8,7 @@ const NavigationMenu = () => {
     { label: "Join Room", path: "/join-room" },
     { label: "Create Room", path: "/create-room" },
     { label: "Connected Users", path: "/connected-users" },
-    { label: "Roles", path: "/roles" },
+    { label: "View Roles", path: "/roles" },
     { label: "Edit Profile", path: "/profile" },
   ];
 
@@ -17,7 +17,7 @@ const NavigationMenu = () => {
       {paths.map((p, index) => (
         <Link
           key={index + "navlink"}
-          className="max-w-[300px] w-full z-20 p-2 my-2 w-full text-white hover:underline rounded-xl text-center link link-underline link-underline-black text-black"
+          className="w-fit z-20 py-2 my-2 text-white text-center link-underline link-underline-black text-black"
           href={p.path}
           color="foreground"
         >
