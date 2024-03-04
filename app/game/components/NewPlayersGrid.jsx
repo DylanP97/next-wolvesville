@@ -19,7 +19,7 @@ const NewPlayersGrid = ({
     setActionType
 }) => {
     const { socket } = useAuth();
-    
+
     const handlePlayerClick = (selectedPlayer) => {
         if (!isBlocked) {
             if (isSelection) {
@@ -61,6 +61,13 @@ const NewPlayersGrid = ({
                 else {
                     if (actionType == "reveal") {
                         socket.emit("revealPlayer", {
+                            type: clientPlayer.role.canPerform.type,
+                            seerId: clientPlayer.id,
+                            selectedPlayerId: selectedPlayer.id,
+                            selectedPlayerName: selectedPlayer.name,
+                        }, gameId)
+                    } else if (actionType == "heal") {
+                        socket.emit("heal", {
                             type: clientPlayer.role.canPerform.type,
                             seerId: clientPlayer.id,
                             selectedPlayerId: selectedPlayer.id,

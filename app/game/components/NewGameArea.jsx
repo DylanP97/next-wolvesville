@@ -24,12 +24,14 @@ const NewGameArea = ({ }) => {
     const [actionType, setActionType] = useState("");
 
     useEffect(() => {
-        setPlayersList(game.playersList);
-        setClientPlayer(game.playersList.find((p) => p.name == username))
-        setMessagesHistory(game.messagesHistory);
-        setWolvesMessagesHistory(game.wolvesMessagesHistory);
-        setJailNightMessages(game.jailNightMessages);
-        socket.emit("checkForWinner", game.id);
+        if (game.winningTeam !== null) {
+            setPlayersList(game.playersList);
+            setClientPlayer(game.playersList.find((p) => p.name == username))
+            setMessagesHistory(game.messagesHistory);
+            setWolvesMessagesHistory(game.wolvesMessagesHistory);
+            setJailNightMessages(game.jailNightMessages);
+            socket.emit("checkForWinner", game.id);
+        }
     }, [game]);
 
     useEffect(() => {
