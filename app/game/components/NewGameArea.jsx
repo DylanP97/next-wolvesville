@@ -23,6 +23,9 @@ const NewGameArea = ({ }) => {
     const [isBlocked, setIsBlocked] = useState(false);
     const [actionType, setActionType] = useState("");
 
+
+    console.log(playersList)
+    
     useEffect(() => {
         if (game.winningTeam !== null) {
             setPlayersList(game.playersList);

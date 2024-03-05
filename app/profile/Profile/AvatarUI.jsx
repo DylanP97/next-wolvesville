@@ -4,41 +4,47 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@nextui-org/react";
 
-const AvatarUI = ({ selection, heightAndWidth, accessories, accessoriesColor, clothesColor, clothing, clothingGraphic, eyebrows, eyes, facialHair, facialHairColor, hairColor, hatColor, mouth, skinColor, top }) => {
-  const [avatar, setAvatar] = useState("");
+const AvatarUI = ({ 
+  avatar, heightAndWidth
+  // selection, accessories, accessoriesColor, clothesColor, clothing, clothingGraphic, eyebrows, eyes, facialHair, facialHairColor, hairColor, hatColor, mouth, skinColor, top 
+}) => {
+  const [avatarR, setAvatarR] = useState("");
 
   useEffect(() => {
     let a = createAvatar(avataaars, {
-      accessories: [accessories],
-      accessoriesColor: [accessoriesColor],
+      accessories: [avatar.accessories],
+      accessoriesColor: [avatar.accessoriesColor],
       accessoriesProbability: 100,
       backgroundColor: ["65c9ff"],
       backgroundType: ["solid"],
-      clothesColor: [clothesColor || "262e33"],
-      clothing: [clothing || "graphicShirt"],
-      clothingGraphic: [clothingGraphic],
-      eyebrows: [eyebrows || "default"],
-      eyes: [eyes || "default"],
-      facialHair: [facialHair],
-      facialHairColor: [facialHairColor],
+      clothesColor: [avatar.clothesColor || "262e33"],
+      clothing: [avatar.clothing || "graphicShirt"],
+      clothingGraphic: [avatar.clothingGraphic],
+      eyebrows: [avatar.eyebrows || "default"],
+      eyes: [avatar.eyes || "default"],
+      facialHair: [avatar.facialHair],
+      facialHairColor: [avatar.facialHairColor],
       facialHairProbability: 100,
-      hairColor: [hairColor || "4a312c"],
-      hatColor: [hatColor],
-      mouth: [mouth || "default"],
-      skinColor: [skinColor || "ffdbb4"],
-      top: [top || "shortRound"],
+      hairColor: [avatar.hairColor || "4a312c"],
+      hatColor: [avatar.hatColor],
+      mouth: [avatar.mouth || "default"],
+      skinColor: [avatar.skinColor || "ffdbb4"],
+      top: [avatar.top || "shortRound"],
       topProbability: 100,
       size: 64,
     }).toDataUriSync();
 
-    setAvatar(a);
-  }, [accessories, accessoriesColor, clothesColor, clothing, clothingGraphic, eyebrows, eyes, facialHair, facialHairColor, hairColor, hatColor, mouth, skinColor, top]);
+    setAvatarR(a);
+  }, [
+    avatar
+    // accessories, accessoriesColor, clothesColor, clothing, clothingGraphic, eyebrows, eyes, facialHair, facialHairColor, hairColor, hatColor, mouth, skinColor, top
+  ]);
 
   return avatar ? (
     <Image
       height={heightAndWidth || 60}
       width={heightAndWidth || 60}
-      src={avatar}
+      src={avatarR}
       alt="Avatar"
     />
   ) : <CircularProgress color="secondary" aria-label="Loading..." />

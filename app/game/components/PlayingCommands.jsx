@@ -35,7 +35,7 @@ const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelecti
             ((timeOfTheDay === "daytime" && actionTime === "day") || (timeOfTheDay === "nighttime" && actionTime === "night")) &&
             // (name !== "Grave Robber" || (name === "Grave Robber" && deadPlayers.length > 0)) &&
             (
-                <div onClick={() => handleClick(type)} className={`${isSelection ? 'bg-slate-900' : 'bg-green-600'} w-[40px] h-[40px] p-[10px] cursor-pointer flex justify-center items-center`}>
+                <div onClick={() => handleClick(type)} className={`${isSelection ? 'bg-slate-900' : 'bg-green-600'} w-[40px] h-[40px] p-1 cursor-pointer flex justify-center items-center`}>
                     <Image
                         src={emoji}
                         alt={type}

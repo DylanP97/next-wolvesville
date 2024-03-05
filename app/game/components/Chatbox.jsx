@@ -42,7 +42,7 @@ const Chatbox = ({ timeOfTheDay, gameId, clientPlayer }) => {
                     className="outline-none border-none w-full p-2 h-[40px] text-black z-20"
                     onChange={(e) => setMessage(e.target.value)}
                 />
-                <div onClick={() => sendMessage(message)} className="absolute right-0 cursor-pointer flex justify-center items-center p-[10px] w-[40px] h-[40px] bg-slate-900">
+                <div datatype="sendButn" onClick={() => sendMessage(message)} className="absolute right-0 cursor-pointer flex justify-center items-center p-[10px] w-[40px] h-[40px] bg-slate-900 z-20">
                     <Image
                         src={send}
                         alt="sendMessage"

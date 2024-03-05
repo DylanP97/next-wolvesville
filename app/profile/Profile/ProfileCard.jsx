@@ -85,8 +85,10 @@ const ProfileCard = ({ username, avatar, socketId }) => {
       <div className="flex flex-col gap-3 m-4 mt-8">
         <h1 className="font-bold text-xl text-white">Edit Your Profile {username || "Guest"}</h1>
         <div className={`bg-white rounded-3xl flex justify-center`}>
-          <AvatarUI heightAndWidth={140} accessories={accessories} accessoriesColor={accessoriesColor} clothesColor={clothesColor} clothing={clothing} clothingGraphic={clothingGraphic} eyebrows={eyebrows} eyes={eyes} facialHair={facialHair}
-            facialHairColor={facialHairColor} hairColor={hairColor} hatColor={hatColor} mouth={mouth} size={size} skinColor={skinColor} top={top} />
+          <AvatarUI avatar={avatar} heightAndWidth={140}
+            // accessories={accessories} accessoriesColor={accessoriesColor} clothesColor={clothesColor} clothing={clothing} clothingGraphic={clothingGraphic} eyebrows={eyebrows} eyes={eyes} facialHair={facialHair}
+            // facialHairColor={facialHairColor} hairColor={hairColor} hatColor={hatColor} mouth={mouth} size={size} skinColor={skinColor} top={top}
+             />
         </div>
       </div>
       <div className="flex w-full flex-col">
