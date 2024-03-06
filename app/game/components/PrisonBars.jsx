@@ -8,12 +8,12 @@ const PrisonBars = () => {
   return (
     <Image
       src={prisonBars}
-      alt="bg-time"
-      width={500}
-      height={500}
+      alt="prisonBars"
+      width={1500}
+      height={1500}
       priority
       style={{ width: "auto", height: "auto" }}
-      className="absolute top-0 z-30 h-[70%] w-screen"
+      className="absolute top-0 z-30 h-full w-full"
     />
   );
 };

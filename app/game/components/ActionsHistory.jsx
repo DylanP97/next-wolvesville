@@ -2,8 +2,7 @@
 
 const ActionsHistory = ({ messagesHistory, type }) => {
 
-
-  if (type === "jailTime") {
+  if (type === "jailChat") {
     return (
       <div className="w-full z-10 bg-black-600 p-2">
         <h2 className="text-white">Jail Chat 👮‍♂️</h2>

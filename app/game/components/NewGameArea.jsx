@@ -15,24 +15,13 @@ import PrisonBars from "./PrisonBars";
 const NewGameArea = ({ }) => {
     const { game, socket, username } = useAuth();
     const [clientPlayer, setClientPlayer] = useState(game.playersList.find((p) => p.name == username))
-    const [playersList, setPlayersList] = useState(game.playersList);
-    const [messagesHistory, setMessagesHistory] = useState(game.messagesHistory);
-    const [wolvesMessagesHistory, setWolvesMessagesHistory] = useState(game.wolvesMessagesHistory);
-    const [jailNightMessages, setJailNightMessages] = useState(game.jailNightMessages);
     const [isSelection, setIsSelection] = useState(false);
     const [isBlocked, setIsBlocked] = useState(false);
     const [actionType, setActionType] = useState("");
 
-
-    console.log(playersList)
-    
     useEffect(() => {
-        if (game.winningTeam !== null) {
-            setPlayersList(game.playersList);
+        if (game.winningTeam == null) {
             setClientPlayer(game.playersList.find((p) => p.name == username))
-            setMessagesHistory(game.messagesHistory);
-            setWolvesMessagesHistory(game.wolvesMessagesHistory);
-            setJailNightMessages(game.jailNightMessages);
             socket.emit("checkForWinner", game.id);
         }
     }, [game]);
@@ -49,21 +38,21 @@ const NewGameArea = ({ }) => {
                 } h-screen w-screen absolute top-0 left-0 relative`}
             style={{ outline: "none" }}>
             <GameHeader timeOfTheDay={game.timeOfTheDay} dayCount={game.dayCount} timeCounter={game.timeCounter} />
-            <Background timeOfTheDay={game.timeOfTheDay} />
-            {
+            <Background timeOfTheDay={game.timeOfTheDay} clientPlayer={clientPlayer} />
+            {/* {
                 clientPlayer.isUnderArrest && <PrisonBars />
-            }
+            } */}
             <PlayerInfos clientPlayer={clientPlayer} />
-            <NewPlayersGrid gameId={game.id} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} playersList={playersList} clientPlayer={clientPlayer} actionType={actionType} setActionType={setActionType} />
+            <NewPlayersGrid gameId={game.id} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} playersList={game.playersList} clientPlayer={clientPlayer} actionType={actionType} setActionType={setActionType} />
             {
                 clientPlayer.isUnderArrest || (clientPlayer.role.name === "Jailer" && game.timeOfTheDay == "nighttime" && clientPlayer.hasHandcuffed) ? (
-                    <ActionsHistory key="jailChat" type="jailChat" messagesHistory={jailNightMessages} />
+                    <ActionsHistory key="jailChat" type="jailChat" messagesHistory={game.jailNightMessages} />
                 ) : (
                     game.timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" ?
                         (
-                            <ActionsHistory key="wolves" type="wolves" messagesHistory={wolvesMessagesHistory} />
+                            <ActionsHistory key="wolves" type="wolves" messagesHistory={game.wolvesMessagesHistory} />
                         ) : (
-                            <ActionsHistory key="all" type="all" messagesHistory={messagesHistory} />
+                            <ActionsHistory key="all" type="all" messagesHistory={game.messagesHistory} />
                         )
                 )
             }

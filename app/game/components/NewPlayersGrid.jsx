@@ -111,21 +111,19 @@ const NewPlayersGrid = ({
                                 } w-full md:w-40 h-full md:h-full flex flex-col justify-center items-center relative p-2`}
                         >
                             {timeOfTheDay == "votetime" && (
-                                <div className="bg-slate-800 absolute top-0 right-0 p-2 aspect-square">
-                                    {console.log(player.voteAgainst)}
+                                <div className="bg-slate-800 absolute top-0 right-0 p-2 h-8 aspect-square">
                                     <p className="text-white">{player.voteAgainst}</p>
                                 </div>
                             )}
                             {timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" && !clientPlayer.isUnderArrest && (
-                                <div className="bg-gray-950 absolute top-0 right-0 p-2 aspect-square">
-                                    {console.log(player.wolfVoteAgainst)}
+                                <div className="bg-gray-950 absolute top-0 right-0 p-2 h-8 aspect-square">
                                     <p className="text-white">{player.wolfVoteAgainst || 0}</p>
                                 </div>
                             )}
                             {!player.isAlive ? (
-                                <Image className="" width={60} height={60} src={tombstone} alt="tombstone" />
+                                <Image width={60} height={60} src={tombstone} alt="tombstone" />
                             ) : player.isUnderArrest ? (
-                                <Image className="" width={60} height={60} src={prison} alt="prison" />
+                                <Image className="max-h-[60px] " width={60} height={60} src={prison} alt="prison" />
                             ) : player.isRevealed ? (
                                 <Image
                                     src={player.role.image}

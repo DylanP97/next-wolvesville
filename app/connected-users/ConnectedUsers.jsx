@@ -22,8 +22,7 @@ const ConnectedUsers = () => {
               className="flex flex-row bg-white p-4 m-2 rounded-3xl hover:opacity-90 cursor-pointer"
             >
               <div className="flex justify-center items-center p-1">
-                <AvatarUI heightAndWidth={50} accessories={user.avatar.accessories} accessoriesColor={user.avatar.accessoriesColor} clothesColor={user.avatar.clothesColor} clothing={user.avatar.clothing} clothingGraphic={user.avatar.clothingGraphic} eyebrows={user.avatar.eyebrows} eyes={user.avatar.eyes} facialHair={user.avatar.facialHair}
-                  facialHairColor={user.avatar.facialHairColor} hairColor={user.avatar.hairColor} hatColor={user.avatar.hatColor} mouth={user.avatar.mouth} size={user.avatar.size} skinColor={user.avatar.skinColor} top={user.avatar.top} />
+                <AvatarUI heightAndWidth={50} avatar={user.avatar} />
               </div>
               <div>
                 <p className="text-md text-gray-800">{user.username}</p>
