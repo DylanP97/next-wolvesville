@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@nextui-org/react";
 
-const AvatarUI = ({ 
+const AvatarUI = ({
   avatar, heightAndWidth
   // selection, accessories, accessoriesColor, clothesColor, clothing, clothingGraphic, eyebrows, eyes, facialHair, facialHairColor, hairColor, hatColor, mouth, skinColor, top 
 }) => {
@@ -42,9 +42,9 @@ const AvatarUI = ({
 
   return avatar ? (
     <Image
+      src={avatarR}
       height={heightAndWidth || 60}
       width={heightAndWidth || 60}
-      src={avatarR}
       alt="Avatar"
     />
   ) : <CircularProgress color="secondary" aria-label="Loading..." />

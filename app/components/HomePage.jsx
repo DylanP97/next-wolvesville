@@ -33,6 +33,7 @@ const HomePage = ({ username, socketId, isInRoom, avatar }) => {
         height={200}
         width={200}
         src={alpha}
+        alt="alphaWolf"
         className="absolute bottom-28 right-[10%] h-32 w-32"
       />
     </div>

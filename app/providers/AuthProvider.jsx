@@ -19,6 +19,12 @@ export const AuthProvider = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [game, setGame] = useState(null)
 
+  const updateGameState = (newIsInRoom, newIsPlaying, newGame) => {
+    setIsInRoom(newIsInRoom);
+    setIsPlaying(newIsPlaying);
+    setGame(newGame);
+  };
+
   const addRoom = (room) => {
     setRooms([...rooms, room]);
   };
@@ -67,7 +73,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [authState.isConnected]);
 
-  return <AuthContext.Provider value={{ ...authState, setAuthInfo, socket, rooms, addRoom, connectedUsers, isInRoom, isPlaying, game }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ ...authState, setAuthInfo, socket, rooms, addRoom, connectedUsers, isInRoom, isPlaying, game, updateGameState }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

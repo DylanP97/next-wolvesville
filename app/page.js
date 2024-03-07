@@ -19,14 +19,6 @@ export default function Home() {
       ) : (
         <Connexion />
       )}
-      {/* <Image
-        src={werewolf.src}
-        alt="bg-img"
-        priority
-        width={200}
-        height={200}
-        className="fixed top-0 z-0 mx-auto"
-      /> */}
     </>
   );
 }

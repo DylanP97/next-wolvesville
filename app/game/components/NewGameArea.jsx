@@ -10,7 +10,6 @@ import GameHeader from "./GameHeader";
 import PlayingCommands from "./PlayingCommands";
 import NewPlayersGrid from "./NewPlayersGrid";
 import Chatbox from "./Chatbox";
-import PrisonBars from "./PrisonBars";
 
 const NewGameArea = ({ }) => {
     const { game, socket, username } = useAuth();
@@ -39,9 +38,6 @@ const NewGameArea = ({ }) => {
             style={{ outline: "none" }}>
             <GameHeader timeOfTheDay={game.timeOfTheDay} dayCount={game.dayCount} timeCounter={game.timeCounter} />
             <Background timeOfTheDay={game.timeOfTheDay} clientPlayer={clientPlayer} />
-            {/* {
-                clientPlayer.isUnderArrest && <PrisonBars />
-            } */}
             <PlayerInfos clientPlayer={clientPlayer} />
             <NewPlayersGrid gameId={game.id} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} playersList={game.playersList} clientPlayer={clientPlayer} actionType={actionType} setActionType={setActionType} />
             {
@@ -58,7 +54,9 @@ const NewGameArea = ({ }) => {
             }
             <Chatbox timeOfTheDay={game.timeOfTheDay} gameId={game.id} clientPlayer={clientPlayer} />
             <PlayingCommands clientPlayer={clientPlayer} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} actionType={actionType} setActionType={setActionType} />
-            {game.winningTeam && <WinnerOverlay winningTeam={game.winningTeam} />}
+            {
+                game.winningTeam && <WinnerOverlay winningTeam={game.winningTeam} />
+            }
             {
                 isBlocked && <p className="text-white text-xs mt-2">You made your selection.</p>
             }

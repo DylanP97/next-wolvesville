@@ -59,6 +59,14 @@ const NewPlayersGrid = ({
                 }
 
                 else {
+                    if (actionType == "killPrisoner") {
+                        socket.emit("killPrisoner", {
+                            type: actionType,
+                            killerId: clientPlayer.id,
+                            selectedPlayerId: selectedPlayer.id,
+                            selectedPlayerName: selectedPlayer.name,
+                        }, gameId)
+                    }
                     if (actionType == "reveal") {
                         socket.emit("revealPlayer", {
                             type: clientPlayer.role.canPerform.type,
@@ -69,14 +77,14 @@ const NewPlayersGrid = ({
                     } else if (actionType == "heal") {
                         socket.emit("heal", {
                             type: clientPlayer.role.canPerform.type,
-                            seerId: clientPlayer.id,
+                            playerId: clientPlayer.id,
                             selectedPlayerId: selectedPlayer.id,
                             selectedPlayerName: selectedPlayer.name,
                         }, gameId)
                     } else {
                         socket.emit("registerAction", {
                             type: clientPlayer.role.canPerform.type,
-                            player: clientPlayer.id,
+                            playerId: clientPlayer.id,
                             selectedPlayerId: selectedPlayer.id,
                             actionTime: clientPlayer.role.canPerform.actionTime,
                         }, gameId);
@@ -111,7 +119,7 @@ const NewPlayersGrid = ({
                                 } w-full md:w-40 h-full md:h-full flex flex-col justify-center items-center relative p-2`}
                         >
                             {timeOfTheDay == "votetime" && (
-                                <div className="bg-slate-800 absolute top-0 right-0 p-2 h-8 aspect-square">
+                                <div className="bg-slate-800 absolute top-0 right-0 p-1 h-8 aspect-square flex justify-center">
                                     <p className="text-white">{player.voteAgainst}</p>
                                 </div>
                             )}

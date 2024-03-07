@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
 import Image from "next/image";
 import send from "../../../public/game/paper-plane.png"
+import { useKeys } from "../../providers/KeysProvider";
 
 const Chatbox = ({ timeOfTheDay, gameId, clientPlayer }) => {
     const { socket, username } = useAuth();
+    const { currentKey, setCurrentKey } = useKeys();
     const [message, setMessage] = useState("");
 
     const isJailer = clientPlayer.role.name === "Jailer"
@@ -22,6 +24,11 @@ const Chatbox = ({ timeOfTheDay, gameId, clientPlayer }) => {
             console.log("rien n'est écrit")
         }
     }
+
+    useEffect(() => {
+        if (currentKey == "Enter") sendMessage(message)
+        setCurrentKey(null)
+    })
 
     useEffect(() => {
         setMessage("");
@@ -42,13 +49,13 @@ const Chatbox = ({ timeOfTheDay, gameId, clientPlayer }) => {
                     className="outline-none border-none w-full p-2 h-[60px] text-black z-20"
                     onChange={(e) => setMessage(e.target.value)}
                 />
-                <div datatype="sendButn" onClick={() => sendMessage(message)} className="absolute right-0 cursor-pointer flex justify-center items-center p-[20px] w-[60px] h-[60px] bg-slate-900 z-20">
+                <div onClick={() => sendMessage(message)} className="absolute right-0 w-[60px] h-[60px] p-1 cursor-pointer flex justify-center items-center bg-slate-900 z-20">
                     <Image
                         src={send}
                         alt="sendMessage"
-                        width={40}
-                        height={40}
-                        style={{ width: "auto", height: "auto" }}
+                        width={50}
+                        height={50}
+                        className=""
                     />
                 </div>
             </div>
