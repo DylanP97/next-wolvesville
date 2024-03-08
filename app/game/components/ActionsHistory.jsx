@@ -2,9 +2,6 @@
 
 const ActionsHistory = ({ messagesHistory, type }) => {
 
-  messagesHistory.reverse();
-  console.log(messagesHistory)
-
   if (type === "jailChat") {
     return (
       <div className="w-full z-10 bg-black-600 p-2">

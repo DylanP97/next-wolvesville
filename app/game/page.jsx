@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Connexion from "../components/Connexion";
 import { useAuth } from "../providers/AuthProvider";
 import NewGameArea from "./components/NewGameArea";
+import { KeysProvider } from "../providers/KeysProvider";
 
 export default function GamePage() {
   const [availableTeams, setAvailableTeams] = useState([]);
@@ -29,7 +30,9 @@ export default function GamePage() {
   return (
     <>
       {isConnected ? (
-        <NewGameArea teams={availableTeams} />
+        <KeysProvider>
+          <NewGameArea teams={availableTeams} />
+        </KeysProvider>
       ) : (
         <Connexion />
       )}

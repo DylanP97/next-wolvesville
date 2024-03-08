@@ -40,9 +40,10 @@ const AvatarUI = ({
     // accessories, accessoriesColor, clothesColor, clothing, clothingGraphic, eyebrows, eyes, facialHair, facialHairColor, hairColor, hatColor, mouth, skinColor, top
   ]);
 
-  return avatar ? (
+  return avatar && avatarR ? (
     <Image
       src={avatarR}
+      
       height={heightAndWidth || 60}
       width={heightAndWidth || 60}
       alt="Avatar"

@@ -103,7 +103,7 @@ const NewPlayersGrid = ({
     };
 
     return (
-        <div className={`${isSelection ? "" : ""} flex flex-row place-items-center w-full xl:w-[80%]`}>
+        <div className={`flex flex-row place-items-center p-1 w-full xl:w-[80%]`}>
             {
                 playersList.map((player) => {
                     return (
@@ -116,15 +116,15 @@ const NewPlayersGrid = ({
                                         : "bg-slate-800"
                                     : "bg-slate-500"
                                 : "bg-black"
-                                } w-full md:w-40 h-full md:h-full flex flex-col justify-center items-center relative p-2`}
+                                } outline outline-2 outline-white w-full md:w-40 h-full md:h-full flex flex-col justify-center items-center relative p-2`}
                         >
                             {timeOfTheDay == "votetime" && (
-                                <div className="bg-slate-800 absolute top-0 right-0 p-1 h-8 aspect-square flex justify-center">
+                                <div className="bg-slate-800 absolute top-0 right-0 p-1 h-8 aspect-square flex justify-center items-center outline outline-2 outline-white">
                                     <p className="text-white">{player.voteAgainst}</p>
                                 </div>
                             )}
                             {timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" && !clientPlayer.isUnderArrest && (
-                                <div className="bg-gray-950 absolute top-0 right-0 p-2 h-8 aspect-square">
+                                <div className="bg-gray-950 absolute top-0 right-0 p-2 h-8 aspect-square flex justify-center items-center outline outline-2 outline-white">
                                     <p className="text-white">{player.wolfVoteAgainst || 0}</p>
                                 </div>
                             )}

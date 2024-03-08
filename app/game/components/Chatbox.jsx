@@ -17,6 +17,8 @@ const Chatbox = ({ timeOfTheDay, gameId, clientPlayer }) => {
     const isWolvesChat = (timeOfTheDay == "nighttime" && isWolf ? true : false)
 
     const sendMessage = (message) => {
+        console.log(message.length)
+        console.log(typeof message)
         if (message) {
             socket.emit("sendMessage", message, gameId, username, isWolvesChat, isJailerChat, isJailer)
             setMessage("");
@@ -26,9 +28,12 @@ const Chatbox = ({ timeOfTheDay, gameId, clientPlayer }) => {
     }
 
     useEffect(() => {
-        if (currentKey == "Enter") sendMessage(message)
-        setCurrentKey(null)
-    })
+        if (currentKey == "Enter") {
+            sendMessage(message)
+            setCurrentKey(null)
+            setMessage("")
+        }
+    }, [currentKey])
 
     useEffect(() => {
         setMessage("");
@@ -41,18 +46,18 @@ const Chatbox = ({ timeOfTheDay, gameId, clientPlayer }) => {
         )
     } else {
         return (
-            <div className="flex flex-row w-full gap-2">
-                <textarea
+            <div className="relative flex flex-row">
+                <input
                     disabled={!timeOfTheDay == "nighttime" && (!isJailerChat || !isWolf) && false}
                     placeholder="Write a message"
                     value={message}
-                    className="outline-none border-none w-full p-2 h-[60px] text-black z-20"
+                    className="outline-none border-none p-2 h-[60px] text-black z-20"
                     onChange={(e) => setMessage(e.target.value)}
                 />
-                <div onClick={() => sendMessage(message)} className="absolute right-0 w-[60px] h-[60px] p-1 cursor-pointer flex justify-center items-center bg-slate-900 z-20">
+                <div onClick={() => sendMessage(message)} className="absolute right-0 w-[60px] h-[60px] p-2 cursor-pointer flex justify-center items-center bg-blue-900 z-20 hover:bg-blue-700">
                     <Image
                         src={send}
-                        alt="sendMessage"
+                        alt="send"
                         width={50}
                         height={50}
                         className=""

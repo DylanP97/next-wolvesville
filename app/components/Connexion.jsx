@@ -92,6 +92,7 @@ const Connexion = () => {
             type="password"
             label="Password"
             value={password}
+            autocomplete="current-password"
             className="max-w-xs p-2"
             onChange={(e) => setPassword(e.target.value)}
           />

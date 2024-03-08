@@ -5,9 +5,10 @@ import React from "react";
 import { useAuth } from "../providers/AuthProvider";
 
 const JoinRoom = () => {
-  const { rooms, username, socketId, avatar, socket } = useAuth();
+  const { rooms, username, socketId, avatar, socket, updateGameState } = useAuth();
 
   const joinRoom = (roomId, userJoining) => {
+    updateGameState(null, false, null);
     socket.emit("joinRoom", roomId, userJoining);
   };
 
@@ -43,7 +44,7 @@ const JoinRoom = () => {
               <CardFooter>
                 {
                   usersInTheRoom.length < room.nbrOfPlayers &&
-                  !usersInTheRoom.some((usr) => usr.username === username) ? (
+                    !usersInTheRoom.some((usr) => usr.username === username) ? (
                     <Button color="secondary" variant="ghost" onClick={() => joinRoom(room.id, { username, socketId, avatar })}>
                       Join Room
                     </Button>

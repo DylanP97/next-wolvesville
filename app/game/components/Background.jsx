@@ -26,7 +26,6 @@ const Background = ({
       className="absolute top-0 h-full min-w-full opacity-20 z-0"
     />
   )
-
   
   return (
     <Image

@@ -5,11 +5,10 @@ import { useAuth } from "../../providers/AuthProvider";
 import Background from "./Background";
 import WinnerOverlay from "./WinnerOverlay";
 import ActionsHistory from "./ActionsHistory";
+import ActionBar from "./ActionBar";
 import PlayerInfos from "./PlayerInfos";
 import GameHeader from "./GameHeader";
-import PlayingCommands from "./PlayingCommands";
 import NewPlayersGrid from "./NewPlayersGrid";
-import Chatbox from "./Chatbox";
 
 const NewGameArea = ({ }) => {
     const { game, socket, username } = useAuth();
@@ -52,13 +51,24 @@ const NewGameArea = ({ }) => {
                         )
                 )
             }
-            <Chatbox timeOfTheDay={game.timeOfTheDay} gameId={game.id} clientPlayer={clientPlayer} />
-            <PlayingCommands clientPlayer={clientPlayer} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} actionType={actionType} setActionType={setActionType} />
-            {
-                game.winningTeam && <WinnerOverlay winningTeam={game.winningTeam} />
-            }
+
+            <ActionBar
+                timeOfTheDay={game.timeOfTheDay}
+                gameId={game.id}
+                clientPlayer={clientPlayer}
+                isSelection={isSelection}
+                setIsSelection={setIsSelection}
+                isBlocked={isBlocked}
+                setIsBlocked={setIsBlocked}
+                actionType={actionType}
+                setActionType={setActionType}
+
+            />
             {
                 isBlocked && <p className="text-white text-xs mt-2">You made your selection.</p>
+            }
+            {
+                game.winningTeam && <WinnerOverlay winningTeam={game.winningTeam} />
             }
         </section>
     );
