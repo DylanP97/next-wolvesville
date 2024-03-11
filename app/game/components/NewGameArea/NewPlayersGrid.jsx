@@ -1,10 +1,12 @@
 "use client"
 
 import Image from "next/image";
-import AvatarUI from "../../profile/Profile/AvatarUI";
-import tombstone from "../../../public/game/tombstone.png"
-import prison from "../../../public/game/prison.png"
-import { useAuth } from "../../providers/AuthProvider";
+import AvatarUI from "../../../profile/Profile/AvatarUI";
+import tombstone from "../../../../public/game/tombstone.png"
+import prison from "../../../../public/game/prison.png"
+import { useAuth } from "../../../providers/AuthProvider";
+import VoteCount from "./PlayersGrid/VoteCount";
+import IconReveal from "./PlayersGrid/IconReveal";
 
 const NewPlayersGrid = ({
     gameId,
@@ -33,7 +35,7 @@ const NewPlayersGrid = ({
                     return;
                 }
 
-                if (selectedPlayer.isUnderArrest) {
+                if (clientPlayer.role.name !== "Jailer" && selectedPlayer.isUnderArrest) {
                     console.log("this player is locked up in jail. You can't get select him.");
                     return;
                 }
@@ -59,7 +61,7 @@ const NewPlayersGrid = ({
                 }
 
                 else {
-                    if (actionType == "killPrisoner") {
+                    if (clientPlayer.role.name === "Jailer" && selectedPlayer.isUnderArrest && actionType == "killPrisoner") {
                         socket.emit("killPrisoner", {
                             type: actionType,
                             killerId: clientPlayer.id,
@@ -104,6 +106,7 @@ const NewPlayersGrid = ({
 
     return (
         <div className={`flex flex-row place-items-center p-1 w-full xl:w-[80%]`}>
+
             {
                 playersList.map((player) => {
                     return (
@@ -118,27 +121,29 @@ const NewPlayersGrid = ({
                                 : "bg-black"
                                 } outline outline-2 outline-white w-full md:w-40 h-full md:h-full flex flex-col justify-center items-center relative p-2`}
                         >
+
                             {timeOfTheDay == "votetime" && (
-                                <div className="bg-slate-800 absolute top-0 right-0 p-1 h-8 aspect-square flex justify-center items-center outline outline-2 outline-white">
-                                    <p className="text-white">{player.voteAgainst}</p>
-                                </div>
+                                <VoteCount
+                                    voteNbr={player.voteAgainst}
+                                />
                             )}
+
                             {timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" && !clientPlayer.isUnderArrest && (
-                                <div className="bg-gray-950 absolute top-0 right-0 p-2 h-8 aspect-square flex justify-center items-center outline outline-2 outline-white">
-                                    <p className="text-white">{player.wolfVoteAgainst || 0}</p>
-                                </div>
+                                <VoteCount
+                                    voteNbr={player.wolfVoteAgainst}
+                                />
                             )}
+
+                            {player.isRevealed && (
+                                <IconReveal
+                                    roleIcon={player.role.image}
+                                />
+                            )}
+
                             {!player.isAlive ? (
                                 <Image width={60} height={60} src={tombstone} alt="tombstone" />
                             ) : player.isUnderArrest ? (
                                 <Image className="max-h-[60px] " width={60} height={60} src={prison} alt="prison" />
-                            ) : player.isRevealed ? (
-                                <Image
-                                    src={player.role.image}
-                                    width={60}
-                                    height={60}
-                                    alt="role"
-                                />
                             ) : (
                                 <AvatarUI heightAndWidth={60} avatar={player.avatar} />
                             )}
@@ -147,6 +152,7 @@ const NewPlayersGrid = ({
                     )
                 })
             }
+
         </div>
 
     );

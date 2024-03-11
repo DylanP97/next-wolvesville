@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Tooltip } from "@nextui-org/react";
-import voteAgainstIcon from "../../../public/game/vote-time.png";
+import voteAgainstIcon from "../../../../../../public/game/vote-time.png";
 
 const CmdVote = ({
     activateSelection,
@@ -10,7 +10,7 @@ const CmdVote = ({
 }) => {
 
     return (
-        <Tooltip content={"Choose a player to vote against"}>
+        <Tooltip content={"Vote against a player"} color="secondary" variant="flat">
             <div
                 onClick={() => activateSelection("vote")}
                 className={`${isSelection ? 'bg-slate-900' : 'bg-red-800 hover:bg-red-600'}
@@ -21,7 +21,7 @@ const CmdVote = ({
                     alt="voteAgainst"
                     width={50}
                     height={50}
-                    className=""
+                    className="max-h-[50px] max-w-[50px] object-contain	"
                 />
             </div>
         </ Tooltip>

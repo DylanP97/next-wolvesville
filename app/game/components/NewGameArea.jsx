@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
-import Background from "./Background";
-import WinnerOverlay from "./WinnerOverlay";
-import ActionsHistory from "./ActionsHistory";
-import ActionBar from "./ActionBar";
-import PlayerInfos from "./PlayerInfos";
-import GameHeader from "./GameHeader";
-import NewPlayersGrid from "./NewPlayersGrid";
+import Background from "./NewGameArea/Background";
+import WinnerOverlay from "./NewGameArea/WinnerOverlay";
+import ActionsHistory from "./NewGameArea/ActionsHistory";
+import ActionBar from "./NewGameArea/ActionBar";
+import PlayerInfos from "./NewGameArea/PlayerInfos";
+import GameHeader from "./NewGameArea/GameHeader";
+import NewPlayersGrid from "./NewGameArea/NewPlayersGrid";
 
-const NewGameArea = ({ }) => {
+const NewGameArea = () => {
     const { game, socket, username } = useAuth();
     const [clientPlayer, setClientPlayer] = useState(game.playersList.find((p) => p.name == username))
     const [isSelection, setIsSelection] = useState(false);

@@ -2,7 +2,7 @@
 
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
-import { useAuth } from "../../providers/AuthProvider";
+import { useAuth } from "../../../providers/AuthProvider";
 
 const WinnerOverlay = ({ winningTeam }) => {
   const { updateGameState } = useAuth();

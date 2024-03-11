@@ -12,7 +12,7 @@ const ActionsHistory = ({ messagesHistory, type }) => {
             {
               messagesHistory.map((msg, index) => {
                 return (
-                  <li key={index + "msg"} className="text-xs z-20 ">
+                  <li key={index + "msg"} datatype={index + "msg"} className={`text-xs z-20 ${index == 0 && "font-bold"}`}>
                     {msg.time} -- {msg.author}: {msg.msg}
                   </li>
                 )
@@ -33,7 +33,7 @@ const ActionsHistory = ({ messagesHistory, type }) => {
               messagesHistory.map((msg, index) => {
                 if (msg.author) {
                   return (
-                    <li key={index + "msg"} className="text-xs z-20 text-orange-300">
+                    <li key={index + "msg"} datatype={index + "msg"} className={`text-xs z-20 ${index == 0 && "font-bold"}`}>
                       {msg.time} -- {msg.author}: {msg.msg}
                     </li>
                   )
@@ -58,7 +58,7 @@ const ActionsHistory = ({ messagesHistory, type }) => {
               messagesHistory.map((msg, index) => {
                 if (msg.author) {
                   return (
-                    <li key={index + "msg"} className="text-xs z-20 text-blue-200">
+                    <li key={index + "msg"} datatype={index + "msg"} className={`text-xs z-20 ${index == 0 && "font-bold"}`}>
                       {msg.time} -- {msg.author}: {msg.msg}
                     </li>
                   )

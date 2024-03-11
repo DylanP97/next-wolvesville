@@ -1,7 +1,7 @@
 "use client"
 
-import Chatbox from "./Chatbox";
-import PlayingCommands from "./PlayingCommands";
+import Chatbox from "./ActionBar/Chatbox";
+import PlayingCommands from "./ActionBar/PlayingCommands";
 
 const ActionBar = ({
     timeOfTheDay,
