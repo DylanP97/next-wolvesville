@@ -1,17 +1,13 @@
 "use client"
 
-import Image from "next/image";
-import AvatarUI from "../../../profile/Profile/AvatarUI";
-import tombstone from "../../../../public/game/tombstone.png"
-import prison from "../../../../public/game/prison.png"
 import { useAuth } from "../../../providers/AuthProvider";
 import VoteCount from "./PlayersGrid/VoteCount";
 import IconReveal from "./PlayersGrid/IconReveal";
 
 const NewPlayersGrid = ({
-    gameId,
-    timeOfTheDay,
     playersList,
+    timeOfTheDay,
+    gameId,
     clientPlayer,
     isSelection,
     setIsSelection,
@@ -21,8 +17,17 @@ const NewPlayersGrid = ({
     setActionType
 }) => {
     const { socket } = useAuth();
+    const clientIsWolf = clientPlayer.role.team.join() == "werewolves"
 
     const handlePlayerClick = (selectedPlayer) => {
+
+        function selectionMade() {
+            setIsBlocked(true);
+            setIsSelection(false);
+        }
+
+        const isJailer = clientPlayer.role.name === "Jailer"
+
         if (!isBlocked) {
             if (isSelection) {
                 if (!selectedPlayer.isAlive) {
@@ -35,16 +40,15 @@ const NewPlayersGrid = ({
                     return;
                 }
 
-                if (clientPlayer.role.name !== "Jailer" && selectedPlayer.isUnderArrest) {
-                    console.log("this player is locked up in jail. You can't get select him.");
+                if (!isJailer && selectedPlayer.isUnderArrest) {
+                    console.log("this player is locked up in jail. You can't select him.");
                     return;
                 }
 
                 if (timeOfTheDay == "votetime" && actionType == "vote") {
                     const nbr = clientPlayer.role.name === "Mayor" ? 2 : 1;
                     socket.emit("addVote", selectedPlayer.id, nbr, gameId)
-                    setIsBlocked(true);
-                    setIsSelection(false);
+                    selectionMade()
                     return;
                 }
 
@@ -52,8 +56,7 @@ const NewPlayersGrid = ({
                     if (selectedPlayer.role.team.join() !== "werewolves") {
                         const nbr = clientPlayer.role.name === "Alpha Werewolf" ? 2 : 1;
                         socket.emit("addWolfVote", selectedPlayer.id, nbr, gameId)
-                        setIsBlocked(true);
-                        setIsSelection(false);
+                        selectionMade()
                     } else {
                         console.log("You can't select a wolf")
                     }
@@ -61,38 +64,36 @@ const NewPlayersGrid = ({
                 }
 
                 else {
-                    if (clientPlayer.role.name === "Jailer" && selectedPlayer.isUnderArrest && actionType == "killPrisoner") {
+                    if (isJailer && selectedPlayer.isUnderArrest && actionType == "killPrisoner") {
                         socket.emit("killPrisoner", {
                             type: actionType,
                             killerId: clientPlayer.id,
                             selectedPlayerId: selectedPlayer.id,
                             selectedPlayerName: selectedPlayer.name,
                         }, gameId)
-                    }
-                    if (actionType == "reveal") {
+                    } else if (actionType == "reveal") {
                         socket.emit("revealPlayer", {
-                            type: clientPlayer.role.canPerform.type,
+                            type: actionType,
                             seerId: clientPlayer.id,
                             selectedPlayerId: selectedPlayer.id,
                             selectedPlayerName: selectedPlayer.name,
                         }, gameId)
                     } else if (actionType == "heal") {
                         socket.emit("heal", {
-                            type: clientPlayer.role.canPerform.type,
+                            type: actionType,
                             playerId: clientPlayer.id,
                             selectedPlayerId: selectedPlayer.id,
                             selectedPlayerName: selectedPlayer.name,
                         }, gameId)
                     } else {
                         socket.emit("registerAction", {
-                            type: clientPlayer.role.canPerform.type,
+                            type: actionType,
                             playerId: clientPlayer.id,
                             selectedPlayerId: selectedPlayer.id,
                             actionTime: clientPlayer.role.canPerform.actionTime,
                         }, gameId);
                     }
-                    setIsBlocked(true);
-                    setIsSelection(false);
+                    selectionMade()
                     return;
                 }
             } else {
@@ -109,12 +110,17 @@ const NewPlayersGrid = ({
 
             {
                 playersList.map((player) => {
+
+                    const isAlsoWolf = player.role.team.join() == "werewolves"
+
                     return (
                         <div key={"plycard" + player.id}
                             onClick={() => handlePlayerClick(player)}
                             className={`${player.isAlive
                                 ? clientPlayer.id !== player.id
-                                    ? isSelection && !isBlocked
+                                    ? isSelection && !isBlocked && (
+                                        clientIsWolf && !isAlsoWolf
+                                    )
                                         ? "bg-red-800 cursor-pointer animate-pulse"
                                         : "bg-slate-800"
                                     : "bg-slate-500"
@@ -128,27 +134,22 @@ const NewPlayersGrid = ({
                                 />
                             )}
 
-                            {timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" && !clientPlayer.isUnderArrest && (
+                            {timeOfTheDay == "nighttime" && clientIsWolf && !clientPlayer.isUnderArrest && (
                                 <VoteCount
                                     voteNbr={player.wolfVoteAgainst}
                                 />
                             )}
 
                             {(player.isRevealed || player.id == clientPlayer.id || (
-                                player.role.team.join() == "werewolves" && clientPlayer.role.team.join() == "werewolves"
+                                isAlsoWolf && clientIsWolf
                             )) && (
-                                <IconReveal
-                                    roleIcon={player.role.image}
-                                />
-                            )}
+                                    <IconReveal
+                                        roleIcon={player.role.image}
+                                    />
+                                )}
 
-                            {!player.isAlive ? (
-                                <Image width={60} height={60} src={tombstone} alt="tombstone" />
-                            ) : player.isUnderArrest ? (
-                                <Image className="max-h-[60px] " width={60} height={60} src={prison} alt="prison" />
-                            ) : (
-                                <AvatarUI heightAndWidth={60} avatar={player.avatar} />
-                            )}
+                            <PlayerAvatar avatar={player.avatar} />
+
                             <p className={`${isSelection && player.id !== clientPlayer.id ? "text-black" : "text-white"} text-xs mt-2`}>{player.name}</p>
                         </div>
                     )

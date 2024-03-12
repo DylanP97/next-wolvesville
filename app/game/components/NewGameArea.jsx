@@ -17,6 +17,16 @@ const NewGameArea = () => {
     const [isBlocked, setIsBlocked] = useState(false);
     const [actionType, setActionType] = useState("");
 
+    const sharedProps = {
+        clientPlayer,
+        isSelection,
+        setIsSelection,
+        isBlocked,
+        setIsBlocked,
+        actionType,
+        setActionType
+    }
+
     useEffect(() => {
         if (game.winningTeam == null) {
             setClientPlayer(game.playersList.find((p) => p.name == username))
@@ -32,22 +42,32 @@ const NewGameArea = () => {
 
     return (
         <section
-            className={`${game.timeOfTheDay === "daytime" ? "bg-sky-500" : game.timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-black"
-                } h-screen w-screen absolute top-0 left-0 relative`}
-            style={{ outline: "none" }}>
+            className="bg-black h-screen w-screen absolute top-0 left-0 relative outline-none"
+        // {`${game.timeOfTheDay === "daytime" ? "bg-sky-500" : game.timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-black"}`}
+        >
+
             <GameHeader timeOfTheDay={game.timeOfTheDay} dayCount={game.dayCount} timeCounter={game.timeCounter} />
+
             <Background timeOfTheDay={game.timeOfTheDay} clientPlayer={clientPlayer} />
+
             <PlayerInfos clientPlayer={clientPlayer} />
-            <NewPlayersGrid gameId={game.id} timeOfTheDay={game.timeOfTheDay} isSelection={isSelection} setIsSelection={setIsSelection} isBlocked={isBlocked} setIsBlocked={setIsBlocked} playersList={game.playersList} clientPlayer={clientPlayer} actionType={actionType} setActionType={setActionType} />
+
+            <NewPlayersGrid
+                playersList={game.playersList}
+                timeOfTheDay={game.timeOfTheDay}
+                gameId={game.id}
+                {...sharedProps}
+            />
+
             {
                 clientPlayer.isUnderArrest || (clientPlayer.role.name === "Jailer" && game.timeOfTheDay == "nighttime" && clientPlayer.hasHandcuffed) ? (
-                    <ActionsHistory key="jailChat" type="jailChat" messagesHistory={game.jailNightMessages} />
+                    <ActionsHistory key="jail" type="Jail" messagesHistory={game.jailNightMessages} />
                 ) : (
                     game.timeOfTheDay == "nighttime" && clientPlayer.role.team.join() == "werewolves" ?
                         (
-                            <ActionsHistory key="wolves" type="wolves" messagesHistory={game.wolvesMessagesHistory} />
+                            <ActionsHistory key="wolves" type="Wolves" messagesHistory={game.wolvesMessagesHistory} />
                         ) : (
-                            <ActionsHistory key="all" type="all" messagesHistory={game.messagesHistory} />
+                            <ActionsHistory key="village" type="Village" messagesHistory={game.messagesHistory} />
                         )
                 )
             }
@@ -55,21 +75,16 @@ const NewGameArea = () => {
             <ActionBar
                 timeOfTheDay={game.timeOfTheDay}
                 gameId={game.id}
-                clientPlayer={clientPlayer}
-                isSelection={isSelection}
-                setIsSelection={setIsSelection}
-                isBlocked={isBlocked}
-                setIsBlocked={setIsBlocked}
-                actionType={actionType}
-                setActionType={setActionType}
-
+                {...sharedProps}
             />
             {
                 isBlocked && <p className="text-white text-xs mt-2">You made your selection.</p>
             }
+
             {
                 game.winningTeam && <WinnerOverlay winningTeam={game.winningTeam} />
             }
+
         </section>
     );
 };
