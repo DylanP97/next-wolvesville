@@ -21,7 +21,7 @@ const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelecti
     }
 
     return (
-        <div className="w-[180px]">
+        <div className="w-[180px] z-20">
 
             {
                 timeOfTheDay === "votetime" && canVote && <CmdVote activateSelection={activateSelection} isSelection={isSelection} />

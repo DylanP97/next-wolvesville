@@ -39,7 +39,7 @@ const ActionsHistory = ({ messagesHistory, type }) => {
                   )
                 }
                 return (
-                  <li className="text-xs" key={index + "msg"}>{msg.time} -- {msg.msg}</li>
+                  <li className={`text-xs z-20 ${index == 0 && "font-bold"}`} key={index + "msg"}>{msg.time} -- {msg.msg}</li>
                 )
               })
             }
@@ -64,7 +64,7 @@ const ActionsHistory = ({ messagesHistory, type }) => {
                   )
                 }
                 return (
-                  <li className="text-xs" key={index + "msg"}>{msg.time} -- {msg.msg}</li>
+                  <li className={`text-xs z-20 ${index == 0 && "font-bold"}`} key={index + "msg"}>{msg.time} -- {msg.msg}</li>
                 )
               })
             }

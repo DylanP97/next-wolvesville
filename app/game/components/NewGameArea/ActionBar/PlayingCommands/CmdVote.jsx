@@ -21,6 +21,7 @@ const CmdVote = ({
                     alt="voteAgainst"
                     width={50}
                     height={50}
+                    style={{ height: "auto", width: "auto" }}
                     className="max-h-[50px] max-w-[50px] object-contain	"
                 />
             </div>

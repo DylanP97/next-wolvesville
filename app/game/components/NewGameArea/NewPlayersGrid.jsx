@@ -134,7 +134,9 @@ const NewPlayersGrid = ({
                                 />
                             )}
 
-                            {player.isRevealed && (
+                            {(player.isRevealed || player.id == clientPlayer.id || (
+                                player.role.team.join() == "werewolves" && clientPlayer.role.team.join() == "werewolves"
+                            )) && (
                                 <IconReveal
                                     roleIcon={player.role.image}
                                 />

@@ -1,6 +1,7 @@
 "use client";
 
 import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image } from "@nextui-org/react";
+import RoleStatusChip from "./RoleStatusChip"
 
 const RoleCard = ({ role }) => {
   const teamsString = role.team.join(", ");
@@ -18,7 +19,11 @@ const RoleCard = ({ role }) => {
       <CardBody>
         <p className="text-sm">{role.description}</p>
       </CardBody>
-      <CardFooter></CardFooter>
+      <CardFooter>
+        <RoleStatusChip 
+          status={role.status}
+        />
+      </CardFooter>
     </Card>
   );
 };

@@ -1,7 +1,7 @@
 "use client"
 
-import { Checkbox, Link, User, Chip, cn } from "@nextui-org/react";
-import React from "react";
+import { Checkbox, User, cn } from "@nextui-org/react";
+import RoleStatusChip from "../roles/components/RoleStatusChip"
 
 const RoleCheckbox = ({
     role
@@ -32,21 +32,9 @@ const RoleCheckbox = ({
                     name={role.name}
                     className=""
                 />
-                <div className="flex flex-col items-end gap-1">
-                    {role.status > 0 && (
-                        <Chip color={
-                            role.status == 1 ? "success" :
-                                role.status == 2 ? "warning" :
-                                    role.status == 3 && "danger"}
-                            size="sm" variant="flat">
-                            {(
-                                role.status == 1 ? 'Available' :
-                                    role.status == 2 ? 'Half-Playable' :
-                                        role.status == 3 && 'Not Working'
-                            )}
-                        </Chip>
-                    )}
-                </div>
+                <RoleStatusChip
+                    status={role.status}
+                />
             </div>
         </Checkbox>
     );
