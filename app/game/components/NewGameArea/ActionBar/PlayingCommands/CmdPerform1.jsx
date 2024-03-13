@@ -31,7 +31,7 @@ const CmdPerform1 = ({
                 <Tooltip content={label} color="secondary" variant="flat">
                     <div
                         onClick={() => activateSelection(type)}
-                        className={`${isSelection ? 'bg-slate-900' : 'bg-green-600 hover:bg-green-400'} w-[60px] h-[60px] p-2 cursor-pointer flex justify-center items-center z-20`}
+                        className={`${isSelection ? 'bg-slate-900' : 'bg-green-600 hover:bg-green-400'} w-[60px] h-[60px] p-2 cursor-pointer flex justify-center items-center z-20 relative`}
                     >
                         <Image
                             src={emoji}
@@ -40,6 +40,7 @@ const CmdPerform1 = ({
                             height={50}
                             className="max-h-[40px] max-w-[40px] object-contain	"
                         />
+                        <p className="absolute bottom-0 right-0 text-white">{nbrLeftToPerform !== undefined && nbrLeftToPerform}</p>
                     </div>
                 </Tooltip>
             }

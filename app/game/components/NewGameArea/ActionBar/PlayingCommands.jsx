@@ -7,8 +7,17 @@ import CmdPerform2 from "./PlayingCommands/CmdPerform2";
 const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelection, isBlocked, setIsBlocked, actionType, setActionType }) => {
 
     const {
-        role: { canVote, canPerform, canPerform2, name, bombPower, playersToSetOnFire, partner } = {},
-        isUnderArrest, hasHandcuffed
+        role: {
+            canVote,
+            canPerform,
+            canPerform2,
+            name,
+            bombPower,
+            playersToSetOnFire,
+            partner
+        } = {},
+        isUnderArrest,
+        hasHandcuffed
     } = clientPlayer;
 
     const activateSelection = (action) => {
@@ -22,7 +31,6 @@ const PlayingCommands = ({ clientPlayer, timeOfTheDay, isSelection, setIsSelecti
 
     return (
         <div className="w-[180px] z-20">
-
             {
                 timeOfTheDay === "votetime" && canVote && <CmdVote activateSelection={activateSelection} isSelection={isSelection} />
             }

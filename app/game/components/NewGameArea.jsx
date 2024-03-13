@@ -42,8 +42,7 @@ const NewGameArea = () => {
 
     return (
         <section
-            className="bg-black h-screen w-screen absolute top-0 left-0 relative outline-none"
-        // {`${game.timeOfTheDay === "daytime" ? "bg-sky-500" : game.timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-black"}`}
+            className={`${game.timeOfTheDay === "daytime" ? "bg-sky-500" : game.timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-black"} h-screen w-screen absolute top-0 left-0 relative outline-none`}
         >
 
             <GameHeader timeOfTheDay={game.timeOfTheDay} dayCount={game.dayCount} timeCounter={game.timeCounter} />

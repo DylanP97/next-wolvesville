@@ -6,15 +6,17 @@ import tombstone from "../../../../../public/game/tombstone.png"
 import prison from "../../../../../public/game/prison.png"
 
 const PlayerAvatar = ({
+    isAlive,
+    isUnderArrest,
     avatar
 }) => {
 
 
     return (
         <>
-            {!player.isAlive ? (
+            {!isAlive ? (
                 <Image width={60} height={60} src={tombstone} alt="tombstone" />
-            ) : player.isUnderArrest ? (
+            ) : isUnderArrest ? (
                 <Image className="max-h-[60px] " width={60} height={60} src={prison} alt="prison" />
             ) : (
                 <AvatarUI heightAndWidth={60} avatar={avatar} />

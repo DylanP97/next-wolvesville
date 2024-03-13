@@ -3,6 +3,7 @@
 import { useAuth } from "../../../providers/AuthProvider";
 import VoteCount from "./PlayersGrid/VoteCount";
 import IconReveal from "./PlayersGrid/IconReveal";
+import PlayerAvatar from "./PlayersGrid/PlayerAvatar";
 
 const NewPlayersGrid = ({
     playersList,
@@ -78,6 +79,13 @@ const NewPlayersGrid = ({
                             selectedPlayerId: selectedPlayer.id,
                             selectedPlayerName: selectedPlayer.name,
                         }, gameId)
+                    } else if (actionType == "shoot") {
+                        socket.emit("shootBullet", {
+                            type: actionType,
+                            gunnerId: clientPlayer.id,
+                            selectedPlayerId: selectedPlayer.id,
+                            selectedPlayerName: selectedPlayer.name,
+                        }, gameId)
                     } else if (actionType == "heal") {
                         socket.emit("heal", {
                             type: actionType,
@@ -119,7 +127,7 @@ const NewPlayersGrid = ({
                             className={`${player.isAlive
                                 ? clientPlayer.id !== player.id
                                     ? isSelection && !isBlocked && (
-                                        clientIsWolf && !isAlsoWolf
+                                        (clientIsWolf && !isAlsoWolf) || !clientIsWolf
                                     )
                                         ? "bg-red-800 cursor-pointer animate-pulse"
                                         : "bg-slate-800"
@@ -148,7 +156,7 @@ const NewPlayersGrid = ({
                                     />
                                 )}
 
-                            <PlayerAvatar avatar={player.avatar} />
+                            <PlayerAvatar isAlive={player.isAlive} isUnderArrest={player.isUnderArrest} avatar={player.avatar} />
 
                             <p className={`${isSelection && player.id !== clientPlayer.id ? "text-black" : "text-white"} text-xs mt-2`}>{player.name}</p>
                         </div>
