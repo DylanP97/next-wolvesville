@@ -2,7 +2,6 @@
 
 import NavigationMenu from "./NavigationMenu";
 import Image from "next/image";
-import alpha from "../../public/game/Loup-Alpha.png";
 import AvatarUI from "../profile/Profile/AvatarUI"
 
 const HomePage = ({ username, socketId, isInRoom, avatar }) => {
@@ -32,7 +31,7 @@ const HomePage = ({ username, socketId, isInRoom, avatar }) => {
       <Image
         height={200}
         width={200}
-        src={alpha}
+        src={"https://res.cloudinary.com/dnhq4fcyp/image/upload/v1710518131/Loup_de_lOmbre_qcjycz.webp"}
         alt="alphaWolf"
         className="absolute bottom-28 right-[10%] h-32 w-32"
       />

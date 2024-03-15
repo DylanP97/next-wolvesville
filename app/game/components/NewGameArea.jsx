@@ -28,7 +28,7 @@ const NewGameArea = () => {
     }
 
     useEffect(() => {
-        if (game.winningTeam == null) {
+        if (!game.winningTeam) {
             setClientPlayer(game.playersList.find((p) => p.name == username))
             socket.emit("checkForWinner", game.id);
         }

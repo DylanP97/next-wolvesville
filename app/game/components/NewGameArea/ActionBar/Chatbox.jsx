@@ -16,11 +16,15 @@ const Chatbox = ({ timeOfTheDay, gameId, clientPlayer }) => {
     const isWolvesChat = (timeOfTheDay == "nighttime" && isWolf ? true : false)
 
     const sendMessage = (message) => {
-        if (message) {
-            socket.emit("sendMessage", message, gameId, username, isWolvesChat, isJailerChat, isJailer)
-            setMessage("");
+        if (clientPlayer.isAlive) {
+            if (message) {
+                socket.emit("sendMessage", message, gameId, username, isWolvesChat, isJailerChat, isJailer)
+                setMessage("");
+            } else {
+                console.log("rien n'est écrit")
+            }
         } else {
-            console.log("rien n'est écrit")
+            console.log("You're dead...")
         }
     }
 
