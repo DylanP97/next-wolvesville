@@ -14,6 +14,7 @@ const NewGameArea = () => {
     const { game, socket, username } = useAuth();
     const [clientPlayer, setClientPlayer] = useState(game.playersList.find((p) => p.name == username))
     const [isSelection, setIsSelection] = useState(false);
+    const [isDoubleSelection, setIsDoubleSelection] = useState(false);
     const [isBlocked, setIsBlocked] = useState(false);
     const [actionType, setActionType] = useState("");
 
@@ -21,6 +22,8 @@ const NewGameArea = () => {
         clientPlayer,
         isSelection,
         setIsSelection,
+        isDoubleSelection,
+        setIsDoubleSelection,
         isBlocked,
         setIsBlocked,
         actionType,
@@ -36,6 +39,7 @@ const NewGameArea = () => {
 
     useEffect(() => {
         setIsSelection(false);
+        setIsDoubleSelection(false);
         setIsBlocked(false);
         setActionType("");
     }, [game.timeOfTheDay])
@@ -72,10 +76,17 @@ const NewGameArea = () => {
             }
 
             <ActionBar
+                dayCount={game.dayCount}
                 timeOfTheDay={game.timeOfTheDay}
                 gameId={game.id}
                 {...sharedProps}
             />
+            {
+                isDoubleSelection && <p className="text-white text-xs mt-2">isDoubleSelection active</p>
+            }
+            {
+                isSelection && <p className="text-white text-xs mt-2">isSelection active</p>
+            }
             {
                 isBlocked && <p className="text-white text-xs mt-2">You made your selection.</p>
             }
