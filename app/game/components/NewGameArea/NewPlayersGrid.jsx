@@ -29,6 +29,7 @@ const NewPlayersGrid = ({
     const isJailer = clientPlayer.role.name === "Jailer"
 
 
+
     const handlePlayerClick = (selectedPlayer) => {
 
         function selectionCompleted() {
@@ -125,6 +126,7 @@ const NewPlayersGrid = ({
                     } else if (isDoubleSelection && selectedPlayer1) {
                         if (actionType == "link") {
                             socket.emit("registerAction", {
+                                type: "link",
                                 lover1Id: selectedPlayer1.id,
                                 lover2Id: selectedPlayer.id,
                                 cupidId: clientPlayer.id,
@@ -158,7 +160,7 @@ const NewPlayersGrid = ({
                             className={
                                 `${player.isAlive
                                     ? clientPlayer.id !== player.id
-                                        ? (isSelection || isDoubleSelection) && !isBlocked && (
+                                        ? (isSelection || (isDoubleSelection && (player.id !== (selectedPlayer1 && selectedPlayer1.id)))) && !isBlocked && (
                                             (clientIsWolf && !isAlsoWolf) || !clientIsWolf
                                         )
                                             ? "bg-red-800 cursor-pointer animate-pulse"
@@ -181,10 +183,10 @@ const NewPlayersGrid = ({
                                 />
                             )}
 
-                            {(clientPlayer.role.name == "Cupid" && player.isInLove) && (
-                                <div className="absolute bottom-0 right-0 m-2 h-8 aspect-square flex justify-center items-center">
+                            {((clientPlayer.role.name == "Cupid" && player.isInLove) || (clientPlayer.isInLove && player.isInLove)) && (
+                                <div className="absolute bottom-0 left-0 m-2 h-6 aspect-square flex justify-center items-center animate-pulse">
                                     <Image
-                                        src={clientPlayer.role.canPerform.emoji}
+                                        src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706531451/selection/resuscitation_tqyfkl.png"
                                         alt="lover"
                                         width={60}
                                         height={60}

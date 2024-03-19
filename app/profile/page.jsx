@@ -1,6 +1,6 @@
 "use client"
 
-import ProfileCard from "./Profile/ProfileCard";
+import Profile from "./Profile/Profile";
 import Connexion from "../components/Connexion";
 import { useAuth } from "../providers/AuthProvider";
 import { redirect } from "next/navigation";
@@ -13,7 +13,7 @@ export default function ProfilePage() {
   return (
     <>
       {isConnected ? (
-        <ProfileCard username={username} avatar={avatar} socketId={socketId} />
+        <Profile username={username} avatar={avatar} socketId={socketId} />
       ) : (
         <Connexion />
       )}
