@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import send from "../../../../../../public/game/paper-plane.png"
+import send from "../../../../../public/game/paper-plane.png"
 import { Tooltip } from "@nextui-org/react";
 
 const CmdSend = ({

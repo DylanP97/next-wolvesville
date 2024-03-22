@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Tooltip } from "@nextui-org/react";
-import voteAgainstIcon from "../../../../../../public/game/vote-time.png";
+import voteAgainstIcon from "../../../../../public/game/vote-time.png";
 
 const CmdVote = ({
     activateSelection,
