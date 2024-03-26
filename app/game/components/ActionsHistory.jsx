@@ -9,8 +9,10 @@ const ActionsHistory = () => {
     wolvesChat,
     jailChat,
     timeOfTheDay,
-    isUnderArrest,
     isWolf,
+    isJailer,
+    isUnderArrest,
+    hasHandcuffed,
   } = useGame();
 
   class Chat {
@@ -23,13 +25,12 @@ const ActionsHistory = () => {
   const wolves = new Chat("Wolves", wolvesChat, "🐺");
   const jail = new Chat("Jail", jailChat, "👮‍♂️");
 
-  const [usedChat, setUsedChat] = useState();
-
-  isUnderArrest || (isJailer && timeOfTheDay == "nighttime" && hasHandcuffed)
-    ? setUsedChat(jail)
-    : timeOfTheDay == "nighttime" && isWolf
-    ? setUsedChat(wolves)
-    : setUsedChat(general);
+  const usedChat =
+    (isUnderArrest || (isJailer && timeOfTheDay == "nighttime" && hasHandcuffed))
+      ? jail
+      : timeOfTheDay == "nighttime" && isWolf
+      ? wolves
+      : general;
 
   return (
     <div className="w-full z-10 bg-gray-800 p-2">

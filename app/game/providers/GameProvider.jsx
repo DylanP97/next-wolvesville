@@ -8,79 +8,81 @@ const GameContext = createContext();
 export const GameProvider = ({ children }) => {
   const { game, socket, username } = useAuth();
 
-  console.log("ddddddddd")
-  console.log(game)
+  if (game) {
+    const [clientPlayer, setClientPlayer] = useState(
+      game.playersList.find((p) => p.name == username)
+    );
 
-  const [clientPlayer, setClientPlayer] = useState(
-    game.playersList.find((p) => p.name == username)
-  );
-  
-  const [isSelection, setIsSelection] = useState(false);
-  const [isDoubleSelection, setIsDoubleSelection] = useState(false);
-  const [isBlocked, setIsBlocked] = useState(false);
-  const [actionType, setActionType] = useState("");
+    console.log("gameee")
+    console.log(game)
 
-  const gameId = game.id;
-  const timeOfTheDay = game.timeOfTheDay;
-  const dayCount = game.dayCount;
-  const timeCounter = game.timeCounter;
-  const winningTeam = game.winningTeam || null;
+    const gameId = game.id;
+    const timeOfTheDay = game.timeOfTheDay;
+    const dayCount = game.dayCount;
+    const timeCounter = game.timeCounter;
+    const winningTeam = game.winningTeam || null;
 
-  const isWolf = clientPlayer.role.team.includes("werewolves");
-  const isJailer = clientPlayer.role.name === "Jailer";
-  const hasHandcuffed = clientPlayer.hasHandcuffed;
-  const isUnderArrest = clientPlayer.isUnderArrest;
+    const playersList = game.playersList;
 
-  const jailChat = game.jailNightMessages;
-  const wolvesChat = game.wolvesMessagesHistory;
-  const generalChat = game.messagesHistory;
+    const isWolf = clientPlayer.role.team.includes("werewolves");
+    const isJailer = clientPlayer.role.name === "Jailer";
+    const isUnderArrest = clientPlayer.isUnderArrest;
+    const hasHandcuffed = clientPlayer.hasHandcuffed;
 
-  useEffect(() => {
-    if (!winningTeam) {
-      setClientPlayer(game.playersList.find((p) => p.name == username));
-      socket.emit("checkForWinner", game.id);
-    }
-  }, [game]);
+    const jailChat = game.jailNightMessages;
+    const wolvesChat = game.wolvesMessagesHistory;
+    const generalChat = game.messagesHistory;
 
-  useEffect(() => {
-    setIsSelection(false);
-    setIsDoubleSelection(false);
-    setIsBlocked(false);
-    setActionType("");
-  }, [timeOfTheDay]);
+    const [isSelection, setIsSelection] = useState(false);
+    const [isDoubleSelection, setIsDoubleSelection] = useState(false);
+    const [isBlocked, setIsBlocked] = useState(false);
+    const [actionType, setActionType] = useState("");
 
-  return (
-    <GameContext.Provider
-      value={{
-        gameId,
-        timeOfTheDay,
-        dayCount,
-        timeCounter,
-        winningTeam,
+    useEffect(() => {
+      if (!winningTeam) {
+        setClientPlayer(game.playersList.find((p) => p.name == username));
+        socket.emit("checkForWinner", game.id);
+      }
+    }, [game]);
 
-        clientPlayer,
-        isWolf,
-        isJailer,
-        isUnderArrest,
-        hasHandcuffed,
+    useEffect(() => {
+      setIsSelection(false);
+      setIsDoubleSelection(false);
+      setIsBlocked(false);
+      setActionType("");
+    }, [timeOfTheDay]);
 
-        jailChat,
-        wolvesChat,
-        generalChat,
-
-        isSelection,
-        isDoubleSelection,
-        isBlocked,
-        setIsSelection,
-        setIsDoubleSelection,
-        setIsBlocked,
-        actionType,
-        setActionType,
-      }}
-    >
-      {children}
-    </GameContext.Provider>
-  );
+    return (
+      <GameContext.Provider
+        value={{
+          clientPlayer,
+          gameId,
+          timeOfTheDay,
+          dayCount,
+          timeCounter,
+          winningTeam,
+          playersList,
+          isWolf,
+          isJailer,
+          isUnderArrest,
+          hasHandcuffed,
+          jailChat,
+          wolvesChat,
+          generalChat,
+          isSelection,
+          isDoubleSelection,
+          isBlocked,
+          setIsSelection,
+          setIsDoubleSelection,
+          setIsBlocked,
+          actionType,
+          setActionType,
+        }}
+      >
+        {children}
+      </GameContext.Provider>
+    );
+  }
 };
 
 export const useGame = () => {
@@ -89,4 +91,6 @@ export const useGame = () => {
   if (!context) {
     throw new Error("useGame must be used within an GameProvider");
   }
+
+  return context;
 };
