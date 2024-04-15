@@ -9,41 +9,35 @@ export const GameProvider = ({ children }) => {
   const { game, socket, username } = useAuth();
 
   if (game) {
-    const [clientPlayer, setClientPlayer] = useState(
-      game.playersList.find((p) => p.name == username)
-    );
-
-    console.log("gameee")
-    console.log(game)
-
     const gameId = game.id;
+    const playersList = game.playersList;
+    const aliveList = game.playersList.filter((p) => p.isAlive);
+    const clientPlayer = game.playersList.find((p) => p.name == username);
     const timeOfTheDay = game.timeOfTheDay;
     const dayCount = game.dayCount;
     const timeCounter = game.timeCounter;
-    const winningTeam = game.winningTeam || null;
-
-    const playersList = game.playersList;
+    const winningTeam = game.winningTeam;
+    const jailChat = game.jailNightMessages;
+    const wolvesChat = game.wolvesMessagesHistory;
+    const generalChat = game.messagesHistory;
 
     const isWolf = clientPlayer.role.team.includes("werewolves");
     const isJailer = clientPlayer.role.name === "Jailer";
     const isUnderArrest = clientPlayer.isUnderArrest;
     const hasHandcuffed = clientPlayer.hasHandcuffed;
 
-    const jailChat = game.jailNightMessages;
-    const wolvesChat = game.wolvesMessagesHistory;
-    const generalChat = game.messagesHistory;
-
     const [isSelection, setIsSelection] = useState(false);
     const [isDoubleSelection, setIsDoubleSelection] = useState(false);
     const [isBlocked, setIsBlocked] = useState(false);
     const [actionType, setActionType] = useState("");
 
-    useEffect(() => {
-      if (!winningTeam) {
-        setClientPlayer(game.playersList.find((p) => p.name == username));
-        socket.emit("checkForWinner", game.id);
-      }
-    }, [game]);
+    console.log("hello GameProvider");
+    console.log(winningTeam);
+
+    if (!winningTeam) {
+      console.log("no winningTeam");
+      socket.emit("checkForWinner", game.id);
+    }
 
     useEffect(() => {
       setIsSelection(false);
@@ -62,6 +56,7 @@ export const GameProvider = ({ children }) => {
           timeCounter,
           winningTeam,
           playersList,
+          aliveList,
           isWolf,
           isJailer,
           isUnderArrest,

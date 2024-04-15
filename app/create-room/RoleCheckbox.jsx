@@ -1,43 +1,53 @@
-"use client"
+// RoleCheckbox.js
 
-import { Checkbox, User, cn } from "@nextui-org/react";
-import RoleStatusChip from "../roles/components/RoleStatusChip"
+import { Input, User } from "@nextui-org/react";
+import { useState } from "react";
 
-const RoleCheckbox = ({
-    role
-}) => {
+const RoleCheckbox = ({ role, onChange }) => {
+  const [nbrOf, setNbrOf] = useState(0);
+  const isSolo = !["village", "werewolves"].includes(role.team.join());
 
-    return (
-        <Checkbox
-            aria-label={role.name}
-            classNames={{
-                base: cn(
-                    "inline-flex w-full max-w-md bg-content1",
-                    "hover:bg-content2 items-center justify-start",
-                    "cursor-pointer rounded-lg gap-2 px-4 py-2 m-1 border-2 border-transparent",
-                    "data-[selected=true]:border-primary",
-                ),
-                label: "w-full",
-            }}
-            value={role}
-        >
-            <div className="w-full flex justify-between gap-2">
-                <User
-                    avatarProps={{ size: "md", src: role.image, color: "secondary", isBordered: true, radius: "lg" }}
-                    description={
-                        <p className="text-sm text-blue-500">
-                            @{role.team}
-                        </p>
-                    }
-                    name={role.name}
-                    className=""
-                />
-                <RoleStatusChip
-                    status={role.status}
-                />
-            </div>
-        </Checkbox>
-    );
-}
+  const handleNbrOfChange = (event) => {
+    if (isSolo) return;
+    const newValue = Number(event.target.value);
+    setNbrOf(newValue);
+    onChange(role.name, newValue); // Pass the role name and the new value to the parent component
+  };
+
+  const colorsForTeams = {
+    village: "primary",
+    werewolves: "secondary",
+    others: "success",
+  };
+
+  return (
+    <div className="flex flex-row w-[80%] gap-2 justify-start">
+      <div className="flex gap-2">
+        <Input
+          color="secondary"
+          type="number"
+          className="m-1"
+          defaultValue={nbrOf}
+          labelPlacement="outside"
+          size="md"
+          min={0}
+          max={isSolo ? 1 : 3}
+          onChange={handleNbrOfChange}
+        />
+      </div>
+      <User
+        avatarProps={{
+          size: "md",
+          src: role.image,
+          color: colorsForTeams[role.team],
+          radius: "lg",
+        }}
+        className="p-1"
+        description={<p className="text-sm">@{role.team}</p>}
+        name={<p className="text-sm text-gray-200">{role.name}</p>}
+      />
+    </div>
+  );
+};
 
 export default RoleCheckbox;

@@ -30,7 +30,7 @@ const GameMain = () => {
       <ActionsHistory />
       <ActionBar />
 
-      {winningTeam && <WinnerOverlay />}
+      {winningTeam !== null && <WinnerOverlay />}
     </section>
   );
 };

@@ -8,7 +8,7 @@ import { useGame } from "../providers/GameProvider";
 
 const WinnerOverlay = () => {
   const { updateGameState } = useAuth();
-  const { winningTeam } = useGame();
+  const { winningTeam, aliveList } = useGame();
 
   const handleExitGame = () => {
     updateGameState(null, false, null);
@@ -33,7 +33,7 @@ const WinnerOverlay = () => {
           />
           <p className="mb-4">The {winningTeam.name} won!</p>
           <div className="flex flex-row justify-center mt-4">
-            {winningTeam.aliveList.map((ply) => {
+            {aliveList.map((ply) => {
               return (
                 <div
                   key={ply.name + "key-win-div"}

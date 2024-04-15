@@ -17,7 +17,7 @@ const RoleStatusChip = ({
                     {(
                         status == 1 ? 'Available' :
                             status == 2 ? 'Half-Playable' :
-                                status == 3 && 'Not Working'
+                                status == 3 && 'Still in Development'
                     )}
                 </Chip>
             )}
