@@ -8,7 +8,6 @@ const RoleCheckbox = ({ role, onChange }) => {
   const isSolo = !["village", "werewolves"].includes(role.team.join());
 
   const handleNbrOfChange = (event) => {
-    if (isSolo) return;
     const newValue = Number(event.target.value);
     setNbrOf(newValue);
     onChange(role.name, newValue); // Pass the role name and the new value to the parent component
