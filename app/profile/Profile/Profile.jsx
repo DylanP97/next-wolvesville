@@ -52,9 +52,10 @@ const Profile = ({ username, avatar, socketId }) => {
       <div className="flex w-full flex-col max-w-[400px]">
         <Tabs aria-label="Options" className="justify-center">
           <Tab title={headTab.title + " " + headTab.emoji}>
-            {headTab.attributes.map((a) => {
+            {headTab.attributes.map((a, i) => {
               return (
                 <ProfileSelect
+                  key={a.label + i + "-ps"}
                   label={a.label}
                   options={a.options}
                   currentValue={avState[a.label]}
@@ -64,9 +65,10 @@ const Profile = ({ username, avatar, socketId }) => {
             })}
           </Tab>
           <Tab title={clothesTab.title + " " + clothesTab.emoji}>
-            {clothesTab.attributes.map((a) => {
+            {clothesTab.attributes.map((a, i) => {
               return (
                 <ProfileSelect
+                  key={a.label + i + "-ps"}
                   label={a.label}
                   options={a.options}
                   currentValue={avState[a.label]}
@@ -76,9 +78,10 @@ const Profile = ({ username, avatar, socketId }) => {
             })}
           </Tab>
           <Tab title={bodyTab.title + " " + bodyTab.emoji}>
-            {bodyTab.attributes.map((a) => {
+            {bodyTab.attributes.map((a, i) => {
               return (
                 <ProfileSelect
+                  key={a.label + i + "-ps"}
                   label={a.label}
                   options={a.options}
                   currentValue={avState[a.label]}
@@ -88,9 +91,10 @@ const Profile = ({ username, avatar, socketId }) => {
             })}
           </Tab>
           <Tab title={eyesTab.title + " " + eyesTab.emoji}>
-            {eyesTab.attributes.map((a) => {
+            {eyesTab.attributes.map((a, i) => {
               return (
                 <ProfileSelect
+                  key={a.label + i + "-ps"}
                   label={a.label}
                   options={a.options}
                   currentValue={avState[a.label]}

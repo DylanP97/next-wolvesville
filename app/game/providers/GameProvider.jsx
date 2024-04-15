@@ -8,6 +8,11 @@ const GameContext = createContext();
 export const GameProvider = ({ children }) => {
   const { game, socket, username } = useAuth();
 
+  const [isSelection, setIsSelection] = useState(false);
+  const [isDoubleSelection, setIsDoubleSelection] = useState(false);
+  const [isBlocked, setIsBlocked] = useState(false);
+  const [actionType, setActionType] = useState("");
+
   if (game) {
     const gameId = game.id;
     const playersList = game.playersList;
@@ -25,14 +30,6 @@ export const GameProvider = ({ children }) => {
     const isJailer = clientPlayer.role.name === "Jailer";
     const isUnderArrest = clientPlayer.isUnderArrest;
     const hasHandcuffed = clientPlayer.hasHandcuffed;
-
-    const [isSelection, setIsSelection] = useState(false);
-    const [isDoubleSelection, setIsDoubleSelection] = useState(false);
-    const [isBlocked, setIsBlocked] = useState(false);
-    const [actionType, setActionType] = useState("");
-
-    console.log("hello GameProvider");
-    console.log(winningTeam);
 
     if (!winningTeam) {
       console.log("no winningTeam");

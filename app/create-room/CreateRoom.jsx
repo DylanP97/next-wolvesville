@@ -134,8 +134,8 @@ const CreateRoom = () => {
               })}
             </div>
             <div className="flex gap-3 items-center">
-              {selectedRolesTeam.map((team) => {
-                return <TeamCounter team={team} />;
+              {selectedRolesTeam.map((t, i) => {
+                return <TeamCounter team={t} key={t.name + i + "-tc"} />;
               })}
             </div>
             {availableRoles.map((role) => {
