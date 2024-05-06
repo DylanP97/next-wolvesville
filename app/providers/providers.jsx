@@ -4,10 +4,10 @@ import { AuthProvider } from "./AuthProvider";
 
 export function Providers({ children }) {
   return (
-    <NextUIProvider>
+      <NextUIProvider>
         <AuthProvider>
           {children}
         </AuthProvider>
-    </NextUIProvider>
+      </NextUIProvider>
   );
 }

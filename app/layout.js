@@ -15,13 +15,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={GeistSans.className}>
-      <body className="flex flex-col items-center w-screen min-h-screen h-full">
-        <ClientOnly>
-          <GeneralBtns />
-        </ClientOnly>
+    <html lang="en" className={`${GeistSans.className} h-screen`}>
+      <body>
         <Providers>
+          <div className="flex flex-col items-center h-screen">
+          <ClientOnly>
+            <GeneralBtns />
+          </ClientOnly>
           {children}
+          </div>
         </Providers>
       </body>
     </html >

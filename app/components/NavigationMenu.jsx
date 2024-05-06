@@ -13,11 +13,12 @@ const NavigationMenu = () => {
   ];
 
   return (
-    <nav className="flex flex-col items-center py-6 w-full z-20">
+    <nav className="flex flex-col items-center py-4 w-full z-20">
+      <h1 className="text-3xl font-bold my-6 text-white text-center">Main Menu</h1>
       {paths.map((p, index) => (
         <Link
           key={index + "navlink"}
-          className="w-fit z-20 py-2 text-white text-center link-underline link-underline-black text-black"
+          className="w-fit z-20 py-2 text-white text-center hover:text-primary"
           href={p.path}
           color="foreground"
         >

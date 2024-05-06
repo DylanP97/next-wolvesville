@@ -56,8 +56,19 @@ const Connexion = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-indigo-900 from-10% via-indigo-700 via-30% to-blue-950 to-80% h-screen w-screen flex flex-col justify-center items-center">
-      <h1 className="font-bold text-white my-2 text-xl">{isLogin ? "Login with your account" : "Register a new account"}</h1>
+    <div className="absolute top-0 left-0 bg-black h-screen w-screen flex flex-col justify-center items-center">
+      <div className=" m-4">
+        <h1 className="text-white text-center text-lg">
+          Welcome to my own version of Wolvesville!
+        </h1>
+        <a
+          target="_blank"
+          className="text-white flex justify-center italic hover:underline pointer text-sm hover:text-secondary"
+          href="https://www.wolvesville.com"
+        >
+          Check the original game here
+        </a>
+      </div>
       <form onSubmit={handleSubmit}>
         {!isLogin && (
           <div>
@@ -99,20 +110,18 @@ const Connexion = () => {
         </div>
 
         <div>
-          <Button variant="shadow" color="secondary" className="w-[95%] m-2" type="submit">
+          <Button variant="shadow" color="primary" className="w-[95%] m-2" type="submit">
             {isLogin ? "Login" : "Signup"}
           </Button>
         </div>
       </form>
 
-      <div className="p-2 m-2">
         <p className="text-white">
-          {isLogin ? "Don't have an account? " : "Already have an account? "}
-          <span onClick={handleSwitch} style={{ cursor: "pointer", color: "pink", textDecoration: "underline" }}>
+          {isLogin ? "Not registered yet? " : "Already registred? "}
+          <span onClick={handleSwitch} className="hover:underline pointer text-primary">
             {isLogin ? "Signup" : "Login"}
           </span>
         </p>
-      </div>
     </div>
   );
 };

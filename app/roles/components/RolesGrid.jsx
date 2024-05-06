@@ -27,7 +27,7 @@ const RolesGrid = () => {
   }, []);
 
   return (
-    <section className="mb-10 p-5">
+    <section className="p-5 bg-black">
       <h1 className="text-white text-3xl font-bold p-4">List of Roles</h1>
       <div className="w-full grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 p-5">
         {availableRoles.sort((a, b) => a.status - b.status).map((role) => (

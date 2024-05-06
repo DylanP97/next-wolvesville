@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [authState.isConnected]);
 
-  return <AuthContext.Provider value={{ ...authState, setAuthInfo, socket, rooms, addRoom, connectedUsers, isInRoom, isPlaying, game, updateGameState }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider id="authcontext" value={{ ...authState, setAuthInfo, socket, rooms, addRoom, connectedUsers, isInRoom, isPlaying, game, updateGameState }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

@@ -11,6 +11,7 @@ const CreateRoom = () => {
   const [availableRoles, setAvailableRoles] = useState([]);
   const [availableTeams, setAvailableTeams] = useState([]);
   const [roomName, setRoomName] = useState("");
+  const [creationError, setCreationError] = useState("");
   const [selectedRoles, setSelectedRoles] = useState([]);
   const [selectedRolesTeam, setSelectedRolesTeam] = useState([]);
   const [created, setCreated] = useState(false);
@@ -87,17 +88,31 @@ const CreateRoom = () => {
   };
 
   const submitNewRoom = () => {
-    const newRoom = {
-      id: Date.now(),
-      name: roomName,
-      createdBy: username,
-      nbrOfPlayers: selectedRoles.length,
-      selectedRoles: selectedRoles,
-      usersInTheRoom: [{ username, socketId, avatar }],
-    };
-    socket.emit("createRoom", newRoom);
-    addRoom(newRoom);
-    setCreated(true);
+    if (selectedRoles.length < 2) {
+      setCreationError("At least 2 players please.");
+      return
+    }
+    else if (selectedRoles.length > 16) {
+      setCreationError("16 players at most.");
+      return
+    }
+    else if (!roomName) {
+      setCreationError("You have to give a name to your room.");
+      return
+    }
+    else {
+      const newRoom = {
+        id: Date.now(),
+        name: roomName,
+        createdBy: username,
+        nbrOfPlayers: selectedRoles.length,
+        selectedRoles: selectedRoles,
+        usersInTheRoom: [{ username, socketId, avatar }],
+      };
+      socket.emit("createRoom", newRoom);
+      addRoom(newRoom);
+      setCreated(true);
+    }
   };
 
   return (
@@ -116,6 +131,17 @@ const CreateRoom = () => {
               className="max-w-xs ws-60"
               onChange={(e) => setRoomName(e.target.value)}
             />
+            <Divider className="my-2" />
+            <div className="flex items-center gap-2">
+              <Button
+                color="secondary"
+                variant="shadow"
+                onClick={() => submitNewRoom()}
+              >
+                Create Room
+              </Button>
+              <p className="text-white text-sm">{creationError}</p>
+            </div>
             <div className="flex items-center h-14 m-2">
               <p className="text-gray-200">{selectedRoles.length} players: </p>
               {selectedRoles.map((r, i) => {
@@ -151,21 +177,10 @@ const CreateRoom = () => {
           </div>
         </>
       )}
-      <Divider className="my-2" />
-      <div className="flex gap-2">
-        {!created &&
-          (selectedRoles.length >= 2) &&
-          (selectedRoles.length <= 16) &&
-          roomName && (
-            <Button
-              color="secondary"
-              variant="shadow"
-              onClick={() => submitNewRoom()}
-            >
-              Create Room
-            </Button>
-          )}
-      </div>
+      <br />
+      <Button className="mt-6" color="secondary" variant="ghost" onClick={() => window.history.back()}>
+        Go Back
+      </Button>
     </div>
   );
 };
