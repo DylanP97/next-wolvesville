@@ -16,7 +16,19 @@
       "intro.lo": "Login",
       "intro.si": "SignUp",
       "intro.nry": "Not Registered Yet? ",
-      "intro.ar": "Already Registered? "
+      "intro.ar": "Already Registered? ",
+      "toggle.quit": "Quit Full Screen",
+      "toggle.go": "Go Full Screen",
+      "logout": "Logout",
+      "menu.title": "Main Menu",
+      "menu.1": "Join Room",
+      "menu.2": "Create Room",
+      "menu.3": "Connected Players",
+      "menu.4": "View Roles",
+      "menu.5": "Edit Profile",
+      "connected.title": "Connected Players List",
+      "connected.nousers": "There are no users connected currently",
+      "goback": "Go Back"
     }
   },
   "fr": {
@@ -36,8 +48,19 @@
       "intro.lo": "Connexion",
       "intro.si": "Inscription",
       "intro.nry": "Vous n'avez pas de compte ? ",
-      "intro.ar": "Déjà un compte ? "
-
+      "intro.ar": "Déjà un compte ? ",
+      "toggle.quit": "Quitter Mode Plein Écran",
+      "toggle.go": "Mode Plein Écran",
+      "logout": "Déconnexion",
+      "menu.title": "Menu principal",
+      "menu.1": "Rejoindre une salle",
+      "menu.2": "Créer une salle",
+      "menu.3": "Joueurs connectés",
+      "menu.4": "Voir les roles",
+      "menu.5": "Modifier mon profil",
+      "connected.title": "Liste des joueurs connectés",
+      "connected.nousers": "Il n'y a pas de joueurs connectés",
+      "goback": "Revenir à la page précédente"
     }
   }
 }

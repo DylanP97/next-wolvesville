@@ -6,8 +6,10 @@ import { useState } from "react";
 import MaximizeIcon from "./icons/MaximizeIcon";
 import MinimizeIcon from "./icons/MinimizeIcon";
 import LanguageToggle from "./LanguageToggle";
+import { useTranslation } from "react-i18next";
 
 const GeneralBtns = () => {
+  const { t } = useTranslation();
   const { isConnected } = useAuth();
   const [fullScreen, setFullScreen] = useState(false);
 
@@ -28,7 +30,7 @@ const GeneralBtns = () => {
         isIconOnly
         color="primary"
         variant="ghost"
-        aria-label={fullScreen ? "Quit Full Screen" : "Go Full Screen"}
+        aria-label={fullScreen ? t("toggle.quit") : t("toggle.go")}
         onPress={() => (fullScreen ? exitFullscreen() : enterFullscreen())}
       >
         {fullScreen ? <MinimizeIcon /> : <MaximizeIcon />}
@@ -37,10 +39,10 @@ const GeneralBtns = () => {
         <Button
           variant="ghost"
           color="primary"
-          aria-label="Logout"
+          aria-label={t("logout")}
           onPress={() => document.location.assign("/")}
         >
-          Logout
+          {t("logout")}
         </Button>
       )}
     </div>

@@ -1,20 +1,23 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 const NavigationMenu = () => {
+  const { t } = useTranslation();
+
   const paths = [
-    { label: "Join Room", path: "/join-room" },
-    { label: "Create Room", path: "/create-room" },
-    { label: "Connected Users", path: "/connected-users" },
-    { label: "View Roles", path: "/roles" },
-    { label: "Edit Profile", path: "/profile" },
+    { label: t("menu.1"), path: "/join-room" },
+    { label: t("menu.2"), path: "/create-room" },
+    { label: t("menu.3"), path: "/connected-users" },
+    { label: t("menu.4"), path: "/roles" },
+    { label: t("menu.5"), path: "/profile" },
   ];
 
   return (
     <nav className="flex flex-col items-center py-4 w-full z-20">
       <h1 className="text-3xl font-bold my-6 text-white text-center">
-        Main Menu
+        {t("menu.title")}
       </h1>
       {paths.map((p, index) => (
         <Link
