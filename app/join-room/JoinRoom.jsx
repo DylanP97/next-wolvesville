@@ -1,11 +1,18 @@
 "use client";
 
-import { Button, Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
-import React from "react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+} from "@nextui-org/react";
 import { useAuth } from "../providers/AuthProvider";
+import GoBackBtn from "../components/GoBackBtn";
 
 const JoinRoom = () => {
-  const { rooms, username, socketId, avatar, socket, updateGameState } = useAuth();
+  const { rooms, username, socketId, avatar, socket, updateGameState } =
+    useAuth();
 
   const joinRoom = (roomId, userJoining) => {
     updateGameState(null, false, null);
@@ -13,9 +20,8 @@ const JoinRoom = () => {
   };
 
   const deleteRoom = (roomId) => {
-    socket.emit('deleteRoom', roomId)
+    socket.emit("deleteRoom", roomId);
   };
-
 
   return (
     <div className="w-full bg-black p-4">
@@ -26,7 +32,7 @@ const JoinRoom = () => {
         </div>
       ) : (
         rooms.map((room) => {
-          let usersInTheRoom = room.usersInTheRoom
+          let usersInTheRoom = room.usersInTheRoom;
           return (
             <Card key={room.id} className="m-4">
               <CardHeader>
@@ -37,39 +43,44 @@ const JoinRoom = () => {
                 <p>creator: {room.createdBy}</p>
                 <p>nbr of players: {room.nbrOfPlayers}</p>
                 <p>currently in the room :</p>
-                {
-                  usersInTheRoom.map((userInRoom, index) => <p key={"uitr" + index}>{userInRoom.username}</p>)
-                }
+                {usersInTheRoom.map((userInRoom, index) => (
+                  <p key={"uitr" + index}>{userInRoom.username}</p>
+                ))}
               </CardBody>
               <CardFooter>
-                {
-                  usersInTheRoom.length < room.nbrOfPlayers &&
-                    !usersInTheRoom.some((usr) => usr.username === username) ? (
-                    <Button color="secondary" variant="ghost" onClick={() => joinRoom(room.id, { username, socketId, avatar })}>
-                      Join Room
-                    </Button>
-                  ) : (
-                    <p>You have joined the room.</p>
-                  )
-                }
-                {
-                  usersInTheRoom.length == room.nbrOfPlayers && <p className="p-2" >The room is full</p>
-                }
-                {
-                  (username == room.createdBy) && (
-                    <Button color="danger" variant="ghost" onClick={() => deleteRoom(room.id)}>
-                      Delete Room
-                    </Button>
-                  )
-                }
+                {usersInTheRoom.length < room.nbrOfPlayers &&
+                !usersInTheRoom.some((usr) => usr.username === username) ? (
+                  <Button
+                    color="secondary"
+                    variant="ghost"
+                    onClick={() =>
+                      joinRoom(room.id, { username, socketId, avatar })
+                    }
+                  >
+                    Join Room
+                  </Button>
+                ) : (
+                  <p>You have joined the room.</p>
+                )}
+                {usersInTheRoom.length == room.nbrOfPlayers && (
+                  <p className="p-2">The room is full</p>
+                )}
+                {username == room.createdBy && (
+                  <Button
+                    color="danger"
+                    variant="ghost"
+                    onClick={() => deleteRoom(room.id)}
+                  >
+                    Delete Room
+                  </Button>
+                )}
               </CardFooter>
             </Card>
-          )
+          );
         })
       )}
-      <Button color="primary" variant="ghost" onClick={() => window.history.back()}>
-        Go Back
-      </Button>
+      <br />
+      <GoBackBtn />
     </div>
   );
 };

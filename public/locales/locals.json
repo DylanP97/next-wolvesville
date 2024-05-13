@@ -28,7 +28,8 @@
       "menu.5": "Edit Profile",
       "connected.title": "Connected Players List",
       "connected.nousers": "There are no users connected currently",
-      "goback": "Go Back"
+      "goback": "Go Back",
+      "submit": "Submit"
     }
   },
   "fr": {
@@ -60,7 +61,8 @@
       "menu.5": "Modifier mon profil",
       "connected.title": "Liste des joueurs connectés",
       "connected.nousers": "Il n'y a pas de joueurs connectés",
-      "goback": "Revenir à la page précédente"
+      "goback": "Revenir à la page précédente",
+      "submit": "Soumettre"
     }
   }
 }

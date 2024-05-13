@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@nextui-org/react";
 import { useAuth } from "../providers/AuthProvider";
-import AvatarUI from "../profile/Profile/AvatarUI";
 import { useTranslation } from "react-i18next";
+import AvatarUI from "../profile/components/AvatarUI";
+import GoBackBtn from "../components/GoBackBtn";
 
 const ConnectedUsers = () => {
   const { t } = useTranslation();
@@ -46,14 +46,7 @@ const ConnectedUsers = () => {
         })
       )}
       <br />
-      <Button
-        className="mt-6"
-        color="secondary"
-        variant="ghost"
-        onClick={() => window.history.back()}
-      >
-        {t("goback")}
-      </Button>
+      <GoBackBtn />
     </div>
   );
 };

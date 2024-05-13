@@ -33,6 +33,7 @@ function LanguageToggle() {
       variant="ghost"
       aria-label={currentLanguage}
       onPress={toggleLanguage}
+      className="hover:text-white"
     >
       {currentLanguage === "en" ? "en" : "fr"}
     </Button>

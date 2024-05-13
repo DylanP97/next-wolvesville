@@ -1,6 +1,6 @@
 "use client"
 
-import Profile from "./Profile/Profile";
+import Profile from "./components/Profile";
 import Connexion from "../components/Connexion";
 import { useAuth } from "../providers/AuthProvider";
 import { redirect } from "next/navigation";

@@ -1,6 +1,6 @@
 "use client";
 
-import AvatarUI from "../profile/Profile/AvatarUI";
+import AvatarUI from "../profile/components/AvatarUI";
 import { useTranslation } from "react-i18next";
 
 const AuthInfo = ({ username, socketId, isInRoom, avatar }) => {

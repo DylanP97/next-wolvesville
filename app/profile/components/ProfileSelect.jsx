@@ -3,6 +3,7 @@
 import { Select, SelectItem } from "@nextui-org/react";
 
 const ProfileSelect = ({ label, options, currentValue, setAvState }) => {
+  
   const updateState = (option) => {
     return setAvState((prevAvatar) => {
       return {

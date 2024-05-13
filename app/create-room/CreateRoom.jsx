@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../providers/AuthProvider";
 import RoleCheckbox from "./RoleCheckbox";
 import TeamCounter from "./TeamCounter";
+import GoBackBtn from "../components/GoBackBtn";
 
 const CreateRoom = () => {
   const { username, socket, addRoom, socketId, avatar } = useAuth();
@@ -90,17 +91,14 @@ const CreateRoom = () => {
   const submitNewRoom = () => {
     if (selectedRoles.length < 2) {
       setCreationError("At least 2 players please.");
-      return
-    }
-    else if (selectedRoles.length > 16) {
+      return;
+    } else if (selectedRoles.length > 16) {
       setCreationError("16 players at most.");
-      return
-    }
-    else if (!roomName) {
+      return;
+    } else if (!roomName) {
       setCreationError("You have to give a name to your room.");
-      return
-    }
-    else {
+      return;
+    } else {
       const newRoom = {
         id: Date.now(),
         name: roomName,
@@ -178,9 +176,7 @@ const CreateRoom = () => {
         </>
       )}
       <br />
-      <Button className="mt-6" color="secondary" variant="ghost" onClick={() => window.history.back()}>
-        Go Back
-      </Button>
+      <GoBackBtn />
     </div>
   );
 };

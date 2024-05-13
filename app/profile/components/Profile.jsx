@@ -1,17 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import AvatarUI from "./AvatarUI";
-import ProfileSelect from "./ProfileSelect";
-import { Tabs, Tab } from "@nextui-org/react";
-import { headTab, clothesTab, bodyTab, eyesTab } from "./tabs";
-import { Button } from "@nextui-org/react";
 import { useAuth } from "../../providers/AuthProvider";
+import { useTranslation } from "react-i18next";
+import { Tabs, Tab } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
+import { headTab, clothesTab, bodyTab, eyesTab } from "./tabs";
+import ProfileSelect from "./ProfileSelect";
+import AvatarUI from "./AvatarUI";
+import GoBackBtn from "../../components/GoBackBtn";
 
 const Profile = ({ username, avatar, socketId }) => {
   const [avState, setAvState] = useState(avatar);
   const [response, setResponse] = useState("");
   const { setAuthInfo } = useAuth();
+  const { t } = useTranslation();
 
   const handleSubmit = async () => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -39,8 +42,8 @@ const Profile = ({ username, avatar, socketId }) => {
   };
 
   return (
-    <section className="w-screen h-screen p-5 flex flex-col justify-start items-center">
-      <div className="flex flex-col gap-3 m-4 mt-8">
+    <section className="bg-black w-full p-5 flex flex-col justify-start items-center">
+      <div className="flex flex-col gap-3 m-4">
         <h1 className="font-bold text-xl text-white">
           Edit Your Profile {username || "Guest"}
         </h1>
@@ -107,15 +110,14 @@ const Profile = ({ username, avatar, socketId }) => {
       </div>
 
       <div className="flex gap-2">
+        <GoBackBtn />
         <Button
-          color="secondary"
+          className="hover:text-white"
+          color="primary"
           variant="ghost"
-          onClick={() => window.history.back()}
+          onClick={handleSubmit}
         >
-          Go Back
-        </Button>
-        <Button color="primary" variant="ghost" onClick={handleSubmit}>
-          Submit
+          {t("submit")}
         </Button>
       </div>
       <p className="text-white text-sm mt-4">{response}</p>
