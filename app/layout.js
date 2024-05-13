@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${GeistSans.className} h-screen`}>
       <body>
         <Providers>
-          <div className="flex flex-col items-center h-screen">
+          <div className="flex flex-col items-center min-h-screen">
             <GeneralBtns />
             {children}
           </div>

@@ -1,12 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
+import { useGame } from "../providers/GameProvider";
 import VoteCount from "./GameGrid/VoteCount";
 import IconReveal from "./GameGrid/IconReveal";
 import PlayerAvatar from "./GameGrid/PlayerAvatar";
-import { useState } from "react";
 import Image from "next/image";
-import { useGame } from "../providers/GameProvider";
 
 const GameGrid = () => {
   const { socket } = useAuth();

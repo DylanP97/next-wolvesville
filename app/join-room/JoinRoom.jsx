@@ -51,8 +51,9 @@ const JoinRoom = () => {
                 {usersInTheRoom.length < room.nbrOfPlayers &&
                 !usersInTheRoom.some((usr) => usr.username === username) ? (
                   <Button
+                    className="w-full hover:text-white hover:scale-[105%]"
                     color="secondary"
-                    variant="ghost"
+                    variant="solid"
                     onClick={() =>
                       joinRoom(room.id, { username, socketId, avatar })
                     }

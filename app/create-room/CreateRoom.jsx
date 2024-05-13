@@ -119,14 +119,14 @@ const CreateRoom = () => {
         <h1 className="text-white">The room has been created...</h1>
       ) : (
         <>
-          <h1 className="text-white text-3xl font-bold">Create a new room</h1>
-          <div className="m-4 flex flex-col">
+          <h1 className="text-white text-3xl font-bold mb-2">Create a new room</h1>
+          <div className="flex flex-col">
             <Input
               color="secondary"
               isRequired
               type="text"
               label="Enter a room name :"
-              className="max-w-xs ws-60"
+              className="max-w-xs ws-60 bg-white rounded-xl"
               onChange={(e) => setRoomName(e.target.value)}
             />
             <Divider className="my-2" />
@@ -134,6 +134,7 @@ const CreateRoom = () => {
               <Button
                 color="secondary"
                 variant="shadow"
+                className="text-white w-60 transition-all hover:scale-[105%]"
                 onClick={() => submitNewRoom()}
               >
                 Create Room

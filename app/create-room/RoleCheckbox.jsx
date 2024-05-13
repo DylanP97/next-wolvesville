@@ -25,7 +25,7 @@ const RoleCheckbox = ({ role, onChange }) => {
         <Input
           color="secondary"
           type="number"
-          className="m-1"
+          className="m-1 bg-white rounded-xl"
           defaultValue={nbrOf}
           labelPlacement="outside"
           size="md"

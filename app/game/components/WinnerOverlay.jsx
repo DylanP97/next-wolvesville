@@ -3,7 +3,7 @@
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import { useAuth } from "../../providers/AuthProvider";
-import AvatarUI from "../../profile/Profile/AvatarUI";
+import AvatarUI from "../../profile/components/AvatarUI";
 import { useGame } from "../providers/GameProvider";
 
 const WinnerOverlay = () => {

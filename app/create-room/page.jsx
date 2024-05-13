@@ -11,7 +11,7 @@ export default function CreateRoomPage() {
   if (isConnected && isInRoom && isPlaying) return redirect("/game");
 
   return (
-    <div className="w-screen">
+    <div className="w-full">
       {isConnected ? (
         <CreateRoom />
       ) : (

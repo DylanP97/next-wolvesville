@@ -79,32 +79,30 @@ const Connexion = () => {
       </div>
       <form onSubmit={handleSubmit}>
         {!isLogin && (
-          <div>
+          <div className="w-[95%] m-2">
             <Input
               color="secondary"
               isRequired
               type="text"
               label={t("intro.un")}
               value={username}
-              className="max-w-xs p-2"
+              className="max-w-xs bg-white rounded-2xl"
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
         )}
-
-        <div>
+        <div className="w-[95%] m-2">
           <Input
             color="secondary"
             isRequired
             type="email"
             label={t("intro.em")}
             value={email}
-            className="max-w-xs p-2"
+            className="max-w-xs bg-white rounded-2xl"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-
-        <div>
+        <div className="w-[95%] m-2">
           <Input
             color="secondary"
             isRequired
@@ -112,7 +110,7 @@ const Connexion = () => {
             label={t("intro.pw")}
             value={password}
             autocomplete="current-password"
-            className="max-w-xs p-2"
+            className="max-w-xs bg-white rounded-2xl"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
@@ -121,7 +119,7 @@ const Connexion = () => {
           <Button
             variant="shadow"
             color="primary"
-            className="w-[95%] m-2"
+            className="w-[95%] mx-2 mb-2 hover:text-white"
             type="submit"
           >
             {isLogin ? t("intro.lo") : t("intro.si")}

@@ -42,14 +42,11 @@ const Profile = ({ username, avatar, socketId }) => {
   };
 
   return (
-    <section className="bg-black w-full p-5 flex flex-col justify-start items-center">
-      <div className="flex flex-col gap-3 m-4">
-        <h1 className="font-bold text-xl text-white">
-          Edit Your Profile {username || "Guest"}
-        </h1>
-        <div className={`bg-white rounded-3xl flex justify-center`}>
-          <AvatarUI avatar={avState} heightAndWidth={140} />
-        </div>
+    <section className="bg-black w-full px-5 flex flex-col justify-start items-center">
+      <div
+        className={`bg-white rounded-full flex justify-center my-4 overflow-hidden`}
+      >
+        <AvatarUI avatar={avState} heightAndWidth={140} />
       </div>
 
       <div className="flex w-full flex-col max-w-[400px]">
@@ -112,9 +109,9 @@ const Profile = ({ username, avatar, socketId }) => {
       <div className="flex gap-2">
         <GoBackBtn />
         <Button
-          className="hover:text-white"
+          className="text-black hover:text-primary"
           color="primary"
-          variant="ghost"
+          variant="faded"
           onClick={handleSubmit}
         >
           {t("submit")}
