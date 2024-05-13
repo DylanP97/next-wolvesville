@@ -9,8 +9,10 @@ import {
 } from "@nextui-org/react";
 import { useAuth } from "../providers/AuthProvider";
 import GoBackBtn from "../components/GoBackBtn";
+import { useTranslation } from "react-i18next";
 
 const JoinRoom = () => {
+  const { t } = useTranslation();
   const { rooms, username, socketId, avatar, socket, updateGameState } =
     useAuth();
 
@@ -25,10 +27,10 @@ const JoinRoom = () => {
 
   return (
     <div className="w-full bg-black p-4">
-      <h1 className="text-white text-3xl font-bold">Join a room</h1>
+      <h1 className="text-white text-3xl font-bold">{t("menu.1")}</h1>
       {rooms.length === 0 ? (
         <div className="m-4">
-          <p className="text-white">There are no rooms to join currently</p>
+          <p className="text-white">{t("join.noroom")}</p>
         </div>
       ) : (
         rooms.map((room) => {

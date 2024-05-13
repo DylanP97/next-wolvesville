@@ -8,7 +8,7 @@
       "home.3": "Ready to play",
       "home.status.1": "In Room:",
       "home.status.2": "Not in a room currently",
-      "intro.title": "Welcome to my own version of Wolvesville!",
+      "intro.title": "Welcome to my own version of Wolvesville",
       "intro.ref": "Check the original game here",
       "intro.un": "Username",
       "intro.em": "Email",
@@ -29,7 +29,8 @@
       "connected.title": "Connected Players List",
       "connected.nousers": "There are no users connected currently",
       "goback": "Go Back",
-      "submit": "Submit"
+      "submit": "Submit",
+      "join.noroom": "There are no rooms to join currently"
     }
   },
   "fr": {
@@ -41,7 +42,7 @@
       "home.3": "Prêt pour une partie",
       "home.status.1": "Dans la salle :",
       "home.status.2": "Actuellement dans aucune salle",
-      "intro.title": "Bienvenue dans ma version de Wolvesville !",
+      "intro.title": "Bienvenue dans ma version de Wolvesville",
       "intro.ref": "Cliquez ici pour voir le jeu officiel",
       "intro.un": "Pseudo",
       "intro.em": "Adresse email",
@@ -55,14 +56,15 @@
       "logout": "Déconnexion",
       "menu.title": "Menu principal",
       "menu.1": "Rejoindre une salle",
-      "menu.2": "Créer une salle",
+      "menu.2": "Creation de salle",
       "menu.3": "Joueurs connectés",
       "menu.4": "Voir les roles",
       "menu.5": "Modifier mon profil",
       "connected.title": "Liste des joueurs connectés",
       "connected.nousers": "Il n'y a pas de joueurs connectés",
       "goback": "Revenir à la page précédente",
-      "submit": "Soumettre"
+      "submit": "Soumettre",
+      "join.noroom": "Il n'y a aucune salle à rejoindre actuellement"
     }
   }
 }

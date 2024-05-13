@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'SevenMonsters';
+  src: url('../public/fonts/SevenMonstersDemoRegular.ttf') format('truetype');
+}
+
+h1 {
+  font-family: 'SevenMonsters', sans-serif;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -66,7 +66,7 @@ const Connexion = () => {
   return (
     <div className="absolute top-0 left-0 bg-black h-screen w-screen flex flex-col justify-center items-center">
       <div className="m-4">
-        <h1 className="text-white text-center text-xl text-bold mb-2">
+        <h1 className="text-white text-center text-3xl text-bold mb-2">
           {t("intro.title")}
         </h1>
         <a

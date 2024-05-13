@@ -6,8 +6,10 @@ import { useAuth } from "../providers/AuthProvider";
 import RoleCheckbox from "./RoleCheckbox";
 import TeamCounter from "./TeamCounter";
 import GoBackBtn from "../components/GoBackBtn";
+import { useTranslation } from "react-i18next";
 
 const CreateRoom = () => {
+  const { t } = useTranslation();
   const { username, socket, addRoom, socketId, avatar } = useAuth();
   const [availableRoles, setAvailableRoles] = useState([]);
   const [availableTeams, setAvailableTeams] = useState([]);
@@ -119,7 +121,7 @@ const CreateRoom = () => {
         <h1 className="text-white">The room has been created...</h1>
       ) : (
         <>
-          <h1 className="text-white text-3xl font-bold mb-2">Create a new room</h1>
+          <h1 className="text-white text-3xl font-bold mb-2">{t("menu.2")}</h1>
           <div className="flex flex-col">
             <Input
               color="secondary"
