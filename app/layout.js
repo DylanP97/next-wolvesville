@@ -1,8 +1,7 @@
 import "./globals.css";
 import { GeistSans } from "geist/font";
 import { Providers } from "./providers/providers";
-import GeneralBtns from "./components/GeneralBtns"
-import ClientOnly from "./components/ClientOnly"
+import GeneralBtns from "./components/GeneralBtns";
 
 export const metadata = {
   title: "Wolvesville",
@@ -19,13 +18,11 @@ export default function RootLayout({ children }) {
       <body>
         <Providers>
           <div className="flex flex-col items-center h-screen">
-          <ClientOnly>
             <GeneralBtns />
-          </ClientOnly>
-          {children}
+            {children}
           </div>
         </Providers>
       </body>
-    </html >
+    </html>
   );
 }
