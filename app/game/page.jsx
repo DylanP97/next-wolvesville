@@ -4,7 +4,7 @@ import Connexion from "../components/Connexion";
 import GameMain from "./components/GameMain";
 import { useAuth } from "../providers/AuthProvider";
 import { GameProvider } from "./providers/GameProvider";
-import { KeysProvider } from "./providers/KeysProvider";
+import { InGameKeysProvider } from "./providers/InGameKeysProvider";
 
 export default function GamePage() {
   const { isConnected } = useAuth();
@@ -13,9 +13,9 @@ export default function GamePage() {
     <>
       {isConnected ? (
         <GameProvider>
-          <KeysProvider>
+          <InGameKeysProvider>
             <GameMain />
-          </KeysProvider>
+          </InGameKeysProvider>
         </GameProvider>
       ) : (
         <Connexion />

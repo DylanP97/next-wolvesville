@@ -2,6 +2,7 @@
 
 import { Input, User } from "@nextui-org/react";
 import { useState } from "react";
+import { colorsForTeams } from "../lib/utils";
 
 const RoleCheckbox = ({ role, onChange }) => {
   const [nbrOf, setNbrOf] = useState(0);
@@ -11,12 +12,6 @@ const RoleCheckbox = ({ role, onChange }) => {
     const newValue = Number(event.target.value);
     setNbrOf(newValue);
     onChange(role.name, newValue); // Pass the role name and the new value to the parent component
-  };
-
-  const colorsForTeams = {
-    village: "primary",
-    werewolves: "secondary",
-    others: "success",
   };
 
   return (
@@ -38,10 +33,9 @@ const RoleCheckbox = ({ role, onChange }) => {
         avatarProps={{
           size: "md",
           src: role.image,
-          color: colorsForTeams[role.team],
           radius: "lg",
         }}
-        className="p-1"
+        className={`p-1 bg-[${colorsForTeams[role.team.join()]}]`}
         description={<p className="text-sm">@{role.team}</p>}
         name={<p className="text-sm text-gray-200">{role.name}</p>}
       />

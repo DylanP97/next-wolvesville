@@ -16,13 +16,12 @@ const NavigationMenu = () => {
 
   return (
     <nav className="flex flex-col items-center py-4 w-full z-20">
-      <h1 className="text-3xl font-bold my-6 text-white text-center">
-        {t("menu.title")}
-      </h1>
       {paths.map((p, index) => (
         <Link
           key={index + "navlink"}
-          className="w-52 z-20 p-2 m-2 rounded-xl bg-primary text-black text-sm text-center hover:text-black hover:bg-primary hover:text-white border-2 border-primary hover:animate-pulse hover:scale-[105%] transition-all	"
+          className={`w-60 z-20 p-2 my-2 rounded-xl bg-secondary text-white text-sm text-center hover:text-black hover:bg-primary hover:text-white ${
+            index < 2 ? "animate-pulse" : ""
+          } hover:scale-[105%] transition-all`}
           href={p.path}
           color="foreground"
         >

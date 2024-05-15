@@ -23,14 +23,18 @@ module.exports = {
       themes: {
         light: {
           colors: {
-            primary: "#FF4000",
-            secondary: "#FF4000",
+            primary: "#ff0055",
+            secondary: "#595959",
+            village: "#349eeb",
+            wolves: "#5c2b8c",
           },
         },
         dark: {
           colors: {
-            primary: "#FF4000",
-            secondary: "#FF4000",
+            primary: "#ff0055",
+            secondary: "#595959",
+            village: "#349eeb",
+            wolves: "#5c2b8c",
           },
         },
       },

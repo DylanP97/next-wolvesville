@@ -5,8 +5,10 @@ import MinimizeIcon from "./icons/MinimizeIcon";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { Button } from "@nextui-org/react";
+import { useKeys } from "../providers/KeysProvider";
 
 const FullScreenToggle = ({}) => {
+  const { currentKey, setCurrentKey } = useKeys();
   const { t } = useTranslation();
   const [fullScreen, setFullScreen] = useState(false);
 
@@ -22,6 +24,13 @@ const FullScreenToggle = ({}) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (currentKey === "F" || currentKey === "f") {
+      fullScreen ? exitFullscreen() : enterFullscreen();
+      setCurrentKey(null);
+    }
+  }, [currentKey]);
+
   async function enterFullscreen() {
     await document.documentElement.requestFullscreen();
     setFullScreen(true);
@@ -35,7 +44,7 @@ const FullScreenToggle = ({}) => {
   return (
     <Button
       isIconOnly
-      color="primary"
+      color="secondary"
       variant="ghost"
       className="icon-container"
       aria-label={fullScreen ? t("toggle.quit") : t("toggle.go")}

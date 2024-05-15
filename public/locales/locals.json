@@ -1,6 +1,7 @@
 {
   "en": {
     "translation": {
+      "game.title": "Werewolves game", 
       "questionmark": "?",
       "exclamation": "!",
       "home.1": "How is it going",
@@ -8,7 +9,7 @@
       "home.3": "Ready to play",
       "home.status.1": "In Room:",
       "home.status.2": "Not in a room currently",
-      "intro.title": "Welcome to my own version of Wolvesville",
+      "intro.title": "Welcome to my own version of werewolves game",
       "intro.ref": "Check the original game here",
       "intro.un": "Username",
       "intro.em": "Email",
@@ -35,6 +36,7 @@
   },
   "fr": {
     "translation": {
+      "game.title": "Jeu du Loup-garou", 
       "questionmark": " ?",
       "exclamation": " !",
       "home.1": "Comment ça va",
@@ -42,8 +44,8 @@
       "home.3": "Prêt pour une partie",
       "home.status.1": "Dans la salle :",
       "home.status.2": "Actuellement dans aucune salle",
-      "intro.title": "Bienvenue dans ma version de Wolvesville",
-      "intro.ref": "Cliquez ici pour voir le jeu officiel",
+      "intro.title": "Bienvenue dans ma version du jeu du loup-garou",
+      "intro.ref": "Cliquez ici pour voir le jeu officiel Wolvesville",
       "intro.un": "Pseudo",
       "intro.em": "Adresse email",
       "intro.pw": "Mot de passe",

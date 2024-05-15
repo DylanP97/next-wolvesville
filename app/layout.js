@@ -4,7 +4,8 @@ import { Providers } from "./providers/providers";
 import GeneralBtns from "./components/GeneralBtns";
 
 export const metadata = {
-  title: "Wolvesville",
+  title: "Werewolves",
+  // t("game.title")
   description:
     "Welcome to Wolvesville, an exhilarating journey back to the dark and mysterious town of Wolvesville. In this highly anticipated sequel, you'll find yourself immersed in a world of deceit, strategy, and hidden identities. This time, it's not just about survival; it's about rewriting the history of Wolvesville.",
   icons: {
@@ -12,14 +13,26 @@ export const metadata = {
   },
 };
 
+// // or Dynamic metadata
+// export async function generateMetadata({ params }) {
+//   return {
+//     title: '...',
+//   }
+// }
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${GeistSans.className} h-screen`}>
+    <html lang="en" className={`${GeistSans.className} `}>
       <body>
         <Providers>
-          <div className="flex flex-col items-center min-h-screen">
+          <div className="min-h-screen flex flex-col justify-between w-full">
             <GeneralBtns />
             {children}
+            <footer className="w-full">
+              <p className="p-4 text-sm text-white text-xs">
+                made by dylanp97
+              </p>
+            </footer>
           </div>
         </Providers>
       </body>

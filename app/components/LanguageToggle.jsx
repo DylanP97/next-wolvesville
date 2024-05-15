@@ -29,7 +29,7 @@ function LanguageToggle() {
   return (
     <Button
       isIconOnly
-      color="primary"
+      color="secondary"
       variant="ghost"
       aria-label={currentLanguage}
       onPress={toggleLanguage}

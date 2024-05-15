@@ -8,9 +8,9 @@ const GoBackBtn = () => {
 
   return (
     <Button
-      className="hover:animate-pulse hover:scale-[105%] transition-all hover:text-white"
+      className="hover:animate-pulse hover:scale-[105%] transition-all text-white"
       color="secondary"
-      variant="ghost"
+      variant="solid"
       onClick={() => window.history.back()}
     >
       {t("goback")}

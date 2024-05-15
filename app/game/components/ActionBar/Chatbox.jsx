@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import CmdSend from "./PlayingCommands/CmdSend";
 import { useGame } from "../../providers/GameProvider";
 import { useAuth } from "../../../providers/AuthProvider";
-import { useKeys } from "../../providers/KeysProvider";
+import { useInGameKeys } from "../../providers/InGameKeysProvider";
 
 const Chatbox = () => {
   const { socket, username } = useAuth();
   const { timeOfTheDay, gameId, clientPlayer, isWolf, isJailer } = useGame();
-  const { currentKey, setCurrentKey } = useKeys();
+  const { currentKey, setCurrentKey } = useInGameKeys();
   const [message, setMessage] = useState("");
 
   const isJailerChat =

@@ -13,7 +13,7 @@ const LogoutBtn = () => {
       {isConnected && (
         <Button
           variant="ghost"
-          color="primary"
+          color="secondary"
           className="hover:text-white"
           aria-label={t("logout")}
           onPress={() => document.location.assign("/")}

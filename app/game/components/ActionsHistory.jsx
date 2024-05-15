@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useGame } from "../providers/GameProvider";
 
 const ActionsHistory = () => {

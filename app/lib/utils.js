@@ -28,3 +28,9 @@ export const defaultAvatar = {
   top: ["shortRound"],
   topProbability: 100,
 }
+
+export const colorsForTeams = {
+  village: "#36c0c9",
+  werewolves: "#5207a3",
+  others: "success",
+};

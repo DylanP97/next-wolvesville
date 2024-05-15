@@ -64,14 +64,14 @@ const Connexion = () => {
   };
 
   return (
-    <div className="absolute top-0 left-0 bg-black h-screen w-screen flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center">
       <div className="m-4">
-        <h1 className="text-white text-center text-3xl text-bold mb-2">
+        <h1 className="text-white text-center text-3xl font-bold mb-2">
           {t("intro.title")}
         </h1>
         <a
           target="_blank"
-          className="text-white flex justify-center italic hover:underline pointer text-sm hover:text-primary"
+          className="text-white flex justify-center hover:underline pointer text-sm hover:text-primary"
           href="https://www.wolvesville.com"
         >
           {t("intro.ref")}
@@ -118,8 +118,8 @@ const Connexion = () => {
         <div>
           <Button
             variant="shadow"
-            color="primary"
-            className="w-[95%] mx-2 mb-2 hover:text-white"
+            color="secondary"
+            className="w-[95%] m-2 text-white hover:bg-primary animate-pulse"
             type="submit"
           >
             {isLogin ? t("intro.lo") : t("intro.si")}
@@ -127,15 +127,14 @@ const Connexion = () => {
         </div>
       </form>
 
-      <p className="text-white">
-        {isLogin ? t("intro.nry") : t("intro.ar")}
-        <span
-          onClick={handleSwitch}
-          className="hover:underline pointer text-primary"
-        >
-          {isLogin ? t("intro.si") : t("intro.lo")}
-        </span>
-      </p>
+      <span
+        onClick={handleSwitch}
+        className="hover:underline pointer text-white hover:text-primary"
+      >
+        {isLogin
+          ? `${t("intro.nry")} ${t("intro.si")}`
+          : `${t("intro.ar")} ${t("intro.lo")}`}
+      </span>
     </div>
   );
 };

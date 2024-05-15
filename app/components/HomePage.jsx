@@ -5,7 +5,7 @@ import AuthInfo from "./AuthInfo";
 
 const HomePage = ({ username, socketId, isInRoom, avatar }) => {
   return (
-    <div className="w-screen h-full p-4 object-contain overflow-hidden h-[90%]">
+    <div className="object-contain overflow-hidden">
       <AuthInfo
         username={username}
         socketId={socketId}

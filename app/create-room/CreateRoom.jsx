@@ -7,6 +7,7 @@ import RoleCheckbox from "./RoleCheckbox";
 import TeamCounter from "./TeamCounter";
 import GoBackBtn from "../components/GoBackBtn";
 import { useTranslation } from "react-i18next";
+import { colorsForTeams } from "../lib/utils";
 
 const CreateRoom = () => {
   const { t } = useTranslation();
@@ -18,12 +19,6 @@ const CreateRoom = () => {
   const [selectedRoles, setSelectedRoles] = useState([]);
   const [selectedRolesTeam, setSelectedRolesTeam] = useState([]);
   const [created, setCreated] = useState(false);
-
-  const colorsForTeams = {
-    village: "primary",
-    werewolves: "secondary",
-    others: "success",
-  };
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -152,10 +147,9 @@ const CreateRoom = () => {
                     avatarProps={{
                       size: "sm",
                       src: r.image,
-                      color: colorsForTeams[r.team],
                       radius: "lg",
                     }}
-                    className="p-1"
+                    className={`p-1 bg-[${colorsForTeams[r.team]}]`}
                   />
                 );
               })}
