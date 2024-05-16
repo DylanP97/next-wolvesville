@@ -4,7 +4,7 @@ import MaximizeIcon from "./icons/MaximizeIcon";
 import MinimizeIcon from "./icons/MinimizeIcon";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
-import { Button } from "@nextui-org/react";
+import { Button, Tooltip } from "@nextui-org/react";
 import { useKeys } from "../providers/KeysProvider";
 
 const FullScreenToggle = ({}) => {
@@ -42,16 +42,22 @@ const FullScreenToggle = ({}) => {
   }
 
   return (
-    <Button
-      isIconOnly
+    <Tooltip
+      content={fullScreen ? t("toggle.quit") : t("toggle.go")}
       color="secondary"
-      variant="ghost"
-      className="icon-container"
-      aria-label={fullScreen ? t("toggle.quit") : t("toggle.go")}
-      onPress={() => (fullScreen ? exitFullscreen() : enterFullscreen())}
+      variant="flat"
     >
-      {fullScreen ? <MinimizeIcon /> : <MaximizeIcon />}
-    </Button>
+      <Button
+        isIconOnly
+        color="secondary"
+        variant="ghost"
+        className="icon-container"
+        aria-label={fullScreen ? t("toggle.quit") : t("toggle.go")}
+        onPress={() => (fullScreen ? exitFullscreen() : enterFullscreen())}
+      >
+        {fullScreen ? <MinimizeIcon /> : <MaximizeIcon />}
+      </Button>
+    </Tooltip>
   );
 };
 

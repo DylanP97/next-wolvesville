@@ -1,7 +1,7 @@
 {
   "en": {
     "translation": {
-      "game.title": "Werewolves game", 
+      "game.title": "Werewolves game",
       "questionmark": "?",
       "exclamation": "!",
       "home.1": "How is it going",
@@ -31,12 +31,15 @@
       "connected.nousers": "There are no users connected currently",
       "goback": "Go Back",
       "submit": "Submit",
-      "join.noroom": "There are no rooms to join currently"
+      "join.noroom": "There are no rooms to join currently",
+      "change.language": "Change Language",
+      "coded.by": "coded by dylanp97",
+      "check.repo": "Check repositories"
     }
   },
   "fr": {
     "translation": {
-      "game.title": "Jeu du Loup-garou", 
+      "game.title": "Jeu du Loup-garou",
       "questionmark": " ?",
       "exclamation": " !",
       "home.1": "Comment ça va",
@@ -58,7 +61,7 @@
       "logout": "Déconnexion",
       "menu.title": "Menu principal",
       "menu.1": "Rejoindre une salle",
-      "menu.2": "Creation de salle",
+      "menu.2": "Création de salle",
       "menu.3": "Joueurs connectés",
       "menu.4": "Voir les roles",
       "menu.5": "Modifier mon profil",
@@ -66,7 +69,10 @@
       "connected.nousers": "Il n'y a pas de joueurs connectés",
       "goback": "Revenir à la page précédente",
       "submit": "Soumettre",
-      "join.noroom": "Il n'y a aucune salle à rejoindre actuellement"
+      "join.noroom": "Il n'y a aucune salle à rejoindre actuellement",
+      "change.language": "Changer de langue",
+      "coded.by": "codé par dylanp97",
+      "check.repo": "voir le code"
     }
   }
 }

@@ -2,6 +2,7 @@ import "./globals.css";
 import { GeistSans } from "geist/font";
 import { Providers } from "./providers/providers";
 import GeneralBtns from "./components/GeneralBtns";
+import Footer from "./components/Footer";
 
 export const metadata = {
   title: "Werewolves",
@@ -13,7 +14,6 @@ export const metadata = {
   },
 };
 
-// // or Dynamic metadata
 // export async function generateMetadata({ params }) {
 //   return {
 //     title: '...',
@@ -28,11 +28,7 @@ export default function RootLayout({ children }) {
           <div className="min-h-screen flex flex-col justify-between w-full">
             <GeneralBtns />
             {children}
-            <footer className="w-full">
-              <p className="p-4 text-sm text-white text-xs">
-                made by dylanp97
-              </p>
-            </footer>
+            <Footer />
           </div>
         </Providers>
       </body>

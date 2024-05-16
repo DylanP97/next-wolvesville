@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@nextui-org/react";
+import { Tooltip } from "@nextui-org/react";
 
 function LanguageToggle() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
 
   // const addAnimation = () => {
@@ -27,16 +28,18 @@ function LanguageToggle() {
   };
 
   return (
-    <Button
-      isIconOnly
-      color="secondary"
-      variant="ghost"
-      aria-label={currentLanguage}
-      onPress={toggleLanguage}
-      className="hover:text-white"
-    >
-      {currentLanguage === "en" ? "en" : "fr"}
-    </Button>
+    <Tooltip content={t("change.language")} color="secondary" variant="flat">
+      <Button
+        isIconOnly
+        color="secondary"
+        variant="ghost"
+        aria-label={currentLanguage}
+        onPress={toggleLanguage}
+        className="hover:text-white"
+      >
+        {currentLanguage === "en" ? "en" : "fr"}
+      </Button>
+    </Tooltip>
   );
 }
 
