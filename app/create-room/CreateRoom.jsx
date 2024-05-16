@@ -23,6 +23,13 @@ const CreateRoom = () => {
 
   const [creationStep, setCreationStep] = useState(1);
 
+  const steps = {
+    1: "Enter a room name",
+    2: "Choose game roles",
+    3: "Enter number of CPU players",
+    4: `Summary of room: ${roomName}`,
+  };
+
   useEffect(() => {
     const fetchTeams = async () => {
       try {
@@ -94,12 +101,12 @@ const CreateRoom = () => {
     } else if (selectedRoles.length > 16) {
       setCreationError("16 players at most.");
       return;
-    } else if (selectedRoles.length > 16) {
-      setCreationError("16 players at most.");
-      return;
-    } else if (selectedRoles.length > 16) {
-      setCreationError("16 players at most.");
-      return;
+    // } else if (selectedRoles.length > 16) {
+    //   setCreationError("16 players at most.");
+    //   return;
+    // } else if (selectedRoles.length > 16) {
+    //   setCreationError("16 players at most.");
+    //   return;
     } else if (!roomName) {
       setCreationError("You have to give a name to your room.");
       return;
@@ -132,7 +139,7 @@ const CreateRoom = () => {
         className="max-w-xs ws-60 bg-white rounded-xl"
         isRequired
         type="text"
-        label="Enter a room name:"
+        label="Room name:"
         onChange={(e) => setRoomName(e.target.value)}
       />
     );
@@ -141,6 +148,11 @@ const CreateRoom = () => {
   const stepTwo = () => {
     return (
       <>
+        <div className="flex gap-3 items-center">
+          {selectedRolesTeam.map((t, i) => {
+            return <TeamCounter team={t} key={t.name + i + "-tc"} />;
+          })}
+        </div>
         <div className="flex flex-row items-center my-2">
           {selectedRoles.map((r, i) => {
             return (
@@ -184,16 +196,38 @@ const CreateRoom = () => {
           max={selectedRoles.length - 1}
           onChange={handleNbrCPUPlayers}
         />
-        <Button
-          color="secondary"
-          variant="shadow"
-          className="animate-pulse hover:bg-primary text-white w-60 transition-all hover:scale-[105%]"
-          onClick={() => submitNewRoom()}
-        >
-          Create Room
-        </Button>
-        <p className="text-white text-sm">{creationError}</p>
       </div>
+    );
+  };
+
+  const stepFour = () => {
+    return (
+      <>
+        <div className="flex flex-row items-center my-2">
+          {selectedRoles.map((r, i) => {
+            return (
+              <User
+                key={r.name + i + "-uc"}
+                avatarProps={{
+                  size: "sm",
+                  src: r.image,
+                  radius: "lg",
+                }}
+                className={`p-1 bg-[${colorsForTeams[r.team]}]`}
+              />
+            );
+          })}
+        </div>
+        <p className="text-sm text-gray-200 my-2">
+          {selectedRoles.length} total players
+        </p>
+        <p className="text-sm text-gray-200">
+          *including {selectedRoles.length - nbrCPUPlayers} user-controlled players
+        </p>
+        <p className="text-sm text-gray-200">
+          *including {nbrCPUPlayers} CPU-controlled players
+        </p>
+      </>
     );
   };
 
@@ -201,6 +235,7 @@ const CreateRoom = () => {
     if (creationStep === 1) return stepOne();
     if (creationStep === 2) return stepTwo();
     if (creationStep === 3) return stepThree();
+    if (creationStep === 4) return stepFour();
   };
 
   const toPreviousStep = () => {
@@ -210,7 +245,7 @@ const CreateRoom = () => {
   };
 
   const toNextStep = () => {
-    if (creationStep < 3) {
+    if (creationStep < 4) {
       setCreationStep(creationStep + 1);
     }
   };
@@ -222,6 +257,9 @@ const CreateRoom = () => {
       ) : (
         <>
           <h1 className="text-white text-3xl font-bold mb-2">{t("menu.2")}</h1>
+          <h2 className="text-white font-bold mb-2">
+            {creationStep}. {steps[creationStep]}
+          </h2>
           <div className="flex flex-col">
             {generateStep()}
             <div className="flex flex-row gap-2 mt-4">
@@ -235,7 +273,7 @@ const CreateRoom = () => {
                   Previous Step
                 </Button>
               )}
-              {creationStep < 3 && (
+              {creationStep < 4 && (
                 <Button
                   className="hover:scale-[105%] transition-all text-white"
                   color="secondary"
@@ -245,26 +283,24 @@ const CreateRoom = () => {
                   Next Step
                 </Button>
               )}
+              {creationStep === 4 && (
+                <>
+                  <Button
+                    color="secondary"
+                    variant="shadow"
+                    className="animate-pulse hover:bg-primary text-white w-60 transition-all hover:scale-[105%]"
+                    onClick={() => submitNewRoom()}
+                  >
+                    Create Room
+                  </Button>
+                  <p className="text-white text-sm">{creationError}</p>
+                </>
+              )}
             </div>
-            {/* <p className="text-xs text-gray-200">
-                {selectedRoles.length} total players
-              </p>
-              <p className="text-xs text-gray-200">
-                *including {selectedRoles.length - nbrCPUPlayers} User players
-              </p>
-              <p className="text-xs text-gray-200">
-                *including {nbrCPUPlayers} CPU players
-              </p> */}
           </div>
-          {/* <div className="flex gap-3 items-center">
-              {selectedRolesTeam.map((t, i) => {
-                return <TeamCounter team={t} key={t.name + i + "-tc"} />;
-              })}
-            </div> */}
         </>
       )}
       <Divider className="my-2" />
-      <br />
       <GoBackBtn />
     </div>
   );

@@ -14,7 +14,6 @@ export const KeysProvider = ({ children }) => {
     };
 
     const handleBlur = () => {
-        console.log("hello")
       setOnInput(false);
     };
 

@@ -37,13 +37,11 @@ const JoinRoom = () => {
           let usersInTheRoom = room.usersInTheRoom;
           return (
             <Card key={room.id} className="m-4">
-              <CardHeader>
-                <p>id: {room.id}</p>
-              </CardHeader>
               <CardBody>
+                <p>id: {room.id}</p>
                 <p>name: {room.name}</p>
                 <p>creator: {room.createdBy}</p>
-                <p>nbr of players: {room.nbrOfPlayers}</p>
+                <p>{room.nbrOfPlayers} players including {room.nbrCPUPlayers} CPU</p>
                 <p>currently in the room :</p>
                 {usersInTheRoom.map((userInRoom, index) => (
                   <p key={"uitr" + index}>{userInRoom.username}</p>
