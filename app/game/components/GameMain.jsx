@@ -21,7 +21,7 @@ const GameMain = () => {
   return (
     <section
       className={`${weather[timeOfTheDay]} 
-      h-screen w-screen absolute top-0 left-0 relative outline-none`}
+      absolute top-0 left-0 relative outline-none`}
     >
       <Background />
       <GameHeader />

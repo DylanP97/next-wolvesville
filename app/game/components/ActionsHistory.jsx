@@ -1,6 +1,10 @@
 "use client";
 
 import { useGame } from "../providers/GameProvider";
+import Image from "next/image";
+import daytime from "../../../public/game/day-time.png";
+import votetime from "../../../public/game/vote-time.png";
+import nighttime from "../../../public/game/night-time.png";
 
 const ActionsHistory = () => {
   const {
@@ -14,6 +18,12 @@ const ActionsHistory = () => {
     hasHandcuffed,
   } = useGame();
 
+  const timeOfDayImages = {
+    nighttime,
+    votetime,
+    daytime,
+  };
+
   class Chat {
     constructor(label, history, emoji) {
       (this.label = label), (this.history = history), (this.emoji = emoji);
@@ -25,14 +35,14 @@ const ActionsHistory = () => {
   const jail = new Chat("Jail", jailChat, "👮‍♂️");
 
   const usedChat =
-    (isUnderArrest || (isJailer && timeOfTheDay == "nighttime" && hasHandcuffed))
+    isUnderArrest || (isJailer && timeOfTheDay == "nighttime" && hasHandcuffed)
       ? jail
       : timeOfTheDay == "nighttime" && isWolf
       ? wolves
       : general;
 
   return (
-    <div className="w-full z-10 bg-gray-800 p-2">
+    <div className="w-full z-10 bg-gray-800 p-2 relative overflow-hidden">
       <h2 className="text-white">
         {usedChat.label} Chat {usedChat.emoji}
       </h2>
@@ -61,6 +71,15 @@ const ActionsHistory = () => {
           })}
         </ul>
       </div>
+      <Image
+        src={timeOfDayImages[timeOfTheDay]}
+        alt="bg-time"
+        width={130}
+        height={130}
+        priority
+        style={{ height: "auto", width: "auto" }}
+        className="m-2 absolute bottom-[0px] right-[-60px] opacity-30 z-0"
+      />
     </div>
   );
 };

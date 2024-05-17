@@ -9,13 +9,11 @@ export const InGameKeysProvider = ({ children }) => {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      console.log("I see that you pressed Enter!");
       setCurrentKey("Enter");
     } else if (event.key === "1") {
       // Handle 1 key press
     } else {
       // Handle other key presses
-      console.log("I see that you pressed something!");
     }
   };
 

@@ -32,17 +32,17 @@ const Background = () => {
       />
     );
 
-  return (
-    <Image
-      src={timeOfDayImages[timeOfTheDay]}
-      alt="bg-time"
-      width={500}
-      height={500}
-      priority
-      style={{ height: "auto", width: "auto" }}
-      className="absolute top-44 right-80 opacity-20 z-0"
-    />
-  );
+  // return (
+  //   <Image
+  //     src={timeOfDayImages[timeOfTheDay]}
+  //     alt="bg-time"
+  //     width={200}
+  //     height={200}
+  //     priority
+  //     style={{ height: "auto", width: "auto" }}
+  //     className="absolute top-44 right-80 opacity-20 z-0 overflow-clip	"
+  //   />
+  // );
 };
 
 export default Background;

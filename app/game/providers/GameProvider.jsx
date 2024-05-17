@@ -31,7 +31,6 @@ export const GameProvider = ({ children }) => {
   const hasHandcuffed = clientPlayer.hasHandcuffed;
 
   if (!winningTeam) {
-    console.log("no winningTeam");
     socket.emit("checkForWinner", game.id);
   }
 

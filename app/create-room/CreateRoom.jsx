@@ -101,12 +101,12 @@ const CreateRoom = () => {
     } else if (selectedRoles.length > 16) {
       setCreationError("16 players at most.");
       return;
-    // } else if (selectedRoles.length > 16) {
-    //   setCreationError("16 players at most.");
-    //   return;
-    // } else if (selectedRoles.length > 16) {
-    //   setCreationError("16 players at most.");
-    //   return;
+      // } else if (selectedRoles.length > 16) {
+      //   setCreationError("16 players at most.");
+      //   return;
+      // } else if (selectedRoles.length > 16) {
+      //   setCreationError("16 players at most.");
+      //   return;
     } else if (!roomName) {
       setCreationError("You have to give a name to your room.");
       return;
@@ -183,6 +183,9 @@ const CreateRoom = () => {
   };
 
   const stepThree = () => {
+    const CPUPlayersMax = selectedRoles.length - 1;
+    console.log(CPUPlayersMax);
+
     return (
       <div className="flex flex-col gap-4">
         <Input
@@ -193,7 +196,7 @@ const CreateRoom = () => {
           label="Number of CPU Players:"
           defaultValue={0}
           min={0}
-          max={selectedRoles.length - 1}
+          max={CPUPlayersMax}
           onChange={handleNbrCPUPlayers}
         />
       </div>
@@ -222,7 +225,8 @@ const CreateRoom = () => {
           {selectedRoles.length} total players
         </p>
         <p className="text-sm text-gray-200">
-          *including {selectedRoles.length - nbrCPUPlayers} user-controlled players
+          *including {selectedRoles.length - nbrCPUPlayers} user-controlled
+          players
         </p>
         <p className="text-sm text-gray-200">
           *including {nbrCPUPlayers} CPU-controlled players
@@ -275,7 +279,7 @@ const CreateRoom = () => {
               )}
               {creationStep < 4 && (
                 <Button
-                  className="hover:scale-[105%] transition-all text-white"
+                  className="hover:scale-[105%] transition-all bg-primary text-white"
                   color="secondary"
                   variant="solid"
                   onClick={() => toNextStep()}
@@ -288,7 +292,7 @@ const CreateRoom = () => {
                   <Button
                     color="secondary"
                     variant="shadow"
-                    className="animate-pulse hover:bg-primary text-white w-60 transition-all hover:scale-[105%]"
+                    className="animate-pulse bg-primary text-white w-60 transition-all hover:scale-[105%]"
                     onClick={() => submitNewRoom()}
                   >
                     Create Room
