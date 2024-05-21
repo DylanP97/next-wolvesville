@@ -8,28 +8,29 @@ export const KeysProvider = ({ children }) => {
   const [currentKey, setCurrentKey] = useState(null);
   const [onInput, setOnInput] = useState(false);
 
+  console.log(onInput);
+
   useEffect(() => {
-    const handleInput = () => {
-      setOnInput(true);
+    const handleFocus = (event) => {
+      if (event.target.tagName === "INPUT") {
+        setOnInput(true);
+      }
     };
 
-    const handleBlur = () => {
-      setOnInput(false);
+    const handleBlur = (event) => {
+      if (event.target.tagName === "INPUT") {
+        setOnInput(false);
+      }
     };
 
-    const inputsField = document.querySelectorAll("input");
-
-    inputsField.forEach((input) => {
-      input.addEventListener("input", handleInput);
-      input.addEventListener("blur", handleBlur);
-    });
+    // Attach event listeners to the document
+    document.addEventListener("focusin", handleFocus);
+    document.addEventListener("focusout", handleBlur);
 
     return () => {
       // Clean up event listeners
-      inputsField.forEach((input) => {
-        input.removeEventListener("input", handleInput);
-        input.removeEventListener("blur", handleBlur);
-      });
+      document.removeEventListener("focusin", handleFocus);
+      document.removeEventListener("focusout", handleBlur);
     };
   }, []);
 
