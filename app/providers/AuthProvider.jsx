@@ -62,7 +62,11 @@ export const AuthProvider = ({ children }) => {
           if (player.isCPU) {
             let newSocket = io(process.env.NEXT_PUBLIC_API_URL);
             newSocket.on("connect", () => {
-              let cpuUser = { ...player, socketId: newSocket.id };
+              let cpuUser = {
+                ...player,
+                socketId: newSocket.id,
+                socket: newSocket,
+              };
               newSocket.emit("sendNewConnectedUser", cpuUser);
             });
           }
@@ -72,13 +76,14 @@ export const AuthProvider = ({ children }) => {
       });
 
       socket.on("updateGame", (updatedGame) => {
-        updateGame.playersList.map((player) => {
+        updatedGame.playersList.map((player) => {
           if (player.isCPU) {
             cpuLogic(
               player.id,
               player.name,
               player.role.name,
-              updatedGame.timeOfTheDay
+              updatedGame.timeOfTheDay,
+              player.socket
             );
           }
         });

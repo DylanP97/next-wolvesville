@@ -7,6 +7,7 @@ import VoteCount from "./GameGrid/VoteCount";
 import IconReveal from "./GameGrid/IconReveal";
 import PlayerAvatar from "./GameGrid/PlayerAvatar";
 import Image from "next/image";
+import PlayerGridCard from "./GameGrid/PlayerGridCard";
 
 const GameGrid = () => {
   const { socket } = useAuth();
@@ -170,73 +171,17 @@ const GameGrid = () => {
   };
 
   return (
-    <div className={`flex flex-row place-items-center p-1 w-full xl:w-[80%]`}>
+    <div className={`flex flex-row place-items-center w-full xl:w-[80%]`}>
       {playersList.map((player) => {
         const isAlsoWolf = player.role.team.includes("werewolves");
 
         return (
-          <div
-            key={"plycard-" + player.id}
-            onClick={() => handlePlayerClick(player)}
-            className={`${
-              player.isAlive
-                ? clientPlayer.id !== player.id
-                  ? (isSelection ||
-                      (isDoubleSelection &&
-                        player.id !==
-                          (selectedPlayer1 && selectedPlayer1.id))) &&
-                    !isBlocked &&
-                    ((isWolf && !isAlsoWolf) || !isWolf)
-                    ? "bg-red-800 cursor-pointer animate-pulse"
-                    : "bg-slate-800"
-                  : "bg-slate-500"
-                : "bg-black"
-            } outline outline-2 outline-white w-full md:w-40 h-full md:h-full flex flex-col justify-center items-center relative p-2`}
-          >
-            {timeOfTheDay == "votetime" && (
-              <VoteCount voteNbr={player.voteAgainst} />
-            )}
-
-            {timeOfTheDay == "nighttime" &&
-              isWolf &&
-              !clientPlayer.isUnderArrest && (
-                <VoteCount voteNbr={player.wolfVoteAgainst} />
-              )}
-
-            {((clientPlayer.role.name == "Cupid" && player.isInLove) ||
-              (clientPlayer.isInLove && player.isInLove)) && (
-              <div className="absolute bottom-0 left-0 m-2 h-6 aspect-square flex justify-center items-center animate-pulse">
-                <Image
-                  src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706531451/selection/resuscitation_tqyfkl.png"
-                  alt="lover"
-                  width={60}
-                  height={60}
-                />
-              </div>
-            )}
-
-            {(player.isRevealed ||
-              player.id == clientPlayer.id ||
-              (isAlsoWolf && isWolf)) && (
-              <IconReveal roleIcon={player.role.image} />
-            )}
-
-            <PlayerAvatar
-              isAlive={player.isAlive}
-              isUnderArrest={player.isUnderArrest}
-              avatar={player.avatar}
-            />
-
-            <p
-              className={`${
-                isSelection && player.id !== clientPlayer.id
-                  ? "text-black"
-                  : "text-white"
-              } text-xs mt-2`}
-            >
-              {player.name}
-            </p>
-          </div>
+          <PlayerGridCard
+            player={player}
+            selectedPlayer1={selectedPlayer1}
+            isAlsoWolf={isAlsoWolf}
+            handlePlayerClick={handlePlayerClick}
+          />
         );
       })}
     </div>

@@ -5,7 +5,7 @@ import PlayingCommands from "./ActionBar/PlayingCommands";
 
 const ActionBar = () => {
   return (
-    <div className="flex flex-row w-full border b-2 border-red-500">
+    <div className="flex flex-row w-full">
       <Chatbox />
       <PlayingCommands />
     </div>

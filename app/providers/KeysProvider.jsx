@@ -8,8 +8,6 @@ export const KeysProvider = ({ children }) => {
   const [currentKey, setCurrentKey] = useState(null);
   const [onInput, setOnInput] = useState(false);
 
-  console.log(onInput);
-
   useEffect(() => {
     const handleFocus = (event) => {
       if (event.target.tagName === "INPUT") {
