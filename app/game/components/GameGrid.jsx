@@ -3,10 +3,6 @@
 import { useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
 import { useGame } from "../providers/GameProvider";
-import VoteCount from "./GameGrid/VoteCount";
-import IconReveal from "./GameGrid/IconReveal";
-import PlayerAvatar from "./GameGrid/PlayerAvatar";
-import Image from "next/image";
 import PlayerGridCard from "./GameGrid/PlayerGridCard";
 
 const GameGrid = () => {
@@ -17,7 +13,6 @@ const GameGrid = () => {
     timeOfTheDay,
     gameId,
     clientPlayer,
-    isWolf,
     isJailer,
     isSelection,
     setIsSelection,
@@ -177,6 +172,7 @@ const GameGrid = () => {
 
         return (
           <PlayerGridCard
+            key={"plycard-" + player.id}
             player={player}
             selectedPlayer1={selectedPlayer1}
             isAlsoWolf={isAlsoWolf}

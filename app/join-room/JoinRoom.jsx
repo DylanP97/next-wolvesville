@@ -6,6 +6,7 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
+  Divider,
 } from "@nextui-org/react";
 import { useAuth } from "../providers/AuthProvider";
 import GoBackBtn from "../components/GoBackBtn";
@@ -41,28 +42,29 @@ const JoinRoom = () => {
                 <p>id: {room.id}</p>
                 <p>name: {room.name}</p>
                 <p>creator: {room.createdBy}</p>
-                <p>{room.nbrOfPlayers} players including {room.nbrCPUPlayers} CPU</p>
+                <p>
+                  {room.nbrOfPlayers} players including {room.nbrCPUPlayers} CPU
+                </p>
                 <p>currently in the room :</p>
                 {usersInTheRoom.map((userInRoom, index) => (
                   <p key={"uitr" + index}>{userInRoom.username}</p>
                 ))}
               </CardBody>
-              <CardFooter>
+              <Divider className="my-2" />
+              <CardFooter className="flex flex-col items-start">
                 {usersInTheRoom.length < room.nbrOfPlayers &&
-                !usersInTheRoom.some((usr) => usr.username === username) ? (
-                  <Button
-                    className="w-full hover:text-white hover:scale-[105%]"
-                    color="secondary"
-                    variant="solid"
-                    onClick={() =>
-                      joinRoom(room.id, { username, socketId, avatar })
-                    }
-                  >
-                    Join Room
-                  </Button>
-                ) : (
-                  <p>You have joined the room.</p>
-                )}
+                  !usersInTheRoom.some((usr) => usr.username === username) && (
+                    <Button
+                      className="w-full hover:text-white hover:scale-[105%]"
+                      color="secondary"
+                      variant="solid"
+                      onClick={() =>
+                        joinRoom(room.id, { username, socketId, avatar })
+                      }
+                    >
+                      Join Room
+                    </Button>
+                  )}
                 {usersInTheRoom.length == room.nbrOfPlayers && (
                   <p className="p-2">The room is full</p>
                 )}

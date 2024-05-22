@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
+import cpuNextMove from "../../lib/cpuNextMove";
 
 const GameContext = createContext();
 
@@ -40,6 +41,29 @@ export const GameProvider = ({ children }) => {
     setIsBlocked(false);
     setActionType("");
   }, [timeOfTheDay]);
+
+  useEffect(() => {
+    console.log(timeCounter);
+
+    if (timeCounter == 4000) {
+      playersList.map((player) => {
+        if (player.isCPU) {
+          console.log(player.name);
+          
+          cpuNextMove(
+            player.id,
+            player.name,
+            player.role,
+            dayCount,
+            timeOfTheDay,
+            playersList,
+            socket,
+            gameId
+          );
+        }
+      });
+    }
+  }, [timeCounter]);
 
   return (
     <GameContext.Provider

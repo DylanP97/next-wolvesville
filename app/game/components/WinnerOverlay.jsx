@@ -49,7 +49,16 @@ const WinnerOverlay = () => {
                       className="p-2 absolute top-[-15%] left-[55%] "
                     />
                     <div className="p-2 bg-blue-500 rounded-full ">
-                      <AvatarUI avatar={ply.avatar} heightAndWidth={80} />
+                      {ply.avatar ? (
+                        <AvatarUI heightAndWidth={80} avatar={ply.avatar} />
+                      ) : (
+                        <Image
+                          src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1715954141/robot-game_ncwkv7.png"
+                          height={80}
+                          width={80}
+                          alt="cpu-player-avatar"
+                        />
+                      )}
                     </div>
                   </div>
                   <p className="m-2 text-gray-200 text-sm text-clip italic">

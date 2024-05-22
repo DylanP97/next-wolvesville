@@ -184,7 +184,6 @@ const CreateRoom = () => {
 
   const stepThree = () => {
     const CPUPlayersMax = selectedRoles.length - 1;
-    console.log(CPUPlayersMax);
 
     return (
       <div className="flex flex-col gap-4">

@@ -2,7 +2,8 @@
 
 import io from "socket.io-client";
 import { createContext, useContext, useState, useEffect } from "react";
-import cpuLogic from "../lib/cpuLogic";
+import cpuNextMove from "../lib/cpuNextMove";
+import { useGame } from "../game/providers/GameProvider";
 
 const AuthContext = createContext();
 
@@ -60,15 +61,8 @@ export const AuthProvider = ({ children }) => {
       socket.on("launchRoom", (game) => {
         game.playersList.map((player) => {
           if (player.isCPU) {
-            let newSocket = io(process.env.NEXT_PUBLIC_API_URL);
-            newSocket.on("connect", () => {
-              let cpuUser = {
-                ...player,
-                socketId: newSocket.id,
-                socket: newSocket,
-              };
-              newSocket.emit("sendNewConnectedUser", cpuUser);
-            });
+            console.log("hello");
+            socket.emit("sendNewConnectedUser", player);
           }
         });
         setGame(game);
@@ -76,18 +70,6 @@ export const AuthProvider = ({ children }) => {
       });
 
       socket.on("updateGame", (updatedGame) => {
-        updatedGame.playersList.map((player) => {
-          if (player.isCPU) {
-            cpuLogic(
-              player.id,
-              player.name,
-              player.role.name,
-              updatedGame.timeOfTheDay,
-              player.socket
-            );
-          }
-        });
-
         setGame(updatedGame);
       });
 
