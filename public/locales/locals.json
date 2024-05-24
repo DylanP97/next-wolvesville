@@ -34,7 +34,24 @@
       "join.noroom": "There are no rooms to join currently",
       "change.language": "Change Language",
       "coded.by": "coded by dylanp97",
-      "check.repo": "Check repositories"
+      "check.repo": "Check repositories",
+      "profile.head": "Head",
+      "profile.clothes": "Clothes",
+      "profile.body": "Body",
+      "profile.eyes": "Eyes",
+      "profile.accessories": "Accessories",
+      "profile.accessoriesColor": "Accessories color",
+      "profile.top": "Top",
+      "profile.hatColor": "Hat color",
+      "profile.hairColor": "Hair color",
+      "profile.clothing": "Clothing",
+      "profile.clothesColor": "Clothes color",
+      "profile.clothingGraphic": "Clothing graphic",
+      "profile.facialHair": "Facial hair",
+      "profile.facialHairColor": "Facial hair color",
+      "profile.mouth": "Mouth",
+      "profile.skinColor": "Skin color",
+      "profile.eyebrows": "Eyebrows"
     }
   },
   "fr": {
@@ -72,7 +89,24 @@
       "join.noroom": "Il n'y a aucune salle à rejoindre actuellement",
       "change.language": "Changer de langue",
       "coded.by": "codé par dylanp97",
-      "check.repo": "voir le code"
+      "check.repo": "voir le code",
+      "profile.head": "Tête",
+      "profile.clothes": "Vêtements",
+      "profile.body": "Corps",
+      "profile.eyes": "Yeux",
+      "profile.accessories": "Accessoires",
+      "profile.accessoriesColor": "Couleur d'accessoires",
+      "profile.top": "Coiffure / Chapeau",
+      "profile.hatColor": "Couleur du chapeau",
+      "profile.hairColor": "Couleur de cheveux",
+      "profile.clothing": "Vêtement",
+      "profile.clothesColor": "Couleur du vêtement",
+      "profile.clothingGraphic": "Symbole sur le vêtement",
+      "profile.facialHair": "Barbe",
+      "profile.facialHairColor": "Couleur de la barbe",
+      "profile.mouth": "Bouche",
+      "profile.skinColor": "Couleur de peau",
+      "profile.eyebrows": "Sourcils"
     }
   }
 }

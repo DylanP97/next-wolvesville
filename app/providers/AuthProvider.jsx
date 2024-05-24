@@ -70,6 +70,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       socket.on("updateGame", (updatedGame) => {
+        console.log(updatedGame.playersList);
         setGame(updatedGame);
       });
 

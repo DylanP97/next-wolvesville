@@ -3,12 +3,11 @@
 import { useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
 import { useTranslation } from "react-i18next";
-import { Tabs, Tab } from "@nextui-org/react";
-import { Button } from "@nextui-org/react";
-import { headTab, clothesTab, bodyTab, eyesTab } from "./tabs";
-import ProfileSelect from "./ProfileSelect";
+import { Button, Tab, Tabs } from "@nextui-org/react";
 import AvatarUI from "./AvatarUI";
 import GoBackBtn from "../../components/GoBackBtn";
+import { tabs } from "./tabsDefinitions";
+import ProfileSelect from "./ProfileSelect";
 
 const Profile = ({ username, avatar, socketId }) => {
   const [avState, setAvState] = useState(avatar);
@@ -51,58 +50,23 @@ const Profile = ({ username, avatar, socketId }) => {
 
       <div className="flex w-full flex-col max-w-[400px]">
         <Tabs aria-label="Options" className="justify-center">
-          <Tab title={headTab.title + " " + headTab.emoji}>
-            {headTab.attributes.map((a, i) => {
-              return (
-                <ProfileSelect
-                  key={a.label + i + "-ps"}
-                  label={a.label}
-                  options={a.options}
-                  currentValue={avState[a.label]}
-                  setAvState={setAvState}
-                />
-              );
-            })}
-          </Tab>
-          <Tab title={clothesTab.title + " " + clothesTab.emoji}>
-            {clothesTab.attributes.map((a, i) => {
-              return (
-                <ProfileSelect
-                  key={a.label + i + "-ps"}
-                  label={a.label}
-                  options={a.options}
-                  currentValue={avState[a.label]}
-                  setAvState={setAvState}
-                />
-              );
-            })}
-          </Tab>
-          <Tab title={bodyTab.title + " " + bodyTab.emoji}>
-            {bodyTab.attributes.map((a, i) => {
-              return (
-                <ProfileSelect
-                  key={a.label + i + "-ps"}
-                  label={a.label}
-                  options={a.options}
-                  currentValue={avState[a.label]}
-                  setAvState={setAvState}
-                />
-              );
-            })}
-          </Tab>
-          <Tab title={eyesTab.title + " " + eyesTab.emoji}>
-            {eyesTab.attributes.map((a, i) => {
-              return (
-                <ProfileSelect
-                  key={a.label + i + "-ps"}
-                  label={a.label}
-                  options={a.options}
-                  currentValue={avState[a.label]}
-                  setAvState={setAvState}
-                />
-              );
-            })}
-          </Tab>
+          {tabs.map((tab) => {
+            return (
+              <Tab key={tab.title} title={tab.title + " " + tab.emoji}>
+                {tab.attributes.map((a, i) => {
+                  return (
+                    <ProfileSelect
+                      key={a.label + i + "-ps"}
+                      label={a.label}
+                      options={a.options}
+                      currentValue={avState[a.label]}
+                      setAvState={setAvState}
+                    />
+                  );
+                })}
+              </Tab>
+            );
+          })}
         </Tabs>
       </div>
 
