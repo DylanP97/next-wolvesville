@@ -11,12 +11,12 @@ export default function JoinRoomPage() {
   if (isConnected && isInRoom && isPlaying) return redirect("/game");
 
   return (
-    <div>
+    <>
       {isConnected ? (
         <JoinRoom />
       ) : (
         <Connexion />
       )}
-    </div>
+    </>
   );
 }

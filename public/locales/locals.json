@@ -51,7 +51,21 @@
       "profile.facialHairColor": "Facial hair color",
       "profile.mouth": "Mouth",
       "profile.skinColor": "Skin color",
-      "profile.eyebrows": "Eyebrows"
+      "profile.eyebrows": "Eyebrows",
+      "create.stepOne": "Enter a room name",
+      "create.stepTwo": "Choose game roles",
+      "create.stepThree": "Enter number of CPU players",
+      "create.stepFour": "Summary of your room",
+      "create.labelRoomName": "Room name",
+      "create.labelCPUNumber": "Number Of CPU Players",
+      "create.nextStep": "Next Step",
+      "create.previousStep": "Previous Step",
+      "create.totalPlayers": "total players",
+      "create.including": "including",
+      "create.userControlled": "user-controlled players",
+      "create.CPUControlled": "CPU-controlled players",
+      "create.submit": "Create room",
+      "role.team": "Team"
     }
   },
   "fr": {
@@ -106,7 +120,21 @@
       "profile.facialHairColor": "Couleur de la barbe",
       "profile.mouth": "Bouche",
       "profile.skinColor": "Couleur de peau",
-      "profile.eyebrows": "Sourcils"
+      "profile.eyebrows": "Sourcils",
+      "create.stepOne": "Définissez un nom pour votre salle",
+      "create.stepTwo": "Choissisez les roles",
+      "create.stepThree": "Définissez le nombre de joueurs ordinateur",
+      "create.stepFour": "Résumé de votre salle",
+      "create.labelRoomName": "Nom de la salle",
+      "create.labelCPUNumber": "Nombre de joueurs ordinateurs",
+      "create.nextStep": "Suivant",
+      "create.previousStep": "Précédent",
+      "create.totalPlayers": "nombre total de joueurs",
+      "create.including": "Incluant",
+      "create.userControlled": "joueurs controllés par un utilisateur",
+      "create.CPUControlled": "joueurs controllés par l'ordinateur",
+      "create.submit": "Créer la salle",
+      "role.team": "Équipe"
     }
   }
 }

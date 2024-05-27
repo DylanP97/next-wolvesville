@@ -27,7 +27,7 @@ const JoinRoom = () => {
   };
 
   return (
-    <div className="w-full bg-black p-4">
+    <div className="flex flex-col justify-between flex-grow w-full bg-black p-4">
       <h1 className="text-white text-3xl font-bold">{t("menu.1")}</h1>
       {rooms.length === 0 ? (
         <div className="m-4">
@@ -82,7 +82,6 @@ const JoinRoom = () => {
           );
         })
       )}
-      <br />
       <GoBackBtn />
     </div>
   );

@@ -24,10 +24,10 @@ const CreateRoom = () => {
   const [creationStep, setCreationStep] = useState(1);
 
   const steps = {
-    1: "Enter a room name",
-    2: "Choose game roles",
-    3: "Enter number of CPU players",
-    4: `Summary of room: ${roomName}`,
+    1: t("create.stepOne"),
+    2: t("create.stepTwo"),
+    3: t("create.stepThree"),
+    4: `${t("create.stepFour")}: ${roomName}`,
   };
 
   useEffect(() => {
@@ -139,7 +139,7 @@ const CreateRoom = () => {
         className="max-w-xs ws-60 bg-white rounded-xl"
         isRequired
         type="text"
-        label="Room name:"
+        label={t("create.labelRoomName")}
         onChange={(e) => setRoomName(e.target.value)}
       />
     );
@@ -192,7 +192,7 @@ const CreateRoom = () => {
           className="max-w-xs ws-60 bg-white rounded-xl"
           isRequired
           type="number"
-          label="Number of CPU Players:"
+          label={t("create.labelCPUNumber")}
           defaultValue={0}
           min={0}
           max={CPUPlayersMax}
@@ -221,14 +221,14 @@ const CreateRoom = () => {
           })}
         </div>
         <p className="text-sm text-gray-200 my-2">
-          {selectedRoles.length} total players
+          {selectedRoles.length} {t("create.totalPlayers")}
         </p>
         <p className="text-sm text-gray-200">
-          *including {selectedRoles.length - nbrCPUPlayers} user-controlled
-          players
+          *{t("create.including")} {selectedRoles.length - nbrCPUPlayers}{" "}
+          {t("create.userControlled")}
         </p>
         <p className="text-sm text-gray-200">
-          *including {nbrCPUPlayers} CPU-controlled players
+          *{t("create.including")} {nbrCPUPlayers} {t("create.CPUControlled")}
         </p>
       </>
     );
@@ -254,15 +254,19 @@ const CreateRoom = () => {
   };
 
   return (
-    <div className="w-full bg-black p-4">
+    <div className="h-full w-full bg-black p-4 flex flex-grow flex-col justify-between">
       {created ? (
         <h1 className="text-white">The room has been created...</h1>
       ) : (
         <>
-          <h1 className="text-white text-3xl font-bold mb-2">{t("menu.2")}</h1>
-          <h2 className="text-white font-bold mb-2">
-            {creationStep}. {steps[creationStep]}
-          </h2>
+          <div>
+            <h1 className="text-white text-3xl font-bold mb-2">
+              {t("menu.2")}
+            </h1>
+            <h2 className="text-white font-bold mb-2">
+              {creationStep}. {steps[creationStep]}
+            </h2>
+          </div>
           <div className="flex flex-col">
             {generateStep()}
             <div className="flex flex-row gap-2 mt-4">
@@ -273,7 +277,7 @@ const CreateRoom = () => {
                   variant="solid"
                   onClick={() => toPreviousStep()}
                 >
-                  Previous Step
+                  {t("create.previousStep")}
                 </Button>
               )}
               {creationStep < 4 && (
@@ -283,7 +287,7 @@ const CreateRoom = () => {
                   variant="solid"
                   onClick={() => toNextStep()}
                 >
-                  Next Step
+                  {t("create.nextStep")}
                 </Button>
               )}
               {creationStep === 4 && (
@@ -294,7 +298,7 @@ const CreateRoom = () => {
                     className="animate-pulse bg-primary text-white w-60 transition-all hover:scale-[105%]"
                     onClick={() => submitNewRoom()}
                   >
-                    Create Room
+                    {t("create.submit")}
                   </Button>
                   <p className="text-white text-sm">{creationError}</p>
                 </>
@@ -303,7 +307,6 @@ const CreateRoom = () => {
           </div>
         </>
       )}
-      <Divider className="my-2" />
       <GoBackBtn />
     </div>
   );
