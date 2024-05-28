@@ -36,7 +36,7 @@ const PlayerGridCard = ({
               ? "bg-red-800 cursor-pointer animate-pulse"
               : "bg-slate-800"
             : "bg-slate-500"
-          : "bg-black"
+          : "bg-[#303030]"
       } w-full md:w-40 h-full md:h-full flex flex-col justify-center items-center relative p-2`}
     >
       {timeOfTheDay == "votetime" && <VoteCount voteNbr={player.voteAgainst} />}

@@ -1,15 +1,19 @@
 // here is the cpu logic
 
 const cpuNextMove = (
-  cpuId,
-  cpuName,
-  cpuRole,
+  cpu,
   dayCount,
   timeOfTheDay,
   playersList,
   socket,
   gameId
 ) => {
+  function getPlayerWithId(id) {
+    return playersList.map((ply) => {
+      if (ply.id === id) return ply;
+    });
+  }
+
   function getRandomAlivePlayer(excludeWerewolves = false) {
     let potentialPlayers = playersList.filter(
       (player) =>
@@ -23,24 +27,24 @@ const cpuNextMove = (
   }
 
   function performNightAction() {
-    switch (cpuRole.name) {
+    switch (cpu.role.name) {
       case "Classic Werewolf":
       case "Alpha Werewolf":
         let target = getRandomAlivePlayer(true);
         socket.emit(
           "addWolfVote",
           target.id,
-          cpuRole.name === "Alpha Werewolf" ? 2 : 1,
+          cpu.role.name === "Alpha Werewolf" ? 2 : 1,
           gameId
         );
         break;
       case "Serial Killer":
         let victim = getRandomAlivePlayer();
         socket.emit(
-          "killPrisoner",
+          "registerAction",
           {
-            type: "kill",
-            killerId: cpuId,
+            type: "murder",
+            killerId: cpu.id,
             selectedPlayerId: victim.id,
             selectedPlayerName: victim.name,
           },
@@ -57,7 +61,7 @@ const cpuNextMove = (
               type: "link",
               lover1Id: lover1.id,
               lover2Id: lover2.id,
-              cupidId: cpuId,
+              cupidId: cpu.id,
             },
             gameId
           );
@@ -69,12 +73,27 @@ const cpuNextMove = (
           "heal",
           {
             type: "heal",
-            playerId: cpuId,
+            playerId: cpu.id,
             selectedPlayerId: playerToHeal.id,
             selectedPlayerName: playerToHeal.name,
           },
           gameId
         );
+        break;
+      case "Jailer":
+        if (!dayCount === 0) {
+          let handcuffedPlayerId = cpu.hasHandcuffed;
+          socket.emit(
+            "executePrisoner",
+            {
+              type: "execute",
+              playerId: cpu.id,
+              selectedPlayerId: handcuffedPlayerId,
+              selectedPlayerName: getPlayerWithId(handcuffedPlayerId),
+            },
+            gameId
+          );
+        }
         break;
       // Add more roles as needed
       default:
@@ -83,14 +102,27 @@ const cpuNextMove = (
   }
 
   function performDayAction() {
-    switch (cpuRole.name) {
+    switch (cpu.role.name) {
+      case "Jailer":
+        let arrestedPlayer = getRandomAlivePlayer();
+        socket.emit(
+          "registerAction",
+          {
+            type: "arrest",
+            playerId: cpu.id,
+            selectedPlayerId: arrestedPlayer.id,
+            selectedPlayerName: arrestedPlayer.name,
+          },
+          gameId
+        );
+        break;
       case "Seer":
         let playerToReveal = getRandomAlivePlayer();
         socket.emit(
           "revealPlayer",
           {
             type: "reveal",
-            seerId: cpuId,
+            seerId: cpu.id,
             selectedPlayerId: playerToReveal.id,
             selectedPlayerName: playerToReveal.name,
           },
@@ -103,7 +135,7 @@ const cpuNextMove = (
           "shootBullet",
           {
             type: "shoot",
-            gunnerId: cpuId,
+            gunnerId: cpu.id,
             selectedPlayerId: targetToShoot.id,
             selectedPlayerName: targetToShoot.name,
           },

@@ -23,16 +23,16 @@ const RoleCard = ({ role }) => {
         <Image
           alt={role.name}
           height={40}
+          width={40}
           radius="sm"
           src={role.image}
-          width={40}
-        />
+          />
         <div className="flex flex-col">
           <p className="text-md">
             {i18n.language === "fr" ? role.nameFR : role.name}
           </p>
           <p className="text-xs text-default-500">
-            {t("role.team")}
+            {t("roles.team")}
             {role.team.length > 1 && "s"}: {teamsString}
           </p>
         </div>

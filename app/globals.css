@@ -1,10 +1,10 @@
 @font-face {
-  font-family: 'SevenMonsters';
-  src: url('../public/fonts/SevenMonstersDemoRegular.ttf') format('truetype');
+  font-family: "SevenMonsters";
+  src: url("../public/fonts/SevenMonstersDemoRegular.ttf") format("truetype");
 }
 
 .wolf-font {
-  font-family: 'SevenMonsters', sans-serif;
+  font-family: "SevenMonsters", sans-serif;
 }
 
 @tailwind base;
@@ -12,9 +12,9 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: #000;
-  --background-end-rgb: #000;
+  --foreground-rgb: #303030;
+  --background-start-rgb: #303030;
+  --background-end-rgb: #303030;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -31,7 +31,7 @@ html {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background-color: #000;
+  background-color: #303030;
 }
 
 .actions-list li {
@@ -49,15 +49,20 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background to make the section behind it appear frozen */
+  background: rgba(
+    0,
+    0,
+    0,
+    0.6
+  ); /* Semi-transparent background to make the section behind it appear frozen */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .winner-message {
-  background: #000000;
-  border: white 1px solid;
+  background: #303030;
+  box-shadow: 0 10px 20px -5px rgba(170, 170, 170, 0.559);
   color: rgb(255, 255, 255);
   padding: 20px;
   border-radius: 8px;
@@ -68,22 +73,84 @@ body {
 
 .link-underline {
   border-bottom-width: 0;
-  background-image: linear-gradient(transparent, transparent), linear-gradient(#fff, #fff);
+  background-image: linear-gradient(transparent, transparent),
+    linear-gradient(#fff, #fff);
   background-size: 0 3px;
   background-position: 0 100%;
   background-repeat: no-repeat;
-  transition: background-size .3s ease-in-out;
+  transition: background-size 0.3s ease-in-out;
 }
 
 .link-underline-black {
-  background-image: linear-gradient(transparent, transparent), linear-gradient(#F2C, #F2C)
+  background-image: linear-gradient(transparent, transparent),
+    linear-gradient(#f2c, #f2c);
 }
 
 .link-underline:hover {
   background-size: 100% 3px;
-  background-position: 0 100%
+  background-position: 0 100%;
 }
 
 .icon-container:hover svg {
   stroke: white;
+}
+
+/******************* CSS for Roles Carousel *******************/
+
+@keyframes scroll {
+  0% {
+    transform: translateX(90vw);
+  }
+  100% {
+    transform: translateX(calc(-250px * 24));
+  }
+}
+
+.slider {
+  background: #303030;
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.125);
+  height: 100px;
+  margin: auto;
+  overflow: hidden;
+  position: absolute;
+  inset: 50% 0%;
+  width: 90vw;
+  opacity: 0.4;
+}
+
+.slider::before,
+.slider::after {
+  background: linear-gradient(
+    to right,
+    #303030 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  content: "";
+  height: 100px;
+  position: absolute;
+  width: 200px;
+  z-index: 2;
+}
+
+.slider::after {
+  right: 0;
+  top: 0;
+  transform: rotateZ(180deg);
+}
+
+.slider::before {
+  left: 0;
+  top: 0;
+}
+
+.slide-track {
+  background-color: #303030;
+  animation: scroll 40s linear infinite;
+  display: flex;
+  width: calc(250px * 48);
+}
+
+.slide {
+  height: 100px;
+  width: 250px;
 }

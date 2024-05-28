@@ -15,7 +15,7 @@ const GameMain = () => {
   const weather = {
     daytime: "bg-sky-500",
     votetime: "bg-sky-700",
-    nighttime: "bg-black",
+    nighttime: "bg-[#303030]",
   };
 
   return (

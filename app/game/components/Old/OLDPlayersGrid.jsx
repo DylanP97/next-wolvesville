@@ -147,7 +147,7 @@
 //                   ? "bg-slate-800 hover:bg-red-800 cursor-pointer"
 //                   : "bg-transparent-50 bg-cyan-900"
 //                 : "bg-yellow-950"
-//               : "bg-black"
+//               : "bg-[#303030]"
 //           } ${
 //             playerToPlay.id === player.id && "outline-1 outline outline-white"
 //           } w-full md:w-48 h-full md:h-full flex flex-col justify-center items-center relative rounded-xl md:rounded-3xl`}

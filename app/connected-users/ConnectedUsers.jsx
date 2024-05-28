@@ -10,7 +10,7 @@ const ConnectedUsers = () => {
   const { connectedUsers } = useAuth();
 
   return (
-    <div className="flex flex-col flex-grow justify-between w-full bg-black p-4">
+    <div className="flex flex-col flex-grow justify-between w-full bg-[#303030] p-4">
       <h1 className="text-white text-3xl font-bold mb-6 mt-10">
         {t("connected.title")}
       </h1>

@@ -10,7 +10,7 @@ export default function GamePage() {
   const { isConnected } = useAuth();
 
   return (
-    <>
+    <div className="flex flex-col flex-grow">
       {isConnected ? (
         <GameProvider>
           <InGameKeysProvider>
@@ -20,6 +20,6 @@ export default function GamePage() {
       ) : (
         <Connexion />
       )}
-    </>
+    </div>
   );
 }

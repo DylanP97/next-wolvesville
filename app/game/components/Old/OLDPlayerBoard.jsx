@@ -113,7 +113,7 @@
 //           onClick={() => explodeBomb(bombPower, setUpdatedPlayersList, displayAction, toNext)}
 //           label={`Explode Bomb, current power: can kill up to ${bombPower} person`}
 //           kbdComponent={<Kbd className="m-2">2</Kbd>}
-//           bgColor="bg-black-950"
+//           bgColor="bg-[#303030]-950"
 //           dataname="explode"
 //         />
 //       )}

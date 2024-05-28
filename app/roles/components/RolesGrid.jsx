@@ -4,9 +4,11 @@ import RoleCard from "./RoleCard";
 import { Divider } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import GoBackBtn from "../../components/GoBackBtn";
+import { useTranslation } from "react-i18next";
 
 const RolesGrid = () => {
   const [availableRoles, setAvailableRoles] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Fetch available roles from the server
@@ -30,8 +32,8 @@ const RolesGrid = () => {
   }, []);
 
   return (
-    <section className="p-5 bg-black">
-      <h1 className="text-white text-3xl font-bold p-4">List of Roles</h1>
+    <section className="p-5 bg-[#303030]">
+      <h1 className="text-white text-3xl font-bold p-4">{t("roles.title")}</h1>
       <div className="w-full grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 p-5">
         {availableRoles
           .sort((a, b) => a.status - b.status)

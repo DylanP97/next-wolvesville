@@ -41,7 +41,7 @@ const Profile = ({ username, avatar, socketId }) => {
   };
 
   return (
-    <section className="bg-black w-full px-5 flex flex-col justify-start items-center">
+    <section className="bg-[#303030] w-full px-5 flex flex-col justify-start items-center">
       <div
         className={`bg-white rounded-full flex justify-center my-4 overflow-hidden`}
       >

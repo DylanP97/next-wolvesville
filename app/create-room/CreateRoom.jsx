@@ -254,7 +254,7 @@ const CreateRoom = () => {
   };
 
   return (
-    <div className="h-full w-full bg-black p-4 flex flex-grow flex-col justify-between">
+    <div className="h-full w-full bg-[#303030] p-4 flex flex-grow flex-col justify-between">
       {created ? (
         <h1 className="text-white">The room has been created...</h1>
       ) : (

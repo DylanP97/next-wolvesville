@@ -51,9 +51,7 @@ export const GameProvider = ({ children }) => {
           console.log(player.name);
           
           cpuNextMove(
-            player.id,
-            player.name,
-            player.role,
+            player,
             dayCount,
             timeOfTheDay,
             playersList,

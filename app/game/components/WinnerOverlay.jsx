@@ -5,8 +5,10 @@ import Image from "next/image";
 import { useAuth } from "../../providers/AuthProvider";
 import AvatarUI from "../../profile/components/AvatarUI";
 import { useGame } from "../providers/GameProvider";
+import { useTranslation } from "react-i18next";
 
 const WinnerOverlay = () => {
+  const { t } = useTranslation();
   const { updateGameState } = useAuth();
   const { winningTeam, aliveList } = useGame();
 
@@ -69,12 +71,12 @@ const WinnerOverlay = () => {
             })}
           </div>
           <Button
-            className="mt-6"
+            className="hover:animate-pulse hover:scale-[105%] w-60 transition-all text-white my-2"
             color="secondary"
             variant="ghost"
             onClick={() => handleExitGame()}
           >
-            Go Back
+            {t("goback")}
           </Button>
         </div>
       </div>

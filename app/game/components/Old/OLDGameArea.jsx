@@ -185,7 +185,7 @@
 //       }}
 //       tabIndex={0}
 //       className={`${
-//         timeOfTheDay === "daytime" ? "bg-sky-500" : timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-black"
+//         timeOfTheDay === "daytime" ? "bg-sky-500" : timeOfTheDay === "votetime" ? "bg-sky-700" : "bg-[#303030]"
 //       } h-screen w-screen p-4 relative`}
 //       style={{ outline: "none" }}>
 //       <GameHeader timeOfTheDay={timeOfTheDay} dayCount={dayCount} />

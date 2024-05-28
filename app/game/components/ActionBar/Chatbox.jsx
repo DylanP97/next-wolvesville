@@ -61,7 +61,7 @@ const Chatbox = () => {
           }
           placeholder="Write a message"
           value={message}
-          className="outline-none border-none p-2 h-[60px] w-full text-black z-20"
+          className="outline-none border-none p-2 h-[100px] w-full text-black z-20"
           onChange={(e) => setMessage(e.target.value)}
         />
         <CmdSend sendMessage={sendMessage} message={message} />

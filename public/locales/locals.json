@@ -65,7 +65,11 @@
       "create.userControlled": "user-controlled players",
       "create.CPUControlled": "CPU-controlled players",
       "create.submit": "Create room",
-      "role.team": "Team"
+      "roles.team": "Team",
+      "roles.title": "List of Roles",
+      "roles.status1": "Available",
+      "roles.status2": "Half-Playable",
+      "roles.status3": "Still in Development"
     }
   },
   "fr": {
@@ -134,7 +138,11 @@
       "create.userControlled": "joueurs controllés par un utilisateur",
       "create.CPUControlled": "joueurs controllés par l'ordinateur",
       "create.submit": "Créer la salle",
-      "role.team": "Équipe"
+      "roles.team": "Équipe",
+      "roles.title": "Liste des Rôles",
+      "roles.status1": "Jouable",
+      "roles.status2": "Jouable mais pas complet",
+      "roles.status3": "En cours de développement"
     }
   }
 }

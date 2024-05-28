@@ -77,10 +77,10 @@ const GameGrid = () => {
             if (
               isJailer &&
               selectedPlayer.isUnderArrest &&
-              actionType == "killPrisoner"
+              actionType == "execute"
             ) {
               socket.emit(
-                "killPrisoner",
+                "executePrisoner",
                 {
                   type: actionType,
                   killerId: clientPlayer.id,
