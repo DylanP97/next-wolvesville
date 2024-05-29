@@ -1,6 +1,6 @@
 "use client"
 
-import Connexion from "../components/Connexion";
+import Connexion from "../connexion/Connexion";
 import CreateRoom from "./CreateRoom";
 import { useAuth } from "../providers/AuthProvider";
 import { redirect } from "next/navigation";

@@ -1,7 +1,7 @@
 "use client"
 
 import RolesGrid from "./components/RolesGrid"
-import Connexion from "../components/Connexion";
+import Connexion from "../connexion/Connexion";
 import { useAuth } from "../providers/AuthProvider";
 import { redirect } from "next/navigation";
 

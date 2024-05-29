@@ -1,6 +1,6 @@
 "use client";
 
-import Connexion from "../components/Connexion";
+import Connexion from "../connexion/Connexion";
 import GameMain from "./components/GameMain";
 import { useAuth } from "../providers/AuthProvider";
 import { GameProvider } from "./providers/GameProvider";
