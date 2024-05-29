@@ -145,9 +145,9 @@ body {
 
 .slide-track {
   background-color: #303030;
-  animation: scroll 40s linear infinite;
+  animation: scroll 20s linear infinite;
   display: flex;
-  width: calc(250px * 48);
+  width: calc(250px * 40);
 }
 
 .slide {

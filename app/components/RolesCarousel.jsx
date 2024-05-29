@@ -30,19 +30,21 @@ const RolesCarousel = () => {
     <div className="flex justify-center items-center">
       <div className="slider">
         <div className="slide-track">
-          {roles.sort().map((role) => {
-            return (
-              <div className="slide flex justify-center items-center">
-                <Image
-                  key={role.name}
-                  height={100}
-                  width={100}
-                  src={role.image}
-                  alt=""
-                />
-              </div>
-            );
-          })}
+          {roles
+            .sort(() => Math.random() - 0.5)
+            .map((role) => {
+              return (
+                <div key={role.name + "-carousel"} className="slide flex justify-center items-center">
+                  <Image
+                    key={role.name}
+                    height={100}
+                    width={100}
+                    src={role.image}
+                    alt=""
+                  />
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>

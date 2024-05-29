@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Input } from "@nextui-org/react";
 import { useAuth } from "../providers/AuthProvider";
 import { defaultAvatar } from "../lib/utils";
 import { useTranslation } from "react-i18next";
+import Image from "next/image";
+import evilEyes from "../../public/game/evileyes.gif";
+import ConnexionForm from "./ConnexionForm";
+import { Spinner } from "@nextui-org/react";
 
 const Connexion = () => {
   const { t } = useTranslation();
@@ -13,6 +16,7 @@ const Connexion = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSwitch = () => {
     setIsLogin((prevIsLogin) => !prevIsLogin);
@@ -20,6 +24,7 @@ const Connexion = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (isLogin) {
       try {
@@ -39,6 +44,8 @@ const Connexion = () => {
         }
       } catch (error) {
         console.error("Login error:", error);
+      } finally {
+        setIsLoading(false);
       }
     } else {
       try {
@@ -64,8 +71,15 @@ const Connexion = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="m-4">
+    <div className="flex flex-col flex-grow justify-center items-center bg-black">
+      <Image
+        className="absolute top-8"
+        alt=""
+        src={evilEyes}
+        height={300}
+        width={300}
+      />
+      <div className="m-4 z-10">
         <h1 className="text-white text-center text-3xl font-bold mb-2">
           {t("intro.title")}
         </h1>
@@ -77,55 +91,24 @@ const Connexion = () => {
           {t("intro.ref")}
         </a>
       </div>
-      <form onSubmit={handleSubmit}>
-        {!isLogin && (
-          <div className="w-[95%] m-2">
-            <Input
-              color="secondary"
-              isRequired
-              type="text"
-              label={t("intro.un")}
-              value={username}
-              className="max-w-xs bg-white rounded-2xl"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-        )}
-        <div className="w-[95%] m-2">
-          <Input
-            color="secondary"
-            isRequired
-            type="email"
-            label={t("intro.em")}
-            value={email}
-            className="max-w-xs bg-white rounded-2xl"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="w-[95%] m-2">
-          <Input
-            color="secondary"
-            isRequired
-            type="password"
-            label={t("intro.pw")}
-            value={password}
-            autocomplete="current-password"
-            className="max-w-xs bg-white rounded-2xl"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
 
-        <div>
-          <Button
-            variant="shadow"
-            color="secondary"
-            className="w-[95%] m-2 text-white hover:bg-primary animate-pulse"
-            type="submit"
-          >
-            {isLogin ? t("intro.lo") : t("intro.si")}
-          </Button>
+      <ConnexionForm
+        handleSubmit={handleSubmit}
+        isLogin={isLogin}
+        username={username}
+        setUsername={setUsername}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+      />
+
+      {isLoading && (
+        <div className="text-white flex justify-center items-center">
+          <Spinner />
+          <p>{t("intro.loading")}</p>
         </div>
-      </form>
+      )}
 
       <span
         onClick={handleSwitch}
