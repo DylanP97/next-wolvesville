@@ -65,7 +65,7 @@ const ActionsHistory = () => {
                 className={`text-xs z-20 ${index == 0 && "font-bold"}`}
                 key={index + "msg"}
               >
-                {msg.time} -- {msg.msg}
+                {msg.time} - {msg.msg}
               </li>
             );
           })}

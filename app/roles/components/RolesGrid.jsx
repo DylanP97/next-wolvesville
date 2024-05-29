@@ -34,7 +34,7 @@ const RolesGrid = () => {
   return (
     <section className="p-5 bg-[#303030]">
       <h1 className="text-white text-3xl font-bold p-4">{t("roles.title")}</h1>
-      <div className="w-full grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 p-5">
+      <div className="w-full grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 p-5">
         {availableRoles
           .sort((a, b) => a.status - b.status)
           .map((role) => (

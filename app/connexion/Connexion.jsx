@@ -76,8 +76,8 @@ const Connexion = () => {
         className="absolute top-8"
         alt=""
         src={evilEyes}
-        height={300}
-        width={300}
+        height={700}
+        width={700}
       />
       <div className="m-4 z-10">
         <h1 className="text-white text-center text-3xl font-bold mb-2">
@@ -103,16 +103,17 @@ const Connexion = () => {
         setPassword={setPassword}
       />
 
-      {isLoading && (
-        <div className="text-white flex justify-center items-center">
+      {!isLoading && (
+        <div className="z-20 text-center text-white flex flex-col justify-center items-center m-2">
           <Spinner />
           <p>{t("intro.loading")}</p>
+          <span className="text-center text-xs text-gray-200">{t("intro.loading.info")}</span>
         </div>
       )}
 
       <span
         onClick={handleSwitch}
-        className="hover:underline pointer text-white hover:text-primary"
+        className="hover:underline hover:cursor-pointer text-white hover:text-primary"
       >
         {isLogin
           ? `${t("intro.nry")} ${t("intro.si")}`
