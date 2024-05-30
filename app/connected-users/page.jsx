@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import ConnectedUsers from "./ConnectedUsers";
 import Connexion from "../connexion/Connexion";
@@ -10,13 +10,5 @@ export default function ConnectedUsersPage() {
 
   if (isConnected && isInRoom && isPlaying) return redirect("/game");
 
-  return (
-    <>
-      {isConnected ? (
-        <ConnectedUsers />
-      ) : (
-        <Connexion />
-      )}
-    </>
-  );
+  return <>{isConnected ? <ConnectedUsers /> : <Connexion />}</>;
 }

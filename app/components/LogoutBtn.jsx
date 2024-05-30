@@ -12,7 +12,7 @@ const LogoutBtn = () => {
     <>
       {isConnected && (
         <Button
-          variant="ghost"
+          variant="solid"
           color="secondary"
           className="hover:text-white"
           aria-label={t("logout")}

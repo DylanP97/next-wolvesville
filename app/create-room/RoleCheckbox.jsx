@@ -1,29 +1,23 @@
-// RoleCheckbox.js
-
 import { Input, User } from "@nextui-org/react";
-import { useState } from "react";
-import { colorsForTeams } from "../lib/utils";
+import i18n from "../lib/i18n";
 
-const RoleCheckbox = ({ role, onChange }) => {
-  const [nbrOf, setNbrOf] = useState(0);
+const RoleCheckbox = ({ role, handleRoleChange }) => {
   const isSolo = !["village", "werewolves"].includes(role.team.join());
 
   const handleNbrOfChange = (event) => {
-    const newValue = Number(event.target.value);
-    setNbrOf(newValue);
-    onChange(role.name, newValue); // Pass the role name and the new value to the parent component
+    handleRoleChange(role.name, Number(event.target.value));
   };
 
   return (
-    <div className="flex flex-row w-[80%] gap-2 justify-start">
+    <div className="flex flex-row gap-2 justify-start">
       <div className="flex gap-2">
         <Input
           color="secondary"
           type="number"
           className="m-1 bg-white rounded-xl"
-          defaultValue={nbrOf}
+          value={role.count}
           labelPlacement="outside"
-          size="md"
+          size="sm"
           min={0}
           max={isSolo ? 1 : 3}
           onChange={handleNbrOfChange}
@@ -31,13 +25,17 @@ const RoleCheckbox = ({ role, onChange }) => {
       </div>
       <User
         avatarProps={{
-          size: "md",
+          size: "sm",
           src: role.image,
-          radius: "lg",
+          radius: "xl",
         }}
-        className={`p-1 bg-[${colorsForTeams[role.team.join()]}]`}
-        description={<p className="text-sm">@{role.team}</p>}
-        name={<p className="text-sm text-gray-200">{role.name}</p>}
+        className="p-1"
+        name={
+          <p className="text-sm text-gray-200">
+            {i18n.language === "fr" ? role.nameFR : role.name}
+            {` (${role.team})`}
+          </p>
+        }
       />
     </div>
   );

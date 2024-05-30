@@ -43,13 +43,9 @@ export const GameProvider = ({ children }) => {
   }, [timeOfTheDay]);
 
   useEffect(() => {
-    console.log(timeCounter);
-
     if (timeCounter == 4000) {
       playersList.map((player) => {
-        if (player.isCPU) {
-          console.log(player.name);
-          
+        if (player.isCPU) {          
           cpuNextMove(
             player,
             dayCount,

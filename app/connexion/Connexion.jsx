@@ -73,14 +73,16 @@ const Connexion = () => {
   return (
     <div className="flex flex-col flex-grow justify-center items-center bg-black">
       <Image
+        priority
         className="absolute top-8"
         alt=""
         src={evilEyes}
         height={700}
         width={700}
+        style={{ width: "auto", height: "auto" }}
       />
       <div className="m-4 z-10">
-        <h1 className="text-white text-center text-3xl font-bold mb-2">
+        <h1 className="opacity-80 text-white text-center text-3xl font-bold mb-2">
           {t("intro.title")}
         </h1>
         <a
@@ -103,22 +105,24 @@ const Connexion = () => {
         setPassword={setPassword}
       />
 
-      {!isLoading && (
-        <div className="z-20 text-center text-white flex flex-col justify-center items-center m-2">
-          <Spinner />
-          <p>{t("intro.loading")}</p>
-          <span className="text-center text-xs text-gray-200">{t("intro.loading.info")}</span>
-        </div>
-      )}
-
       <span
         onClick={handleSwitch}
-        className="hover:underline hover:cursor-pointer text-white hover:text-primary"
+        className="z-20 text-white text-sm hover:underline hover:cursor-pointer hover:text-primary"
       >
         {isLogin
           ? `${t("intro.nry")} ${t("intro.si")}`
           : `${t("intro.ar")} ${t("intro.lo")}`}
       </span>
+
+      {isLoading && (
+        <div className="z-20 text-center text-white flex flex-col justify-center items-center m-2">
+          <Spinner />
+          <p>{t("intro.loading")}</p>
+          <span className="text-center text-xs text-gray-200">
+            {t("intro.loading.info")}
+          </span>
+        </div>
+      )}
     </div>
   );
 };

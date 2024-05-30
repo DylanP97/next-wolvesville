@@ -2,8 +2,6 @@
 
 import io from "socket.io-client";
 import { createContext, useContext, useState, useEffect } from "react";
-import cpuNextMove from "../lib/cpuNextMove";
-import { useGame } from "../game/providers/GameProvider";
 
 const AuthContext = createContext();
 
@@ -47,11 +45,14 @@ export const AuthProvider = ({ children }) => {
       });
 
       socket.on("updateUsers", (updatedUsers) => {
+
+        console.log(updatedUsers)
+
         let user = updatedUsers.find(
           (user) => user.username == authState.username
         );
         if (user.isInRoom) setIsInRoom(user.isInRoom);
-        setConnectedUsers(updatedUsers);
+        setConnectedUsers(updatedUsers.filter((usr) => !usr.isCPU));
       });
 
       socket.on("updateRooms", (updatedRooms) => {
@@ -70,7 +71,6 @@ export const AuthProvider = ({ children }) => {
       });
 
       socket.on("updateGame", (updatedGame) => {
-        console.log(updatedGame.playersList);
         setGame(updatedGame);
       });
 

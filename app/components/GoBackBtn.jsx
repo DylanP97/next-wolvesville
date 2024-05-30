@@ -8,7 +8,7 @@ const GoBackBtn = () => {
 
   return (
     <Button
-      className="hover:animate-pulse hover:scale-[105%] w-60 transition-all text-white my-2"
+      className="hover:animate-pulse hover:scale-[105%] w-60 transition-all my-2"
       color="secondary"
       variant="solid"
       onClick={() => window.history.back()}

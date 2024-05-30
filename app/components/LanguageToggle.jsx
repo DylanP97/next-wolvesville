@@ -28,11 +28,11 @@ function LanguageToggle() {
   };
 
   return (
-    <Tooltip content={t("change.language")} color="secondary" variant="flat">
+    <Tooltip content={t("change.language")} color="secondary" variant="faded">
       <Button
         isIconOnly
         color="secondary"
-        variant="ghost"
+        variant="solid"
         aria-label={currentLanguage}
         onPress={toggleLanguage}
         className="hover:text-white"

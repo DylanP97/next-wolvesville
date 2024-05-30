@@ -18,12 +18,11 @@ const NavigationMenu = () => {
     <nav className="absolute top-1/3 flex flex-col items-center py-4 w-full z-20">
       {paths.map((p, index) => (
         <Link
-          key={index + "navlink"}
-          className={`w-60 z-20 p-2 my-2 rounded-xl bg-secondary text-white text-sm text-center hover:text-black hover:bg-primary hover:text-white ${
+          key={index + "-navlink"}
+          className={`w-60 z-20 p-2 my-2 rounded-xl bg-primary text-sm text-center ${
             index < 2 ? "animate-pulse" : ""
           } hover:scale-[105%] transition-all`}
           href={p.path}
-          color="foreground"
         >
           {p.label}
         </Link>

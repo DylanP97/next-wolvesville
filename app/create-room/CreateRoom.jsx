@@ -15,11 +15,12 @@ const CreateRoom = () => {
   const [availableRoles, setAvailableRoles] = useState([]);
   const [availableTeams, setAvailableTeams] = useState([]);
   const [roomName, setRoomName] = useState("");
-  const [creationError, setCreationError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [selectedRoles, setSelectedRoles] = useState([]);
   const [selectedRolesTeam, setSelectedRolesTeam] = useState([]);
   const [created, setCreated] = useState(false);
   const [nbrCPUPlayers, setNbrCPUPlayers] = useState(0);
+  const [CPUPlayersMax, setCPUPlayersMax] = useState();
 
   const [creationStep, setCreationStep] = useState(1);
 
@@ -31,46 +32,25 @@ const CreateRoom = () => {
   };
 
   useEffect(() => {
-    const fetchTeams = async () => {
-      try {
-        const response = await fetch(
-          process.env.NEXT_PUBLIC_API_URL + "/api/teams"
-        );
-        if (response.ok) {
-          const teamsData = await response.json();
-          setAvailableTeams(teamsData);
-        } else {
-          console.error("Failed to fetch teams");
-        }
-      } catch (error) {
-        console.error("Error fetching teams:", error);
-      }
-    };
-
     fetchTeams();
-  }, []);
-
-  useEffect(() => {
-    const fetchRoles = async () => {
-      try {
-        const response = await fetch(
-          process.env.NEXT_PUBLIC_API_URL + "/api/roles"
-        );
-        if (response.ok) {
-          const rolesData = await response.json();
-          setAvailableRoles(rolesData.filter((r) => r.status == 1));
-        } else {
-          console.error("Failed to fetch roles");
-        }
-      } catch (error) {
-        console.error("Error fetching roles:", error);
-      }
-    };
-
     fetchRoles();
   }, []);
 
   useEffect(() => {
+    let updatedRoles = [];
+
+    availableRoles.map((r) => {
+      for (let i = 0; i < r.count; i++) {
+        updatedRoles.push(r);
+      }
+    });
+
+    setSelectedRoles(updatedRoles);
+  }, [availableRoles]);
+
+  useEffect(() => {
+    setCPUPlayersMax(selectedRoles.length - 1);
+
     setSelectedRolesTeam(
       availableTeams.filter((team) =>
         selectedRoles.map((role) => role.team).includes(team.name)
@@ -78,183 +58,198 @@ const CreateRoom = () => {
     );
   }, [selectedRoles]);
 
-  const handleRoleChange = (roleName, newCount) => {
-    let updatedRoles = [...selectedRoles];
-    updatedRoles = updatedRoles.filter((r) => r.name !== roleName);
-    const role = availableRoles.find((r) => r.name === roleName);
-
-    if (role) {
-      for (let i = 0; i < newCount; i++) {
-        updatedRoles.push(role);
+  const fetchTeams = async () => {
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_URL + "/api/teams"
+      );
+      if (response.ok) {
+        const teamsData = await response.json();
+        setAvailableTeams(teamsData);
+      } else {
+        console.error("Failed to fetch teams");
       }
-
-      setSelectedRoles(updatedRoles);
-    } else {
-      console.error(`Role '${roleName}' not found in availableRoles.`);
+    } catch (error) {
+      console.error("Error fetching teams:", error);
     }
   };
 
-  const submitNewRoom = () => {
-    if (selectedRoles.length < 2) {
-      setCreationError("At least 2 players please.");
-      return;
-    } else if (selectedRoles.length > 16) {
-      setCreationError("16 players at most.");
-      return;
-      // } else if (selectedRoles.length > 16) {
-      //   setCreationError("16 players at most.");
-      //   return;
-      // } else if (selectedRoles.length > 16) {
-      //   setCreationError("16 players at most.");
-      //   return;
-    } else if (!roomName) {
-      setCreationError("You have to give a name to your room.");
-      return;
-    } else {
-      const newRoom = {
-        id: Date.now(),
-        name: roomName,
-        createdBy: username,
-        nbrOfPlayers: selectedRoles.length,
-        nbrUserPlayers: selectedRoles.length - nbrCPUPlayers,
-        nbrCPUPlayers: nbrCPUPlayers,
-        selectedRoles: selectedRoles,
-        usersInTheRoom: [{ username, socketId, avatar }],
-      };
-      socket.emit("createRoom", newRoom);
-      addRoom(newRoom);
-      setCreated(true);
+  const fetchRoles = async () => {
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_URL + "/api/roles"
+      );
+      if (response.ok) {
+        const rolesData = await response.json();
+        const filteredRoles = rolesData.filter((r) => r.status == 1);
+        setAvailableRoles(filteredRoles.map((r) => ({ ...r, count: 0 })));
+      } else {
+        console.error("Failed to fetch roles");
+      }
+    } catch (error) {
+      console.error("Error fetching roles:", error);
     }
+  };
+
+  const handleRoleChange = (roleName, newCount) => {
+    setAvailableRoles((prevAvailableRoles) =>
+      prevAvailableRoles.map((role) =>
+        role.name === roleName ? { ...role, count: newCount } : role
+      )
+    );
   };
 
   const handleNbrCPUPlayers = (event) => {
-    const newValue = Number(event.target.value);
-    setNbrCPUPlayers(newValue);
+    setNbrCPUPlayers(Number(event.target.value));
   };
 
-  const stepOne = () => {
-    return (
-      <Input
-        color="secondary"
-        className="max-w-xs ws-60 bg-white rounded-xl"
-        isRequired
-        type="text"
-        label={t("create.labelRoomName")}
-        onChange={(e) => setRoomName(e.target.value)}
-      />
-    );
-  };
+  const submitNewRoom = () => {
+    if (selectedRoles.length < 2 || selectedRoles.length > 16) {
+      setErrorMessage("The number of players should be between 2 and 16.");
+      return;
+    }
+    if (!roomName) {
+      setErrorMessage("You have to give a name to your room.");
+      return;
+    }
 
-  const stepTwo = () => {
-    return (
-      <>
-        <div className="flex gap-3 items-center">
-          {selectedRolesTeam.map((t, i) => {
-            return <TeamCounter team={t} key={t.name + i + "-tc"} />;
-          })}
-        </div>
-        <div className="flex flex-row items-center my-2">
-          {selectedRoles.map((r, i) => {
-            return (
-              <User
-                key={r.name + i + "-uc"}
-                avatarProps={{
-                  size: "sm",
-                  src: r.image,
-                  radius: "lg",
-                }}
-                className={`p-1 bg-[${colorsForTeams[r.team]}]`}
-              />
-            );
-          })}
-        </div>
-        {availableRoles.map((role) => {
-          if (role.name !== "Accomplice")
-            return (
-              <RoleCheckbox
-                role={role}
-                key={role.name}
-                onChange={handleRoleChange}
-              />
-            );
-        })}
-      </>
-    );
-  };
+    const newRoom = {
+      id: Date.now(),
+      name: roomName,
+      createdBy: username,
+      nbrOfPlayers: selectedRoles.length,
+      nbrUserPlayers: selectedRoles.length - nbrCPUPlayers,
+      nbrCPUPlayers: nbrCPUPlayers,
+      selectedRoles: selectedRoles,
+      usersInTheRoom: [{ username, socketId, avatar }],
+    };
 
-  const stepThree = () => {
-    const CPUPlayersMax = selectedRoles.length - 1;
-
-    return (
-      <div className="flex flex-col gap-4">
-        <Input
-          color="secondary"
-          className="max-w-xs ws-60 bg-white rounded-xl"
-          isRequired
-          type="number"
-          label={t("create.labelCPUNumber")}
-          defaultValue={0}
-          min={0}
-          max={CPUPlayersMax}
-          onChange={handleNbrCPUPlayers}
-        />
-      </div>
-    );
-  };
-
-  const stepFour = () => {
-    return (
-      <>
-        <div className="flex flex-row items-center my-2">
-          {selectedRoles.map((r, i) => {
-            return (
-              <User
-                key={r.name + i + "-uc"}
-                avatarProps={{
-                  size: "sm",
-                  src: r.image,
-                  radius: "lg",
-                }}
-                className={`p-1 bg-[${colorsForTeams[r.team]}]`}
-              />
-            );
-          })}
-        </div>
-        <p className="text-sm text-gray-200 my-2">
-          {selectedRoles.length} {t("create.totalPlayers")}
-        </p>
-        <p className="text-sm text-gray-200">
-          *{t("create.including")} {selectedRoles.length - nbrCPUPlayers}{" "}
-          {t("create.userControlled")}
-        </p>
-        <p className="text-sm text-gray-200">
-          *{t("create.including")} {nbrCPUPlayers} {t("create.CPUControlled")}
-        </p>
-      </>
-    );
+    socket.emit("createRoom", newRoom);
+    addRoom(newRoom);
+    setCreated(true);
   };
 
   const generateStep = () => {
-    if (creationStep === 1) return stepOne();
-    if (creationStep === 2) return stepTwo();
-    if (creationStep === 3) return stepThree();
-    if (creationStep === 4) return stepFour();
+    switch (creationStep) {
+      case 1:
+        return (
+          <Input
+            color="secondary"
+            className="max-w-xs ws-60 bg-white rounded-xl"
+            isRequired
+            value={roomName}
+            type="text"
+            label={t("create.labelRoomName")}
+            onChange={(e) => setRoomName(e.target.value)}
+          />
+        );
+      case 2:
+        return (
+          <>
+            <div className="flex flex-row justify-between">
+              <div className="w-[50%]">
+                {availableRoles.map((role) => (
+                  <RoleCheckbox
+                    key={role.name + "-rolecheckbx"}
+                    role={role}
+                    handleRoleChange={handleRoleChange}
+                    setAvailableRoles={setAvailableRoles}
+                  />
+                ))}
+              </div>
+              <div className="w-[50%] h-[100%]">
+                <p>Please select a variety of roles and teams...</p>
+                <div className="flex gap-3 items-center">
+                  {selectedRolesTeam.map((t, i) => (
+                    <TeamCounter team={t} key={t.name + i + "-tc"} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      case 3:
+        return (
+          <div className="flex flex-col gap-4">
+            <Input
+              color="secondary"
+              className="max-w-xs ws-60 bg-white rounded-xl"
+              isRequired
+              type="number"
+              label={t("create.labelCPUNumber")}
+              value={nbrCPUPlayers}
+              min={0}
+              max={CPUPlayersMax}
+              onChange={handleNbrCPUPlayers}
+            />
+          </div>
+        );
+      case 4:
+        return (
+          <>
+            <div className="flex flex-row items-center my-2">
+              {selectedRoles.map((r, i) => (
+                <User
+                  key={r.name + i + "-uc"}
+                  avatarProps={{
+                    size: "sm",
+                    src: r.image,
+                    radius: "lg",
+                  }}
+                  className={`p-1 bg-[${colorsForTeams[r.team]}]`}
+                />
+              ))}
+            </div>
+            <p className="text-sm text-gray-200 my-2">
+              {selectedRoles.length} {t("create.totalPlayers")}
+            </p>
+            <p className="text-sm text-gray-200">
+              *{t("create.including")} {selectedRoles.length - nbrCPUPlayers}{" "}
+              {t("create.userControlled")}
+            </p>
+            <p className="text-sm text-gray-200">
+              *{t("create.including")} {nbrCPUPlayers}{" "}
+              {t("create.CPUControlled")}
+            </p>
+          </>
+        );
+      default:
+        return null;
+    }
   };
 
   const toPreviousStep = () => {
+    setErrorMessage("");
     if (creationStep > 1) {
       setCreationStep(creationStep - 1);
     }
   };
 
   const toNextStep = () => {
-    if (creationStep < 4) {
-      setCreationStep(creationStep + 1);
+    setErrorMessage("");
+    if (creationStep === 1 && !roomName) {
+      setErrorMessage("Give your room a name.");
+      return;
     }
+    if (
+      creationStep === 2 &&
+      (selectedRoles.length < 2 || selectedRoles.length > 16)
+    ) {
+      setErrorMessage("The number of players should be between 2 and 16.");
+      return;
+    }
+    if (
+      creationStep === 3 &&
+      (nbrCPUPlayers < 0 || nbrCPUPlayers > CPUPlayersMax)
+    ) {
+      setErrorMessage("The CPU number is not correct.");
+      return;
+    }
+    setCreationStep(creationStep + 1);
   };
 
   return (
-    <div className="h-full w-full bg-[#303030] p-4 flex flex-grow flex-col justify-between">
+    <div className="h-full w-full bg-background p-4 flex flex-grow flex-col justify-between">
       {created ? (
         <h1 className="text-white">The room has been created...</h1>
       ) : (
@@ -272,38 +267,40 @@ const CreateRoom = () => {
             <div className="flex flex-row gap-2 mt-4">
               {creationStep > 1 && (
                 <Button
-                  className="hover:scale-[105%] transition-all text-white"
+                  className="hover:scale-[105%] transition-all"
                   color="secondary"
                   variant="solid"
-                  onClick={() => toPreviousStep()}
+                  onClick={toPreviousStep}
                 >
                   {t("create.previousStep")}
                 </Button>
               )}
               {creationStep < 4 && (
                 <Button
-                  className="hover:scale-[105%] transition-all bg-primary text-white"
-                  color="secondary"
+                  className="hover:scale-[105%] transition-all"
+                  color="primary"
                   variant="solid"
-                  onClick={() => toNextStep()}
+                  onClick={toNextStep}
                 >
                   {t("create.nextStep")}
                 </Button>
               )}
               {creationStep === 4 && (
-                <>
-                  <Button
-                    color="secondary"
-                    variant="shadow"
-                    className="animate-pulse bg-primary text-white w-60 transition-all hover:scale-[105%]"
-                    onClick={() => submitNewRoom()}
-                  >
-                    {t("create.submit")}
-                  </Button>
-                  <p className="text-white text-sm">{creationError}</p>
-                </>
+                <Button
+                  color="primary"
+                  variant="shadow"
+                  className="animate-pulse text-white w-60 transition-all hover:scale-[105%]"
+                  onClick={submitNewRoom}
+                >
+                  {t("create.submit")}
+                </Button>
               )}
             </div>
+            {errorMessage && (
+              <p className="mt-2 text-primary-foreground text-sm">
+                {errorMessage}
+              </p>
+            )}
           </div>
         </>
       )}

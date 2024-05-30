@@ -8,8 +8,8 @@ const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className="p-4 w-full">
-      <Tooltip content={t("check.repo")} color="secondary" variant="flat">
+    <footer className="bg-black p-4 w-full">
+      <Tooltip content={t("check.repo")} color="primary" variant="flat">
         <Link
           href="https://github.com/DylanP97?tab=repositories"
           color="foreground"

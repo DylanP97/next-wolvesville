@@ -50,7 +50,7 @@ const FullScreenToggle = ({}) => {
       <Button
         isIconOnly
         color="secondary"
-        variant="ghost"
+        variant="solid"
         className="icon-container"
         aria-label={fullScreen ? t("toggle.quit") : t("toggle.go")}
         onPress={() => (fullScreen ? exitFullscreen() : enterFullscreen())}

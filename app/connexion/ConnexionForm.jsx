@@ -58,7 +58,7 @@ const ConnexionForm = ({
         <Button
           variant="shadow"
           color="secondary"
-          className="w-[95%] m-2 text-white hover:bg-primary animate-pulse"
+          className="w-[95%] m-2 hover:bg-primary hover:text-primary-foreground animate-pulse"
           type="submit"
         >
           {isLogin ? t("intro.lo") : t("intro.si")}
