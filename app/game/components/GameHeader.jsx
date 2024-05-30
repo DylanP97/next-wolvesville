@@ -6,7 +6,7 @@ const GameHeader = () => {
   const { timeOfTheDay, dayCount, timeCounter } = useGame();
 
   return (
-    <div className="bg-slate-900 text-white shadow-lg p-2">
+    <div className="bg-background text-white shadow-lg p-2">
       <p className="text-xs text-white">
         {timeOfTheDay === "daytime" ? (
           <>

@@ -42,11 +42,11 @@ const ActionsHistory = () => {
       : general;
 
   return (
-    <div className="w-full z-10 bg-gray-800 p-2 relative overflow-hidden">
+    <div className="w-full z-10 bg-background p-2 relative overflow-hidden">
       <h2 className="text-white">
         {usedChat.label} Chat {usedChat.emoji}
       </h2>
-      <div className="h-[120px] z-10 p-2 max-h-72 object-bottom overflow-hidden overflow-y-auto">
+      <div className="h-[160px] z-10 p-2 max-h-80 object-bottom overflow-hidden overflow-y-auto">
         <ul className="actions-list text-white">
           {usedChat.history.map((msg, index) => {
             if (msg.author) {

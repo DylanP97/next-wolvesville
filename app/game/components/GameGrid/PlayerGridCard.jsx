@@ -34,10 +34,10 @@ const PlayerGridCard = ({
               !isBlocked &&
               ((isWolf && !isAlsoWolf) || !isWolf)
               ? "bg-red-800 cursor-pointer animate-pulse"
-              : "bg-slate-800"
+              : "bg-secondary"
             : "bg-slate-500"
           : "bg-[#303030]"
-      } w-full md:w-40 h-full md:h-full flex flex-col justify-center items-center relative p-2`}
+      } flex-grow md:w-40 h-full md:h-full flex flex-col justify-center items-center relative p-2`}
     >
       {timeOfTheDay == "votetime" && <VoteCount voteNbr={player.voteAgainst} />}
 

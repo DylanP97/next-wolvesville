@@ -50,7 +50,7 @@ const PlayingCommands = () => {
   };
 
   return (
-    <div className="w-[180px] z-20">
+    <div className="w-full flex-grow z-20">
       {timeOfTheDay === "votetime" && canVote && (
         <CmdVote
           activateSelection={activateSelection}

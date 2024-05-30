@@ -166,7 +166,7 @@ const GameGrid = () => {
   };
 
   return (
-    <div className={`flex flex-row place-items-center w-full xl:w-[80%]`}>
+    <div className={`flex flex-row place-items-center w-full`}>
       {playersList.map((player) => {
         const isAlsoWolf = player.role.team.includes("werewolves");
 

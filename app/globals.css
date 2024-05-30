@@ -65,7 +65,7 @@ body {
 }
 
 .winner-message {
-  background: var(--primary-foreground);
+  background: var(--secondary-default);
   box-shadow: 0 10px 20px -5px rgba(170, 170, 170, 0.559);
   color: rgb(255, 255, 255);
   padding: 20px;

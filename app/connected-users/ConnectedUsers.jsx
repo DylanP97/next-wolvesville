@@ -19,14 +19,14 @@ const ConnectedUsers = () => {
           <p className="text-white">{t("connected.nousers")}</p>
         </div>
       ) : (
-        <div>
+        <div className="flex flex-grow flex-col max-w-[400px]">
           {connectedUsers.map((user, index) => {
             return (
               <div
                 key={"usercard" + index}
                 className={`${
                   user.isInRoom ? "bg-green-500" : "bg-red-500"
-                } flex flex-row p-4 m-2 rounded-3xl hover:opacity-90 cursor-pointer`}
+                } flex flex-row p-4 m-2 h-fit rounded-3xl hover:opacity-90 cursor-pointer`}
               >
                 <div className="flex justify-center items-center p-1">
                   <AvatarUI heightAndWidth={50} avatar={user.avatar} />

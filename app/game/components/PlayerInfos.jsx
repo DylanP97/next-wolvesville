@@ -7,7 +7,7 @@ const PlayerInfos = () => {
   const { clientPlayer } = useGame();
 
   return (
-    <div className="bg-slate-950 shadow-lg p-4 h-[130px] relative overflow-hidden w-full">
+    <div className="bg-background shadow-lg p-4 h-[130px] relative overflow-hidden w-full">
       <p className="text-xs text-white z-20 my-2">
         {clientPlayer.name} - {clientPlayer.role.name}
       </p>

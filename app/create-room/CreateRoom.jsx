@@ -262,7 +262,7 @@ const CreateRoom = () => {
               {creationStep}. {steps[creationStep]}
             </h2>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-grow flex-col py-4">
             {generateStep()}
             <div className="flex flex-row gap-2 mt-4">
               {creationStep > 1 && (
