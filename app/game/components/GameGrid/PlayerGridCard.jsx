@@ -32,12 +32,14 @@ const PlayerGridCard = ({
                 (isDoubleSelection &&
                   player.id !== (selectedPlayer1 && selectedPlayer1.id))) &&
               !isBlocked &&
-              ((isWolf && !isAlsoWolf) || !isWolf)
+              ((isWolf && !isAlsoWolf && timeOfTheDay === "nighttime") ||
+                (isWolf && timeOfTheDay !== "nighttime") ||
+                !isWolf)
               ? "bg-red-800 cursor-pointer animate-pulse"
               : "bg-secondary"
             : "bg-slate-500"
-          : "bg-[#303030]"
-      } flex-grow md:w-40 h-full md:h-full flex flex-col justify-center items-center relative p-2`}
+          : "bg-background"
+      } flex-grow w-40 h-full flex flex-col justify-center items-center relative p-2`}
     >
       {timeOfTheDay == "votetime" && <VoteCount voteNbr={player.voteAgainst} />}
 

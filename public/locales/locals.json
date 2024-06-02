@@ -71,7 +71,8 @@
       "roles.title": "List of Roles",
       "roles.status1": "Available",
       "roles.status2": "Half-Playable",
-      "roles.status3": "Still in Development"
+      "roles.status3": "Still in Development",
+      "serverContent.action.message.seer": "👁️ The seer's magical crystal ball unveiled the identity of "
     }
   },
   "fr": {
@@ -146,7 +147,8 @@
       "roles.title": "Liste des Rôles",
       "roles.status1": "Jouable",
       "roles.status2": "Jouable mais pas complet",
-      "roles.status3": "En cours de développement"
+      "roles.status3": "En cours de développement",
+      "serverContent.action.message.seer": "👁️ La boule de cristal de la voyante a révélé l'identité de "
     }
   }
 }

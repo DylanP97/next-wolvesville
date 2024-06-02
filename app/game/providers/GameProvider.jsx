@@ -15,6 +15,7 @@ export const GameProvider = ({ children }) => {
   const [actionType, setActionType] = useState("");
 
   const gameId = game.id;
+  const isPaused = game.isPaused;
   const playersList = game.playersList;
   const aliveList = game.playersList.filter((p) => p.isAlive);
   const clientPlayer = game.playersList.find((p) => p.name == username);
@@ -45,7 +46,7 @@ export const GameProvider = ({ children }) => {
   useEffect(() => {
     if (timeCounter == 4000) {
       playersList.map((player) => {
-        if (player.isCPU) {          
+        if (player.isCPU && player.isAlive && !player.isUnderArrest) {
           cpuNextMove(
             player,
             dayCount,
@@ -64,6 +65,7 @@ export const GameProvider = ({ children }) => {
       value={{
         clientPlayer,
         gameId,
+        isPaused,
         timeOfTheDay,
         dayCount,
         timeCounter,

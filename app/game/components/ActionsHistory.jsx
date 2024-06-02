@@ -5,6 +5,7 @@ import Image from "next/image";
 import daytime from "../../../public/game/day-time.png";
 import votetime from "../../../public/game/vote-time.png";
 import nighttime from "../../../public/game/night-time.png";
+import i18n from "../../lib/i18n";
 
 const ActionsHistory = () => {
   const {
@@ -41,6 +42,15 @@ const ActionsHistory = () => {
       ? wolves
       : general;
 
+  const replacePlaceholders = (msg) => {
+    if (msg.includes("{serverContent.")) {
+      return msg.replace(/{serverContent\.(.*?)}/g, (_, key) => {
+        return i18n.t(`serverContent.${key}`);
+      });
+    }
+    return msg;
+  };
+
   return (
     <div className="w-full z-10 bg-background p-2 relative overflow-hidden">
       <h2 className="text-white">
@@ -56,7 +66,7 @@ const ActionsHistory = () => {
                   datatype={index + "msg"}
                   className={`text-xs z-20 ${index == 0 && "font-bold"}`}
                 >
-                  {msg.time} -- {msg.author}: {msg.msg}
+                  {msg.time} -- {msg.author}: {replacePlaceholders(msg.msg)}
                 </li>
               );
             }
@@ -65,7 +75,7 @@ const ActionsHistory = () => {
                 className={`text-xs z-20 ${index == 0 && "font-bold"}`}
                 key={index + "msg"}
               >
-                {msg.time} - {msg.msg}
+                {msg.time} - {replacePlaceholders(msg.msg)}
               </li>
             );
           })}

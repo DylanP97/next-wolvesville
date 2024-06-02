@@ -32,7 +32,7 @@ const RolesGrid = () => {
   }, []);
 
   return (
-    <section className="p-5 bg-[#303030]">
+    <section className="p-5 bg-background">
       <h1 className="text-white text-3xl font-bold p-4">{t("roles.title")}</h1>
       <div className="w-full grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 p-5">
         {availableRoles

@@ -45,9 +45,6 @@ export const AuthProvider = ({ children }) => {
       });
 
       socket.on("updateUsers", (updatedUsers) => {
-
-        console.log(updatedUsers)
-
         let user = updatedUsers.find(
           (user) => user.username == authState.username
         );
@@ -62,7 +59,6 @@ export const AuthProvider = ({ children }) => {
       socket.on("launchRoom", (game) => {
         game.playersList.map((player) => {
           if (player.isCPU) {
-            console.log("hello");
             socket.emit("sendNewConnectedUser", player);
           }
         });

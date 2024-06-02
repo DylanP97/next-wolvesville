@@ -90,16 +90,21 @@ const GameGrid = () => {
                 gameId
               );
             } else if (actionType == "reveal") {
-              socket.emit(
-                "revealPlayer",
-                {
-                  type: actionType,
-                  seerId: clientPlayer.id,
-                  selectedPlayerId: selectedPlayer.id,
-                  selectedPlayerName: selectedPlayer.name,
-                },
-                gameId
-              );
+              if (!selectedPlayer.isRevealed) {
+                console.log("You can't reveal a player that is not revealed");
+                return;
+              } else {
+                socket.emit(
+                  "revealPlayer",
+                  {
+                    type: actionType,
+                    seerId: clientPlayer.id,
+                    selectedPlayerId: selectedPlayer.id,
+                    selectedPlayerName: selectedPlayer.name,
+                  },
+                  gameId
+                );
+              }
             } else if (actionType == "shoot") {
               socket.emit(
                 "shootBullet",
@@ -166,7 +171,7 @@ const GameGrid = () => {
   };
 
   return (
-    <div className={`flex flex-row place-items-center w-full`}>
+    <div className={`flex flex-row place-items-center w-full flex-grow flex-wrap`}>
       {playersList.map((player) => {
         const isAlsoWolf = player.role.team.includes("werewolves");
 
