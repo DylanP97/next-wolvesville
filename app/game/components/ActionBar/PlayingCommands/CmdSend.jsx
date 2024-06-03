@@ -9,7 +9,7 @@ const CmdSend = ({ sendMessage, message }) => {
     <Tooltip content={"Send message"} color="secondary" variant="flat">
       <div
         onClick={() => sendMessage(message)}
-        className=" bg-blue-900 hover:bg-blue-700 h-[100px] aspect-square p-4 cursor-pointer flex justify-center items-center z-20"
+        className=" bg-blue-900 hover:bg-blue-700 h-[80px] aspect-square p-4 cursor-pointer flex justify-center items-center z-20"
       >
         <Image
           src={send}

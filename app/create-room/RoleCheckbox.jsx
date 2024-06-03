@@ -3,6 +3,9 @@ import i18n from "../lib/i18n";
 
 const RoleCheckbox = ({ role, handleRoleChange }) => {
   const isSolo = !["village", "werewolves"].includes(role.team.join());
+  const allowMultiple = ["Villager", "Seer", "Classic Werewolf"].includes(
+    role.name
+  );
 
   const handleNbrOfChange = (event) => {
     handleRoleChange(role.name, Number(event.target.value));
@@ -19,7 +22,7 @@ const RoleCheckbox = ({ role, handleRoleChange }) => {
           labelPlacement="outside"
           size="sm"
           min={0}
-          max={isSolo ? 1 : 3}
+          max={allowMultiple ? 3 : 1}
           onChange={handleNbrOfChange}
         />
       </div>

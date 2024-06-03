@@ -11,19 +11,14 @@ import { useGame } from "../providers/GameProvider";
 import { Button } from "@nextui-org/react";
 import { useAuth } from "../../providers/AuthProvider";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import ListIcon from "./ListIcon";
 
-const GameMain = () => {
-  const { timeOfTheDay, winningTeam, clientPlayer, gameId, isPaused } =
-    useGame();
+const GameMain = ({ summaryIsOpen, setSummaryIsOpen }) => {
+  const { winningTeam, clientPlayer, gameId, isPaused, weather } = useGame();
   const { socket } = useAuth();
   const [gamePaused, setGamePaused] = useState(false);
-
-  // const weather = {
-  //   daytime: "bg-sky-500",
-  //   votetime: "bg-sky-700",
-  //   nighttime: "bg-[#303030]",
-  // };
-  // ${weather[timeOfTheDay]
+  const { t } = useTranslation();
 
   // Sync the local state with the game state from the server
   useEffect(() => {
@@ -42,16 +37,27 @@ const GameMain = () => {
 
   return (
     <section
-      className={` bg-background absolute top-0 left-0 relative outline-none`}
+      className={`${weather} absolute top-0 left-0 relative outline-none`}
     >
-      <Button
-        className="absolute top-2 right-2 z-20"
-        color="secondary"
-        variant="solid"
-        onClick={gamePaused ? resumeGame : pauseGame}
-      >
-        {gamePaused ? "Resume" : "Pause"}
-      </Button>
+      <div className="absolute top-2 right-2 z-20 flex gap-2">
+        <Button
+          color="secondary"
+          variant="solid"
+          onClick={gamePaused ? resumeGame : pauseGame}
+        >
+          {gamePaused ? t("game.resume") : t("game.pause")}
+        </Button>
+        {!summaryIsOpen && (
+          <Button
+            color="secondary"
+            variant="solid"
+            onClick={() => setSummaryIsOpen(!summaryIsOpen)}
+            isIconOnly
+          >
+            <ListIcon />
+          </Button>
+        )}
+      </div>
       <Background />
       <GameHeader />
       <PlayerInfos />

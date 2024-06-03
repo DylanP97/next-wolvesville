@@ -11,7 +11,7 @@ const CmdVote = ({ activateSelection, isSelection }) => {
         onClick={() => activateSelection("vote")}
         className={`${
           isSelection ? "bg-slate-900" : "bg-red-800 hover:bg-red-600"
-        } h-[100px] aspect-square p-2 cursor-pointer flex justify-center items-center z-20`}
+        } h-[80px] aspect-square p-2 cursor-pointer flex justify-center items-center z-20`}
       >
         <Image
           src={voteAgainstIcon.src}

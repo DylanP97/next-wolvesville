@@ -90,7 +90,7 @@ const GameGrid = () => {
                 gameId
               );
             } else if (actionType == "reveal") {
-              if (!selectedPlayer.isRevealed) {
+              if (selectedPlayer.isRevealed) {
                 console.log("You can't reveal a player that is not revealed");
                 return;
               } else {

@@ -5,7 +5,8 @@ import Image from "next/image";
 import daytime from "../../../public/game/day-time.png";
 import votetime from "../../../public/game/vote-time.png";
 import nighttime from "../../../public/game/night-time.png";
-import i18n from "../../lib/i18n";
+import { useTranslation } from "react-i18next";
+import { replacePlaceholders } from "../../lib/utils";
 
 const ActionsHistory = () => {
   const {
@@ -17,7 +18,9 @@ const ActionsHistory = () => {
     isJailer,
     isUnderArrest,
     hasHandcuffed,
+    weather,
   } = useGame();
+  const { t } = useTranslation();
 
   const timeOfDayImages = {
     nighttime,
@@ -31,9 +34,9 @@ const ActionsHistory = () => {
     }
   }
 
-  const general = new Chat("General", generalChat, "🏘️");
-  const wolves = new Chat("Wolves", wolvesChat, "🐺");
-  const jail = new Chat("Jail", jailChat, "👮‍♂️");
+  const general = new Chat(t("game.generalChat"), generalChat, "🏘️");
+  const wolves = new Chat(t("game.wolvesChat"), wolvesChat, "🐺");
+  const jail = new Chat(t("game.jailChat"), jailChat, "👮‍♂️");
 
   const usedChat =
     isUnderArrest || (isJailer && timeOfTheDay == "nighttime" && hasHandcuffed)
@@ -42,19 +45,12 @@ const ActionsHistory = () => {
       ? wolves
       : general;
 
-  const replacePlaceholders = (msg) => {
-    if (msg.includes("{serverContent.")) {
-      return msg.replace(/{serverContent\.(.*?)}/g, (_, key) => {
-        return i18n.t(`serverContent.${key}`);
-      });
-    }
-    return msg;
-  };
-
   return (
-    <div className="w-full z-10 bg-background p-2 relative overflow-hidden">
+    <div
+      className={`${weather} w-full z-10 bg-background p-2 relative overflow-hidden`}
+    >
       <h2 className="text-white">
-        {usedChat.label} Chat {usedChat.emoji}
+        {usedChat.label} {usedChat.emoji}
       </h2>
       <div className="h-[160px] z-10 p-2 max-h-80 object-bottom overflow-hidden overflow-y-auto">
         <ul className="actions-list text-white">

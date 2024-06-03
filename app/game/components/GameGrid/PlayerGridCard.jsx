@@ -19,6 +19,7 @@ const PlayerGridCard = ({
     isSelection,
     isDoubleSelection,
     isBlocked,
+    weather
   } = useGame();
 
   return (
@@ -36,9 +37,9 @@ const PlayerGridCard = ({
                 (isWolf && timeOfTheDay !== "nighttime") ||
                 !isWolf)
               ? "bg-red-800 cursor-pointer animate-pulse"
-              : "bg-secondary"
+              : `${weather}`
             : "bg-slate-500"
-          : "bg-background"
+          : "bg-black"
       } flex-grow w-40 h-full flex flex-col justify-center items-center relative p-2`}
     >
       {timeOfTheDay == "votetime" && <VoteCount voteNbr={player.voteAgainst} />}

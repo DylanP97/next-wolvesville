@@ -9,6 +9,12 @@ const GameContext = createContext();
 export const GameProvider = ({ children }) => {
   const { game, socket, username } = useAuth();
 
+  const weatherColors = {
+    daytime: "bg-sky-500",
+    votetime: "bg-sky-700",
+    nighttime: "bg-black",
+  };
+
   const [isSelection, setIsSelection] = useState(false);
   const [isDoubleSelection, setIsDoubleSelection] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
@@ -20,6 +26,7 @@ export const GameProvider = ({ children }) => {
   const aliveList = game.playersList.filter((p) => p.isAlive);
   const clientPlayer = game.playersList.find((p) => p.name == username);
   const timeOfTheDay = game.timeOfTheDay;
+  const [weather, setWeather] = useState(weatherColors[timeOfTheDay]);
   const dayCount = game.dayCount;
   const timeCounter = game.timeCounter;
   const winningTeam = game.winningTeam;
@@ -41,6 +48,7 @@ export const GameProvider = ({ children }) => {
     setIsDoubleSelection(false);
     setIsBlocked(false);
     setActionType("");
+    setWeather(weatherColors[timeOfTheDay]);
   }, [timeOfTheDay]);
 
   useEffect(() => {
@@ -87,6 +95,7 @@ export const GameProvider = ({ children }) => {
         setIsBlocked,
         actionType,
         setActionType,
+        weather,
       }}
     >
       {children}

@@ -7,8 +7,8 @@ const NavigationMenu = () => {
   const { t } = useTranslation();
 
   const paths = [
-    { label: t("menu.1"), path: "/join-room" },
     { label: t("menu.2"), path: "/create-room" },
+    { label: t("menu.1"), path: "/join-room" },
     { label: t("menu.3"), path: "/connected-users" },
     { label: t("menu.4"), path: "/roles" },
     { label: t("menu.5"), path: "/profile" },

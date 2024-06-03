@@ -33,7 +33,7 @@ const CommandPerform2 = ({ canPerform2, rolename, activateSelection }) => {
               onClick={() => activateSelection(type)}
               className={`${
                 isSelection ? "bg-secondary" : "bg-green-600 hover:bg-green-400"
-              } h-[100px] aspect-square p-2 cursor-pointer flex justify-center items-center z-20`}
+              } h-[80px] aspect-square p-2 cursor-pointer flex justify-center items-center z-20`}
             >
               <Image
                 src={emoji}

@@ -72,7 +72,18 @@
       "roles.status1": "Available",
       "roles.status2": "Half-Playable",
       "roles.status3": "Still in Development",
-      "serverContent.action.message.seer": "👁️ The seer's magical crystal ball unveiled the identity of "
+      "game.resume": "Resume",
+      "game.pause": "Pause",
+      "game.daytime": "DayTime",
+      "game.votetime": "VoteTime",
+      "game.nighttime": "NightTime",
+      "game.left": "left",
+      "game.generalChat": "General Chat",
+      "game.wolvesChat": "Wolves Chat",
+      "game.jailChat": "Jail Chat",
+      "game.writeMessage": "Write a message",
+      "serverContent.action.message.seer": "👁️ The seer's magical crystal ball unveiled the identity of ",
+      "serverContent.action.message.wolvesMurdered": "💀 Last night, the wolves murdered "
     }
   },
   "fr": {
@@ -145,10 +156,21 @@
       "create.submit": "Créer la salle",
       "roles.team": "Équipe",
       "roles.title": "Liste des Rôles",
-      "roles.status1": "Jouable",
+      "roles.status1": "100% fonctionnel",
       "roles.status2": "Jouable mais pas complet",
       "roles.status3": "En cours de développement",
-      "serverContent.action.message.seer": "👁️ La boule de cristal de la voyante a révélé l'identité de "
+      "game.resume": "Continuer le jeu",
+      "game.pause": "Mettre le jeu en pause",
+      "game.daytime": "Jour",
+      "game.votetime": "Vote",
+      "game.nighttime": "Nuit",
+      "game.left": "restantes",
+      "game.generalChat": "Discussion du village",
+      "game.wolvesChat": "Discussion de nuit entre loups",
+      "game.jailChat": "Discussion de nuit gêolier/prisonnier",
+      "game.writeMessage": "Écrire un message",
+      "serverContent.action.message.seer": "👁️ La boule de cristal de la voyante a révélé l'identité de ",
+      "serverContent.action.message.wolvesMurdered": "💀 La nuit dernière, les loups ont dévorés "
     }
   }
 }
