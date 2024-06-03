@@ -37,7 +37,7 @@ const GameMain = ({ summaryIsOpen, setSummaryIsOpen }) => {
 
   return (
     <section
-      className={`${weather} absolute top-0 left-0 relative outline-none`}
+      className={`${weather} absolute top-0 left-0 relative outline-none `}
     >
       <div className="absolute top-2 right-2 z-20 flex gap-2">
         <Button

@@ -57,7 +57,10 @@ const GameGrid = () => {
         }
 
         if (timeOfTheDay == "votetime" && actionType == "vote") {
-          const nbr = clientPlayer.role.name === "Mayor" ? 2 : 1;
+          const nbr =
+            clientPlayer.role.name === "Mayor" && clientPlayer.isRevealed
+              ? 2
+              : 1;
           socket.emit("addVote", selectedPlayer.id, nbr, gameId);
           selectionCompleted();
           return;
@@ -171,7 +174,9 @@ const GameGrid = () => {
   };
 
   return (
-    <div className={`flex flex-row place-items-center w-full flex-grow flex-wrap`}>
+    <div
+      className={`flex flex-row place-items-center w-full flex-grow flex-wrap`}
+    >
       {playersList.map((player) => {
         const isAlsoWolf = player.role.team.includes("werewolves");
 

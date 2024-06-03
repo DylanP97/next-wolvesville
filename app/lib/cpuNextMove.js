@@ -10,11 +10,16 @@ const cpuNextMove = (
     return playersList.find((ply) => ply.id === id);
   }
 
-  function getRandomAlivePlayer(excludeWerewolves = false, excludeRevealed = false) {
+  function getRandomAlivePlayer(
+    excludeWerewolves = false,
+    excludeRevealed = false,
+    excludePlayerId = null // New parameter to exclude a specific player
+  ) {
     let potentialPlayers = playersList.filter(
       (player) =>
         player.isAlive &&
         !player.isUnderArrest &&
+        player.id !== excludePlayerId && // Exclude the specific player
         (!excludeWerewolves || player.role.team.join() !== "werewolves") &&
         (!excludeRevealed || !player.isRevealed)
     );
@@ -30,7 +35,7 @@ const cpuNextMove = (
     switch (cpu.role.name) {
       case "Classic Werewolf":
       case "Alpha Werewolf":
-        let target = getRandomAlivePlayer(true);
+        let target = getRandomAlivePlayer(true, false, null);
         if (target) {
           socket.emit(
             "addWolfVote",
@@ -93,16 +98,24 @@ const cpuNextMove = (
           let handcuffedPlayerId = cpu.hasHandcuffed;
           let handcuffedPlayer = getPlayerWithId(handcuffedPlayerId);
           if (handcuffedPlayer) {
-            socket.emit(
-              "executePrisoner",
-              {
-                type: "execute",
-                playerId: cpu.id,
-                selectedPlayerId: handcuffedPlayerId,
-                selectedPlayerName: handcuffedPlayer.name,
-              },
-              gameId
+            console.log(
+              "nombre d'exécutions restantes " +
+                cpu.role.canPerform2.nbrLeftToPerform
             );
+            if (cpu.role.canPerform2.nbrLeftToPerform > 0) {
+              if (Math.random() < 0.5) {
+                socket.emit(
+                  "executePrisoner",
+                  {
+                    type: "execute",
+                    playerId: cpu.id,
+                    selectedPlayerId: handcuffedPlayerId,
+                    selectedPlayerName: handcuffedPlayer.name,
+                  },
+                  gameId
+                );
+              }
+            }
           }
         }
         break;
@@ -114,8 +127,13 @@ const cpuNextMove = (
 
   function performDayAction() {
     switch (cpu.role.name) {
+      case "Mayor":
+        if (Math.random() < 0.3 && cpu.role.canPerform.nbrLeftToPerform > 0) {
+          socket.emit("assertDuty", cpu.name, gameId);
+        }
+        break;
       case "Jailer":
-        let arrestedPlayer = getRandomAlivePlayer();
+        let arrestedPlayer = getRandomAlivePlayer(false, false, cpu.id);
         if (arrestedPlayer) {
           socket.emit(
             "registerAction",
@@ -130,7 +148,7 @@ const cpuNextMove = (
         }
         break;
       case "Seer":
-        let playerToReveal = getRandomAlivePlayer(false, true);
+        let playerToReveal = getRandomAlivePlayer(false, true, cpu.id);
         if (playerToReveal && playerToReveal.id !== cpu.id) {
           socket.emit(
             "revealPlayer",
@@ -168,7 +186,12 @@ const cpuNextMove = (
   function performVoteAction() {
     let voteTarget = getRandomAlivePlayer();
     if (voteTarget) {
-      socket.emit("addVote", voteTarget.id, 1, gameId);
+      socket.emit(
+        "addVote",
+        voteTarget.id,
+        clientPlayer.role.name === "Mayor" && clientPlayer.isRevealed ? 2 : 1,
+        gameId
+      );
     }
   }
 

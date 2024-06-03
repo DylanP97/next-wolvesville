@@ -37,7 +37,7 @@ const SideSummary = ({ summaryIsOpen, setSummaryIsOpen }) => {
                   !ply.isAlive && "line-through"
                 } text-sm text-gray-200`}
               >
-                {ply.isRevealed ? ply.name : "???"}
+                {!ply.isRevealed ? ply.name : "???"}
               </p>
             }
           />

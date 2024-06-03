@@ -8,6 +8,7 @@ const CmdPerform1 = ({
   canPerform,
   activateSelection,
   activateDoubleSelection,
+  noSelectionAction,
 }) => {
   const {
     dayCount,
@@ -43,6 +44,7 @@ const CmdPerform1 = ({
           onClick={() => {
             if (needSelection) activateSelection(type);
             else if (needDoubleSelection) activateDoubleSelection(type);
+            else noSelectionAction(type);
           }}
           className={`${
             isSelection || isDoubleSelection

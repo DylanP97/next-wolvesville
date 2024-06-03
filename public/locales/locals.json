@@ -83,7 +83,8 @@
       "game.jailChat": "Jail Chat",
       "game.writeMessage": "Write a message",
       "serverContent.action.message.seer": "👁️ The seer's magical crystal ball unveiled the identity of ",
-      "serverContent.action.message.wolvesMurdered": "💀 Last night, the wolves murdered "
+      "serverContent.action.message.wolvesMurdered": "💀 Last night, the wolves murdered ",
+      "serverContent.action.message.mayorReveal": "👔 The village now know its Mayor "
     }
   },
   "fr": {
@@ -114,7 +115,7 @@
       "menu.1": "Rejoindre une salle",
       "menu.2": "Création de salle",
       "menu.3": "Joueurs connectés",
-      "menu.4": "Description des roles",
+      "menu.4": "Liste des roles",
       "menu.5": "Modifier mon profil",
       "connected.title": "Liste des joueurs connectés",
       "connected.nousers": "Il n'y a pas de joueurs connectés",
@@ -170,7 +171,8 @@
       "game.jailChat": "Discussion de nuit gêolier/prisonnier",
       "game.writeMessage": "Écrire un message",
       "serverContent.action.message.seer": "👁️ La boule de cristal de la voyante a révélé l'identité de ",
-      "serverContent.action.message.wolvesMurdered": "💀 La nuit dernière, les loups ont dévorés "
+      "serverContent.action.message.wolvesMurdered": "💀 La nuit dernière, les loups ont dévorés ",
+      "serverContent.action.message.mayorReveal": "👔 Le village connaît désormais son maire "
     }
   }
 }

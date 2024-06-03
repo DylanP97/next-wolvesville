@@ -19,9 +19,8 @@ const NavigationMenu = () => {
       {paths.map((p, index) => (
         <Link
           key={index + "-navlink"}
-          className={`w-60 z-20 p-2 my-2 rounded-xl bg-primary text-sm text-center ${
-            index < 2 ? "animate-pulse" : ""
-          } hover:scale-[105%] transition-all`}
+          className={`w-60 h-10 z-20 p-2 my-2 rounded-3xl bg-primary text-sm text-center text-primary-foreground flex justify-center items-center hover:font-bold 
+            animate-pulse hover:scale-[105%] transition-all`}
           href={p.path}
         >
           {p.label}

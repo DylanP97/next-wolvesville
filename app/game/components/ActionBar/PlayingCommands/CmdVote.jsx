@@ -4,17 +4,21 @@ import Image from "next/image";
 import { Tooltip } from "@nextui-org/react";
 import voteAgainstIcon from "../../../../../public/game/vote-time.png";
 
-const CmdVote = ({ activateSelection, isSelection }) => {
+const CmdVote = ({ activateSelection, isSelection, wolfVote }) => {
   return (
     <Tooltip content={"Vote against a player"} color="secondary" variant="flat">
       <div
-        onClick={() => activateSelection("vote")}
+        onClick={() => activateSelection(wolfVote ? "devours" : "vote")}
         className={`${
           isSelection ? "bg-slate-900" : "bg-red-800 hover:bg-red-600"
         } h-[80px] aspect-square p-2 cursor-pointer flex justify-center items-center z-20`}
       >
         <Image
-          src={voteAgainstIcon.src}
+          src={
+            wolfVote
+              ? "https://res.cloudinary.com/dnhq4fcyp/image/upload/v1717423963/wolfvote2_ba9iir.webp"
+              : voteAgainstIcon.src
+          }
           alt="voteAgainst"
           width={50}
           height={50}
