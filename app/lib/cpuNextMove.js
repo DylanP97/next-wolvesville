@@ -45,6 +45,19 @@ const cpuNextMove = (
           );
         }
         break;
+      case "Junior Werewolf":
+        let juniorWolftarget = getRandomAlivePlayer(true, false, cpu.id);
+        if (juniorWolftarget) {
+          socket.emit(
+            "chooseJuniorWolfDeathRevenge",
+            {
+              juniorWolfId: cpu.id,
+              selectedPlayerId: juniorWolftarget.id,
+            },
+            gameId
+          );
+        }
+        break;
       case "Serial Killer":
         let victim = getRandomAlivePlayer();
         if (victim) {
@@ -189,7 +202,7 @@ const cpuNextMove = (
       socket.emit(
         "addVote",
         voteTarget.id,
-        clientPlayer.role.name === "Mayor" && clientPlayer.isRevealed ? 2 : 1,
+        cpu.role.name === "Mayor" && cpu.isRevealed ? 2 : 1,
         gameId
       );
     }

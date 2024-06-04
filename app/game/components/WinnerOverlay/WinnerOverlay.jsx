@@ -6,7 +6,6 @@ import { useAuth } from "../../../providers/AuthProvider";
 import AvatarUI from "../../../profile/components/AvatarUI";
 import { useGame } from "../../providers/GameProvider";
 import { useTranslation } from "react-i18next";
-import tombstone from "../../../../public/game/tombstone.png";
 
 const WinnerOverlay = () => {
   const { t } = useTranslation();
@@ -77,7 +76,7 @@ const WinnerOverlay = () => {
           <div className="flex flex-col justify-center mt-4">
             <div className="flex items-end gap-2">
               <Image
-                src={tombstone}
+                src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1717509814/grave_nmqqmp.png"
                 alt="graveyard"
                 height={60}
                 width={60}

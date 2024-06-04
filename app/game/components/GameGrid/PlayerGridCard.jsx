@@ -19,7 +19,8 @@ const PlayerGridCard = ({
     isSelection,
     isDoubleSelection,
     isBlocked,
-    weather
+    weather,
+    actionType,
   } = useGame();
 
   return (
@@ -33,7 +34,10 @@ const PlayerGridCard = ({
                 (isDoubleSelection &&
                   player.id !== (selectedPlayer1 && selectedPlayer1.id))) &&
               !isBlocked &&
-              ((isWolf && !isAlsoWolf && timeOfTheDay === "nighttime") ||
+              ((!isAlsoWolf &&
+                clientPlayer.role.name === "Junior Werewolf" &&
+                actionType === "chooseJuniorWolfDeathRevenge") ||
+                (isWolf && !isAlsoWolf && timeOfTheDay === "nighttime") ||
                 (isWolf && timeOfTheDay !== "nighttime") ||
                 !isWolf)
               ? "bg-red-800 cursor-pointer animate-pulse"

@@ -66,7 +66,24 @@ const GameGrid = () => {
           return;
         }
 
-        if (timeOfTheDay == "nighttime" && actionType == "devours") {
+        if (actionType == "chooseJuniorWolfDeathRevenge") {
+          if (!selectedPlayer.role.team.includes("werewolves")) {
+            socket.emit(
+              "chooseJuniorWolfDeathRevenge",
+              {
+                juniorWolfId: selectedPlayer.id,
+                selectedPlayerId: selectedPlayer.id,
+              },
+              gameId
+            );
+            selectionCompleted();
+          } else {
+            console.log("You can't select a wolf");
+          }
+          return;
+        }
+
+        if (timeOfTheDay == "nighttime" && actionType == "wolfVote") {
           if (!selectedPlayer.role.team.includes("werewolves")) {
             const nbr = clientPlayer.role.name === "Alpha Werewolf" ? 2 : 1;
             socket.emit("addWolfVote", selectedPlayer.id, nbr, gameId);

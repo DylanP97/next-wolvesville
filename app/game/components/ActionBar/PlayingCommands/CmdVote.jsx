@@ -8,7 +8,7 @@ const CmdVote = ({ activateSelection, isSelection, wolfVote }) => {
   return (
     <Tooltip content={"Vote against a player"} color="secondary" variant="flat">
       <div
-        onClick={() => activateSelection(wolfVote ? "devours" : "vote")}
+        onClick={() => activateSelection(wolfVote ? "wolfVote" : "vote")}
         className={`${
           isSelection ? "bg-slate-900" : "bg-red-800 hover:bg-red-600"
         } h-[80px] aspect-square p-2 cursor-pointer flex justify-center items-center z-20`}
