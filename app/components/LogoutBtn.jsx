@@ -5,9 +5,27 @@ import { useAuth } from "../providers/AuthProvider";
 import { useTranslation } from "react-i18next";
 
 const LogoutBtn = () => {
-    const { t } = useTranslation();
-    const { isConnected } = useAuth();
-  
+  const { t } = useTranslation();
+  const { isConnected, setAuthInfo } = useAuth();
+
+  const logout = async () => {
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_URL + "/api/user/logout",
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        setAuthInfo(null, null, false, null);
+        document.location.assign("/");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
   return (
     <>
       {isConnected && (
@@ -16,7 +34,7 @@ const LogoutBtn = () => {
           color="secondary"
           className="hover:text-white"
           aria-label={t("logout")}
-          onPress={() => document.location.assign("/")}
+          onPress={() => logout()}
         >
           {t("logout")}
         </Button>

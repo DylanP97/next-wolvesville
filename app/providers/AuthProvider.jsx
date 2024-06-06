@@ -33,51 +33,72 @@ export const AuthProvider = ({ children }) => {
     setAuthState({ username, avatar, isConnected, socketId });
   };
 
+  async function checkAuth() {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_URL + "/api/user/checkAuth", // Assuming your endpoint is /check-auth
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log("User is authenticated:", data);
+      setAuthInfo(data.username, data.avatar, true, null);
+    } else {
+      console.error("User is not authenticated");
+    }
+  }
+
   useEffect(() => {
-    if (authState.isConnected) {
-      const socket = io(process.env.NEXT_PUBLIC_API_URL);
-      let user = { username: authState.username, avatar: authState.avatar };
+    const initializeAuth = async () => {
+      await checkAuth();
+      if (authState.isConnected) {
+        const socket = io(process.env.NEXT_PUBLIC_API_URL);
+        let user = { username: authState.username, avatar: authState.avatar };
 
-      socket.on("connect", () => {
-        user = { ...user, socketId: socket.id };
-        setAuthInfo(authState.username, authState.avatar, true, socket.id);
-        socket.emit("sendNewConnectedUser", user);
-      });
-
-      socket.on("updateUsers", (updatedUsers) => {
-        let user = updatedUsers.find(
-          (user) => user.username == authState.username
-        );
-        if (user.isInRoom) setIsInRoom(user.isInRoom);
-        setConnectedUsers(updatedUsers.filter((usr) => !usr.isCPU));
-      });
-
-      socket.on("updateRooms", (updatedRooms) => {
-        setRooms(updatedRooms);
-      });
-
-      socket.on("launchRoom", (game) => {
-        game.playersList.map((player) => {
-          if (player.isCPU) {
-            socket.emit("sendNewConnectedUser", player);
-          }
+        socket.on("connect", () => {
+          user = { ...user, socketId: socket.id };
+          setAuthInfo(authState.username, authState.avatar, true, socket.id);
+          socket.emit("sendNewConnectedUser", user);
         });
-        setGame(game);
-        setIsPlaying(true);
-      });
 
-      socket.on("updateGame", (updatedGame) => {
-        setGame(updatedGame);
-      });
+        socket.on("updateUsers", (updatedUsers) => {
+          let user = updatedUsers.find(
+            (user) => user.username == authState.username
+          );
+          if (user.isInRoom) setIsInRoom(user.isInRoom);
+          setConnectedUsers(updatedUsers.filter((usr) => !usr.isCPU));
+        });
 
-      setSocket(socket);
+        socket.on("updateRooms", (updatedRooms) => {
+          setRooms(updatedRooms);
+        });
 
-      return () => {
+        socket.on("launchRoom", (game) => {
+          game.playersList.map((player) => {
+            if (player.isCPU) {
+              socket.emit("sendNewConnectedUser", player);
+            }
+          });
+          setGame(game);
+          setIsPlaying(true);
+        });
+
+        socket.on("updateGame", (updatedGame) => {
+          setGame(updatedGame);
+        });
+
+        setSocket(socket);
+      } else {
         if (socket) {
           socket.disconnect();
         }
-      };
-    }
+      }
+    };
+
+    initializeAuth();
   }, [authState.isConnected]);
 
   return (

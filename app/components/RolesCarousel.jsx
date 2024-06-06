@@ -41,6 +41,7 @@ const RolesCarousel = () => {
                     width={100}
                     src={role.image}
                     alt=""
+                    priority
                   />
                 </div>
               );

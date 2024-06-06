@@ -31,6 +31,8 @@ const CreateRoom = () => {
     4: `${t("create.stepFour")}: ${roomName}`,
   };
 
+  console.log(selectedRolesTeam);
+
   useEffect(() => {
     fetchTeams();
     fetchRoles();
@@ -51,11 +53,14 @@ const CreateRoom = () => {
   useEffect(() => {
     setCPUPlayersMax(selectedRoles.length - 1);
 
-    setSelectedRolesTeam(
-      availableTeams.filter((team) =>
-        selectedRoles.map((role) => role.team).includes(team.name)
-      )
+    console.log(availableTeams);
+
+    let selectedRolesTeamsArray = selectedRoles.map((role) => role.team.join());
+    console.log(selectedRolesTeamsArray)
+    let filteredTeams = availableTeams.filter((team) =>
+      selectedRolesTeamsArray.includes(team.name)
     );
+    setSelectedRolesTeam(filteredTeams);
   }, [selectedRoles]);
 
   const fetchTeams = async () => {
@@ -146,8 +151,8 @@ const CreateRoom = () => {
       case 2:
         return (
           <>
-            <div className="flex flex-row justify-between">
-              <div className="w-[50%]">
+            <div className="flex flex-col md:flex-row justify-between">
+              <div className="">
                 {availableRoles.map((role) => (
                   <RoleCheckbox
                     key={role.name + "-rolecheckbx"}
@@ -157,12 +162,12 @@ const CreateRoom = () => {
                   />
                 ))}
               </div>
-              <div className="w-[50%] h-[100%]">
+              <div className="p-4">
                 <p>Please select a variety of roles and teams...</p>
                 <div className="flex gap-3 items-center">
-                  {selectedRolesTeam.map((t, i) => (
-                    <TeamCounter team={t} key={t.name + i + "-tc"} />
-                  ))}
+                  {selectedRolesTeam.map((t, i) => {
+                    return <TeamCounter team={t} key={t.name + i + "-tc"} />;
+                  })}
                 </div>
               </div>
             </div>
@@ -264,7 +269,7 @@ const CreateRoom = () => {
           </div>
           <div className="flex flex-grow flex-col py-4">
             {generateStep()}
-            <div className="flex flex-row gap-2 mt-4">
+            <div className="flex flex-row gap-2 mt-2">
               {creationStep > 1 && (
                 <Button
                   className="hover:scale-[105%] transition-all"

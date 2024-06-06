@@ -36,6 +36,7 @@ const Connexion = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ email, password }),
+            credentials: 'include',
           }
         );
         if (response.ok) {
@@ -57,6 +58,7 @@ const Connexion = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ username, email, password, defaultAvatar }),
+            credentials: 'include',
           }
         );
 
@@ -66,6 +68,8 @@ const Connexion = () => {
         }
       } catch (error) {
         console.error("Signup error:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };

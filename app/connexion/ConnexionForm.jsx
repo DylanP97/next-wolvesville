@@ -16,7 +16,7 @@ const ConnexionForm = ({
   const { t } = useTranslation();
 
   return (
-    <form className="z-20" onSubmit={handleSubmit}>
+    <form className=" w-60 z-20" onSubmit={handleSubmit}>
       {!isLogin && (
         <div className="w-[95%] m-2">
           <Input
