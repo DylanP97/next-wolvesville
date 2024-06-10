@@ -8,10 +8,11 @@ import Image from "next/image";
 import evilEyes from "../../public/game/evileyes.gif";
 import ConnexionForm from "./ConnexionForm";
 import { Spinner } from "@nextui-org/react";
+import io from "socket.io-client"; // Add this import
 
 const Connexion = () => {
   const { t } = useTranslation();
-  const { setAuthInfo } = useAuth();
+  const { setAuthInfo, setSocket, setToken } = useAuth();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,12 +37,26 @@ const Connexion = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ email, password }),
-            credentials: 'include',
+            credentials: "include",
           }
         );
         if (response.ok) {
-          const userData = await response.json();
-          setAuthInfo(userData.username, userData.avatar, true);
+          const data = await response.json();
+          setToken(data.token);
+          const newSocket = io(process.env.NEXT_PUBLIC_API_URL, {
+            query: { token: data.token },
+          });
+          setSocket(newSocket);
+          setAuthInfo(data.username, data.avatar, true, newSocket.id);
+          newSocket.on("connect", () => {
+            const user = {
+              username: data.username,
+              avatar: data.avatar,
+              socketId: newSocket.id,
+              token: data.token,
+            };
+            newSocket.emit("sendNewConnectedUser", user);
+          });
         }
       } catch (error) {
         console.error("Login error:", error);
@@ -58,7 +73,7 @@ const Connexion = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ username, email, password, defaultAvatar }),
-            credentials: 'include',
+            credentials: "include",
           }
         );
 

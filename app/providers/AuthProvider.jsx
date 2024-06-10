@@ -1,7 +1,7 @@
 "use client";
 
-import io from "socket.io-client";
 import { createContext, useContext, useState, useEffect } from "react";
+import io from "socket.io-client";
 
 const AuthContext = createContext();
 
@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
     isConnected: false,
     socketId: null,
   });
+  const [token, setToken] = useState(null);
   const [isInRoom, setIsInRoom] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [game, setGame] = useState(null);
@@ -35,79 +36,72 @@ export const AuthProvider = ({ children }) => {
 
   async function checkAuth() {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + "/api/user/checkAuth", // Assuming your endpoint is /check-auth
+      process.env.NEXT_PUBLIC_API_URL + "/api/user/checkAuth",
       {
         method: "GET",
         credentials: "include",
       }
     );
-
     if (response.ok) {
       const data = await response.json();
       console.log("User is authenticated:", data);
-      setAuthInfo(data.username, data.avatar, true, null);
+      setAuthInfo(data.username, data.avatar, true, data.socketId);
+      setToken(data.token);
+      const newSocket = io(process.env.NEXT_PUBLIC_API_URL, {
+        query: { token: data.token },
+      });
+      setSocket(newSocket);
     } else {
-      console.error("User is not authenticated");
+      console.log("User is not authenticated");
     }
   }
 
   useEffect(() => {
-    const initializeAuth = async () => {
-      await checkAuth();
-      if (authState.isConnected) {
-        const socket = io(process.env.NEXT_PUBLIC_API_URL);
-        let user = { username: authState.username, avatar: authState.avatar };
+    checkAuth();
+  }, []);
 
-        socket.on("connect", () => {
-          user = { ...user, socketId: socket.id };
-          setAuthInfo(authState.username, authState.avatar, true, socket.id);
-          socket.emit("sendNewConnectedUser", user);
+  useEffect(() => {
+    if (socket) {
+      socket.on("updateUsers", (updatedUsers) => {
+        let user = updatedUsers.find(
+          (user) => user.username === authState.username
+        );
+        if (user?.isInRoom) setIsInRoom(user.isInRoom);
+        setConnectedUsers(updatedUsers.filter((usr) => !usr.isCPU));
+      });
+
+      socket.on("updateRooms", (updatedRooms) => {
+        setRooms(updatedRooms);
+      });
+
+      socket.on("launchRoom", (game) => {
+        game.playersList.forEach((player) => {
+          if (player.isCPU) {
+            socket.emit("sendNewConnectedUser", player);
+          }
         });
+        setGame(game);
+        setIsPlaying(true);
+      });
 
-        socket.on("updateUsers", (updatedUsers) => {
-          let user = updatedUsers.find(
-            (user) => user.username == authState.username
-          );
-          if (user.isInRoom) setIsInRoom(user.isInRoom);
-          setConnectedUsers(updatedUsers.filter((usr) => !usr.isCPU));
-        });
+      socket.on("updateGame", (updatedGame) => {
+        setGame(updatedGame);
+      });
 
-        socket.on("updateRooms", (updatedRooms) => {
-          setRooms(updatedRooms);
-        });
-
-        socket.on("launchRoom", (game) => {
-          game.playersList.map((player) => {
-            if (player.isCPU) {
-              socket.emit("sendNewConnectedUser", player);
-            }
-          });
-          setGame(game);
-          setIsPlaying(true);
-        });
-
-        socket.on("updateGame", (updatedGame) => {
-          setGame(updatedGame);
-        });
-
-        setSocket(socket);
-      } else {
-        if (socket) {
-          socket.disconnect();
-        }
-      }
-    };
-
-    initializeAuth();
-  }, [authState.isConnected]);
+      return () => {
+        socket.disconnect();
+      };
+    }
+  }, [socket]);
 
   return (
     <AuthContext.Provider
-      id="authcontext"
       value={{
         ...authState,
         setAuthInfo,
         socket,
+        setSocket,
+        setToken,
         rooms,
         addRoom,
         connectedUsers,
