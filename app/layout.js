@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={``}>
       <body>
         <Providers>
-          <div className="min-h-screen flex flex-col justify-between w-full">
+          <div className="flex flex-col justify-between w-full min-h-screen">
             <GeneralBtns />
             {children}
             <Footer />

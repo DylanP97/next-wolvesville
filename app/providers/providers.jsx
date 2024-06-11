@@ -3,6 +3,7 @@
 import { NextUIProvider } from "@nextui-org/react";
 import { AuthProvider } from "./AuthProvider";
 import { KeysProvider } from "./KeysProvider";
+import { SoundProvider } from "./SoundProvider";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../lib/i18n";
 import ClientOnly from "../components/ClientOnly";
@@ -13,7 +14,9 @@ export function Providers({ children }) {
       <I18nextProvider i18n={i18n}>
         <NextUIProvider>
           <KeysProvider>
-            <AuthProvider>{children}</AuthProvider>
+            <SoundProvider>
+              <AuthProvider>{children}</AuthProvider>
+            </SoundProvider>
           </KeysProvider>
         </NextUIProvider>
       </I18nextProvider>

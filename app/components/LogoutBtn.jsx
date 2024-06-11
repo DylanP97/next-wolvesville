@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 const LogoutBtn = () => {
   const { t } = useTranslation();
-  const { isConnected, setAuthInfo } = useAuth();
+  const { isConnected, setAuthInfo, socket, setSocket } = useAuth();
 
   const logout = async () => {
     try {
@@ -19,6 +19,8 @@ const LogoutBtn = () => {
       );
       if (response.ok) {
         setAuthInfo(null, null, false, null);
+        socket.emit("logout");
+        setSocket(null);
         document.location.assign("/");
       }
     } catch (error) {

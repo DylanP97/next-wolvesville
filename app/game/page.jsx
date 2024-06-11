@@ -13,7 +13,7 @@ export default function GamePage() {
   const [summaryIsOpen, setSummaryIsOpen] = useState(false);
 
   return (
-    <div className="flex flex-col flex-grow">
+    <div className="flex flex-col flex-grow h-screen">
       {isConnected ? (
         <GameProvider>
           <InGameKeysProvider>

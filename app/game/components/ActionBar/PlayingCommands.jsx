@@ -7,7 +7,7 @@ import { useGame } from "../../providers/GameProvider";
 import { useAuth } from "../../../providers/AuthProvider";
 
 const PlayingCommands = () => {
-  const { socket } = useAuth;
+  const { socket } = useAuth();
 
   const {
     clientPlayer,
@@ -18,6 +18,7 @@ const PlayingCommands = () => {
     setIsDoubleSelection,
     isBlocked,
     setActionType,
+    gameId,
   } = useGame();
 
   const {

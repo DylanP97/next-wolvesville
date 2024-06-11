@@ -37,29 +37,31 @@ const GameMain = ({ summaryIsOpen, setSummaryIsOpen }) => {
 
   return (
     <section
-      className={`${weather} absolute top-0 left-0 relative outline-none `}
+      className={`${weather} h-screen w-full flex flex-col flex-grow relative pt-[60px]`}
     >
-      <div className="absolute top-2 right-2 z-20 flex gap-2">
-        <Button
-          color="secondary"
-          variant="solid"
-          onClick={gamePaused ? resumeGame : pauseGame}
-        >
-          {gamePaused ? t("game.resume") : t("game.pause")}
-        </Button>
-        {!summaryIsOpen && (
+      <div className="z-20 flex justify-between items-center w-full px-4">
+        <GameHeader />
+        <div className="flex justify-center items-center gap-2">
           <Button
             color="secondary"
             variant="solid"
-            onClick={() => setSummaryIsOpen(!summaryIsOpen)}
-            isIconOnly
+            onClick={gamePaused ? resumeGame : pauseGame}
           >
-            <ListIcon />
+            {gamePaused ? t("game.resume") : t("game.pause")}
           </Button>
-        )}
+          {!summaryIsOpen && (
+            <Button
+              color="secondary"
+              variant="solid"
+              onClick={() => setSummaryIsOpen(!summaryIsOpen)}
+              isIconOnly
+            >
+              <ListIcon />
+            </Button>
+          )}
+        </div>
       </div>
       <Background />
-      <GameHeader />
       <PlayerInfos />
       <GameGrid />
       <ActionsHistory />

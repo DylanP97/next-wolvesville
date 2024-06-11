@@ -8,7 +8,7 @@ const GameHeader = () => {
   const { t } = useTranslation();
 
   return (
-    <div className={`${weather} text-white shadow-lg p-2`}>
+    <>
       <p className="text-xs text-white">
         {timeOfTheDay === "daytime" ? (
           <>
@@ -27,7 +27,7 @@ const GameHeader = () => {
           </>
         )}
       </p>
-    </div>
+    </>
   );
 };
 

@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import io from "socket.io-client";
+import { useSound } from "./SoundProvider";
 
 const AuthContext = createContext();
 
@@ -19,6 +20,8 @@ export const AuthProvider = ({ children }) => {
   const [isInRoom, setIsInRoom] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [game, setGame] = useState(null);
+
+  const { playTrack, generateBackgroundMusic } = useSound();
 
   const updateGameState = (newIsInRoom, newIsPlaying, newGame) => {
     setIsInRoom(newIsInRoom);
@@ -57,6 +60,12 @@ export const AuthProvider = ({ children }) => {
   }
 
   useEffect(() => {
+    if (authState.isConnected) {
+      generateBackgroundMusic();
+    }
+  }, [authState.isConnected]);
+
+  useEffect(() => {
     checkAuth();
   }, []);
 
@@ -82,6 +91,12 @@ export const AuthProvider = ({ children }) => {
         });
         setGame(game);
         setIsPlaying(true);
+        const clientPlayer = game.playersList.find(
+          (ply) => ply.name === authState.username
+        );
+        if (clientPlayer?.role.name === "Serial Killer") {
+          playTrack("/audio/serialKillerVibe.mp3");
+        }
       });
 
       socket.on("updateGame", (updatedGame) => {

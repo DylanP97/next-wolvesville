@@ -3,7 +3,7 @@ import i18n from "../lib/i18n";
 
 const RoleCheckbox = ({ role, handleRoleChange }) => {
   const isSolo = !["village", "werewolves"].includes(role.team.join());
-  const allowMultiple = ["Villager", "Seer", "Classic Werewolf"].includes(
+  const allowMultiple = ["Villager", "Classic Werewolf"].includes(
     role.name
   );
 

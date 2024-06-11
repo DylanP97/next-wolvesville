@@ -35,9 +35,9 @@ const SideSummary = ({ summaryIsOpen, setSummaryIsOpen }) => {
               <p
                 className={`${
                   !ply.isAlive && "line-through"
-                } text-sm text-gray-200`}
+                } text-xs text-gray-200`}
               >
-                {!ply.isRevealed ? ply.name : "???"}
+                {ply.name} {ply.isRevealed ? "Revealed" : "???"}
               </p>
             }
           />

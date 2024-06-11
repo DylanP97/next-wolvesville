@@ -31,8 +31,6 @@ const CreateRoom = () => {
     4: `${t("create.stepFour")}: ${roomName}`,
   };
 
-  console.log(selectedRolesTeam);
-
   useEffect(() => {
     fetchTeams();
     fetchRoles();
@@ -52,11 +50,7 @@ const CreateRoom = () => {
 
   useEffect(() => {
     setCPUPlayersMax(selectedRoles.length - 1);
-
-    console.log(availableTeams);
-
     let selectedRolesTeamsArray = selectedRoles.map((role) => role.team.join());
-    console.log(selectedRolesTeamsArray)
     let filteredTeams = availableTeams.filter((team) =>
       selectedRolesTeamsArray.includes(team.name)
     );
@@ -151,7 +145,12 @@ const CreateRoom = () => {
       case 2:
         return (
           <>
-            <div className="flex flex-col md:flex-row justify-between">
+            <p className="text-sm italic">
+              Vous ne pouvez que choisir 1 joueur max par rôle. Exception faite
+              pour le loup-garou classique et le villageois, où vous
+              pouvez en ajoutez jusqu&apos;à 3 chacun.
+            </p>
+            <div className="flex flex-col md:flex-row justify-between my-4">
               <div className="">
                 {availableRoles.map((role) => (
                   <RoleCheckbox
@@ -162,14 +161,24 @@ const CreateRoom = () => {
                   />
                 ))}
               </div>
-              <div className="p-4">
+              {/* <div className="p-4">
                 <p>Please select a variety of roles and teams...</p>
                 <div className="flex gap-3 items-center">
                   {selectedRolesTeam.map((t, i) => {
-                    return <TeamCounter team={t} key={t.name + i + "-tc"} />;
+                    let selectedPlayers = selectedRoles.filter(
+                      (role) => role.team === t.name
+                    );
+                    console.log(selectedPlayers)
+                    return (
+                      <TeamCounter
+                        team={t}
+                        selectedPlayers={selectedPlayers}
+                        key={t.name + i + "-tc"}
+                      />
+                    );
                   })}
                 </div>
-              </div>
+              </div> */}
             </div>
           </>
         );

@@ -154,6 +154,7 @@ const GameGrid = () => {
                   type: actionType,
                   playerId: clientPlayer.id,
                   selectedPlayerId: selectedPlayer.id,
+                  selectedPlayerName: selectedPlayer.name,
                   actionTime: clientPlayer.role.canPerform.actionTime,
                 },
                 gameId

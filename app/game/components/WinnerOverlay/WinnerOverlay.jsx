@@ -9,12 +9,13 @@ import { useTranslation } from "react-i18next";
 
 const WinnerOverlay = () => {
   const { t } = useTranslation();
-  const { updateGameState } = useAuth();
-  const { winningTeam, aliveList, playersList } = useGame();
+  const { updateGameState, socket } = useAuth();
+  const { winningTeam, aliveList, playersList, gameId } = useGame();
 
   const handleExitGame = () => {
     updateGameState(null, false, null);
     document.location.assign("/");
+    socket.emit("deleteRoom", gameId);
   };
 
   if (winningTeam) {
@@ -38,7 +39,7 @@ const WinnerOverlay = () => {
             <p className="mb-4">The {winningTeam.name} won!</p>
           </div>
           <div className="flex flex-row justify-center mt-4">
-            {aliveList.map((ply) => {
+            {winningTeam.winnerPlayers.map((ply) => {
               return (
                 <div
                   key={ply.name + "key-win-div"}

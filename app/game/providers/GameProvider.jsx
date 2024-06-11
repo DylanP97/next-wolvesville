@@ -3,11 +3,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
 import cpuNextMove from "../../lib/cpuNextMove";
+import { useSound } from "../../providers/SoundProvider";
 
 const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
   const { game, socket, username } = useAuth();
+  const { generateNoise } = useSound();
 
   const weatherColors = {
     daytime: "bg-sky-500",
@@ -41,6 +43,8 @@ export const GameProvider = ({ children }) => {
 
   if (!winningTeam) {
     socket.emit("checkForWinner", game.id);
+  } else {
+    socket.emit("pauseGame", game.id);
   }
 
   useEffect(() => {
@@ -49,6 +53,13 @@ export const GameProvider = ({ children }) => {
     setIsBlocked(false);
     setActionType("");
     setWeather(weatherColors[timeOfTheDay]);
+    if (
+      timeOfTheDay === "nighttime" &&
+      clientPlayer.role.team.join() === "werewolves" &&
+      winningTeam !== null
+    ) {
+      generateNoise("wolfHowl");
+    }
   }, [timeOfTheDay]);
 
   useEffect(() => {

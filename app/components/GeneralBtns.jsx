@@ -6,10 +6,14 @@ import LogoutBtn from "./LogoutBtn";
 
 const GeneralBtns = () => {
   return (
-    <div className="flex flex-row justify-end items-center w-full bg-black p-2 z-30 h-[10%] gap-2">
-      <LanguageToggle />
-      <FullScreenToggle />
-      <LogoutBtn />
+    <div className="relative w-full">
+      <div className="fixed top-0 w-full h-10 group z-30">
+        <div className="fixed top-0 w-full bg-black p-2 z-30 transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex flex-row justify-end items-center gap-2">
+          <LanguageToggle />
+          <FullScreenToggle />
+          <LogoutBtn />
+        </div>
+      </div>
     </div>
   );
 };
