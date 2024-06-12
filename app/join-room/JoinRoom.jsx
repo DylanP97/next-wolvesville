@@ -39,13 +39,16 @@ const JoinRoom = () => {
           return (
             <Card key={room.id} className="m-4">
               <CardBody>
-                <p>id: {room.id}</p>
-                <p>name: {room.name}</p>
-                <p>creator: {room.createdBy}</p>
+                {/* <p>id: {room.id}</p> */}
+                <p>{room.name}</p>
                 <p>
-                  {room.nbrOfPlayers} players including {room.nbrCPUPlayers} CPU
+                  {t("join.createdBy")} {room.createdBy}
                 </p>
-                <p>currently in the room :</p>
+                <p>
+                  {room.nbrOfPlayers} {t("join.playersIncluding")}{" "}
+                  {room.nbrCPUPlayers} CPU
+                </p>
+                <p>{t("join.currentlyInTheRoom")}</p>
                 {usersInTheRoom.map((userInRoom, index) => (
                   <p key={"uitr" + index}>{userInRoom.username}</p>
                 ))}
@@ -62,11 +65,11 @@ const JoinRoom = () => {
                         joinRoom(room.id, { username, socketId, avatar })
                       }
                     >
-                      Join Room
+                      {t("join.joinRoom")}
                     </Button>
                   )}
                 {usersInTheRoom.length == room.nbrOfPlayers && (
-                  <p className="p-2">The room is full</p>
+                  <p className="p-2">{t("join.theRoomIsFull")}</p>
                 )}
                 {username == room.createdBy && (
                   <Button
@@ -74,7 +77,7 @@ const JoinRoom = () => {
                     variant="ghost"
                     onClick={() => deleteRoom(room.id)}
                   >
-                    Delete Room
+                    {t("join.deleteRoom")}
                   </Button>
                 )}
               </CardFooter>

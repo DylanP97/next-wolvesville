@@ -6,7 +6,7 @@ import { Tooltip } from "@nextui-org/react";
 
 const CmdSend = ({ sendMessage, message }) => {
   return (
-    <Tooltip content={"Send message"} color="secondary" variant="flat">
+    <Tooltip content={t("game.sendMessage")} color="secondary" variant="flat">
       <div
         onClick={() => sendMessage(message)}
         className=" bg-blue-900 hover:bg-blue-700 h-[80px] aspect-square p-4 cursor-pointer flex justify-center items-center z-20"

@@ -1,0 +1,1 @@
+// eventually move the whole handlePlayerClick function of GameGrid.jsx into a separate file.

@@ -12,7 +12,7 @@ const GameHeader = () => {
       <p className="text-xs text-white">
         {timeOfTheDay === "daytime" ? (
           <>
-            ☀️ {t("game.daytime")} n° {dayCount} - {timeCounter / 1000}s{" "}
+            ☀️ {t("game.daytime")} n°{dayCount} - {timeCounter / 1000}s{" "}
             {t("game.left")}
           </>
         ) : timeOfTheDay === "votetime" ? (

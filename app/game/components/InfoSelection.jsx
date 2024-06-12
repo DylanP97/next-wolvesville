@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useGame } from "../providers/GameProvider";
 
-const InfoDisplay = () => {
+const InfoSelection = () => {
   const { isSelection, isDoubleSelection, isBlocked } = useGame();
 
   const [info, setInfo] = useState();
@@ -15,4 +15,4 @@ const InfoDisplay = () => {
   return <p className="text-white text-xs mt-2">{info} active</p>;
 };
 
-export default InfoDisplay;
+export default InfoSelection;

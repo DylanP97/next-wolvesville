@@ -12,7 +12,7 @@ import { Button } from "@nextui-org/react";
 import { useAuth } from "../../providers/AuthProvider";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import ListIcon from "./ListIcon";
+import ListIcon from "../../components/icons/ListIcon";
 
 const GameMain = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { winningTeam, clientPlayer, gameId, isPaused, weather } = useGame();

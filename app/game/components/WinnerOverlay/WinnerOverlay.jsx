@@ -6,17 +6,30 @@ import { useAuth } from "../../../providers/AuthProvider";
 import AvatarUI from "../../../profile/components/AvatarUI";
 import { useGame } from "../../providers/GameProvider";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import i18n from "../../../lib/i18n";
+import fetchTeams from "../../../lib/fetch";
 
 const WinnerOverlay = () => {
   const { t } = useTranslation();
   const { updateGameState, socket } = useAuth();
   const { winningTeam, aliveList, playersList, gameId } = useGame();
+  const [wTeamData, setWTeamData] = useState();
 
   const handleExitGame = () => {
     updateGameState(null, false, null);
     document.location.assign("/");
     socket.emit("deleteRoom", gameId);
   };
+
+  useEffect(() => {
+    const teamsData = fetchTeams();
+    setWTeamData(
+      teamsData.find((team) => {
+        team.name == winningTeam.name;
+      })
+    );
+  }, []);
 
   if (winningTeam) {
     return (
@@ -36,7 +49,12 @@ const WinnerOverlay = () => {
               className="w-8 h-8"
               style={{ height: "auto", width: "auto" }}
             />
-            <p className="mb-4">The {winningTeam.name} won!</p>
+            <p className="mb-4">
+              {/* ajouter db headline : headlineFR */}
+              {i18n.language === "fr"
+                ? wTeamData.headlineFR
+                : wTeamData.headline}
+            </p>
           </div>
           <div className="flex flex-row justify-center mt-4">
             {winningTeam.winnerPlayers.map((ply) => {
@@ -59,7 +77,7 @@ const WinnerOverlay = () => {
                         <AvatarUI heightAndWidth={80} avatar={ply.avatar} />
                       ) : (
                         <Image
-                          src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1715954141/robot-game_ncwkv7.png"
+                          src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1717510105/cpu_ir0roq.png"
                           height={80}
                           width={80}
                           alt="cpu-player-avatar"
@@ -68,7 +86,7 @@ const WinnerOverlay = () => {
                     </div>
                   </div>
                   <p className="m-2 text-gray-200 text-sm text-clip italic">
-                    {ply.name} as {ply.role.name}
+                    {ply.name} {t("winnerOverlay.as")} {ply.role.name}
                   </p>
                 </div>
               );
@@ -84,7 +102,7 @@ const WinnerOverlay = () => {
                 className="w-8 h-8"
                 style={{ height: "auto", width: "auto" }}
               />
-              <p className="mb-4">Graveyard...</p>
+              <p className="mb-4">{t("winnerOverlay.graveyard")}</p>
             </div>
             <div className="flex flex-row justify-center mt-4">
               {playersList
@@ -118,7 +136,7 @@ const WinnerOverlay = () => {
                         </div>
                       </div>
                       <p className="m-2 text-gray-200 text-xs text-clip italic">
-                        {ply.name} was a {ply.role.name}
+                        {ply.name} {t("winnerOverlay.wasA")} {ply.role.name}
                       </p>
                     </div>
                   );

@@ -52,14 +52,14 @@ const Chatbox = () => {
     setMessage("");
   }, [timeOfTheDay]);
 
-  if (!isWolf && !isJailerChat && timeOfTheDay == "nighttime") {
+  if (!isWolf && !isJailerChat && timeOfTheDay === "nighttime") {
     return <></>;
   } else {
     return (
       <div className="flex flex-row w-full">
         <input
           disabled={
-            !timeOfTheDay == "nighttime" && (!isJailerChat || !isWolf) && false
+            !timeOfTheDay === "nighttime" && (!isJailerChat || !isWolf) && false
           }
           placeholder={t("game.writeMessage")}
           value={message}

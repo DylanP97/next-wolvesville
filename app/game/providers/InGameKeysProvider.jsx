@@ -30,7 +30,7 @@ export const useInGameKeys = () => {
   const context = useContext(InGameKeysContext);
 
   if (!context) {
-    throw new Error("useInGameKeys must be used within an KeysProvider");
+    throw new Error("useInGameKeys must be used within an InGameKeysProvider");
   }
 
   return context;

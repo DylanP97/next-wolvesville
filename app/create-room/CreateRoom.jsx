@@ -104,11 +104,11 @@ const CreateRoom = () => {
 
   const submitNewRoom = () => {
     if (selectedRoles.length < 2 || selectedRoles.length > 16) {
-      setErrorMessage("The number of players should be between 2 and 16.");
+      setErrorMessage(t("create.error.numberOfPlayers"));
       return;
     }
     if (!roomName) {
-      setErrorMessage("You have to give a name to your room.");
+      setErrorMessage(t("create.error.giveRoomName"));
       return;
     }
 
@@ -146,9 +146,7 @@ const CreateRoom = () => {
         return (
           <>
             <p className="text-sm italic">
-              Vous ne pouvez que choisir 1 joueur max par rôle. Exception faite
-              pour le loup-garou classique et le villageois, où vous
-              pouvez en ajoutez jusqu&apos;à 3 chacun.
+              {t("create.info.numberOnEachRole")}
             </p>
             <div className="flex flex-col md:flex-row justify-between my-4">
               <div className="">
@@ -242,21 +240,21 @@ const CreateRoom = () => {
   const toNextStep = () => {
     setErrorMessage("");
     if (creationStep === 1 && !roomName) {
-      setErrorMessage("Give your room a name.");
+      setErrorMessage(t("create.error.giveRoomName"));
       return;
     }
     if (
       creationStep === 2 &&
       (selectedRoles.length < 2 || selectedRoles.length > 16)
     ) {
-      setErrorMessage("The number of players should be between 2 and 16.");
+      setErrorMessage(t("create.error.numberOfPlayers"));
       return;
     }
     if (
       creationStep === 3 &&
       (nbrCPUPlayers < 0 || nbrCPUPlayers > CPUPlayersMax)
     ) {
-      setErrorMessage("The CPU number is not correct.");
+      setErrorMessage(t("create.error.CPUNbrNotPossible"));
       return;
     }
     setCreationStep(creationStep + 1);
@@ -265,7 +263,7 @@ const CreateRoom = () => {
   return (
     <div className="h-full w-full bg-background p-4 flex flex-grow flex-col justify-between">
       {created ? (
-        <h1 className="text-white">The room has been created...</h1>
+        <h1 className="text-white">{t("create.roomCreatedWaitingUsers")}</h1>
       ) : (
         <>
           <div>

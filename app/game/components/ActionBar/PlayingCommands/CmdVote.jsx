@@ -6,7 +6,11 @@ import voteAgainstIcon from "../../../../../public/game/vote-time.png";
 
 const CmdVote = ({ activateSelection, isSelection, wolfVote }) => {
   return (
-    <Tooltip content={"Vote against a player"} color="secondary" variant="flat">
+    <Tooltip
+      content={t("game.tooltip.voteAgainst")}
+      color="secondary"
+      variant="flat"
+    >
       <div
         onClick={() => activateSelection(wolfVote ? "wolfVote" : "vote")}
         className={`${
