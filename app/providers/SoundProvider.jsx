@@ -6,7 +6,7 @@ const SoundContext = createContext();
 
 export const SoundProvider = ({ children }) => {
   const [currentBgMusic, setCurrentBgMusic] = useState(null);
-  const [bgMusicVolume, setBgMusicVolume] = useState(1); // Initial volume is 100%
+  const [bgMusicVolume, setBgMusicVolume] = useState(0.5); // Initial volume is 100%
   const [tracks, setTracks] = useState([
     "/audio/battleOfTheCreek.mp3",
     "/audio/breakingTheSiege.mp3",
@@ -48,7 +48,7 @@ export const SoundProvider = ({ children }) => {
     setCurrentBgMusic(newBgMusic);
 
     newBgMusic.onended = () => {
-      if (isPlaying) {
+      if (currentBgMusic) {
         // play same special role track
         playTrack(track);
       } else {
@@ -66,27 +66,35 @@ export const SoundProvider = ({ children }) => {
   };
 
   const generateNoise = (audioType) => {
+    console.log("hello generateNoise");
     if (currentBgMusic) {
       // Lower the volume of background music temporarily
-      setBgMusicVolume(0.5); // Example: Reduce volume to 50%
+      setBgMusicVolume(0.2); // Example: Reduce volume to 50%
     }
 
-    let newAudio;
+    let newNoise;
 
     switch (audioType) {
       case "wolfHowl":
-        newAudio = new Audio("/audio/wolfHowling.mp3");
+        newNoise = new Audio("/audio/wolfHowling.mp3");
+        break;
+      case "rooster":
+        newNoise = new Audio("/audio/rooster.mp3");
+        break;
+      case "pianoPercussion":
+        newNoise = new Audio("/audio/pianoPercussion.mp3");
         break;
       default:
         return;
     }
 
-    newAudio.play();
+    newNoise.volume = 1;
+    newNoise.play();
 
-    newAudio.onended = () => {
+    newNoise.onended = () => {
       if (currentBgMusic) {
         // Restore the volume of background music after noise ends
-        setBgMusicVolume(1); // Restore volume to 100%
+        setBgMusicVolume(0.5); // Restore volume to 100%
       }
     };
   };

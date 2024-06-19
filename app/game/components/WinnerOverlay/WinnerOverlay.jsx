@@ -24,14 +24,10 @@ const WinnerOverlay = () => {
 
   useEffect(() => {
     const teamsData = fetchTeams();
-    setWTeamData(
-      teamsData.find((team) => {
-        team.name == winningTeam.name;
-      })
-    );
+    setWTeamData(teamsData.find((team) => team.name === winningTeam.name));
   }, []);
 
-  if (winningTeam) {
+  if (winningTeam && wTeamData) {
     return (
       <div
         className="winner-overlay"

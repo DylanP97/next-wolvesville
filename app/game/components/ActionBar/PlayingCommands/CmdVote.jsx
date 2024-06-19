@@ -3,8 +3,11 @@
 import Image from "next/image";
 import { Tooltip } from "@nextui-org/react";
 import voteAgainstIcon from "../../../../../public/game/vote-time.png";
+import { useTranslation } from "react-i18next";
 
 const CmdVote = ({ activateSelection, isSelection, wolfVote }) => {
+  const { t } = useTranslation();
+
   return (
     <Tooltip
       content={t("game.tooltip.voteAgainst")}

@@ -3,8 +3,11 @@
 import Image from "next/image";
 import send from "../../../../../public/game/paper-plane.png";
 import { Tooltip } from "@nextui-org/react";
+import { useTranslation } from "react-i18next";
 
 const CmdSend = ({ sendMessage, message }) => {
+  const { t } = useTranslation();
+
   return (
     <Tooltip content={t("game.sendMessage")} color="secondary" variant="flat">
       <div

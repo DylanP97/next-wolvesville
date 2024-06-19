@@ -53,12 +53,14 @@ export const GameProvider = ({ children }) => {
     setIsBlocked(false);
     setActionType("");
     setWeather(weatherColors[timeOfTheDay]);
-    if (
-      timeOfTheDay === "nighttime" &&
-      clientPlayer.role.team.join() === "werewolves" &&
-      winningTeam !== null
-    ) {
+    if (timeOfTheDay === "nighttime" && !winningTeam) {
       generateNoise("wolfHowl");
+    }
+    if (timeOfTheDay === "votetime" && !winningTeam) {
+      generateNoise("pianoPercussion");
+    }
+    if (timeOfTheDay === "daytime" && !winningTeam) {
+      generateNoise("rooster");
     }
   }, [timeOfTheDay]);
 
