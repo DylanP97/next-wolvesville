@@ -4,7 +4,8 @@ const fetchTeams = async () => {
       process.env.NEXT_PUBLIC_API_URL + "/api/teams"
     );
     if (response.ok) {
-      return teamsData = await response.json();
+      const teamsData = await response.json();
+      return teamsData
     } else {
       console.error("Failed to fetch teams");
     }

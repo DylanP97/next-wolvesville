@@ -11,10 +11,11 @@ import SideSummary from "./components/SideSummary";
 export default function GamePage() {
   const { isConnected } = useAuth();
   const [summaryIsOpen, setSummaryIsOpen] = useState(false);
+  const { game } = useAuth();
 
   return (
     <div className="flex flex-col flex-grow h-screen">
-      {isConnected ? (
+      {isConnected && game ? (
         <GameProvider>
           <InGameKeysProvider>
             <GameMain

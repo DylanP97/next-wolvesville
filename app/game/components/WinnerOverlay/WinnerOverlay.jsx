@@ -21,11 +21,18 @@ const WinnerOverlay = () => {
     document.location.assign("/");
     socket.emit("deleteRoom", gameId);
   };
-
   useEffect(() => {
-    const teamsData = fetchTeams();
-    setWTeamData(teamsData.find((team) => team.name === winningTeam.name));
-  }, []);
+    const fetchAndSetTeamData = async () => {
+      try {
+        const teamsData = await fetchTeams();
+        setWTeamData(teamsData.find((team) => team.name === winningTeam.name));
+      } catch (error) {
+        console.error("Failed to fetch teams data", error);
+      }
+    };
+
+    fetchAndSetTeamData();
+  }, [winningTeam]); // Ajoutez winningTeam comme dépendance si nécessaire
 
   if (winningTeam && wTeamData) {
     return (

@@ -1,23 +1,14 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
+import tracksData from "../lib/tracks";
 
 const SoundContext = createContext();
 
 export const SoundProvider = ({ children }) => {
   const [currentBgMusic, setCurrentBgMusic] = useState(null);
-  const [bgMusicVolume, setBgMusicVolume] = useState(0.5); // Initial volume is 100%
-  const [tracks, setTracks] = useState([
-    "/audio/battleOfTheCreek.mp3",
-    "/audio/breakingTheSiege.mp3",
-    "/audio/chasingLight.mp3",
-    "/audio/cobblestoneVillage.mp3",
-    "/audio/lands.mp3",
-    "/audio/medievalTown.mp3",
-    "/audio/theMedievalBanquet.mp3",
-    "/audio/wildBoarsInn.mp3",
-    // Add more tracks as needed
-  ]);
+  const [bgMusicVolume, setBgMusicVolume] = useState(0.5);
+  const tracks = tracksData.map((track) => track.path);
 
   useEffect(() => {
     // Cleanup audio when component unmounts
@@ -28,6 +19,13 @@ export const SoundProvider = ({ children }) => {
       }
     };
   }, [currentBgMusic]);
+
+  useEffect(() => {
+    // Update the volume of the current background music whenever bgMusicVolume changes
+    if (currentBgMusic) {
+      currentBgMusic.volume = bgMusicVolume;
+    }
+  }, [bgMusicVolume, currentBgMusic]);
 
   const playRandomTrack = () => {
     const randomIndex = Math.floor(Math.random() * tracks.length);
@@ -43,7 +41,7 @@ export const SoundProvider = ({ children }) => {
 
     let newBgMusic = new Audio(track);
 
-    newBgMusic.volume = bgMusicVolume; // Set initial volume
+    newBgMusic.volume = bgMusicVolume;
     newBgMusic.play();
     setCurrentBgMusic(newBgMusic);
 
@@ -68,8 +66,7 @@ export const SoundProvider = ({ children }) => {
   const generateNoise = (audioType) => {
     console.log("hello generateNoise");
     if (currentBgMusic) {
-      // Lower the volume of background music temporarily
-      setBgMusicVolume(0.2); // Example: Reduce volume to 50%
+      setBgMusicVolume(0.2);
     }
 
     let newNoise;
@@ -93,8 +90,7 @@ export const SoundProvider = ({ children }) => {
 
     newNoise.onended = () => {
       if (currentBgMusic) {
-        // Restore the volume of background music after noise ends
-        setBgMusicVolume(0.5); // Restore volume to 100%
+        setBgMusicVolume(0.5);
       }
     };
   };
@@ -104,6 +100,8 @@ export const SoundProvider = ({ children }) => {
       value={{
         generateNoise,
         generateBackgroundMusic,
+        bgMusicVolume,
+        setBgMusicVolume,
         playTrack,
       }}
     >
@@ -112,5 +110,4 @@ export const SoundProvider = ({ children }) => {
   );
 };
 
-// Hook to use the SoundContext
 export const useSound = () => useContext(SoundContext);

@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
 import cpuNextMove from "../../lib/cpuNextMove";
 import { useSound } from "../../providers/SoundProvider";
+import { redirect } from "next/navigation";
 
 const GameContext = createContext();
 
