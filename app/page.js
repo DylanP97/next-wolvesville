@@ -1,6 +1,6 @@
 "use client";
 
-import HomePage from "./components/HomePage";
+import HomePage from "./homepage/HomePage";
 import Connexion from "./connexion/Connexion";
 import { useAuth } from "./providers/AuthProvider";
 import { redirect } from "next/navigation";

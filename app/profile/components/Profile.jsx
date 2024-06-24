@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Button, Tab, Tabs } from "@nextui-org/react";
 import AvatarUI from "./AvatarUI";
 import GoBackBtn from "../../components/GoBackBtn";
-import { tabs } from "./tabsDefinitions";
+import { tabs } from "../lib/tabsDefinitions";
 import ProfileSelect from "./ProfileSelect";
 
 const Profile = ({ username, avatar, socketId }) => {
@@ -41,18 +41,28 @@ const Profile = ({ username, avatar, socketId }) => {
   };
 
   return (
-    <section className="bg-background w-full px-5 flex flex-col justify-start items-center">
+    <section className="bg-background h-screen w-full px-5 flex flex-col justify-center items-center ">
       <div
         className={`bg-white rounded-full flex justify-center my-4 overflow-hidden`}
       >
         <AvatarUI avatar={avState} heightAndWidth={140} />
       </div>
 
-      <div className="flex w-full flex-col max-w-[400px]">
-        <Tabs aria-label="Options" className="justify-center">
+      <div className="flex w-full flex-col w-full max-w-[500px]">
+        <Tabs
+          aria-label="Options"
+          variant="solid"
+          color="primary"
+          className="justify-center"
+          placement="top"
+        >
           {tabs.map((tab) => {
             return (
-              <Tab key={tab.title} title={tab.title + " " + tab.emoji}>
+              <Tab
+                key={tab.title}
+                title={tab.title + " " + tab.emoji}
+                className="w-full"
+              >
                 {tab.attributes.map((a, i) => {
                   return (
                     <ProfileSelect
@@ -70,7 +80,7 @@ const Profile = ({ username, avatar, socketId }) => {
         </Tabs>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 my-4">
         <GoBackBtn />
         <Button
           className="text-black hover:text-primary"

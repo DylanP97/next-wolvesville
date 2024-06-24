@@ -9,6 +9,7 @@ import evilEyes from "../../public/game/evileyes.gif";
 import ConnexionForm from "./ConnexionForm";
 import { Spinner } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
+import { fetchLogin, fetchSignUp } from "../lib/fetch";
 
 const Connexion = () => {
   const { t } = useTranslation();
@@ -28,20 +29,10 @@ const Connexion = () => {
     setIsLoading(true);
 
     if (isLogin) {
-      try {
-        const response = await fetch(
-          process.env.NEXT_PUBLIC_API_URL + "/api/user/login",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email, password }),
-            credentials: "include",
-          }
-        );
-        if (response.ok) {
-          const data = await response.json();
+      const login = async () => {
+        const data = await fetchLogin(email, password);
+        
+        if (data) {
           setToken(data.token);
           const newSocket = io(process.env.NEXT_PUBLIC_API_URL, {
             query: { token: data.token },
@@ -58,34 +49,13 @@ const Connexion = () => {
             newSocket.emit("sendNewConnectedUser", user);
           });
         }
-      } catch (error) {
-        console.error("Login error:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      };
+      login();
+      setIsLoading(false);
     } else {
-      try {
-        const response = await fetch(
-          process.env.NEXT_PUBLIC_API_URL + "/api/user/signup",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ username, email, password, defaultAvatar }),
-            credentials: "include",
-          }
-        );
-
-        console.log("Signup response:", response);
-        if (response.ok) {
-          setIsLogin(true);
-        }
-      } catch (error) {
-        console.error("Signup error:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      const resOk = fetchSignUp(username, email, password, defaultAvatar);
+      if (resOk) setIsLogin(true);
+      setIsLoading(false);
     }
   };
 

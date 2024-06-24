@@ -8,6 +8,7 @@ import TeamCounter from "./TeamCounter";
 import GoBackBtn from "../components/GoBackBtn";
 import { useTranslation } from "react-i18next";
 import { colorsForTeams } from "../lib/utils";
+import { fetchRoles, fetchTeams } from "../lib/fetch";
 
 const CreateRoom = () => {
   const { t } = useTranslation();
@@ -25,15 +26,26 @@ const CreateRoom = () => {
   const [creationStep, setCreationStep] = useState(1);
 
   const steps = {
-    1: t("create.stepOne"),
-    2: t("create.stepTwo"),
-    3: t("create.stepThree"),
-    4: `${t("create.stepFour")}: ${roomName}`,
+    1: t("create.stepTwo"),
+    2: t("create.stepThree"),
+    3: `${t("create.stepFour")}: ${roomName}`,
   };
 
   useEffect(() => {
-    fetchTeams();
-    fetchRoles();
+    const fetchData = async () => {
+      try {
+        const teamsData = await fetchTeams();
+        setAvailableTeams(teamsData || []);
+
+        const rolesData = await fetchRoles();
+        const filteredRoles = rolesData.filter((r) => r.status == 1);
+        setAvailableRoles(filteredRoles.map((r) => ({ ...r, count: 0 })));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -57,37 +69,13 @@ const CreateRoom = () => {
     setSelectedRolesTeam(filteredTeams);
   }, [selectedRoles]);
 
-  const fetchTeams = async () => {
-    try {
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "/api/teams"
-      );
-      if (response.ok) {
-        const teamsData = await response.json();
-        setAvailableTeams(teamsData);
-      } else {
-        console.error("Failed to fetch teams");
-      }
-    } catch (error) {
-      console.error("Error fetching teams:", error);
-    }
-  };
+  useEffect(() => {
+    generateRoomId();
+  }, []);
 
-  const fetchRoles = async () => {
-    try {
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "/api/roles"
-      );
-      if (response.ok) {
-        const rolesData = await response.json();
-        const filteredRoles = rolesData.filter((r) => r.status == 1);
-        setAvailableRoles(filteredRoles.map((r) => ({ ...r, count: 0 })));
-      } else {
-        console.error("Failed to fetch roles");
-      }
-    } catch (error) {
-      console.error("Error fetching roles:", error);
-    }
+  const generateRoomId = () => {
+    const roomId = `${Math.random().toString(36).substr(2, 9)}`;
+    setRoomName(roomId);
   };
 
   const handleRoleChange = (roleName, newCount) => {
@@ -132,23 +120,11 @@ const CreateRoom = () => {
     switch (creationStep) {
       case 1:
         return (
-          <Input
-            color="secondary"
-            className="max-w-xs ws-60 bg-white rounded-xl"
-            isRequired
-            value={roomName}
-            type="text"
-            label={t("create.labelRoomName")}
-            onChange={(e) => setRoomName(e.target.value)}
-          />
-        );
-      case 2:
-        return (
           <>
-            <p className="text-sm italic">
+            <p className="text-xs italic">
               {t("create.info.numberOnEachRole")}
             </p>
-            <div className="flex flex-col md:flex-row justify-between my-4">
+            <div className="flex flex-col md:flex-row justify-between my-2">
               <div className="">
                 {availableRoles.map((role) => (
                   <RoleCheckbox
@@ -159,28 +135,10 @@ const CreateRoom = () => {
                   />
                 ))}
               </div>
-              {/* <div className="p-4">
-                <p>Please select a variety of roles and teams...</p>
-                <div className="flex gap-3 items-center">
-                  {selectedRolesTeam.map((t, i) => {
-                    let selectedPlayers = selectedRoles.filter(
-                      (role) => role.team === t.name
-                    );
-                    console.log(selectedPlayers)
-                    return (
-                      <TeamCounter
-                        team={t}
-                        selectedPlayers={selectedPlayers}
-                        key={t.name + i + "-tc"}
-                      />
-                    );
-                  })}
-                </div>
-              </div> */}
             </div>
           </>
         );
-      case 3:
+      case 2:
         return (
           <div className="flex flex-col gap-4">
             <Input
@@ -196,10 +154,10 @@ const CreateRoom = () => {
             />
           </div>
         );
-      case 4:
+      case 3:
         return (
           <>
-            <div className="flex flex-row items-center my-2">
+            <div className="flex flex-row flex-wrap items-center my-2">
               {selectedRoles.map((r, i) => (
                 <User
                   key={r.name + i + "-uc"}
@@ -244,14 +202,14 @@ const CreateRoom = () => {
       return;
     }
     if (
-      creationStep === 2 &&
+      creationStep === 1 &&
       (selectedRoles.length < 2 || selectedRoles.length > 16)
     ) {
       setErrorMessage(t("create.error.numberOfPlayers"));
       return;
     }
     if (
-      creationStep === 3 &&
+      creationStep === 2 &&
       (nbrCPUPlayers < 0 || nbrCPUPlayers > CPUPlayersMax)
     ) {
       setErrorMessage(t("create.error.CPUNbrNotPossible"));
@@ -265,7 +223,7 @@ const CreateRoom = () => {
       {created ? (
         <h1 className="text-white">{t("create.roomCreatedWaitingUsers")}</h1>
       ) : (
-        <>
+        <div className="py-4">
           <div>
             <h1 className="text-white text-3xl font-bold mb-2">
               {t("menu.2")}
@@ -274,9 +232,9 @@ const CreateRoom = () => {
               {creationStep}. {steps[creationStep]}
             </h2>
           </div>
-          <div className="flex flex-grow flex-col py-4">
+          <div className="flex flex-grow flex-col">
             {generateStep()}
-            <div className="flex flex-row gap-2 mt-2">
+            <div className="flex flex-row gap-2">
               {creationStep > 1 && (
                 <Button
                   className="hover:scale-[105%] transition-all"
@@ -287,7 +245,7 @@ const CreateRoom = () => {
                   {t("create.previousStep")}
                 </Button>
               )}
-              {creationStep < 4 && (
+              {creationStep < 3 && (
                 <Button
                   className="hover:scale-[105%] transition-all"
                   color="primary"
@@ -297,7 +255,7 @@ const CreateRoom = () => {
                   {t("create.nextStep")}
                 </Button>
               )}
-              {creationStep === 4 && (
+              {creationStep === 3 && (
                 <Button
                   color="primary"
                   variant="shadow"
@@ -314,7 +272,7 @@ const CreateRoom = () => {
               </p>
             )}
           </div>
-        </>
+        </div>
       )}
       <GoBackBtn />
     </div>

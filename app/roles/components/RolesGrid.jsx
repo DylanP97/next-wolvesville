@@ -1,39 +1,27 @@
 "use client";
 
 import RoleCard from "./RoleCard";
-import { Divider } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import GoBackBtn from "../../components/GoBackBtn";
 import { useTranslation } from "react-i18next";
+import { fetchRoles } from "../../lib/fetch";
 
 const RolesGrid = () => {
   const [availableRoles, setAvailableRoles] = useState([]);
   const { t } = useTranslation();
 
   useEffect(() => {
-    // Fetch available roles from the server
-    const fetchRoles = async () => {
-      try {
-        const response = await fetch(
-          process.env.NEXT_PUBLIC_API_URL + "/api/roles"
-        );
-        if (response.ok) {
-          const rolesData = await response.json();
-          setAvailableRoles(rolesData);
-        } else {
-          console.error("Failed to fetch roles");
-        }
-      } catch (error) {
-        console.error("Error fetching roles:", error);
-      }
+    const fetchData = async () => {
+      const rolesData = await fetchRoles();
+      setAvailableRoles(rolesData);
     };
 
-    fetchRoles();
+    fetchData();
   }, []);
 
   return (
-    <section className="p-5 bg-background">
-      <h1 className="text-white text-3xl font-bold p-4">{t("roles.title")}</h1>
+    <section className="p-5 bg-background mb-12">
+      <h1 className="text-white text-3xl font-bold p-5">{t("roles.title")}</h1>
       <div className="w-full grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 p-5">
         {availableRoles
           .sort((a, b) => a.status - b.status)
@@ -41,8 +29,9 @@ const RolesGrid = () => {
             <RoleCard key={role.name} role={role} />
           ))}
       </div>
-      <Divider className="my-4" />
-      <GoBackBtn />
+      <div className="px-5 py-2">
+        <GoBackBtn />
+      </div>
     </section>
   );
 };

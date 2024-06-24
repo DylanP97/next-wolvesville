@@ -202,7 +202,9 @@ const cpuNextMove = (
       socket.emit(
         "addVote",
         voteTarget.id,
-        cpu.role.name === "Mayor" && cpu.isRevealed ? 2 : 1,
+        cpu.role.name === "Mayor" && cpu.role.canPerform.nbrLeftToPerform === 0
+          ? 2
+          : 1,
         gameId
       );
     }

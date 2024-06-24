@@ -1,7 +1,7 @@
 class Track {
-  constructor(title, author, ms, path) {
+  constructor(title, artist, ms, path) {
     (this.title = title),
-      (this.author = author),
+      (this.artist = artist),
       (this.ms = ms),
       (this.path = path);
   }

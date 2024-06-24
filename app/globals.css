@@ -157,3 +157,17 @@ body {
   height: 100px;
   width: 250px;
 }
+
+.track-display {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  background-color: #545454;
+}
+
+.track-display.fade-in {
+  opacity: 1;
+}
+
+.track-display.fade-out {
+  opacity: 0;
+}

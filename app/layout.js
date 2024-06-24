@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Providers } from "./providers/providers";
-import GeneralBtns from "./components/GeneralBtns";
+import GeneralBtns from "./general-btns/GeneralBtns";
 import Footer from "./components/Footer";
 
 export const metadata = {
@@ -8,7 +8,7 @@ export const metadata = {
   description:
     "Welcome to Wolvesville, an exhilarating journey back to the dark and mysterious town of Wolvesville. In this highly anticipated sequel, you'll find yourself immersed in a world of deceit, strategy, and hidden identities. This time, it's not just about survival; it's about rewriting the history of Wolvesville.",
   icons: {
-    icon: "../public/favicon_io/android-chrome-192x192.png"
+    icon: "./favicon.ico"
   },
 };
 

@@ -1,12 +1,12 @@
 "use client";
 
 import Connexion from "../connexion/Connexion";
-import GameMain from "./components/GameMain";
+import GameMain from "./GameMain";
 import { useAuth } from "../providers/AuthProvider";
 import { GameProvider } from "./providers/GameProvider";
 import { InGameKeysProvider } from "./providers/InGameKeysProvider";
 import { useState } from "react";
-import SideSummary from "./components/SideSummary";
+import SideSummary from "./GameMain/SideSummary";
 
 export default function GamePage() {
   const { isConnected } = useAuth();
@@ -14,7 +14,7 @@ export default function GamePage() {
   const { game } = useAuth();
 
   return (
-    <div className="flex flex-col flex-grow h-screen">
+    <div className="flex flex-col flex-grow">
       {isConnected && game ? (
         <GameProvider>
           <InGameKeysProvider>

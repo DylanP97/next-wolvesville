@@ -6,11 +6,11 @@ import { KeysProvider } from "./KeysProvider";
 import { SoundProvider } from "./SoundProvider";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../lib/i18n";
-import ClientOnly from "../components/ClientOnly";
+// import ClientOnly from "../components/ClientOnly";
 
 export function Providers({ children }) {
   return (
-    <ClientOnly>
+    // <ClientOnly>
       <I18nextProvider i18n={i18n}>
         <NextUIProvider>
           <KeysProvider>
@@ -20,6 +20,6 @@ export function Providers({ children }) {
           </KeysProvider>
         </NextUIProvider>
       </I18nextProvider>
-    </ClientOnly>
+    // </ClientOnly>
   );
 }

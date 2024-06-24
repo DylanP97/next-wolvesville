@@ -8,7 +8,13 @@ const SoundContext = createContext();
 export const SoundProvider = ({ children }) => {
   const [currentBgMusic, setCurrentBgMusic] = useState(null);
   const [bgMusicVolume, setBgMusicVolume] = useState(0.5);
-  const tracks = tracksData.map((track) => track.path);
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const tracks = tracksData.map((track) => ({
+    title: track.title,
+    artist: track.artist,
+    ms: track.ms,
+    path: track.path,
+  }));
 
   useEffect(() => {
     // Cleanup audio when component unmounts
@@ -39,15 +45,16 @@ export const SoundProvider = ({ children }) => {
       currentBgMusic.currentTime = 0;
     }
 
-    let newBgMusic = new Audio(track);
+    let newBgMusic = new Audio(track.path);
 
     newBgMusic.volume = bgMusicVolume;
     newBgMusic.play();
     setCurrentBgMusic(newBgMusic);
+    setCurrentTrack(track);
 
     newBgMusic.onended = () => {
       if (currentBgMusic) {
-        // play same special role track
+        // Play the same special role track
         playTrack(track);
       } else {
         // Play the next track when current track ends
@@ -64,7 +71,6 @@ export const SoundProvider = ({ children }) => {
   };
 
   const generateNoise = (audioType) => {
-    console.log("hello generateNoise");
     if (currentBgMusic) {
       setBgMusicVolume(0.2);
     }
@@ -103,6 +109,7 @@ export const SoundProvider = ({ children }) => {
         bgMusicVolume,
         setBgMusicVolume,
         playTrack,
+        currentTrack,
       }}
     >
       {children}
