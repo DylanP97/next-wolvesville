@@ -62,7 +62,7 @@ const PlayingCommands = () => {
   };
 
   return (
-    <div className="z-20">
+    <>
       {timeOfTheDay === "votetime" && canVote && (
         <CmdVote
           activateSelection={activateSelection}
@@ -93,7 +93,7 @@ const PlayingCommands = () => {
           rolename={name}
         />
       )}
-    </div>
+    </>
   );
 };
 

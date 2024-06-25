@@ -140,7 +140,7 @@ const CreateRoom = () => {
         );
       case 2:
         return (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 py-2">
             <Input
               color="secondary"
               className="max-w-xs ws-60 bg-white rounded-xl"
@@ -156,7 +156,7 @@ const CreateRoom = () => {
         );
       case 3:
         return (
-          <>
+          <div className="flex flex-col py-2">
             <div className="flex flex-row flex-wrap items-center my-2">
               {selectedRoles.map((r, i) => (
                 <User
@@ -181,7 +181,7 @@ const CreateRoom = () => {
               *{t("create.including")} {nbrCPUPlayers}{" "}
               {t("create.CPUControlled")}
             </p>
-          </>
+          </div>
         );
       default:
         return null;

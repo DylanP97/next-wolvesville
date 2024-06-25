@@ -1,9 +1,11 @@
 "use client";
 
-const { Button } = require("@nextui-org/react");
-const { useEffect, useState } = require("react");
+import Image from "next/image";
 import { useAuth } from "../../providers/AuthProvider";
 import { useGame } from "../providers/GameProvider";
+import { Tooltip } from "@nextui-org/react";
+import { useEffect, useState } from "react";
+import { divActionIcon, imgActionIcon } from "../../lib/styles";
 
 const PauseToggle = () => {
   const { socket } = useAuth();
@@ -26,19 +28,27 @@ const PauseToggle = () => {
   };
 
   return (
-    <div className="z-20 flex justify-between items-center w-full px-4">
-      <div className="flex justify-center items-center gap-2 absolute top-16">
-        <Button
-          isIconOnly
-          color="secondary"
-          variant="solid"
-          onClick={gamePaused ? resumeGame : pauseGame}
-          className="text-xs"
-        >
-          {gamePaused ? "▶" : "⏸"}
-        </Button>
+    <Tooltip content="Play/Pause Game" color="secondary" variant="flat">
+      <div
+        onClick={gamePaused ? resumeGame : pauseGame}
+        className={`${
+          gamePaused ? "bg-secondary hover:bg-green-400" : "bg-green-600"
+        } ${divActionIcon}`}
+      >
+        <Image
+          src={
+            gamePaused
+              ? "https://res.cloudinary.com/dnhq4fcyp/image/upload/v1719309608/play-button-arrowhead_rtfcup.png"
+              : "https://res.cloudinary.com/dnhq4fcyp/image/upload/v1719309608/pause_v6iqbq.png"
+          }
+          alt={"Play/Pause Game"}
+          width={50}
+          height={50}
+          style={{ height: "auto", width: "auto" }}
+          className={`${imgActionIcon}`}
+        />
       </div>
-    </div>
+    </Tooltip>
   );
 };
 

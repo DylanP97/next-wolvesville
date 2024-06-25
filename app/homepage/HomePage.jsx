@@ -3,7 +3,6 @@
 import NavigationMenu from "./NavigationMenu";
 import AuthInfo from "./AuthInfo";
 import RolesCarousel from "./RolesCarousel";
-import TrackDisplay from "../track-display/TrackDisplay";
 
 const HomePage = ({ username, socketId, isInRoom, avatar }) => {
   return (
@@ -16,7 +15,6 @@ const HomePage = ({ username, socketId, isInRoom, avatar }) => {
       />
       <RolesCarousel />
       <NavigationMenu />
-      <TrackDisplay />
     </div>
   );
 };

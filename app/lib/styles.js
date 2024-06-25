@@ -1,4 +1,4 @@
 export const divActionIcon =
-  "aspect-square p-2 cursor-pointer flex justify-center items-center h-12";
+  "aspect-square p-1 cursor-pointer flex justify-center items-center h-10";
 
-export const imgActionIcon = "max-h-[30px] max-w-[30px] object-contain";
+export const imgActionIcon = "max-h-[20px] max-w-[20px] object-contain";

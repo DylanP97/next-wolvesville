@@ -1,16 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import VoteCount from "./VoteCount";
-import IconReveal from "./IconReveal";
-import PlayerAvatar from "./PlayerAvatar";
-import { useGame } from "../../../providers/GameProvider";
+import VoteCount from "./PlayerGridCard/VoteCount";
+import IconReveal from "./PlayerGridCard/IconReveal";
+import PlayerAvatar from "./PlayerGridCard/PlayerAvatar";
+import { useGame } from "../../providers/GameProvider";
+import getPlyCardStyles from "./PlayerGridCard/getPlyCardStyles";
 
 const PlayerGridCard = ({
   player,
   selectedPlayer1,
   isAlsoWolf,
-  handlePlayerClick,
+  handleClick,
 }) => {
   const {
     timeOfTheDay,
@@ -23,28 +24,27 @@ const PlayerGridCard = ({
     actionType,
   } = useGame();
 
+  const onClickHandler = () => {
+    handleClick(player);
+  };
+
   return (
     <div
       key={"plycard-" + player.id}
-      onClick={() => handlePlayerClick(player)}
-      className={`${
-        player.isAlive
-          ? clientPlayer.id !== player.id
-            ? (isSelection ||
-                (isDoubleSelection &&
-                  player.id !== (selectedPlayer1 && selectedPlayer1.id))) &&
-              !isBlocked &&
-              ((!isAlsoWolf &&
-                clientPlayer.role.name === "Junior Werewolf" &&
-                actionType === "chooseJuniorWolfDeathRevenge") ||
-                (isWolf && !isAlsoWolf && timeOfTheDay === "nighttime") ||
-                (isWolf && timeOfTheDay !== "nighttime") ||
-                !isWolf)
-              ? "bg-red-800 cursor-pointer animate-pulse"
-              : `${weather}`
-            : "bg-slate-500"
-          : "bg-black"
-      } w-full h-20 flex flex-col justify-center items-center relative p-2`}
+      onClick={onClickHandler}
+      className={`${getPlyCardStyles(
+        player,
+        clientPlayer,
+        isSelection,
+        isDoubleSelection,
+        selectedPlayer1,
+        isBlocked,
+        isWolf,
+        isAlsoWolf,
+        actionType,
+        timeOfTheDay,
+        weather
+      )} w-full h-20 flex flex-col justify-center items-center relative p-2`}
     >
       {timeOfTheDay == "votetime" && <VoteCount voteNbr={player.voteAgainst} />}
 
@@ -74,15 +74,7 @@ const PlayerGridCard = ({
         avatar={player.avatar}
       />
 
-      <p
-        className={`${
-          isSelection && player.id !== clientPlayer.id
-            ? "text-black"
-            : "text-white"
-        } text-xs mt-2`}
-      >
-        {player.name}
-      </p>
+      <p className="text-xs mt-2">{player.name}</p>
     </div>
   );
 };

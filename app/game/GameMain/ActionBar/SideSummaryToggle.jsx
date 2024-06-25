@@ -1,23 +1,21 @@
 "use client";
 
-const { Button } = require("@nextui-org/react");
+const { Tooltip } = require("@nextui-org/react");
 import ListIcon from "../../../components/icons/ListIcon";
+import { divActionIcon } from "../../../lib/styles";
 
 const SideSummaryToggle = ({ summaryIsOpen, setSummaryIsOpen }) => {
   return (
-    <>
-      {!summaryIsOpen && (
-        <Button
-          color="secondary"
-          variant="solid"
-          onClick={() => setSummaryIsOpen(!summaryIsOpen)}
-          className="text-xs"
-          isIconOnly
-        >
-          <ListIcon />
-        </Button>
-      )}
-    </>
+    <Tooltip content="Open/Close Summary" color="secondary" variant="flat">
+      <div
+        onClick={() => setSummaryIsOpen(!summaryIsOpen)}
+        className={`${
+          summaryIsOpen ? "bg-blue-600" : "bg-secondary hover:bg-blue-400"
+        } ${divActionIcon}`}
+      >
+        <ListIcon />
+      </div>
+    </Tooltip>
   );
 };
 

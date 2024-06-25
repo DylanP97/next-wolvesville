@@ -21,15 +21,17 @@ const Background = () => {
     (isJailer && timeOfTheDay == "nighttime" && hasHandcuffed)
   )
     return (
-      <Image
-        src={prisonBg}
-        alt="bg-jail"
-        width={2000}
-        height={2000}
-        priority
-        style={{ height: "auto", width: "auto" }}
-        className="absolute top-0 h-full min-w-full opacity-20 z-0"
-      />
+      <>
+        {/* <Image
+          src={prisonBg}
+          alt="bg-jail"
+          width={2000}
+          height={2000}
+          priority
+          style={{ height: "auto", width: "auto" }}
+          className="absolute top-0 h-full min-w-full opacity-20 z-0"
+        /> */}
+      </>
     );
 
   // return (

@@ -162,6 +162,10 @@ body {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
   background-color: #545454;
+  position: absolute;
+  bottom: 8%;
+  right: 1%;
+  z-index: 80;
 }
 
 .track-display.fade-in {

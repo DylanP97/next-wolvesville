@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useSound } from "../providers/SoundProvider";
+import { useAuth } from "../providers/AuthProvider";
 
 const TrackDisplay = () => {
+  const { isPlaying } = useAuth();
   const { currentTrack } = useSound();
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isNewSong, setIsNewSong] = useState(false);
 
   const formatDuration = (ms) => {
     const minutes = Math.floor(ms / 60000);
@@ -15,16 +17,20 @@ const TrackDisplay = () => {
 
   useEffect(() => {
     if (currentTrack) {
-      setIsPlaying(true);
+      setIsNewSong(true);
       setTimeout(() => {
-        setIsPlaying(false);
+        setIsNewSong(false);
       }, 5000); // Duration for which the TrackDisplay will be visible
     }
   }, [currentTrack]);
 
-  if (currentTrack) {
+  if (currentTrack && !isPlaying) {
     return (
-      <div className={`track-display rounded-xl w-fit m-4 ${isPlaying ? "fade-in p-4 animate-pulse" : "fade-out"}`}>
+      <div
+        className={`track-display rounded-xl w-fit m-4 ${
+          isNewSong ? "fade-in p-4 animate-pulse" : "fade-out"
+        }`}
+      >
         <p className="text-white text-xs">Now playing:</p>
         <p className="text-white text-sm">
           {currentTrack.title} - {currentTrack.artist}

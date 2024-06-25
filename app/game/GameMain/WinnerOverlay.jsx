@@ -1,14 +1,14 @@
 "use client";
 
-import { Button } from "@nextui-org/react";
 import Image from "next/image";
-import { useAuth } from "../../../providers/AuthProvider";
-import AvatarUI from "../../../profile/components/AvatarUI";
-import { useGame } from "../../providers/GameProvider";
+import AvatarUI from "../../profile/components/AvatarUI";
+import { Button } from "@nextui-org/react";
+import { useAuth } from "../../providers/AuthProvider";
+import { useGame } from "../providers/GameProvider";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import i18n from "../../../lib/i18n";
-import fetchTeams from "../../../lib/fetch";
+import i18n from "../../lib/i18n";
+import fetchTeams from "../../lib/fetch";
 
 const WinnerOverlay = () => {
   const { t } = useTranslation();
