@@ -32,7 +32,7 @@ const PauseToggle = () => {
       <div
         onClick={gamePaused ? resumeGame : pauseGame}
         className={`${
-          gamePaused ? "bg-secondary hover:bg-green-400" : "bg-green-600"
+          gamePaused ? "bg-slate-500 hover:bg-slate-400" : "bg-secondary hover:bg-slate-400"
         } ${divActionIcon}`}
       >
         <Image

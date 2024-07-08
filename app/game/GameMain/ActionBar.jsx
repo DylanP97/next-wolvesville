@@ -10,7 +10,7 @@ const ActionBar = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { clientPlayer } = useGame();
 
   return (
-    <div className="flex flex-row w-full h-12">
+    <div className="flex flex-row w-full h-10">
       <PauseToggle />
       <SideSummaryToggle
         summaryIsOpen={summaryIsOpen}

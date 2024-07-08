@@ -9,6 +9,7 @@ import getPlyCardStyles from "./PlayerGridCard/getPlyCardStyles";
 
 const PlayerGridCard = ({
   player,
+  selectedPlayer,
   selectedPlayer1,
   isAlsoWolf,
   handleClick,
@@ -37,13 +38,14 @@ const PlayerGridCard = ({
         clientPlayer,
         isSelection,
         isDoubleSelection,
+        selectedPlayer,
         selectedPlayer1,
         isBlocked,
         isWolf,
         isAlsoWolf,
         actionType,
-        timeOfTheDay,
-        weather
+        weather,
+        timeOfTheDay
       )} w-full h-20 flex flex-col justify-center items-center relative p-2`}
     >
       {timeOfTheDay == "votetime" && <VoteCount voteNbr={player.voteAgainst} />}

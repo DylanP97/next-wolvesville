@@ -8,7 +8,7 @@ import { useGame } from "../providers/GameProvider";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import i18n from "../../lib/i18n";
-import fetchTeams from "../../lib/fetch";
+import { fetchTeams } from "../../lib/fetch";
 
 const WinnerOverlay = () => {
   const { t } = useTranslation();

@@ -13,11 +13,14 @@ const handlePlayerClick = (
   setIsBlocked,
   setIsSelection,
   setIsDoubleSelection,
-  selectedPlayer,
+  player,
+  setSelectedPlayer,
   selectedPlayer1,
-  setSelectedPlayer1
+  setSelectedPlayer1,
+  setErrorMessage
 ) => {
   function selectionCompleted() {
+    setSelectedPlayer(player);
     setIsBlocked(true);
     setIsSelection(false);
   }
@@ -29,85 +32,78 @@ const handlePlayerClick = (
 
   if (!isBlocked) {
     if (isSelection || isDoubleSelection) {
-      if (selectedPlayer.id === clientPlayer.id) {
-        console.log("Don't select yourself!");
+      if (player.id === clientPlayer.id) {
+        setErrorMessage("Don't select yourself!");
         return;
       }
 
-      if (!selectedPlayer.isAlive) {
-        console.log("This player is dead. Stop hitting its grave.");
+      if (!player.isAlive) {
+        setErrorMessage("This player is dead. Stop hitting its grave.");
         return;
       }
 
-      if (!isJailer && selectedPlayer.isUnderArrest) {
-        console.log("this player is locked up in jail. You can't select him.");
+      if (!isJailer && player.isUnderArrest) {
+        setErrorMessage(
+          "This player is locked up in jail. You can't select him."
+        );
         return;
       }
 
-      if (
-        isJailer &&
-        actionType === "execute" &&
-        !selectedPlayer.isUnderArrest
-      ) {
-        console.log("You can only execute the player who is under arrest.");
+      if (isJailer && actionType === "execute" && !player.isUnderArrest) {
+        setErrorMessage("You can only execute the player who is under arrest.");
         return;
       }
 
       if (timeOfTheDay === "votetime" && actionType === "vote") {
         const nbr =
           clientPlayer.role.name === "Mayor" && clientPlayer.isRevealed ? 2 : 1;
-        socket.emit("addVote", selectedPlayer.id, nbr, gameId);
+        socket.emit("addVote", player.id, nbr, gameId);
         selectionCompleted();
         return;
       }
 
       if (actionType === "chooseJuniorWolfDeathRevenge") {
-        if (!selectedPlayer.role.team.includes("werewolves")) {
+        if (!player.role.team.includes("werewolves")) {
           socket.emit(
             "chooseJuniorWolfDeathRevenge",
             {
-              juniorWolfId: selectedPlayer.id,
-              selectedPlayerId: selectedPlayer.id,
+              juniorWolfId: player.id,
+              selectedPlayerId: player.id,
             },
             gameId
           );
           selectionCompleted();
         } else {
-          console.log("You can't select a wolf");
+          setErrorMessage("You can't select a wolf to revenge on.");
         }
         return;
       }
 
       if (timeOfTheDay === "nighttime" && actionType === "wolfVote") {
-        if (!selectedPlayer.role.team.includes("werewolves")) {
+        if (!player.role.team.includes("werewolves")) {
           const nbr = clientPlayer.role.name === "Alpha Werewolf" ? 2 : 1;
-          socket.emit("addWolfVote", selectedPlayer.id, nbr, gameId);
+          socket.emit("addWolfVote", player.id, nbr, gameId);
           selectionCompleted();
         } else {
-          console.log("You can't select a wolf");
+          setErrorMessage("You can't select a wolf");
         }
         return;
       } else {
         if (isSelection) {
-          if (
-            isJailer &&
-            selectedPlayer.isUnderArrest &&
-            actionType === "execute"
-          ) {
-            console.log("socket emit execute");
+          if (isJailer && player.isUnderArrest && actionType === "execute") {
             socket.emit(
               "executePrisoner",
               {
                 type: actionType,
                 killerId: clientPlayer.id,
-                selectedPlayerId: selectedPlayer.id,
-                selectedPlayerName: selectedPlayer.name,
+                selectedPlayerId: player.id,
+                selectedPlayerName: player.name,
               },
               gameId
             );
           } else if (actionType === "reveal") {
-            if (selectedPlayer.isRevealed) {
-              console.log("You can't reveal a player that is not revealed");
+            if (player.isRevealed) {
+              setErrorMessage("You can't reveal a player that is not revealed");
               return;
             } else {
               socket.emit(
@@ -115,8 +111,8 @@ const handlePlayerClick = (
                 {
                   type: actionType,
                   seerId: clientPlayer.id,
-                  selectedPlayerId: selectedPlayer.id,
-                  selectedPlayerName: selectedPlayer.name,
+                  selectedPlayerId: player.id,
+                  selectedPlayerName: player.name,
                 },
                 gameId
               );
@@ -127,8 +123,8 @@ const handlePlayerClick = (
               {
                 type: actionType,
                 gunnerId: clientPlayer.id,
-                selectedPlayerId: selectedPlayer.id,
-                selectedPlayerName: selectedPlayer.name,
+                selectedPlayerId: player.id,
+                selectedPlayerName: player.name,
               },
               gameId
             );
@@ -138,8 +134,8 @@ const handlePlayerClick = (
               {
                 type: actionType,
                 playerId: clientPlayer.id,
-                selectedPlayerId: selectedPlayer.id,
-                selectedPlayerName: selectedPlayer.name,
+                selectedPlayerId: player.id,
+                selectedPlayerName: player.name,
               },
               gameId
             );
@@ -149,8 +145,8 @@ const handlePlayerClick = (
               {
                 type: actionType,
                 playerId: clientPlayer.id,
-                selectedPlayerId: selectedPlayer.id,
-                selectedPlayerName: selectedPlayer.name,
+                selectedPlayerId: player.id,
+                selectedPlayerName: player.name,
                 actionTime: clientPlayer.role.canPerform.actionTime,
               },
               gameId
@@ -159,7 +155,7 @@ const handlePlayerClick = (
           selectionCompleted();
           return;
         } else if (isDoubleSelection && selectedPlayer1 == null) {
-          setSelectedPlayer1(selectedPlayer);
+          setSelectedPlayer1(player);
           return;
         } else if (isDoubleSelection && selectedPlayer1) {
           if (actionType === "link") {
@@ -168,7 +164,7 @@ const handlePlayerClick = (
               {
                 type: "link",
                 lover1Id: selectedPlayer1.id,
-                lover2Id: selectedPlayer.id,
+                lover2Id: player.id,
                 cupidId: clientPlayer.id,
               },
               gameId
@@ -179,11 +175,11 @@ const handlePlayerClick = (
         }
       }
     } else {
-      console.log("no selection modes are active ");
+      setErrorMessage("no selection modes are active ");
       return;
     }
   } else {
-    console.log("selection's blocked ");
+    setErrorMessage("selection's blocked ");
   }
 };
 

@@ -19,7 +19,11 @@ export const InGameKeysProvider = ({ children }) => {
 
   return (
     <InGameKeysContext.Provider value={{ currentKey, setCurrentKey }}>
-      <div onKeyDown={handleKeyDown} tabIndex={0}>
+      <div
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+        className="flex flex-col flex-grow"
+      >
         {children}
       </div>
     </InGameKeysContext.Provider>

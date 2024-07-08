@@ -8,7 +8,7 @@ const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className="sticky bottom-0 w-full bg-black p-4 z-10 border-white border-t-2">
+    <footer className="sticky bottom-0 w-full bg-black p-4 z-10">
       <Tooltip content={t("check.repo")} color="primary" variant="flat">
         <Link
           href="https://github.com/DylanP97?tab=repositories"

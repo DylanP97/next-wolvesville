@@ -48,9 +48,11 @@ const CmdPerform1 = ({
             else noSelectionAction(type);
           }}
           className={`${
-            isSelection || isDoubleSelection
-              ? "bg-secondary hover:bg-primary"
-              : "bg-green-600 hover:bg-green-400"
+            isBlocked
+              ? "bg-slate-500"
+              : isSelection || isDoubleSelection
+              ? "bg-red-600 hover:bg-red-500"
+              : "bg-green-600 hover:bg-green-500"
           } ${divActionIcon} relative`}
         >
           <Image

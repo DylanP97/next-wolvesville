@@ -5,6 +5,7 @@ const getPlyCardStyles = (
   clientPlayer,
   isSelection,
   isDoubleSelection,
+  selectedPlayer,
   selectedPlayer1,
   isBlocked,
   isWolf,
@@ -20,6 +21,14 @@ const getPlyCardStyles = (
   if (clientPlayer.id === player.id)
     return "bg-slate-400 border-red-500 border-2 text-black";
 
+  if (selectedPlayer) {
+    if (player.id === selectedPlayer.id) return "bg-red-500";
+  }
+
+  if (selectedPlayer1) {
+    if (player.id === selectedPlayer1.id) return "bg-green-500";
+  }
+
   function selectionRemaining() {
     return (
       (isSelection ||
@@ -29,8 +38,17 @@ const getPlyCardStyles = (
     );
   }
 
-  // if client player is a junior wolf and the selection is for its action, he can choose another player that is not a wolf at anytime of the day
-  function chooseJuniorWolfDeathRevenge() {
+  if (clientPlayer.role.name === "Jailer") {
+    if (timeOfTheDay === "nighttime" && actionType === "execute") {
+      if (player.isUnderArrest) {
+        return "bg-slate-500 hover:bg-slate-400 cursor-pointer animate-pulse hover:animate-none";
+      } else {
+        return `${weather}`;
+      }
+    }
+  }
+
+  function choosingPreyAsJuniorWolfAction() {
     return (
       !isAlsoWolf &&
       clientPlayer.role.name === "Junior Werewolf" &&
@@ -38,49 +56,41 @@ const getPlyCardStyles = (
     );
   }
 
-  // if client player is a wolf and he's choosing who to vote against at night
   function wolfNightChoice() {
     return isWolf && !isAlsoWolf && timeOfTheDay === "nighttime";
   }
 
-  // but if player is under arrest and the client is the jailer, the client can select him to execute him
-  function toBeExecuted() {
-    return (
-      clientPlayer.role.name === "Jailer" &&
-      player.isUnderArrest &&
-      timeOfTheDay === "nighttime"
-    );
-  }
-
-  function isAFreeCitizen() {
-    return !player.isUnderArrest;
-  }
-
-  function arrestPrisoner() {
-    return (
-      clientPlayer.role.name === "Jailer" &&
-      timeOfTheDay === "daytime" &&
-      actionType === "arrest"
-    );
-  }
-
   function itsVillageVoteTime() {
-    return clientPlayer.canVote && timeOfTheDay === "votetime";
+    return clientPlayer.role.canVote && timeOfTheDay === "votetime";
+  }
+
+  function basicSelection() {
+    return (
+      !itsVillageVoteTime() &&
+      !wolfNightChoice() &&
+      !choosingPreyAsJuniorWolfAction() &&
+      ((timeOfTheDay === "daytime" &&
+        clientPlayer.role.canPerform.actionTime === "day") ||
+        (timeOfTheDay === "daytime" &&
+          clientPlayer.role.canPerform2.actionTime === "day") ||
+        (timeOfTheDay === "nighttime" &&
+          clientPlayer.role.canPerform.actionTime === "night") ||
+        (timeOfTheDay === "nighttime" &&
+          clientPlayer.role.canPerform2.actionTime === "night"))
+    );
   }
 
   // cases when to display the card as a potentially selected item
-  if (
-    selectionRemaining() &&
-    (itsVillageVoteTime() ||
-      (isAFreeCitizen() &&
-        (arrestPrisoner() ||
-          chooseJuniorWolfDeathRevenge() ||
-          wolfNightChoice())) ||
-      toBeExecuted())
-  )
-    return "bg-red-800 cursor-pointer animate-pulse";
-
-  return `${weather}`;
+  if (selectionRemaining()) {
+    if (
+      itsVillageVoteTime() ||
+      wolfNightChoice() ||
+      choosingPreyAsJuniorWolfAction() ||
+      basicSelection()
+    )
+      return "bg-slate-500 hover:bg-slate-400 cursor-pointer animate-pulse hover:animate-none";
+  }
+  return `bg-transparent`;
 };
 
 export default getPlyCardStyles;

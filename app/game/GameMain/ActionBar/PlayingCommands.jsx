@@ -5,9 +5,11 @@ import CmdPerform1 from "./PlayingCommands/CmdPerform1";
 import CmdPerform2 from "./PlayingCommands/CmdPerform2";
 import { useGame } from "../../providers/GameProvider";
 import { useAuth } from "../../../providers/AuthProvider";
+import { useGameAnimations } from "../../providers/GameAnimationsProvider";
 
 const PlayingCommands = () => {
   const { socket } = useAuth();
+  const { triggerSimpleMessage } = useGameAnimations();
 
   const {
     clientPlayer,
@@ -38,7 +40,7 @@ const PlayingCommands = () => {
       setIsSelection(!isSelection);
       setActionType(actionType);
     } else {
-      console.log(
+      triggerSimpleMessage(
         "you already select something, now selection mode is blocked"
       );
     }
@@ -49,8 +51,8 @@ const PlayingCommands = () => {
       setIsDoubleSelection(!isDoubleSelection);
       setActionType(actionType);
     } else {
-      console.log(
-        "you already select something now, doubleSelection mode is blocked"
+      triggerSimpleMessage(
+        "you already select something, now doubleSelection mode is blocked"
       );
     }
   };

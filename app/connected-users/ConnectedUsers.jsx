@@ -5,25 +5,28 @@ import { useTranslation } from "react-i18next";
 import ConnectedUserCard from "./ConnectedUserCard";
 import GoBackBtn from "../components/GoBackBtn";
 import { useEffect, useState } from "react";
+import { fetchUsers } from "../lib/fetch";
 
 const ConnectedUsers = () => {
   const { t } = useTranslation();
   const { connectedUsers } = useAuth();
+  const [nonConnectedUsers, setNonConnectedUsers] = useState([]);
 
-  const [notConnectedUsers, setNotConnectedUsers] = useState([]);
-
-
-  useEffect(() => {
-    fetchUsers()
-  }, [])
-
-  useEffect(() => {
-    if (connectedUsers.length === 0) {
-      setTimeout(() => {
-        setConnectedUsers(users);
-      }, 1000);
+  const defineNonConnectedUsers = async () => {
+    const allUsers = await fetchUsers();
+    console.log("allUsers");
+    console.log(allUsers);
+    if (allUsers) {
+      const membersNotHere = allUsers.data.filter((user) => {
+        return !connectedUsers.includes(user.id);
+      });
+      setNonConnectedUsers(membersNotHere);
     }
-  }, [connectedUsers]);
+  };
+
+  useEffect(() => {
+    defineNonConnectedUsers();
+  }, []);
 
   return (
     <div className="bg-background flex flex-col flex-grow justify-between w-full p-4">
@@ -39,11 +42,22 @@ const ConnectedUsers = () => {
           {connectedUsers.map((user, index) => {
             return <ConnectedUserCard key={"usercard" + index} user={user} />;
           })}
-          {notConnectedUsers.map((user, index) => {
-            return <ConnectedUserCard key={"usercard" + index} user={user} />;
-          })}
         </div>
       )}
+      <div className="my-2">
+        <h2 className="text-white text-xl font-bold my-4">
+          Not Connected
+        </h2>
+        {nonConnectedUsers &&
+          nonConnectedUsers.map((user, index) => {
+            return (
+              <div className="my-2" key={"notconnected" + index}>
+                <p className="text-white text-xs">{user.username}</p>
+                <p className="text-white text-xs">{user.email}</p>
+              </div>
+            );
+          })}
+      </div>
       <GoBackBtn />
     </div>
   );

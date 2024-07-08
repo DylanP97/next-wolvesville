@@ -175,3 +175,36 @@ body {
 .track-display.fade-out {
   opacity: 0;
 }
+
+/* Define keyframes for fade-in and fade-out animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+/* Class to trigger fade-in animation */
+.fade-in {
+  animation: fadeIn 0.5s forwards;
+}
+
+/* Class to trigger fade-out animation */
+.fade-out {
+  animation: fadeOut 0.5s forwards;
+}

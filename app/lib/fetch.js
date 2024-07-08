@@ -1,3 +1,17 @@
+export const fetchUsers = async () => {
+  try {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_URL + "/api/user/getAllUsers"
+    );
+    console.log(response.ok)
+    if (response.ok) {
+      return response.json();
+    }
+  } catch (error) {
+    console.error("Error fetching users:", error);
+  }
+};
+
 export const fetchRoles = async () => {
   try {
     const response = await fetch(

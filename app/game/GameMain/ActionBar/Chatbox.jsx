@@ -6,11 +6,14 @@ import { useGame } from "../../providers/GameProvider";
 import { useAuth } from "../../../providers/AuthProvider";
 import { useInGameKeys } from "../../providers/InGameKeysProvider";
 import { useTranslation } from "react-i18next";
+import i18n from "../../../lib/i18n";
+import { useGameAnimations } from "../../providers/GameAnimationsProvider";
 
 const Chatbox = () => {
   const { socket, username } = useAuth();
   const { timeOfTheDay, gameId, clientPlayer, isWolf, isJailer } = useGame();
   const { currentKey, setCurrentKey } = useInGameKeys();
+  const { triggerSimpleMessage } = useGameAnimations();
   const [message, setMessage] = useState("");
   const { t } = useTranslation();
 
@@ -29,14 +32,15 @@ const Chatbox = () => {
           username,
           isWolvesChat,
           isJailerChat,
-          isJailer
+          isJailer,
+          i18n.language === "fr" ? "fr" : "en"
         );
         setMessage("");
       } else {
-        console.log("rien n'est écrit");
+        triggerSimpleMessage("You can't send an empty message...");
       }
     } else {
-      console.log("You're dead...");
+      triggerSimpleMessage("You can speak... you're dead... remember?");
     }
   };
 

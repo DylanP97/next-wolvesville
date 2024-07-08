@@ -13,7 +13,7 @@ const GameMain = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { winningTeam, weather } = useGame();
 
   return (
-    <section className={`${weather} w-full flex flex-col flex-grow`}>
+    <section className={`${weather} w-full flex flex-col flex-grow `}>
       <Background />
       <GameHeader />
       {/* <PlayerInfos /> */}

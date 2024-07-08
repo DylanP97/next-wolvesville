@@ -47,7 +47,7 @@ const ActionsHistory = () => {
 
   return (
     <div
-      className={`${weather} w-full z-10 bg-background p-2 relative overflow-hidden flex flex-col flex-grow`}
+      className={`${weather} w-full z-10 bg-background p-2 relative overflow-hidden flex flex-col flex-grow min-h-[220px]`}
     >
       <h2 className="text-white text-xs">
         {usedChat.label} {usedChat.emoji}
