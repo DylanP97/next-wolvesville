@@ -48,6 +48,7 @@ body {
 
 /* Add this to your CSS */
 .winner-overlay {
+  z-index: 999;
   position: fixed;
   top: 0;
   left: 0;
@@ -57,7 +58,7 @@ body {
     0,
     0,
     0,
-    0.6
+    0
   ); /* Semi-transparent background to make the section behind it appear frozen */
   display: flex;
   justify-content: center;
@@ -72,7 +73,16 @@ body {
   border-radius: 8px;
   text-align: center;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 90%;
   /* Add any other styles you want for the winner's message */
+}
+
+.winnerMessage {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.eyeImage:hover ~ .winnerMessage {
+  display: none;
 }
 
 .link-underline {

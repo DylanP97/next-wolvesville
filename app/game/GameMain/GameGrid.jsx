@@ -54,6 +54,11 @@ const GameGrid = () => {
   };
 
   useEffect(() => {
+    setSelectedPlayer(null);
+    setSelectedPlayer1(null);
+  }, [timeOfTheDay]);
+
+  useEffect(() => {
     if (errorMessage) {
       triggerSimpleMessage(errorMessage);
       setErrorMessage(null);

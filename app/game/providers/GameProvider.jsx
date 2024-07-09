@@ -44,7 +44,7 @@ export const GameProvider = ({ children }) => {
   if (!winningTeam) {
     socket.emit("checkForWinner", game.id);
   } else {
-    socket.emit("pauseGame", game.id);
+    socket.emit("endGame", game.id);
   }
 
   useEffect(() => {

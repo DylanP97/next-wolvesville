@@ -6,7 +6,8 @@ import { useGame } from "../../../providers/GameProvider";
 import { divActionIcon, imgActionIcon } from "../../../../lib/styles";
 
 const CommandPerform2 = ({ canPerform2, rolename, activateSelection }) => {
-  const { timeOfTheDay, isUnderArrest, isSelection, hasHandcuffed } = useGame();
+  const { timeOfTheDay, isUnderArrest, isSelection, isDoubleSelection, hasHandcuffed, isBlocked } =
+    useGame();
 
   const {
     label = undefined,
@@ -33,8 +34,12 @@ const CommandPerform2 = ({ canPerform2, rolename, activateSelection }) => {
             <div
               onClick={() => activateSelection(type)}
               className={`${
-                isSelection ? "bg-secondary" : "bg-green-600 hover:bg-green-400"
-              } ${divActionIcon}`}
+                isBlocked
+                  ? "bg-slate-500"
+                  : isSelection || isDoubleSelection
+                  ? "bg-yellow-600 hover:bg-yellow-400"
+                  : "bg-green-600 hover:bg-green-400"
+              } ${divActionIcon} relative`}
             >
               <Image
                 src={emoji}

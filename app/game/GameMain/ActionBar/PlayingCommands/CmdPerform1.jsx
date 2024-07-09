@@ -17,6 +17,7 @@ const CmdPerform1 = ({
     isUnderArrest,
     isSelection,
     isDoubleSelection,
+    isBlocked
   } = useGame();
 
   const {

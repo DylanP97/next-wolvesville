@@ -59,7 +59,7 @@ const cpuNextMove = (
         }
         break;
       case "Serial Killer":
-        let victim = getRandomAlivePlayer();
+        let victim = getRandomAlivePlayer(false, false, cpu.id);
         if (victim) {
           socket.emit(
             "registerAction",

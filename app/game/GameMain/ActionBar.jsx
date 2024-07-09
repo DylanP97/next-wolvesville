@@ -16,7 +16,7 @@ const ActionBar = ({ summaryIsOpen, setSummaryIsOpen }) => {
         summaryIsOpen={summaryIsOpen}
         setSummaryIsOpen={setSummaryIsOpen}
       />
-      <Chatbox />
+      {clientPlayer.isAlive && <Chatbox />} 
       {clientPlayer.isAlive && <PlayingCommands />}
     </div>
   );

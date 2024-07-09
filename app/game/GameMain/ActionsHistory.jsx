@@ -19,6 +19,7 @@ const ActionsHistory = () => {
     isUnderArrest,
     hasHandcuffed,
     weather,
+    clientPlayer,
   } = useGame();
   const { t } = useTranslation();
 
@@ -39,7 +40,11 @@ const ActionsHistory = () => {
   const jail = new Chat(t("game.jailChat"), jailChat, "👮‍♂️");
 
   const usedChat =
-    isUnderArrest || (isJailer && timeOfTheDay == "nighttime" && hasHandcuffed)
+    (clientPlayer.isAlive && isUnderArrest) ||
+    (clientPlayer.isAlive &&
+      isJailer &&
+      timeOfTheDay == "nighttime" &&
+      hasHandcuffed >= 0)
       ? jail
       : timeOfTheDay == "nighttime" && isWolf
       ? wolves
@@ -47,12 +52,12 @@ const ActionsHistory = () => {
 
   return (
     <div
-      className={`${weather} w-full z-10 bg-background p-2 relative overflow-hidden flex flex-col flex-grow min-h-[220px]`}
+      className={`${weather} w-full z-10 bg-background p-2 relative overflow-hidden flex flex-col flex-grow min-h-[220px] `}
     >
       <h2 className="text-white text-xs">
         {usedChat.label} {usedChat.emoji}
       </h2>
-      <div className="max-h-[200px] z-10 p-2 max-h-80 object-bottom overflow-hidden overflow-y-auto">
+      <div className="z-10 p-2 object-bottom overflow-y-auto max-h-80">
         <ul className="actions-list text-white text-xs">
           {usedChat.history.map((msg, index) => {
             if (msg.author) {

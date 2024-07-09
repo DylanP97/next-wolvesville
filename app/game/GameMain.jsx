@@ -4,13 +4,15 @@ import Background from "./GameMain/Background";
 import WinnerOverlay from "./GameMain/WinnerOverlay";
 import ActionsHistory from "./GameMain/ActionsHistory";
 import ActionBar from "./GameMain/ActionBar";
-import PlayerInfos from "./GameMain/PlayerInfos";
 import GameHeader from "./GameMain/GameHeader";
 import GameGrid from "./GameMain/GameGrid";
 import { useGame } from "./providers/GameProvider";
+import useWindowSize from "react-use/lib/useWindowSize";
+import Confetti from 'react-confetti'
 
 const GameMain = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { winningTeam, weather } = useGame();
+  const { width, height } = useWindowSize();
 
   return (
     <section className={`${weather} w-full flex flex-col flex-grow `}>
@@ -23,7 +25,12 @@ const GameMain = ({ summaryIsOpen, setSummaryIsOpen }) => {
         summaryIsOpen={summaryIsOpen}
         setSummaryIsOpen={setSummaryIsOpen}
       />
-      {winningTeam !== null && <WinnerOverlay />}
+      {winningTeam !== null && (
+        <>
+          <Confetti width={width} height={height} />
+          <WinnerOverlay />
+        </>
+      )}
     </section>
   );
 };

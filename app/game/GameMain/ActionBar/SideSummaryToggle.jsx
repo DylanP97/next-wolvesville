@@ -1,6 +1,6 @@
 "use client";
 
-const { Tooltip } = require("@nextui-org/react");
+import { Tooltip } from "@nextui-org/react";
 import ListIcon from "../../../components/icons/ListIcon";
 import { divActionIcon } from "../../../lib/styles";
 

@@ -30,156 +30,167 @@ const handlePlayerClick = (
     setIsDoubleSelection(false);
   }
 
-  if (!isBlocked) {
-    if (isSelection || isDoubleSelection) {
-      if (player.id === clientPlayer.id) {
-        setErrorMessage("Don't select yourself!");
-        return;
-      }
+  if (clientPlayer.isAlive) {
+    if (!isBlocked) {
+      if (isSelection || isDoubleSelection) {
+        if (player.id === clientPlayer.id) {
+          setErrorMessage("Don't select yourself!");
+          return;
+        }
 
-      if (!player.isAlive) {
-        setErrorMessage("This player is dead. Stop hitting its grave.");
-        return;
-      }
+        if (!player.isAlive) {
+          setErrorMessage("This player is dead. Stop hitting its grave.");
+          return;
+        }
 
-      if (!isJailer && player.isUnderArrest) {
-        setErrorMessage(
-          "This player is locked up in jail. You can't select him."
-        );
-        return;
-      }
-
-      if (isJailer && actionType === "execute" && !player.isUnderArrest) {
-        setErrorMessage("You can only execute the player who is under arrest.");
-        return;
-      }
-
-      if (timeOfTheDay === "votetime" && actionType === "vote") {
-        const nbr =
-          clientPlayer.role.name === "Mayor" && clientPlayer.isRevealed ? 2 : 1;
-        socket.emit("addVote", player.id, nbr, gameId);
-        selectionCompleted();
-        return;
-      }
-
-      if (actionType === "chooseJuniorWolfDeathRevenge") {
-        if (!player.role.team.includes("werewolves")) {
-          socket.emit(
-            "chooseJuniorWolfDeathRevenge",
-            {
-              juniorWolfId: player.id,
-              selectedPlayerId: player.id,
-            },
-            gameId
+        if (!isJailer && player.isUnderArrest) {
+          setErrorMessage(
+            "This player is locked up in jail. You can't select him."
           );
-          selectionCompleted();
-        } else {
-          setErrorMessage("You can't select a wolf to revenge on.");
+          return;
         }
-        return;
-      }
 
-      if (timeOfTheDay === "nighttime" && actionType === "wolfVote") {
-        if (!player.role.team.includes("werewolves")) {
-          const nbr = clientPlayer.role.name === "Alpha Werewolf" ? 2 : 1;
-          socket.emit("addWolfVote", player.id, nbr, gameId);
-          selectionCompleted();
-        } else {
-          setErrorMessage("You can't select a wolf");
+        if (isJailer && actionType === "execute" && !player.isUnderArrest) {
+          setErrorMessage(
+            "You can only execute the player who is under arrest."
+          );
+          return;
         }
-        return;
-      } else {
-        if (isSelection) {
-          if (isJailer && player.isUnderArrest && actionType === "execute") {
+
+        if (timeOfTheDay === "votetime" && actionType === "vote") {
+          const nbr =
+            clientPlayer.role.name === "Mayor" && clientPlayer.isRevealed
+              ? 2
+              : 1;
+          socket.emit("addVote", player.id, nbr, gameId);
+          selectionCompleted();
+          return;
+        }
+
+        if (actionType === "chooseJuniorWolfDeathRevenge") {
+          if (!player.role.team.includes("werewolves")) {
             socket.emit(
-              "executePrisoner",
+              "chooseJuniorWolfDeathRevenge",
               {
-                type: actionType,
-                killerId: clientPlayer.id,
+                juniorWolfId: player.id,
                 selectedPlayerId: player.id,
-                selectedPlayerName: player.name,
               },
               gameId
             );
-          } else if (actionType === "reveal") {
-            if (player.isRevealed) {
-              setErrorMessage("You can't reveal a player that is not revealed");
-              return;
-            } else {
+            selectionCompleted();
+          } else {
+            setErrorMessage("You can't select a wolf to revenge on.");
+          }
+          return;
+        }
+
+        if (timeOfTheDay === "nighttime" && actionType === "wolfVote") {
+          if (!player.role.team.includes("werewolves")) {
+            const nbr = clientPlayer.role.name === "Alpha Werewolf" ? 2 : 1;
+            socket.emit("addWolfVote", player.id, nbr, gameId);
+            selectionCompleted();
+          } else {
+            setErrorMessage("You can't select a wolf");
+          }
+          return;
+        } else {
+          if (isSelection) {
+            if (isJailer && player.isUnderArrest && actionType === "execute") {
               socket.emit(
-                "revealPlayer",
+                "executePrisoner",
                 {
                   type: actionType,
-                  seerId: clientPlayer.id,
+                  killerId: clientPlayer.id,
                   selectedPlayerId: player.id,
                   selectedPlayerName: player.name,
                 },
                 gameId
               );
+            } else if (actionType === "reveal") {
+              if (player.isRevealed) {
+                setErrorMessage(
+                  "You can't reveal a player that is not revealed"
+                );
+                return;
+              } else {
+                socket.emit(
+                  "revealPlayer",
+                  {
+                    type: actionType,
+                    seerId: clientPlayer.id,
+                    selectedPlayerId: player.id,
+                    selectedPlayerName: player.name,
+                  },
+                  gameId
+                );
+              }
+            } else if (actionType === "shoot") {
+              socket.emit(
+                "shootBullet",
+                {
+                  type: actionType,
+                  gunnerId: clientPlayer.id,
+                  selectedPlayerId: player.id,
+                  selectedPlayerName: player.name,
+                },
+                gameId
+              );
+            } else if (actionType === "heal") {
+              socket.emit(
+                "heal",
+                {
+                  type: actionType,
+                  playerId: clientPlayer.id,
+                  selectedPlayerId: player.id,
+                  selectedPlayerName: player.name,
+                },
+                gameId
+              );
+            } else {
+              socket.emit(
+                "registerAction",
+                {
+                  type: actionType,
+                  playerId: clientPlayer.id,
+                  selectedPlayerId: player.id,
+                  selectedPlayerName: player.name,
+                  actionTime: clientPlayer.role.canPerform.actionTime,
+                },
+                gameId
+              );
             }
-          } else if (actionType === "shoot") {
-            socket.emit(
-              "shootBullet",
-              {
-                type: actionType,
-                gunnerId: clientPlayer.id,
-                selectedPlayerId: player.id,
-                selectedPlayerName: player.name,
-              },
-              gameId
-            );
-          } else if (actionType === "heal") {
-            socket.emit(
-              "heal",
-              {
-                type: actionType,
-                playerId: clientPlayer.id,
-                selectedPlayerId: player.id,
-                selectedPlayerName: player.name,
-              },
-              gameId
-            );
-          } else {
-            socket.emit(
-              "registerAction",
-              {
-                type: actionType,
-                playerId: clientPlayer.id,
-                selectedPlayerId: player.id,
-                selectedPlayerName: player.name,
-                actionTime: clientPlayer.role.canPerform.actionTime,
-              },
-              gameId
-            );
+            selectionCompleted();
+            return;
+          } else if (isDoubleSelection && selectedPlayer1 == null) {
+            setSelectedPlayer1(player);
+            return;
+          } else if (isDoubleSelection && selectedPlayer1) {
+            if (actionType === "link") {
+              socket.emit(
+                "registerAction",
+                {
+                  type: "link",
+                  lover1Id: selectedPlayer1.id,
+                  lover2Id: player.id,
+                  cupidId: clientPlayer.id,
+                },
+                gameId
+              );
+            }
+            doubleSelectionCompleted();
+            return;
           }
-          selectionCompleted();
-          return;
-        } else if (isDoubleSelection && selectedPlayer1 == null) {
-          setSelectedPlayer1(player);
-          return;
-        } else if (isDoubleSelection && selectedPlayer1) {
-          if (actionType === "link") {
-            socket.emit(
-              "registerAction",
-              {
-                type: "link",
-                lover1Id: selectedPlayer1.id,
-                lover2Id: player.id,
-                cupidId: clientPlayer.id,
-              },
-              gameId
-            );
-          }
-          doubleSelectionCompleted();
-          return;
         }
+      } else {
+        setErrorMessage("no selection modes are active ");
+        return;
       }
     } else {
-      setErrorMessage("no selection modes are active ");
-      return;
+      setErrorMessage("selection's blocked ");
     }
   } else {
-    setErrorMessage("selection's blocked ");
+    setErrorMessage("You are dead. You can't do anything.");
+    return;
   }
 };
 

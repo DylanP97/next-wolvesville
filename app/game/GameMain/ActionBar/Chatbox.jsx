@@ -19,7 +19,9 @@ const Chatbox = () => {
 
   const isJailerChat =
     clientPlayer.isUnderArrest ||
-    (isJailer && timeOfTheDay == "nighttime" && clientPlayer.hasHandcuffed);
+    (isJailer &&
+      timeOfTheDay == "nighttime" &&
+      clientPlayer.hasHandcuffed >= 0);
   const isWolvesChat = timeOfTheDay == "nighttime" && isWolf ? true : false;
 
   const sendMessage = (message) => {

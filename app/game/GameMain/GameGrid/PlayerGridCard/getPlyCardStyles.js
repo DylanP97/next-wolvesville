@@ -39,7 +39,11 @@ const getPlyCardStyles = (
   }
 
   if (clientPlayer.role.name === "Jailer") {
-    if (timeOfTheDay === "nighttime" && actionType === "execute") {
+    if (
+      timeOfTheDay === "nighttime" &&
+      actionType === "execute" &&
+      selectionRemaining()
+    ) {
       if (player.isUnderArrest) {
         return "bg-slate-500 hover:bg-slate-400 cursor-pointer animate-pulse hover:animate-none";
       } else {
@@ -83,10 +87,10 @@ const getPlyCardStyles = (
   // cases when to display the card as a potentially selected item
   if (selectionRemaining()) {
     if (
-      itsVillageVoteTime() ||
+      (itsVillageVoteTime() ||
       wolfNightChoice() ||
       choosingPreyAsJuniorWolfAction() ||
-      basicSelection()
+      basicSelection()) && !player.isUnderArrest
     )
       return "bg-slate-500 hover:bg-slate-400 cursor-pointer animate-pulse hover:animate-none";
   }
