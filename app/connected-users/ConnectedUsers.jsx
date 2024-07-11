@@ -3,6 +3,7 @@
 import { useAuth } from "../providers/AuthProvider";
 import { useTranslation } from "react-i18next";
 import ConnectedUserCard from "./ConnectedUserCard";
+import NotConnectedUserCard from "./NotConnectedUserCard";
 import GoBackBtn from "../components/GoBackBtn";
 import { useEffect, useState } from "react";
 import { fetchUsers } from "../lib/fetch";
@@ -14,12 +15,10 @@ const ConnectedUsers = () => {
 
   const defineNonConnectedUsers = async () => {
     const allUsers = await fetchUsers();
-    console.log("allUsers");
-    console.log(allUsers);
     if (allUsers) {
-      const membersNotHere = allUsers.data.filter((user) => {
-        return !connectedUsers.includes(user.id);
-      });
+      const membersNotHere = allUsers.data.filter(
+        user => !connectedUsers.some(connectedUser => connectedUser.username === user.username)
+      );
       setNonConnectedUsers(membersNotHere);
     }
   };
@@ -30,7 +29,7 @@ const ConnectedUsers = () => {
 
   return (
     <div className="bg-background flex flex-col flex-grow justify-between w-full p-4">
-      <h1 className="text-white text-3xl font-bold mb-6 mt-10">
+      <h1 className="text-white text-3xl font-bold my-6">
         {t("connected.title")}
       </h1>
       {!connectedUsers ? (
@@ -38,25 +37,25 @@ const ConnectedUsers = () => {
           <p className="text-white">{t("connected.nousers")}</p>
         </div>
       ) : (
-        <div className="flex flex-grow flex-col max-w-[400px]">
+        <div className="flex flex-grow flex-col">
           {connectedUsers.map((user, index) => {
             return <ConnectedUserCard key={"usercard" + index} user={user} />;
           })}
         </div>
       )}
-      <div className="my-2">
-        <h2 className="text-white text-xl font-bold my-4">
-          Not Connected
-        </h2>
-        {nonConnectedUsers &&
-          nonConnectedUsers.map((user, index) => {
-            return (
-              <div className="my-2" key={"notconnected" + index}>
-                <p className="text-white text-xs">{user.username}</p>
-                <p className="text-white text-xs">{user.email}</p>
-              </div>
-            );
-          })}
+      <div className="my-4">
+        <h2 className="text-white text-xl font-bold my-2">Not Connected</h2>
+        <div className="flex justify-center flex-wrap w-full">
+          {nonConnectedUsers &&
+            nonConnectedUsers.map((user) => {
+              return (
+                <NotConnectedUserCard
+                  user={user}
+                  key={"notconnected" + user.name}
+                />
+              );
+            })}
+        </div>
       </div>
       <GoBackBtn />
     </div>

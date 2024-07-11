@@ -8,7 +8,7 @@ import { useSound } from "../../providers/SoundProvider";
 const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
-  const { game, socket, username } = useAuth();
+  const { game, socket, username, updateGameState } = useAuth();
   const { generateNoise } = useSound();
 
   const weatherColors = {
@@ -45,6 +45,7 @@ export const GameProvider = ({ children }) => {
     socket.emit("checkForWinner", game.id);
   } else {
     socket.emit("endGame", game.id);
+    updateGameState(false, false, null);
   }
 
   useEffect(() => {

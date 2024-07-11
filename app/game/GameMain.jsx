@@ -8,7 +8,7 @@ import GameHeader from "./GameMain/GameHeader";
 import GameGrid from "./GameMain/GameGrid";
 import { useGame } from "./providers/GameProvider";
 import useWindowSize from "react-use/lib/useWindowSize";
-import Confetti from 'react-confetti'
+import Confetti from "react-confetti";
 
 const GameMain = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { winningTeam, weather } = useGame();
@@ -27,7 +27,7 @@ const GameMain = ({ summaryIsOpen, setSummaryIsOpen }) => {
       />
       {winningTeam !== null && (
         <>
-          <Confetti width={width} height={height} />
+          <Confetti width={width} height={height} style={{ zIndex: "999" }} />
           <WinnerOverlay />
         </>
       )}

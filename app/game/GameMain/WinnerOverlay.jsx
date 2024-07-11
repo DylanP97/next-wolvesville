@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@nextui-org/react";
+import { Button, Divider } from "@nextui-org/react";
 import { useAuth } from "../../providers/AuthProvider";
 import { useGame } from "../providers/GameProvider";
 import { useTranslation } from "react-i18next";
@@ -56,7 +56,7 @@ const WinnerOverlay = () => {
                 : wTeamData.winHeadline}
             </p>
           </div>
-          <div className="flex flex-row justify-center mt-4">
+          <div className="flex flex-row justify-center flex-wrap">
             {winningTeam.winnerPlayers.map((ply) => {
               return (
                 <AvatarAndRole
@@ -67,7 +67,8 @@ const WinnerOverlay = () => {
               );
             })}
           </div>
-          <div className="flex flex-col justify-center mt-4">
+          <Divider className="my-4" />
+          <div className="flex flex-col justify-center my-2">
             <div className="flex items-center gap-2">
               <Image
                 src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1717509814/grave_nmqqmp.png"
@@ -79,7 +80,7 @@ const WinnerOverlay = () => {
               />
               <p className="text-sm">{t("winnerOverlay.graveyard")}</p>
             </div>
-            <div className="flex flex-row justify-center mt-4">
+            <div className="flex flex-row justify-center mt-4 gap-2 flex-wrap">
               {playersList
                 .filter((ply) => !ply.isAlive)
                 .map((ply) => {
@@ -100,7 +101,7 @@ const WinnerOverlay = () => {
           >
             {t("goback")}
           </Button>
-          <Image
+          {/* <Image
             src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1720534502/eye_yee8gi.png"
             alt="eyec"
             height={40}
@@ -108,7 +109,7 @@ const WinnerOverlay = () => {
             style={{ height: "auto", width: "auto" }}
             className={`w-6 h-6 absolute top-2 right-2 eyeImage`}
             id="winner-overlay-eyec"
-          />
+          /> */}
         </div>
       </div>
     );

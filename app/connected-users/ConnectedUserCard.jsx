@@ -10,16 +10,11 @@ const ConnectedUserCard = ({ user }) => {
     <div
       className={`${
         user.isInRoom ? "bg-green-500" : "bg-red-500"
-      } flex flex-row p-4 m-2 h-fit rounded-3xl hover:opacity-90 cursor-pointer`}
+      } flex flex-row p-2 m-2 h-fit rounded-3xl hover:opacity-90 cursor-pointer max-w-[350px]`}
     >
-      <div className="flex justify-center items-center p-1">
-        <AvatarUI heightAndWidth={50} avatar={user.avatar} />
-      </div>
-      <div>
-        <div>
-          <p className="text-md">{user.username}</p>
-          <p className="text-xs text-gray-200">id: {user.socketId}</p>
-        </div>
+      <AvatarUI heightAndWidth={50} avatar={user.avatar} />
+      <div className="flex flex-col items-start">
+        <p className="text-md">{user.username}</p>
         {user.isInRoom ? (
           <p className="text-xs">
             🟢🎮 {t("home.status.1")} {user.isInRoom}

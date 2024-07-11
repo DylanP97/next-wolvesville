@@ -3,7 +3,6 @@ export const fetchUsers = async () => {
     const response = await fetch(
       process.env.NEXT_PUBLIC_API_URL + "/api/user/getAllUsers"
     );
-    console.log(response.ok)
     if (response.ok) {
       return response.json();
     }

@@ -3,7 +3,7 @@
 import { Input, User, Button, Divider } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import { useAuth } from "../providers/AuthProvider";
-import RoleCheckbox from "./RoleCheckbox";
+import RoleChoice from "./RoleChoice";
 import TeamCounter from "./TeamCounter";
 import GoBackBtn from "../components/GoBackBtn";
 import { useTranslation } from "react-i18next";
@@ -127,7 +127,7 @@ const CreateRoom = () => {
             <div className="flex flex-col md:flex-row justify-between my-2">
               <div className="">
                 {availableRoles.map((role) => (
-                  <RoleCheckbox
+                  <RoleChoice
                     key={role.name + "-rolecheckbx"}
                     role={role}
                     handleRoleChange={handleRoleChange}

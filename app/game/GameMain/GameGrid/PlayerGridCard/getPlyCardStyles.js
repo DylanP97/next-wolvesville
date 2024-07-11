@@ -74,12 +74,16 @@ const getPlyCardStyles = (
       !wolfNightChoice() &&
       !choosingPreyAsJuniorWolfAction() &&
       ((timeOfTheDay === "daytime" &&
+        clientPlayer.role.canPerform &&
         clientPlayer.role.canPerform.actionTime === "day") ||
         (timeOfTheDay === "daytime" &&
+          clientPlayer.role.canPerform2 &&
           clientPlayer.role.canPerform2.actionTime === "day") ||
         (timeOfTheDay === "nighttime" &&
+          clientPlayer.role.canPerform &&
           clientPlayer.role.canPerform.actionTime === "night") ||
         (timeOfTheDay === "nighttime" &&
+          clientPlayer.role.canPerform2 &&
           clientPlayer.role.canPerform2.actionTime === "night"))
     );
   }
@@ -88,9 +92,10 @@ const getPlyCardStyles = (
   if (selectionRemaining()) {
     if (
       (itsVillageVoteTime() ||
-      wolfNightChoice() ||
-      choosingPreyAsJuniorWolfAction() ||
-      basicSelection()) && !player.isUnderArrest
+        wolfNightChoice() ||
+        choosingPreyAsJuniorWolfAction() ||
+        basicSelection()) &&
+      !player.isUnderArrest
     )
       return "bg-slate-500 hover:bg-slate-400 cursor-pointer animate-pulse hover:animate-none";
   }
