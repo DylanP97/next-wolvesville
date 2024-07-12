@@ -25,7 +25,7 @@ const GameMain = ({ summaryIsOpen, setSummaryIsOpen }) => {
         summaryIsOpen={summaryIsOpen}
         setSummaryIsOpen={setSummaryIsOpen}
       />
-      {winningTeam !== null && (
+      {winningTeam === null && (
         <>
           <Confetti width={width} height={height} style={{ zIndex: "999" }} />
           <WinnerOverlay />

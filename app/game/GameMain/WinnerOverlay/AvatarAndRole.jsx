@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import AvatarUI from "../../../profile/components/AvatarUI";
+import AvatarUI from "../../../components/AvatarUI"; 
 import { useTranslation } from "react-i18next";
 import i18n from "../../../lib/i18n";
 

@@ -154,7 +154,7 @@ const handlePlayerClick = (
                   playerId: clientPlayer.id,
                   selectedPlayerId: player.id,
                   selectedPlayerName: player.name,
-                  actionTime: clientPlayer.role.canPerform.actionTime,
+                  actionTime: clientPlayer.role.canPerform1.actionTime,
                 },
                 gameId
               );

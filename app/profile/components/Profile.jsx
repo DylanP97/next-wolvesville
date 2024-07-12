@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
 import { useTranslation } from "react-i18next";
 import { Button, Tab, Tabs } from "@nextui-org/react";
-import AvatarUI from "./AvatarUI";
 import GoBackBtn from "../../components/GoBackBtn";
 import { tabs } from "../lib/tabsDefinitions";
 import ProfileSelect from "./ProfileSelect";
+import AvatarUI from "../../components/AvatarUI";
 
 const Profile = ({ username, avatar, socketId }) => {
   const [avState, setAvState] = useState(avatar);

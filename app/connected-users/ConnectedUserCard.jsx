@@ -1,10 +1,8 @@
 "use client";
 
-import { useTranslation } from "react-i18next";
-import AvatarUI from "../profile/components/AvatarUI";
+import AvatarUI from "../components/AvatarUI";
 
 const ConnectedUserCard = ({ user }) => {
-  const { t } = useTranslation();
 
   return (
     <div
@@ -15,13 +13,7 @@ const ConnectedUserCard = ({ user }) => {
       <AvatarUI heightAndWidth={50} avatar={user.avatar} />
       <div className="flex flex-col items-start">
         <p className="text-md">{user.username}</p>
-        {user.isInRoom ? (
-          <p className="text-xs">
-            🟢🎮 {t("home.status.1")} {user.isInRoom}
-          </p>
-        ) : (
-          <p className="text-xs">🔴 {t("home.status.2")}</p>
-        )}
+        <IsInRoomInfo isInRoom={user.isInRoom} />
       </div>
     </div>
   );

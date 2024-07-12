@@ -1,8 +1,7 @@
 "use client";
 
 import CmdVote from "./PlayingCommands/CmdVote";
-import CmdPerform1 from "./PlayingCommands/CmdPerform1";
-import CmdPerform2 from "./PlayingCommands/CmdPerform2";
+import CmdPerform from "./PlayingCommands/CmdPerform";
 import { useGame } from "../../providers/GameProvider";
 import { useAuth } from "../../../providers/AuthProvider";
 import { useGameAnimations } from "../../providers/GameAnimationsProvider";
@@ -23,17 +22,7 @@ const PlayingCommands = () => {
     gameId,
   } = useGame();
 
-  const {
-    role: {
-      canVote,
-      canPerform,
-      canPerform2,
-      name,
-      bombPower,
-      playersToSetOnFire,
-      partner,
-    } = {},
-  } = clientPlayer;
+  const { role: { canVote, canPerform1, canPerform2 } = {} } = clientPlayer;
 
   const activateSelection = (actionType) => {
     if (!isBlocked) {
@@ -80,19 +69,20 @@ const PlayingCommands = () => {
             wolfVote={true}
           />
         )}
-      {canPerform && (
-        <CmdPerform1
-          canPerform={canPerform}
+      {canPerform1 && (
+        <CmdPerform
+          canPerform={canPerform1}
           activateSelection={activateSelection}
           activateDoubleSelection={activateDoubleSelection}
           noSelectionAction={noSelectionAction}
         />
       )}
       {canPerform2 && (
-        <CmdPerform2
-          canPerform2={canPerform2}
+        <CmdPerform
+          canPerform={canPerform2}
           activateSelection={activateSelection}
-          rolename={name}
+          activateDoubleSelection={activateDoubleSelection}
+          noSelectionAction={noSelectionAction}
         />
       )}
     </>

@@ -1,9 +1,10 @@
 "use client";
 
-import AvatarUI from "../profile/components/AvatarUI";
 import { useTranslation } from "react-i18next";
+import AvatarUI from "../components/AvatarUI";
+import IsInRoomInfo from "../components/IsInRoomInfo";
 
-const AuthInfo = ({ username, socketId, isInRoom, avatar }) => {
+const AuthInfo = ({ username, isInRoom, avatar }) => {
   const { t } = useTranslation();
 
   const welcomeMsgs = [
@@ -16,18 +17,10 @@ const AuthInfo = ({ username, socketId, isInRoom, avatar }) => {
 
   return (
     <header className="mt-6 p-4 flex justify-center items-center">
-      <div className="mx-2 flex items-center justify-center bg-primary-foreground rounded-full overflow-hidden border-4 border-primary-foreground">
-        <AvatarUI avatar={avatar} heightAndWidth={80} />
-      </div>
+      <AvatarUI avatar={avatar} heightAndWidth={80} />
       <div className="h-full">
         <p className="text-md text-white">{welcomeMsgs[randomIndex]}</p>
-        {isInRoom ? (
-          <p className="text-md text-white">
-            🟢 {t("home.status.1")} {isInRoom}
-          </p>
-        ) : (
-          <p className="text-md text-white">🔴 {t("home.status.2")}</p>
-        )}
+        <IsInRoomInfo isInRoom={isInRoom} />
       </div>
     </header>
   );

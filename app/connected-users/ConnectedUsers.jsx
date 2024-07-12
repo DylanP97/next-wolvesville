@@ -3,10 +3,10 @@
 import { useAuth } from "../providers/AuthProvider";
 import { useTranslation } from "react-i18next";
 import ConnectedUserCard from "./ConnectedUserCard";
-import NotConnectedUserCard from "./NotConnectedUserCard";
 import GoBackBtn from "../components/GoBackBtn";
 import { useEffect, useState } from "react";
 import { fetchUsers } from "../lib/fetch";
+import AvatarUI from "../components/AvatarUI";
 
 const ConnectedUsers = () => {
   const { t } = useTranslation();
@@ -17,7 +17,10 @@ const ConnectedUsers = () => {
     const allUsers = await fetchUsers();
     if (allUsers) {
       const membersNotHere = allUsers.data.filter(
-        user => !connectedUsers.some(connectedUser => connectedUser.username === user.username)
+        (user) =>
+          !connectedUsers.some(
+            (connectedUser) => connectedUser.username === user.username
+          )
       );
       setNonConnectedUsers(membersNotHere);
     }
@@ -49,8 +52,9 @@ const ConnectedUsers = () => {
           {nonConnectedUsers &&
             nonConnectedUsers.map((user) => {
               return (
-                <NotConnectedUserCard
-                  user={user}
+                <AvatarUI
+                  heightAndWidth={50}
+                  avatar={user.avatar}
                   key={"notconnected" + user.name}
                 />
               );

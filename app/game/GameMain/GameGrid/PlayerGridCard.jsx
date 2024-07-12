@@ -5,7 +5,10 @@ import VoteCount from "./PlayerGridCard/VoteCount";
 import IconReveal from "./PlayerGridCard/IconReveal";
 import PlayerAvatar from "./PlayerGridCard/PlayerAvatar";
 import { useGame } from "../../providers/GameProvider";
-import getPlyCardStyles from "./PlayerGridCard/getPlyCardStyles";
+import {
+  getPlyCardBackground,
+  getPlyCardLayout,
+} from "./PlayerGridCard/getPlyCardStyles";
 
 const PlayerGridCard = ({
   player,
@@ -33,20 +36,20 @@ const PlayerGridCard = ({
     <div
       key={"plycard-" + player.id}
       onClick={onClickHandler}
-      className={`${getPlyCardStyles(
+      className={`${getPlyCardBackground(
         player,
-        clientPlayer,
-        isSelection,
-        isDoubleSelection,
         selectedPlayer,
         selectedPlayer1,
-        isBlocked,
-        isWolf,
         isAlsoWolf,
-        actionType,
+        timeOfTheDay,
+        clientPlayer,
+        isWolf,
+        isSelection,
+        isDoubleSelection,
+        isBlocked,
         weather,
-        timeOfTheDay
-      )} w-full h-20 flex flex-col justify-center items-center relative p-2`}
+        actionType
+      )} ${getPlyCardLayout()} `}
     >
       {timeOfTheDay == "votetime" && <VoteCount voteNbr={player.voteAgainst} />}
 
@@ -76,7 +79,7 @@ const PlayerGridCard = ({
         avatar={player.avatar}
       />
 
-      <p className="text-xs mt-2">{player.name}</p>
+      <p className="text-xs">{player.name}</p>
     </div>
   );
 };

@@ -1,18 +1,18 @@
 // styles for the player card
 
-const getPlyCardStyles = (
+export const getPlyCardBackground = (
   player,
-  clientPlayer,
-  isSelection,
-  isDoubleSelection,
   selectedPlayer,
   selectedPlayer1,
-  isBlocked,
-  isWolf,
   isAlsoWolf,
-  actionType,
+  timeOfTheDay,
+  clientPlayer,
+  isWolf,
+  isSelection,
+  isDoubleSelection,
+  isBlocked,
   weather,
-  timeOfTheDay
+  actionType
 ) => {
   // if player is dead, return black
   if (!player.isAlive) return "bg-black text-yellow-500";
@@ -74,14 +74,14 @@ const getPlyCardStyles = (
       !wolfNightChoice() &&
       !choosingPreyAsJuniorWolfAction() &&
       ((timeOfTheDay === "daytime" &&
-        clientPlayer.role.canPerform &&
-        clientPlayer.role.canPerform.actionTime === "day") ||
+        clientPlayer.role.canPerform1 &&
+        clientPlayer.role.canPerform1.actionTime === "day") ||
         (timeOfTheDay === "daytime" &&
           clientPlayer.role.canPerform2 &&
           clientPlayer.role.canPerform2.actionTime === "day") ||
         (timeOfTheDay === "nighttime" &&
-          clientPlayer.role.canPerform &&
-          clientPlayer.role.canPerform.actionTime === "night") ||
+          clientPlayer.role.canPerform1 &&
+          clientPlayer.role.canPerform1.actionTime === "night") ||
         (timeOfTheDay === "nighttime" &&
           clientPlayer.role.canPerform2 &&
           clientPlayer.role.canPerform2.actionTime === "night"))
@@ -102,4 +102,6 @@ const getPlyCardStyles = (
   return `bg-transparent`;
 };
 
-export default getPlyCardStyles;
+export const getPlyCardLayout = () => {
+  return "w-full h-24 flex flex-col gap-2 justify-center items-center relative p-2";
+};

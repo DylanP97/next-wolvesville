@@ -141,7 +141,7 @@ const cpuNextMove = (
   function performDayAction() {
     switch (cpu.role.name) {
       case "Mayor":
-        if (Math.random() < 0.3 && cpu.role.canPerform.nbrLeftToPerform > 0) {
+        if (Math.random() < 0.3 && cpu.role.canPerform1.nbrLeftToPerform > 0) {
           socket.emit("assertDuty", cpu.name, gameId);
         }
         break;
@@ -202,7 +202,7 @@ const cpuNextMove = (
       socket.emit(
         "addVote",
         voteTarget.id,
-        cpu.role.name === "Mayor" && cpu.role.canPerform.nbrLeftToPerform === 0
+        cpu.role.name === "Mayor" && cpu.role.canPerform1.nbrLeftToPerform === 0
           ? 2
           : 1,
         gameId

@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import AvatarUI from "../../../../profile/components/AvatarUI";
 import prison from "../../../../../public/game/prison.png";
+import AvatarUI from "../../../../components/AvatarUI";
 
 const PlayerAvatar = ({ isAlive, isUnderArrest, avatar }) => {
   return (

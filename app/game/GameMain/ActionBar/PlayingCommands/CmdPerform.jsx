@@ -5,7 +5,7 @@ import { Tooltip } from "@nextui-org/react";
 import { useGame } from "../../../providers/GameProvider";
 import { divActionIcon, imgActionIcon } from "../../../../lib/styles";
 
-const CmdPerform1 = ({
+const CmdPerform = ({
   canPerform,
   activateSelection,
   activateDoubleSelection,
@@ -17,7 +17,7 @@ const CmdPerform1 = ({
     isUnderArrest,
     isSelection,
     isDoubleSelection,
-    isBlocked
+    isBlocked,
   } = useGame();
 
   const {
@@ -73,4 +73,4 @@ const CmdPerform1 = ({
   }
 };
 
-export default CmdPerform1;
+export default CmdPerform;

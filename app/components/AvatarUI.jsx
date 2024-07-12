@@ -4,11 +4,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@nextui-org/react";
 
-const AvatarUI = ({
-  avatar, heightAndWidth
-  // selection, accessories, accessoriesColor, clothesColor, clothing, clothingGraphic, eyebrows, eyes, facialHair, facialHairColor, hairColor, hatColor, mouth, skinColor, top 
-}) => {
-  const [avatarR, setAvatarR] = useState("");
+const AvatarUI = ({ avatar, heightAndWidth }) => {
+  const [avatarState, setAvatarState] = useState("");
 
   useEffect(() => {
     let a = createAvatar(avataaars, {
@@ -34,21 +31,23 @@ const AvatarUI = ({
       size: 64,
     }).toDataUriSync();
 
-    setAvatarR(a);
-  }, [
-    avatar
-    // accessories, accessoriesColor, clothesColor, clothing, clothingGraphic, eyebrows, eyes, facialHair, facialHairColor, hairColor, hatColor, mouth, skinColor, top
-  ]);
+    setAvatarState(a);
+  }, [avatar]);
 
-  return avatar && avatarR ? (
-    <Image
-      src={avatarR}
-      
-      height={heightAndWidth || 60}
-      width={heightAndWidth || 60}
-      alt="Avatar"
-    />
-  ) : <CircularProgress color="secondary" aria-label="Loading..." />
+  return avatar && avatarState ? (
+    <div
+      className={`bg-white rounded-full flex justify-center overflow-hidden`}
+    >
+      <Image
+        src={avatarState}
+        height={heightAndWidth || 60}
+        width={heightAndWidth || 60}
+        alt="Avatar"
+      />
+    </div>
+  ) : (
+    <CircularProgress color="secondary" aria-label="Loading..." />
+  );
 };
 
 export default AvatarUI;
