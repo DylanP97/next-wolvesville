@@ -45,7 +45,7 @@ export const GameProvider = ({ children }) => {
     socket.emit("checkForWinner", game.id);
   } else {
     socket.emit("endGame", game.id);
-    updateGameState(false, false, null);
+    updateGameState(true, false, game);
   }
 
   useEffect(() => {
@@ -66,7 +66,7 @@ export const GameProvider = ({ children }) => {
   }, [timeOfTheDay]);
 
   useEffect(() => {
-    if (timeCounter == 4000) {
+    if (timeCounter == 4000 && game.createdBy === clientPlayer.name) {
       playersList.map((player) => {
         if (player.isCPU && player.isAlive && !player.isUnderArrest) {
           cpuNextMove(

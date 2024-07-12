@@ -68,7 +68,11 @@ const GameGrid = () => {
   return (
     <div className={`grid grid-cols-4 place-items-center`}>
       {playersList.map((player) => {
-        const isAlsoWolf = player.role.team.includes("werewolves");
+        const isAlsoWolf =
+          player &&
+          player.role &&
+          player.role.team &&
+          player.role.team.includes("werewolves");
 
         return (
           <PlayerGridCard

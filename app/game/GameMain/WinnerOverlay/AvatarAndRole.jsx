@@ -37,7 +37,7 @@ const AvatarAndRole = ({ ply, alive }) => {
           )}
         </div>
       </div>
-      <p className="m-2 text-gray-200 text-sm text-clip italic">
+      <p className="m-2 text-gray-200 text-xs text-clip italic">
         {ply.name} {alive ? t("winnerOverlay.as") : t("winnerOverlay.wasA")} {" "}
         {i18n.language === "fr" ? ply.role.nameFR : ply.role.name}
       </p>

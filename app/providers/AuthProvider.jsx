@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
     setIsInRoom(newIsInRoom);
     setIsPlaying(newIsPlaying);
     setGame(newGame);
+    socket.emit("updateUserInfoOnServer", authState.username, newIsInRoom);
   };
 
   const addRoom = (room) => {

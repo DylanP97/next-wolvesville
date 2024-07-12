@@ -10,9 +10,8 @@ import { useState } from "react";
 import SideSummary from "./GameMain/SideSummary";
 
 export default function GamePage() {
-  const { isConnected } = useAuth();
   const [summaryIsOpen, setSummaryIsOpen] = useState(false);
-  const { game } = useAuth();
+  const { isConnected, isInRoom, isPlaying, game } = useAuth();
 
   return (
     <div className="flex flex-col flex-grow">

@@ -19,7 +19,7 @@ const WinnerOverlay = () => {
   const handleExitGame = () => {
     updateGameState(null, false, null);
     document.location.assign("/");
-    socket.emit("deleteRoom", gameId);
+    // socket.emit("deleteRoom", gameId);
   };
   useEffect(() => {
     const fetchAndSetTeamData = async () => {
@@ -39,7 +39,7 @@ const WinnerOverlay = () => {
       <div className="winner-overlay">
         <div
           id="winner-message"
-          className="winner-message flex flex-col justify-center relative"
+          className="winner-message p-4 flex flex-col justify-center relative"
         >
           <div className="flex items-center gap-2">
             <Image
@@ -50,12 +50,13 @@ const WinnerOverlay = () => {
               style={{ height: "auto", width: "auto" }}
               className="w-6 h-6"
             />
-            <p className="text-sm">
+            <p className="text-xs">
               {i18n.language === "fr"
                 ? wTeamData.winHeadlineFR
                 : wTeamData.winHeadline}
             </p>
           </div>
+          <Divider className="my-4" />
           <div className="flex flex-row justify-center flex-wrap">
             {winningTeam.winnerPlayers.map((ply) => {
               return (
@@ -78,8 +79,9 @@ const WinnerOverlay = () => {
                 style={{ height: "auto", width: "auto" }}
                 className="w-6 h-6"
               />
-              <p className="text-sm">{t("winnerOverlay.graveyard")}</p>
+              <p className="text-xs">{t("winnerOverlay.graveyard")}</p>
             </div>
+            <Divider className="my-4" />
             <div className="flex flex-row justify-center mt-4 gap-2 flex-wrap">
               {playersList
                 .filter((ply) => !ply.isAlive)
