@@ -71,6 +71,27 @@ export const fetchLogin = async (email, password) => {
   }
 };
 
+export const fetchGuestLogin = async () => {
+  try {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_URL + "/api/user/guestLogin",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ }),
+        credentials: "include",
+      }
+    );
+    if (response.ok) {
+      return response.json();
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+  }
+};
+
 export const fetchSignUp = async (username, email, password, defaultAvatar) => {
   try {
     const response = await fetch(

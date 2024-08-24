@@ -10,6 +10,7 @@ import ConnexionForm from "./ConnexionForm";
 import { Spinner } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
 import { fetchLogin, fetchSignUp } from "../lib/fetch";
+import Title from "./Title";
 
 const Connexion = () => {
   const { t } = useTranslation();
@@ -31,7 +32,7 @@ const Connexion = () => {
     if (isLogin) {
       const login = async () => {
         const data = await fetchLogin(email, password);
-        
+
         if (data) {
           setToken(data.token);
           const newSocket = io(process.env.NEXT_PUBLIC_API_URL, {
@@ -61,7 +62,7 @@ const Connexion = () => {
 
   return (
     <div className="flex flex-col flex-grow justify-center items-center bg-black">
-      <Image
+      {/* <Image
         priority
         className="absolute top-8"
         alt=""
@@ -69,19 +70,8 @@ const Connexion = () => {
         height={700}
         width={700}
         style={{ width: "auto", height: "auto" }}
-      />
-      <div className="m-4 z-10">
-        <h1 className="opacity-80 text-white text-center text-3xl font-bold mb-2">
-          {t("intro.title")}
-        </h1>
-        <a
-          target="_blank"
-          className="text-white flex justify-center hover:underline pointer text-sm hover:text-primary"
-          href="https://www.wolvesville.com"
-        >
-          {t("intro.ref")}
-        </a>
-      </div>
+      /> */}
+      <Title />
 
       <ConnexionForm
         handleSubmit={handleSubmit}

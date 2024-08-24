@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
-const NavigationMenu = () => {
+const NavigationMenu = (
+  // {paths}
+) => {
   const { t } = useTranslation();
 
   const paths = [

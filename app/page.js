@@ -1,7 +1,7 @@
 "use client";
 
 import HomePage from "./homepage/HomePage";
-import Connexion from "./connexion/Connexion";
+import PreScreenMenu from "./connexion/PreScreenMenu";
 import { useAuth } from "./providers/AuthProvider";
 import { redirect } from "next/navigation";
 
@@ -21,7 +21,7 @@ export default function Home() {
           avatar={avatar}
         />
       ) : (
-        <Connexion />
+        <PreScreenMenu />
       )}
     </>
   );
