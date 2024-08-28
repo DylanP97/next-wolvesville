@@ -25,7 +25,11 @@ const WinnerOverlay = () => {
     const fetchAndSetTeamData = async () => {
       try {
         const teamsData = await fetchTeams();
-        setWTeamData(teamsData.find((team) => team.name === winningTeam.name));
+        if (winningTeam) {
+          setWTeamData(
+            teamsData.find((team) => team.name === winningTeam.name)
+          );
+        }
       } catch (error) {
         console.error("Failed to fetch teams data", error);
       }

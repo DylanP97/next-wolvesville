@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [isInRoom, setIsInRoom] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isGuest, setIsGuest] = useState(false);
   const [game, setGame] = useState(null);
 
   const { playTrack, generateBackgroundMusic } = useSound();
@@ -126,6 +127,8 @@ export const AuthProvider = ({ children }) => {
         isPlaying,
         game,
         updateGameState,
+        isGuest,
+        setIsGuest,
       }}
     >
       {children}
