@@ -23,12 +23,12 @@ const PreScreenMenu = () => {
 
     if (data) {
       setToken(data.token);
+      setIsGuest(true);
 
       const newSocket = io(process.env.NEXT_PUBLIC_API_URL, {
         query: { token: data.token },
       });
       setSocket(newSocket);
-      setIsGuest(true);
       setAuthInfo(data.username, data.avatar, true, newSocket.id);
       newSocket.on("connect", () => {
         const user = {
