@@ -61,6 +61,9 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+
+  /** execution */
+
   useEffect(() => {
     if (authState.isConnected) {
       generateBackgroundMusic();

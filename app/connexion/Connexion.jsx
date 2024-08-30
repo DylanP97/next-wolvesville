@@ -4,21 +4,19 @@ import { useState } from "react";
 import { useAuth } from "../providers/AuthProvider";
 import { defaultAvatar } from "../lib/utils";
 import { useTranslation } from "react-i18next";
-import Image from "next/image";
-import evilEyes from "../../public/game/evileyes.gif";
 import ConnexionForm from "./ConnexionForm";
 import { Spinner } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
 import { fetchLogin, fetchSignUp } from "../lib/fetch";
 import Title from "./Title";
 
-const Connexion = () => {
+const Connexion = ({ logOption }) => {
   const { t } = useTranslation();
   const { setAuthInfo, setSocket, setToken } = useAuth();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(logOption === "login");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSwitch = () => {

@@ -1,6 +1,6 @@
 export class Attribute {
-  constructor(label, options) {
-    (this.label = label), (this.options = options);
+  constructor(path, label, options) {
+    (this.path = path), (this.label = label), (this.options = options);
   }
 }
 

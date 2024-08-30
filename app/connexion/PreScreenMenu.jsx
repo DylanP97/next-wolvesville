@@ -66,7 +66,7 @@ const PreScreenMenu = () => {
       <HomePage username={username} isInRoom={false} avatar={defaultAvatar} />
     );
   } else if (logOption === "login" || logOption === "register") {
-    return <Connexion />;
+    return <Connexion logOption={logOption} />;
   } else {
     return (
       <div className="flex flex-col flex-grow justify-center items-center bg-black">

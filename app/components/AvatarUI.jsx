@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import { CircularProgress } from "@nextui-org/react";
 
 const AvatarUI = ({ avatar, heightAndWidth }) => {
-  const [avatarState, setAvatarState] = useState("");
+  const [avatarState, setAvatarState] = useState();
 
   useEffect(() => {
+    console.log("AvatarUI re-rendered");
+
     let a = createAvatar(avataaars, {
       accessories: [avatar.accessories],
       accessoriesColor: [avatar.accessoriesColor],

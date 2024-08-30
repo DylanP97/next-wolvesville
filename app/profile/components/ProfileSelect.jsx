@@ -2,13 +2,13 @@
 
 import { Select, SelectItem } from "@nextui-org/react";
 
-const ProfileSelect = ({ label, options, currentValue, setAvState }) => {
+const ProfileSelect = ({ path, label, options, currentValue, setAvState }) => {
   
   const updateState = (option) => {
-    return setAvState((prevAvatar) => {
+    setAvState((prevAvatar) => {
       return {
         ...prevAvatar,
-        [label]: option,
+        [path]: option,
       };
     });
   };
@@ -18,7 +18,7 @@ const ProfileSelect = ({ label, options, currentValue, setAvState }) => {
       label={`Select ${label}`}
       placeholder={currentValue}
       variant="underline"
-      className="w-full my-1 w-full"
+      className="w-full my-1"
     >
       {options.map((option) => {
         return (

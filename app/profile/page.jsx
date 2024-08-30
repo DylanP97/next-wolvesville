@@ -10,9 +10,6 @@ export default function ProfilePage() {
     isConnected,
     isInRoom,
     isPlaying,
-    username,
-    avatar,
-    socketId,
     isGuest,
   } = useAuth();
 
@@ -22,7 +19,7 @@ export default function ProfilePage() {
   return (
     <>
       {isConnected ? (
-        <Profile username={username} avatar={avatar} socketId={socketId} />
+        <Profile />
       ) : (
         <Connexion />
       )}

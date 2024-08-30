@@ -4,15 +4,15 @@ import { useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
 import { useTranslation } from "react-i18next";
 import { Button, Tab, Tabs } from "@nextui-org/react";
-import GoBackBtn from "../../components/GoBackBtn";
 import { tabs } from "../lib/tabsDefinitions";
 import ProfileSelect from "./ProfileSelect";
+import GoBackBtn from "../../components/GoBackBtn";
 import AvatarUI from "../../components/AvatarUI";
 
-const Profile = ({ username, avatar, socketId }) => {
-  const [avState, setAvState] = useState(avatar);
+const Profile = () => {
   const [response, setResponse] = useState("");
-  const { setAuthInfo } = useAuth();
+  const { setAuthInfo, username, avatar, socketId } = useAuth();
+  const [avState, setAvState] = useState(avatar);
   const { t } = useTranslation();
 
   const handleSubmit = async () => {
@@ -32,13 +32,15 @@ const Profile = ({ username, avatar, socketId }) => {
       if (response.ok) {
         const userData = await response.json();
         setResponse(userData.message);
-        setAuthInfo(userData.username, userData.avatar, true, socketId);
+        setAuthInfo(userData.username, userData.avatar);
       }
     } catch (error) {
       setResponse(userData.message);
       console.error("Login error:", error);
     }
   };
+
+  console.log("avState", avState);
 
   return (
     <section className="bg-background h-screen w-full px-5 flex flex-col justify-center items-center ">
@@ -67,9 +69,10 @@ const Profile = ({ username, avatar, socketId }) => {
                   return (
                     <ProfileSelect
                       key={a.label + i + "-ps"}
+                      path={a.path}
                       label={a.label}
                       options={a.options}
-                      currentValue={avState[a.label]}
+                      currentValue={avState[a.path]}
                       setAvState={setAvState}
                     />
                   );
