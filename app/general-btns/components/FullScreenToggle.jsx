@@ -53,7 +53,7 @@ const FullScreenToggle = ({}) => {
         color="secondary"
         variant="solid"
         className="icon-container"
-        aria-label={fullScreen ? t("toggle.quit") : t("toggle.go")}
+        // aria-label={fullScreen ? t("toggle.quit") : t("toggle.go")}
         onPress={() => (fullScreen ? exitFullscreen() : enterFullscreen())}
       >
         {fullScreen ? <MinimizeIcon /> : <MaximizeIcon />}

@@ -109,6 +109,7 @@ const CreateRoom = () => {
       nbrCPUPlayers: nbrCPUPlayers,
       selectedRoles: selectedRoles,
       usersInTheRoom: [{ username, socketId, avatar }],
+      isLaunched: false,
     };
 
     socket.emit("createRoom", newRoom);

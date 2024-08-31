@@ -24,11 +24,17 @@ export const AuthProvider = ({ children }) => {
 
   const { playTrack, generateBackgroundMusic } = useSound();
 
-  const updateGameState = (newIsInRoom, newIsPlaying, newGame) => {
+  const updateUserGameState = (newIsInRoom, newIsPlaying, newGame) => {
     setIsInRoom(newIsInRoom);
     setIsPlaying(newIsPlaying);
     setGame(newGame);
-    socket.emit("updateUserInfoOnServer", authState.username, newIsInRoom);
+    socket.emit(
+      "updateUserGameState",
+      authState.username,
+      newIsInRoom,
+      newIsPlaying,
+      newGame
+    );
   };
 
   const addRoom = (room) => {
@@ -50,8 +56,10 @@ export const AuthProvider = ({ children }) => {
     if (response.ok) {
       const data = await response.json();
       console.log("User is authenticated:", data);
+      // console.log("game", game);
       setAuthInfo(data.username, data.avatar, true, data.socketId);
       setToken(data.token);
+      setIsGuest(data.isGuest);
       const newSocket = io(process.env.NEXT_PUBLIC_API_URL, {
         query: { token: data.token },
       });
@@ -60,7 +68,6 @@ export const AuthProvider = ({ children }) => {
       console.log("User is not authenticated");
     }
   }
-
 
   /** execution */
 
@@ -105,7 +112,6 @@ export const AuthProvider = ({ children }) => {
       });
 
       socket.on("updateGame", (updatedGame) => {
-        console.log("updatedGame socket called");
         !updatedGame.hasEnded && setGame(updatedGame);
       });
 
@@ -129,7 +135,7 @@ export const AuthProvider = ({ children }) => {
         isInRoom,
         isPlaying,
         game,
-        updateGameState,
+        updateUserGameState,
         isGuest,
         setIsGuest,
       }}

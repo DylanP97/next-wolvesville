@@ -8,8 +8,6 @@ const AvatarUI = ({ avatar, heightAndWidth }) => {
   const [avatarState, setAvatarState] = useState();
 
   useEffect(() => {
-    console.log("AvatarUI re-rendered");
-
     let a = createAvatar(avataaars, {
       accessories: [avatar.accessories],
       accessoriesColor: [avatar.accessoriesColor],

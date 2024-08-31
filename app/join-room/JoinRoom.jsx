@@ -14,11 +14,11 @@ import { useTranslation } from "react-i18next";
 
 const JoinRoom = () => {
   const { t } = useTranslation();
-  const { rooms, username, socketId, avatar, socket, updateGameState } =
+  const { rooms, username, socketId, avatar, socket, updateUserGameState } =
     useAuth();
 
   const joinRoom = (roomId, userJoining) => {
-    updateGameState(null, false, null);
+    updateUserGameState(roomId, false, null);
     socket.emit("joinRoom", roomId, userJoining);
   };
 

@@ -36,6 +36,7 @@ const PreScreenMenu = () => {
           avatar: data.avatar,
           socketId: newSocket.id,
           token: data.token,
+          isGuest: true,
         };
         newSocket.emit("sendNewConnectedUser", user);
       });

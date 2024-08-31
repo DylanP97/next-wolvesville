@@ -55,7 +55,7 @@ const ConnectedUsers = () => {
                 <AvatarUI
                   heightAndWidth={50}
                   avatar={user.avatar}
-                  key={"notconnected" + user.name}
+                  key={"notconnected" + user.username}
                 />
               );
             })}

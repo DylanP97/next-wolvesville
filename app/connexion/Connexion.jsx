@@ -44,6 +44,7 @@ const Connexion = ({ logOption }) => {
               avatar: data.avatar,
               socketId: newSocket.id,
               token: data.token,
+              isGuest: false,
             };
             newSocket.emit("sendNewConnectedUser", user);
           });

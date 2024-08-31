@@ -12,12 +12,12 @@ import AvatarAndRole from "./WinnerOverlay/AvatarAndRole";
 
 const WinnerOverlay = () => {
   const { t } = useTranslation();
-  const { updateGameState, socket } = useAuth();
+  const { updateUserGameState, socket } = useAuth();
   const { winningTeam, playersList, gameId } = useGame();
   const [wTeamData, setWTeamData] = useState();
 
   const handleExitGame = () => {
-    updateGameState(null, false, null);
+    updateUserGameState(null, false, null);
     document.location.assign("/");
     // socket.emit("deleteRoom", gameId);
   };
