@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSound } from "../providers/SoundProvider";
-import { useAuth } from "../providers/AuthProvider";
+import { useSound } from "./providers/SoundProvider";
+import { useAuth } from "./providers/AuthProvider";
 
 const TrackDisplay = () => {
   const { isPlaying } = useAuth();

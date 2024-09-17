@@ -1,6 +1,6 @@
 @font-face {
   font-family: "SevenMonsters";
-  src: url("../public/fonts/SevenMonstersDemoRegular.ttf") format("truetype");
+  src: url("../public/SevenMonstersDemoRegular.ttf") format("truetype");
 }
 
 .wolf-font {

@@ -1,24 +1,24 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import HomePage from "../homepage/HomePage";
-import Connexion from "./Connexion";
+import HomePage from "./homepage/HomePage";
+import Connexion from "./connexion/Connexion";
 import Title from "./Title";
 import { useEffect, useState } from "react";
-import { defaultAvatar } from "../lib/utils";
-import { useAuth } from "../providers/AuthProvider";
-import { fetchGuestLogin } from "../lib/fetch";
+import { defaultAvatar } from "./lib/utils";
+import { useAuth } from "./providers/AuthProvider";
+import { fetchGuestLogin } from "./lib/fetch";
 import { Spinner } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
+import { btnClassNames } from "./lib/styles";
 
 const PreScreenMenu = () => {
   const { t } = useTranslation();
   const [logOption, setLogOption] = useState("");
-  const { setAuthInfo, setSocket, setToken, username, setIsGuest } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const { setAuthInfo, setSocket, setToken, username, setIsGuest } = useAuth();
 
   const handleGuestLogin = async () => {
-    setIsLoading(true);
     const data = await fetchGuestLogin();
 
     if (data) {
@@ -46,6 +46,7 @@ const PreScreenMenu = () => {
 
   useEffect(() => {
     if (logOption === "guestPlay") {
+      setIsLoading(true);
       handleGuestLogin();
     }
   }, [logOption]);
@@ -62,7 +63,7 @@ const PreScreenMenu = () => {
     );
   }
 
-  if (logOption === "guestPlay") {
+  if (logOption === "guestPlay" && isLoading === false) {
     return (
       <HomePage username={username} isInRoom={false} avatar={defaultAvatar} />
     );
@@ -75,19 +76,16 @@ const PreScreenMenu = () => {
         <nav className="top-1/3 flex flex-col items-center py-4 w-full z-20">
           <div
             onClick={() => setLogOption("guestPlay")}
-            className="w-60 h-10 z-20 p-2 my-2 rounded-3xl bg-primary text-sm text-center text-primary-foreground flex justify-center items-center hover:font-bold hover:scale-[105%] transition-all"
+            className={btnClassNames}
           >
             Play as Guest
           </div>
-          <div
-            onClick={() => setLogOption("login")}
-            className="w-60 h-10 z-20 p-2 my-2 rounded-3xl bg-primary text-sm text-center text-primary-foreground flex justify-center items-center hover:font-bold hover:scale-[105%] transition-all"
-          >
+          <div onClick={() => setLogOption("login")} className={btnClassNames}>
             Log in with your account
           </div>
           <div
             onClick={() => setLogOption("register")}
-            className="w-60 h-10 z-20 p-2 my-2 rounded-3xl bg-primary text-sm text-center text-primary-foreground flex justify-center items-center hover:font-bold hover:scale-[105%] transition-all"
+            className={btnClassNames}
           >
             Register a new account
           </div>

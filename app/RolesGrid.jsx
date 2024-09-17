@@ -2,9 +2,9 @@
 
 import RoleCard from "./RoleCard";
 import { useEffect, useState } from "react";
-import GoBackBtn from "../../components/GoBackBtn";
+import GoBackBtn from "./components/GoBackBtn";
 import { useTranslation } from "react-i18next";
-import { fetchRoles } from "../../lib/fetch";
+import { fetchRoles } from "./lib/fetch";
 
 const RolesGrid = () => {
   const [availableRoles, setAvailableRoles] = useState([]);

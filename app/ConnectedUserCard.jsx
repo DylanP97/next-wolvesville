@@ -1,7 +1,7 @@
 "use client";
 
-import AvatarUI from "../components/AvatarUI";
-import IsInRoomInfo from "../components/IsInRoomInfo";
+import AvatarUI from "./components/AvatarUI";
+import IsInRoomInfo from "./components/IsInRoomInfo";
 
 const ConnectedUserCard = ({ user }) => {
   return (

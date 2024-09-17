@@ -2,7 +2,7 @@ import "./globals.css";
 import { Providers } from "./providers/providers";
 import GeneralBtns from "./general-btns/GeneralBtns";
 import Footer from "./components/Footer";
-import TrackDisplay from "./track-display/TrackDisplay";
+import TrackDisplay from "./TrackDisplay";
 
 export const metadata = {
   title: "Werewolves",

@@ -15,8 +15,8 @@ import {
   top,
 } from "./attributesDefinition";
 import { Tab } from "./tabsClasses";
-import localsJSON from "../../../public/locales/locals.json";
-import i18n from "../../lib/i18n";
+import localsJSON from "../../public/locals.json";
+import i18n from "../lib/i18n";
 
 const lang = i18n.language;
 

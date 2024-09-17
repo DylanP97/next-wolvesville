@@ -2,13 +2,13 @@
 
 import { Input, User, Button, Divider } from "@nextui-org/react";
 import { useState, useEffect } from "react";
-import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "./providers/AuthProvider";
 import RoleChoice from "./RoleChoice";
 import TeamCounter from "./TeamCounter";
-import GoBackBtn from "../components/GoBackBtn";
+import GoBackBtn from "./components/GoBackBtn";
 import { useTranslation } from "react-i18next";
-import { colorsForTeams } from "../lib/utils";
-import { fetchRoles, fetchTeams } from "../lib/fetch";
+import { colorsForTeams } from "./lib/utils";
+import { fetchRoles, fetchTeams } from "./lib/fetch";
 
 const CreateRoom = () => {
   const { t } = useTranslation();

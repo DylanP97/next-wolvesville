@@ -1,45 +1,68 @@
 "use client";
 
-import Link from "next/link";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../providers/AuthProvider";
+import CreateRoom from "../CreateRoom";
+import ConnectedUsers from "../ConnectedUsers";
+import JoinRoom from "../JoinRoom";
+import RolesGrid from "../RolesGrid";
+import Profile from "../Profile";
+import { btnClassNames } from "../lib/styles";
 
-const NavigationMenu = () =>
-  // {paths}
-  {
-    const { t } = useTranslation();
-    const { isGuest } = useAuth();
+const NavigationMenu = ({
+  setActiveComponent,
+}) => {
+  const { t } = useTranslation();
+  const { isGuest } = useAuth();
 
-    const paths = [
-      { label: t("menu.2"), path: "/create-room", allowedForGuest: true },
-      { label: t("menu.1"), path: "/join-room", allowedForGuest: true },
-      { label: t("menu.3"), path: "/connected-users", allowedForGuest: true },
-      { label: t("menu.4"), path: "/roles", allowedForGuest: true },
-      {
-        label: t("menu.5"),
-        path: "/profile",
-        allowedForGuest: false,
-      },
-    ];
+  const components = [
+    {
+      label: t("menu.2"),
+      componentToReturn: <CreateRoom />,
+      allowedForGuest: true,
+    },
+    {
+      label: t("menu.1"),
+      componentToReturn: <JoinRoom />,
+      allowedForGuest: true,
+    },
+    {
+      label: t("menu.3"),
+      componentToReturn: <ConnectedUsers />,
+      allowedForGuest: true,
+    },
+    {
+      label: t("menu.4"),
+      componentToReturn: <RolesGrid />,
+      allowedForGuest: true,
+    },
+    {
+      label: t("menu.5"),
+      componentToReturn: <Profile />,
+      allowedForGuest: false,
+    },
+  ];
 
-    // Filter paths based on isGuest status
-    const filteredPaths = paths.filter((p) =>
-      isGuest ? p.allowedForGuest : true
-    );
+  const filteredComponents = components.filter((c) =>
+    isGuest ? c.allowedForGuest : true
+  );
 
-    return (
+  return (
+    <div className="w-full h-full">
       <nav className="absolute top-1/3 flex flex-col items-center py-4 w-full z-20">
-        {filteredPaths.map((p, index) => (
-          <Link
-            key={index + "-navlink"}
-            className={`w-60 h-10 z-20 p-2 my-2 rounded-3xl bg-primary text-sm text-center text-primary-foreground flex justify-center items-center hover:font-bold hover:scale-[105%] transition-all`}
-            href={p.path}
+        {filteredComponents.map((c, index) => (
+          <div
+            key={index + "-navComponent"}
+            onClick={() => setActiveComponent(c.componentToReturn)}
+            className={btnClassNames}
           >
-            {p.label}
-          </Link>
+            {c.label}
+          </div>
         ))}
       </nav>
-    );
-  };
+    </div>
+  );
+};
 
 export default NavigationMenu;

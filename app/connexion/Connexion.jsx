@@ -8,7 +8,7 @@ import ConnexionForm from "./ConnexionForm";
 import { Spinner } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
 import { fetchLogin, fetchSignUp } from "../lib/fetch";
-import Title from "./Title";
+import Title from "../Title";
 
 const Connexion = ({ logOption }) => {
   const { t } = useTranslation();

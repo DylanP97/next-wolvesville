@@ -1,12 +1,12 @@
 "use client";
 
-import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "./providers/AuthProvider";
 import { useTranslation } from "react-i18next";
 import ConnectedUserCard from "./ConnectedUserCard";
-import GoBackBtn from "../components/GoBackBtn";
+import GoBackBtn from "./components/GoBackBtn";
 import { useEffect, useState } from "react";
-import { fetchUsers } from "../lib/fetch";
-import AvatarUI from "../components/AvatarUI";
+import { fetchUsers } from "./lib/fetch";
+import AvatarUI from "./components/AvatarUI";
 
 const ConnectedUsers = () => {
   const { t } = useTranslation();

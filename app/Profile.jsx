@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "../../providers/AuthProvider";
+import { useAuth } from "./providers/AuthProvider";
 import { useTranslation } from "react-i18next";
 import { Button, Tab, Tabs } from "@nextui-org/react";
-import { tabs } from "../lib/tabsDefinitions";
+import { tabs } from "./profile-lib/tabsDefinitions";
 import ProfileSelect from "./ProfileSelect";
-import GoBackBtn from "../../components/GoBackBtn";
-import AvatarUI from "../../components/AvatarUI";
+import GoBackBtn from "./components/GoBackBtn";
+import AvatarUI from "./components/AvatarUI";
 
 const Profile = () => {
   const [response, setResponse] = useState("");

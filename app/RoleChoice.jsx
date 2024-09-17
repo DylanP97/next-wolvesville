@@ -1,5 +1,5 @@
 import { Input, User } from "@nextui-org/react";
-import i18n from "../lib/i18n";
+import i18n from "./lib/i18n";
 import Image from "next/image";
 
 const RoleChoice = ({ role, handleRoleChange }) => {

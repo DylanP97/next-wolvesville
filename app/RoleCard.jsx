@@ -10,7 +10,7 @@ import {
   Image,
 } from "@nextui-org/react";
 import RoleStatusChip from "./RoleStatusChip";
-import i18n from "../../lib/i18n";
+import i18n from "./lib/i18n";
 import { useTranslation } from "react-i18next";
 
 const RoleCard = ({ role }) => {

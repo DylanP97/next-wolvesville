@@ -8,8 +8,8 @@ import {
   CardHeader,
   Divider,
 } from "@nextui-org/react";
-import { useAuth } from "../providers/AuthProvider";
-import GoBackBtn from "../components/GoBackBtn";
+import { useAuth } from "./providers/AuthProvider";
+import GoBackBtn from "./components/GoBackBtn";
 import { useTranslation } from "react-i18next";
 
 const JoinRoom = () => {
