@@ -1,11 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import daytime from "../../../public/game/day-time.png";
-import votetime from "../../../public/game/vote-time.png";
-import nighttime from "../../../public/game/night-time.png";
-import prisonBg from "../../../public/game/prison-bg.jpg";
-import { useGame } from "../providers/GameProvider";
+import daytime from "../../public/game/day-time.png";
+import votetime from "../../public/game/vote-time.png";
+import nighttime from "../../public/game/night-time.png";
+import { useGame } from "./GameProvider";
 
 const Background = () => {
   const { isJailer, isUnderArrest, hasHandcuffed, timeOfTheDay } = useGame();

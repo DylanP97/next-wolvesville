@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import CmdSend from "./PlayingCommands/CmdSend";
-import { useGame } from "../../providers/GameProvider";
-import { useAuth } from "../../../providers/AuthProvider";
-import { useInGameKeys } from "../../providers/InGameKeysProvider";
+import CmdSend from "./CmdSend";
+import { useGame } from "./GameProvider";
+import { useAuth } from "../providers/AuthProvider";
+import { useInGameKeys } from "./InGameKeysProvider";
 import { useTranslation } from "react-i18next";
-import i18n from "../../../lib/i18n";
-import { useGameAnimations } from "../../providers/GameAnimationsProvider";
+import i18n from "../lib/i18n";
+import { useGameAnimations } from "./GameAnimationsProvider";
 
 const Chatbox = () => {
   const { socket, username } = useAuth();

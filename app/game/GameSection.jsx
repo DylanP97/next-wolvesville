@@ -1,16 +1,16 @@
 "use client";
 
-import Background from "./GameMain/Background";
-import WinnerOverlay from "./GameMain/WinnerOverlay";
-import ActionsHistory from "./GameMain/ActionsHistory";
-import ActionBar from "./GameMain/ActionBar";
-import GameHeader from "./GameMain/GameHeader";
-import GameGrid from "./GameMain/GameGrid";
-import { useGame } from "./providers/GameProvider";
+import Background from "./Background";
+import WinnerOverlay from "./WinnerOverlay";
+import ActionsHistory from "./ActionsHistory";
+import ActionBar from "./ActionBar";
+import GameHeader from "./GameHeader";
+import GameGrid from "./GameGrid";
+import { useGame } from "./GameProvider";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
 
-const GameMain = ({ summaryIsOpen, setSummaryIsOpen }) => {
+const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { winningTeam, weather } = useGame();
   const { width, height } = useWindowSize();
 
@@ -18,7 +18,6 @@ const GameMain = ({ summaryIsOpen, setSummaryIsOpen }) => {
     <section className={`${weather} w-full flex flex-col flex-grow `}>
       <Background />
       <GameHeader />
-      {/* <PlayerInfos /> */}
       <GameGrid />
       <ActionsHistory />
       <ActionBar
@@ -35,4 +34,4 @@ const GameMain = ({ summaryIsOpen, setSummaryIsOpen }) => {
   );
 };
 
-export default GameMain;
+export default GameSection;

@@ -1,9 +1,9 @@
 "use client";
 
-import { useGame } from "../providers/GameProvider";
-import Chatbox from "./ActionBar/Chatbox";
-import PlayingCommands from "./ActionBar/PlayingCommands";
-import SideSummaryToggle from "./ActionBar/SideSummaryToggle";
+import { useGame } from "./GameProvider";
+import Chatbox from "./Chatbox";
+import PlayingCommands from "./PlayingCommands";
+import SideSummaryToggle from "./SideSummaryToggle";
 import PauseToggle from "./PauseToggle"
 
 const ActionBar = ({ summaryIsOpen, setSummaryIsOpen }) => {

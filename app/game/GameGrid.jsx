@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAuth } from "../../providers/AuthProvider";
-import { useGame } from "../providers/GameProvider";
-import PlayerGridCard from "./GameGrid/PlayerGridCard";
-import handlePlayerClick from "./GameGrid/handlePlayerClick";
-import { useGameAnimations } from "../providers/GameAnimationsProvider";
+import { useAuth } from "../providers/AuthProvider";
+import { useGame } from "./GameProvider";
+import PlayerGridCard from "./PlayerGridCard";
+import handlePlayerClick from "./handlePlayerClick";
+import { useGameAnimations } from "./GameAnimationsProvider";
 
 const GameGrid = () => {
   const { triggerSimpleMessage } = useGameAnimations();

@@ -1,12 +1,12 @@
 "use client";
 
-import { useGame } from "../providers/GameProvider";
+import { useGame } from "./GameProvider";
 import Image from "next/image";
-import daytime from "../../../public/game/day-time.png";
-import votetime from "../../../public/game/vote-time.png";
-import nighttime from "../../../public/game/night-time.png";
+import daytime from "../../public/game/day-time.png";
+import votetime from "../../public/game/vote-time.png";
+import nighttime from "../../public/game/night-time.png";
 import { useTranslation } from "react-i18next";
-import { replacePlaceholders } from "../../lib/utils";
+import { replacePlaceholders } from "../lib/utils";
 
 const ActionsHistory = () => {
   const {

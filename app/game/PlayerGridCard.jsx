@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import VoteCount from "./PlayerGridCard/VoteCount";
-import IconReveal from "./PlayerGridCard/IconReveal";
-import PlayerAvatar from "./PlayerGridCard/PlayerAvatar";
-import { useGame } from "../../providers/GameProvider";
+import VoteCount from "./VoteCount";
+import IconReveal from "./IconReveal";
+import PlayerAvatar from "./PlayerAvatar";
+import { useGame } from "./GameProvider";
 import {
   getPlyCardBackground,
   getPlyCardLayout,
-} from "./PlayerGridCard/getPlyCardStyles";
+} from "./getPlyCardStyles";
 
 const PlayerGridCard = ({
   player,

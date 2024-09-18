@@ -1,17 +1,17 @@
 "use client";
 
 import Connexion from "../connexion/Connexion";
-import GameMain from "./GameMain";
+import GameSection from "./GameSection";
 import { useAuth } from "../providers/AuthProvider";
-import { GameProvider } from "./providers/GameProvider";
-import { InGameKeysProvider } from "./providers/InGameKeysProvider";
-import { GameAnimationsProvider } from "./providers/GameAnimationsProvider";
+import { GameProvider } from "./GameProvider";
+import { InGameKeysProvider } from "./InGameKeysProvider";
+import { GameAnimationsProvider } from "./GameAnimationsProvider";
 import { useState } from "react";
-import SideSummary from "./GameMain/SideSummary";
+import SideSummary from "./SideSummary";
 
-export default function GamePage() {
+export default function Game() {
   const [summaryIsOpen, setSummaryIsOpen] = useState(false);
-  const { isConnected, isInRoom, isPlaying, game } = useAuth();
+  const { isConnected, game } = useAuth();
 
   return (
     <div className="flex flex-col flex-grow">
@@ -20,7 +20,7 @@ export default function GamePage() {
           <InGameKeysProvider>
             <GameAnimationsProvider>
               <div className="flex flex-col flex-grow">
-                <GameMain
+                <GameSection
                   summaryIsOpen={summaryIsOpen}
                   setSummaryIsOpen={setSummaryIsOpen}
                 />

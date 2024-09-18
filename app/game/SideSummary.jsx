@@ -1,8 +1,8 @@
 "use client";
 
 import { Button, User } from "@nextui-org/react";
-import { useGame } from "../providers/GameProvider";
-import CrossIcon from "../../components/icons/CrossIcon";
+import { useGame } from "./GameProvider";
+import CrossIcon from "../components/icons/CrossIcon";
 import { useTranslation } from "react-i18next";
 
 const SideSummary = ({ summaryIsOpen, setSummaryIsOpen }) => {

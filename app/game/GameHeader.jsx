@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import { useGame } from "../providers/GameProvider";
+import { useGame } from "./GameProvider";
 
 const GameHeader = () => {
   const { timeOfTheDay, dayCount, timeCounter, weather } = useGame();

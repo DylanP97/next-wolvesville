@@ -1,10 +1,10 @@
 "use client";
 
-import CmdVote from "./PlayingCommands/CmdVote";
-import CmdPerform from "./PlayingCommands/CmdPerform";
-import { useGame } from "../../providers/GameProvider";
-import { useAuth } from "../../../providers/AuthProvider";
-import { useGameAnimations } from "../../providers/GameAnimationsProvider";
+import CmdVote from "./CmdVote";
+import CmdPerform from "./CmdPerform";
+import { useGame } from "./GameProvider";
+import { useAuth } from "../providers/AuthProvider";
+import { useGameAnimations } from "./GameAnimationsProvider";
 
 const PlayingCommands = () => {
   const { socket } = useAuth();

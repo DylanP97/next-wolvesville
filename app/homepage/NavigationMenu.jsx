@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../providers/AuthProvider";
 import CreateRoom from "../CreateRoom";
@@ -9,37 +8,62 @@ import JoinRoom from "../JoinRoom";
 import RolesGrid from "../RolesGrid";
 import Profile from "../Profile";
 import { btnClassNames } from "../lib/styles";
+import { useToRender } from "../page";
 
-const NavigationMenu = ({
-  setActiveComponent,
-}) => {
+const NavigationMenu = () => {
   const { t } = useTranslation();
   const { isGuest } = useAuth();
+  const { setActiveComponent, activeComponent } = useToRender();
 
   const components = [
     {
       label: t("menu.2"),
-      componentToReturn: <CreateRoom />,
+      componentToReturn: (
+        <CreateRoom
+          setActiveComponent={setActiveComponent}
+          activeComponent={activeComponent}
+        />
+      ),
       allowedForGuest: true,
     },
     {
       label: t("menu.1"),
-      componentToReturn: <JoinRoom />,
+      componentToReturn: (
+        <JoinRoom
+          setActiveComponent={setActiveComponent}
+          activeComponent={activeComponent}
+        />
+      ),
       allowedForGuest: true,
     },
     {
       label: t("menu.3"),
-      componentToReturn: <ConnectedUsers />,
+      componentToReturn: (
+        <ConnectedUsers
+          setActiveComponent={setActiveComponent}
+          activeComponent={activeComponent}
+        />
+      ),
       allowedForGuest: true,
     },
     {
       label: t("menu.4"),
-      componentToReturn: <RolesGrid />,
+      componentToReturn: (
+        <RolesGrid
+          setActiveComponent={setActiveComponent}
+          activeComponent={activeComponent}
+        />
+      ),
       allowedForGuest: true,
     },
     {
       label: t("menu.5"),
-      componentToReturn: <Profile />,
+      componentToReturn: (
+        <Profile
+          setActiveComponent={setActiveComponent}
+          activeComponent={activeComponent}
+        />
+      ),
       allowedForGuest: false,
     },
   ];

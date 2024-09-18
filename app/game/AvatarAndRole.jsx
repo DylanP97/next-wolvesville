@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import AvatarUI from "../../../components/AvatarUI"; 
+import AvatarUI from "../components/AvatarUI"; 
 import { useTranslation } from "react-i18next";
-import i18n from "../../../lib/i18n";
+import i18n from "../lib/i18n";
 
 const AvatarAndRole = ({ ply, alive }) => {
   const { t } = useTranslation();

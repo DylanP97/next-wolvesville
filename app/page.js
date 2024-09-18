@@ -1,21 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import HomePage from "./homepage/HomePage";
 import PreScreenMenu from "./PreScreenMenu";
+import Game from "./game/Game";
 import { useAuth } from "./providers/AuthProvider";
 
+const RenderContext = createContext();
+
 export default function Home() {
-  const { username, isConnected, socketId, isInRoom, isPlaying, avatar } =
-    useAuth();
+  const { username, isConnected, isInRoom, isPlaying, avatar } = useAuth();
   const [activeComponent, setActiveComponent] = useState(null);
 
   useEffect(() => {
     if (!isConnected) {
       setActiveComponent(<PreScreenMenu />);
     } else if (isInRoom && isPlaying) {
-      // Redirect or set active component for the game
-      // setActiveComponent(<Game />); or handle redirection here
+      setActiveComponent(<Game />);
     } else {
       setActiveComponent(
         <HomePage
@@ -23,10 +24,30 @@ export default function Home() {
           isInRoom={isInRoom}
           avatar={avatar}
           setActiveComponent={setActiveComponent}
+          activeComponent={activeComponent}
         />
       );
     }
   }, [isConnected, isInRoom, isPlaying, username, avatar]);
 
-  return <>{activeComponent}</>;
+  return (
+    <RenderContext.Provider
+      value={{
+        activeComponent,
+        setActiveComponent,
+      }}
+    >
+      {activeComponent}
+    </RenderContext.Provider>
+  );
 }
+
+export const useToRender = () => {
+  const context = useContext(RenderContext);
+
+  if (!context) {
+    throw new Error("useToRender must be used within an RenderContext");
+  }
+
+  return context;
+};

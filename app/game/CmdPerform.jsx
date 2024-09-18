@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { Tooltip } from "@nextui-org/react";
-import { useGame } from "../../../providers/GameProvider";
-import { divActionIcon, imgActionIcon } from "../../../../lib/styles";
+import { useGame } from "./GameProvider";
+import { divActionIcon, imgActionIcon } from "../lib/styles";
 
 const CmdPerform = ({
   canPerform,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useGame } from "../providers/GameProvider";
+import { useGame } from "./GameProvider";
 
 const InfoSelection = () => {
   const { isSelection, isDoubleSelection, isBlocked } = useGame();

@@ -1,8 +1,8 @@
 "use client";
 
 import { Tooltip } from "@nextui-org/react";
-import ListIcon from "../../../components/icons/ListIcon";
-import { divActionIcon } from "../../../lib/styles";
+import ListIcon from "../components/icons/ListIcon";
+import { divActionIcon } from "../lib/styles";
 
 const SideSummaryToggle = ({ summaryIsOpen, setSummaryIsOpen }) => {
   return (

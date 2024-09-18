@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import { Button, Divider } from "@nextui-org/react";
-import { useAuth } from "../../providers/AuthProvider";
-import { useGame } from "../providers/GameProvider";
+import { useAuth } from "../providers/AuthProvider";
+import { useGame } from "./GameProvider";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import i18n from "../../lib/i18n";
-import { fetchTeams } from "../../lib/fetch";
-import AvatarAndRole from "./WinnerOverlay/AvatarAndRole";
+import i18n from "../lib/i18n";
+import { fetchTeams } from "../lib/fetch";
+import AvatarAndRole from "./AvatarAndRole";
 
 const WinnerOverlay = () => {
   const { t } = useTranslation();

@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useAuth } from "../../providers/AuthProvider";
-import { useGame } from "../providers/GameProvider";
+import { useAuth } from "../providers/AuthProvider";
+import { useGame } from "./GameProvider";
 import { Tooltip } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { divActionIcon, imgActionIcon } from "../../lib/styles";
+import { divActionIcon, imgActionIcon } from "../lib/styles";
 
 const PauseToggle = () => {
   const { socket } = useAuth();

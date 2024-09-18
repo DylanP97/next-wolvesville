@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useGame } from "../providers/GameProvider";
-import i18n from "../../lib/i18n";
+import { useGame } from "./GameProvider";
+import i18n from "../lib/i18n";
 
 const PlayerInfos = () => {
   const { clientPlayer, weather } = useGame();
