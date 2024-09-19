@@ -11,12 +11,19 @@ import { fetchGuestLogin } from "./lib/fetch";
 import { Spinner } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
 import { btnClassNames } from "./lib/styles";
+import { useAnimation } from "./providers/AnimationProvider";
 
 const PreScreenMenu = () => {
   const { t } = useTranslation();
   const [logOption, setLogOption] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { setAuthInfo, setSocket, setToken, username, setIsGuest } = useAuth();
+
+  const { triggerAnimation } = useAnimation();
+
+  useEffect(() => {
+    triggerAnimation("wolfHowl");
+  }, []);
 
   const handleGuestLogin = async () => {
     const data = await fetchGuestLogin();
