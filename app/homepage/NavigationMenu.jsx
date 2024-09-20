@@ -8,7 +8,7 @@ import JoinRoom from "../JoinRoom";
 import RolesGrid from "../RolesGrid";
 import Profile from "../Profile";
 import { btnClassNames } from "../lib/styles";
-import { useToRender } from "../page";
+import { useToRender } from "../providers/RenderProvider";
 
 const NavigationMenu = () => {
   const { t } = useTranslation();

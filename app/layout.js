@@ -1,8 +1,10 @@
+// layout.js
 import "./globals.css";
 import { Providers } from "./providers/providers";
 import GeneralBtns from "./general-btns/GeneralBtns";
 import Footer from "./components/Footer";
 import TrackDisplay from "./TrackDisplay";
+import { RenderProvider } from "./providers/RenderProvider";
 
 export const metadata = {
   title: "Werewolves",
@@ -20,7 +22,7 @@ export default function RootLayout({ children }) {
         <Providers>
           <div className="flex flex-col justify-between w-full min-h-screen">
             <GeneralBtns />
-            {children}
+            <RenderProvider>{children}</RenderProvider>
             <Footer />
             <TrackDisplay />
           </div>

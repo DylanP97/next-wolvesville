@@ -4,12 +4,14 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "../providers/AuthProvider";
 import cpuNextMove from "../lib/cpuNextMove";
 import { useSound } from "../providers/SoundProvider";
+import { useAnimation } from "../providers/AnimationProvider";
 
 const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
   const { game, socket, username, updateUserGameState } = useAuth();
   const { generateNoise } = useSound();
+  const { triggerAnimation } = useAnimation();
 
   const weatherColors = {
     daytime: "bg-sky-500",
@@ -56,12 +58,14 @@ export const GameProvider = ({ children }) => {
     setWeather(weatherColors[timeOfTheDay]);
     if (timeOfTheDay === "nighttime" && !winningTeam) {
       generateNoise("wolfHowl");
+      triggerAnimation("intoTheNight");
     }
     if (timeOfTheDay === "votetime" && !winningTeam) {
       generateNoise("pianoPercussion");
     }
     if (timeOfTheDay === "daytime" && !winningTeam) {
       generateNoise("rooster");
+      triggerAnimation("happySun");
     }
   }, [timeOfTheDay]);
 

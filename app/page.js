@@ -1,16 +1,15 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import HomePage from "./homepage/HomePage";
 import PreScreenMenu from "./PreScreenMenu";
-import Game from "./game/Game";
+import { useToRender } from "./providers/RenderProvider";
 import { useAuth } from "./providers/AuthProvider";
+import HomePage from "./homepage/HomePage";
+import Game from "./game/Game";
+import { useEffect } from "react";
 
-const RenderContext = createContext();
-
-export default function Home() {
+export default function Page() {
   const { username, isConnected, isInRoom, isPlaying, avatar } = useAuth();
-  const [activeComponent, setActiveComponent] = useState(null);
+  const { activeComponent, setActiveComponent } = useToRender();
 
   useEffect(() => {
     if (!isConnected) {
@@ -23,31 +22,10 @@ export default function Home() {
           username={username}
           isInRoom={isInRoom}
           avatar={avatar}
-          setActiveComponent={setActiveComponent}
-          activeComponent={activeComponent}
         />
       );
     }
-  }, [isConnected, isInRoom, isPlaying, username, avatar]);
+  }, [isConnected, isInRoom, isPlaying]);
 
-  return (
-    <RenderContext.Provider
-      value={{
-        activeComponent,
-        setActiveComponent,
-      }}
-    >
-      {activeComponent}
-    </RenderContext.Provider>
-  );
+  return <div className="flex-grow">{activeComponent}</div>;
 }
-
-export const useToRender = () => {
-  const context = useContext(RenderContext);
-
-  if (!context) {
-    throw new Error("useToRender must be used within an RenderContext");
-  }
-
-  return context;
-};

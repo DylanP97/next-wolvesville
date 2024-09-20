@@ -16,7 +16,7 @@
   --primary-default: #e50403;
   --secondary-foreground: #fff;
   --secondary-default: #52525b;
-  --background: #303030;
+  --background: #000000;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,7 +25,7 @@
     --primary-default: #e50403;
     --secondary-foreground: #fff;
     --secondary-default: #52525b;
-    --background: #303030;
+    --background: #000000;
   }
 }
 

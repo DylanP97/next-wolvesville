@@ -2,11 +2,15 @@
 
 import { Button } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
-import Home, { useToRender } from "../page";
+import { useToRender } from "../providers/RenderProvider";
+import Page from "../page";
+import HomePage from "../homepage/HomePage";
+import { useAuth } from "../providers/AuthProvider";
 
 const GoBackBtn = () => {
   const { t } = useTranslation();
-  const { setActiveComponent, activeComponent } = useToRender();
+  const { setActiveComponent } = useToRender();
+  const { username, isInRoom, avatar } = useAuth();
 
   return (
     <Button
@@ -15,11 +19,7 @@ const GoBackBtn = () => {
       variant="solid"
       onClick={() =>
         setActiveComponent(
-          activeComponent.componentToReturn ? (
-            activeComponent.componentToReturn
-          ) : (
-            <Home />
-          )
+          <HomePage username={username} isInRoom={isInRoom} avatar={avatar} />
         )
       }
     >
