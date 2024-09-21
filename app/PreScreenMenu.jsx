@@ -19,12 +19,6 @@ const PreScreenMenu = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { setAuthInfo, setSocket, setToken, username, setIsGuest } = useAuth();
 
-  const { triggerAnimation } = useAnimation();
-
-  useEffect(() => {
-    triggerAnimation("wolfHowl");
-  }, []);
-
   const handleGuestLogin = async () => {
     const data = await fetchGuestLogin();
 
@@ -75,6 +69,7 @@ const PreScreenMenu = () => {
       <HomePage username={username} isInRoom={false} avatar={defaultAvatar} />
     );
   } else if (logOption === "login" || logOption === "register") {
+    console.log("logOption", logOption);
     return <Connexion logOption={logOption} />;
   } else {
     return (

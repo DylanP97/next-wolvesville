@@ -56,10 +56,12 @@ export const AuthProvider = ({ children }) => {
     if (response.ok) {
       const data = await response.json();
       console.log("User is authenticated:", data);
-      // console.log("game", game);
       setAuthInfo(data.username, data.avatar, true, data.socketId);
       setToken(data.token);
       setIsGuest(data.isGuest);
+      setIsPlaying(data.isPlaying);
+      setIsInRoom(data.isInRoom);
+      setGame(data.game);
       const newSocket = io(process.env.NEXT_PUBLIC_API_URL, {
         query: { token: data.token },
       });

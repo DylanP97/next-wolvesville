@@ -13,6 +13,9 @@ export const GameProvider = ({ children }) => {
   const { generateNoise } = useSound();
   const { triggerAnimation } = useAnimation();
 
+  console.log('game')
+  console.log(game)
+
   const weatherColors = {
     daytime: "bg-sky-500",
     votetime: "bg-sky-700",
@@ -58,7 +61,7 @@ export const GameProvider = ({ children }) => {
     setWeather(weatherColors[timeOfTheDay]);
     if (timeOfTheDay === "nighttime" && !winningTeam) {
       generateNoise("wolfHowl");
-      triggerAnimation("intoTheNight");
+      triggerAnimation("moon");
     }
     if (timeOfTheDay === "votetime" && !winningTeam) {
       generateNoise("pianoPercussion");
