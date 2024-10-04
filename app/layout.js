@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
           <div className="flex flex-col justify-between w-full min-h-screen">
             <GeneralBtns />
             <RenderProvider>{children}</RenderProvider>
-            <Footer />
+            {/* <Footer /> */}
             <TrackDisplay />
           </div>
         </Providers>
