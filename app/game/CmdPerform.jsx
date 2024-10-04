@@ -18,6 +18,8 @@ const CmdPerform = ({
     isSelection,
     isDoubleSelection,
     isBlocked,
+    isJailer,
+    hasHandcuffed
   } = useGame();
 
   const {
@@ -38,7 +40,8 @@ const CmdPerform = ({
       (timeOfTheDay === "nighttime" && actionTime === "night") ||
       (timeOfTheDay === "nighttime" &&
         dayCount === 0 &&
-        actionTime === "1stnight"))
+        actionTime === "1stnight")) && 
+        (isJailer && type === "execute" ? Boolean(hasHandcuffed) : true)
   ) {
     return (
       <Tooltip content={label} color="secondary" variant="flat">

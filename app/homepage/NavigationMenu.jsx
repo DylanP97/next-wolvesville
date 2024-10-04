@@ -7,8 +7,9 @@ import ConnectedUsers from "../ConnectedUsers";
 import JoinRoom from "../JoinRoom";
 import RolesGrid from "../RolesGrid";
 import Profile from "../Profile";
-import { btnClassNames } from "../lib/styles";
+import { btnClassNames, btnPrimary, getBtnClassNames } from "../lib/styles";
 import { useToRender } from "../providers/RenderProvider";
+import { Button } from "@nextui-org/react";
 
 const NavigationMenu = () => {
   const { t } = useTranslation();
@@ -76,13 +77,15 @@ const NavigationMenu = () => {
     <div className="w-full h-full">
       <nav className="absolute top-1/3 flex flex-col items-center py-4 w-full z-20">
         {filteredComponents.map((c, index) => (
-          <div
-            key={index + "-navComponent"}
+          <Button
+            className={getBtnClassNames("w-60")}
+            color="primary"
+            variant="shadow"
             onClick={() => setActiveComponent(c.componentToReturn)}
-            className={btnClassNames}
+            key={index + "-navComponent"}
           >
             {c.label}
-          </div>
+          </Button>
         ))}
       </nav>
     </div>

@@ -31,7 +31,7 @@ const ConnectedUsers = () => {
   }, []);
 
   return (
-    <div className="bg-background flex flex-col flex-grow justify-between w-full p-4">
+    <div className="flex flex-grow flex-col justify-between w-full p-4">
       <h1 className="text-white text-3xl font-bold my-6">
         {t("connected.title")}
       </h1>
@@ -46,20 +46,18 @@ const ConnectedUsers = () => {
           })}
         </div>
       )}
-      <div className="my-4">
-        <h2 className="text-white text-xl font-bold my-2">Not Connected</h2>
-        <div className="flex justify-center flex-wrap w-full">
-          {nonConnectedUsers &&
-            nonConnectedUsers.map((user) => {
-              return (
-                <AvatarUI
-                  heightAndWidth={50}
-                  avatar={user.avatar}
-                  key={"notconnected" + user.username}
-                />
-              );
-            })}
-        </div>
+      <h2 className="text-white text-3xl font-bold my-6">Not Connected</h2>
+      <div className="flex justify-start flex-wrap w-full mb-8">
+        {nonConnectedUsers &&
+          nonConnectedUsers.map((user) => {
+            return (
+              <AvatarUI
+                heightAndWidth={50}
+                avatar={user.avatar}
+                key={"notconnected" + user.username}
+              />
+            );
+          })}
       </div>
       <GoBackBtn />
     </div>

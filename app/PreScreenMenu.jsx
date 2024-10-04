@@ -8,9 +8,9 @@ import { useEffect, useState } from "react";
 import { defaultAvatar } from "./lib/utils";
 import { useAuth } from "./providers/AuthProvider";
 import { fetchGuestLogin } from "./lib/fetch";
-import { Spinner } from "@nextui-org/react";
+import { Button, Spinner } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
-import { btnClassNames } from "./lib/styles";
+import { btnClassNames, getBtnClassNames } from "./lib/styles";
 import { useAnimation } from "./providers/AnimationProvider";
 
 const PreScreenMenu = () => {
@@ -57,7 +57,7 @@ const PreScreenMenu = () => {
       <div className="z-20 text-center text-white flex flex-col justify-center items-center m-2">
         <Spinner />
         <p>{t("intro.loading")}</p>
-        <span className="text-center text-xs text-gray-200">
+        <span className="text-center text-xs text-white">
           {t("intro.loading.info")}
         </span>
       </div>
@@ -76,21 +76,30 @@ const PreScreenMenu = () => {
       <div className="flex flex-col flex-grow justify-center items-center bg-black">
         <Title />
         <nav className="top-1/3 flex flex-col items-center py-4 w-full z-20">
-          <div
+          <Button
+            className={getBtnClassNames("w-60")}
+            color="primary"
+            variant="shadow"
             onClick={() => setLogOption("guestPlay")}
-            className={btnClassNames}
           >
-            Play as Guest
-          </div>
-          <div onClick={() => setLogOption("login")} className={btnClassNames}>
-            Log in with your account
-          </div>
-          <div
+            {t("prescreen.guest")}
+          </Button>
+          <Button
+            className={getBtnClassNames("w-60")}
+            color="primary"
+            onClick={() => setLogOption("login")}
+            variant="shadow"
+          >
+            {t("prescreen.logIn")}
+          </Button>
+          <Button
+            className={getBtnClassNames("w-60")}
+            color="primary"
             onClick={() => setLogOption("register")}
-            className={btnClassNames}
+            variant="shadow"
           >
-            Register a new account
-          </div>
+            {t("prescreen.register")} 
+          </Button>
         </nav>
       </div>
     );

@@ -4,6 +4,7 @@ import { Button } from "@nextui-org/react";
 import { useAuth } from "../../providers/AuthProvider";
 import { useTranslation } from "react-i18next";
 import { fetchLogout } from "../../lib/fetch";
+import { btnClassNames, getBtnClassNames } from "../../lib/styles";
 
 const LogoutBtn = () => {
   const { isConnected, setAuthInfo, socket, setSocket } = useAuth();
@@ -23,10 +24,10 @@ const LogoutBtn = () => {
     <>
       {isConnected && (
         <Button
+          className={getBtnClassNames("w-40")}
           variant="solid"
           color="secondary"
           size="sm"
-          className="hover:text-white text-xs"
           aria-label={t("logout")}
           onPress={() => logout()}
         >

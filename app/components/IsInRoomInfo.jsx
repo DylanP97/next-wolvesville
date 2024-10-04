@@ -7,11 +7,11 @@ const IsInRoomInfo = ({ isInRoom }) => {
 
   if (isInRoom)
     return (
-      <p className="text-xs text-white">
+      <p className="text-md text-white">
         🟢🎮 {t("home.status.1")} {isInRoom}
       </p>
     );
-  else return <p className="text-xs text-white">🔴 {t("home.status.2")}</p>;
+  else return <p className="text-md text-white">🔴🎮 {t("home.status.2")}</p>;
 };
 
 export default IsInRoomInfo;

@@ -36,7 +36,7 @@ const AvatarUI = ({ avatar, heightAndWidth }) => {
 
   return avatar && avatarState ? (
     <div
-      className={`bg-white rounded-full flex justify-center overflow-hidden`}
+      className={`bg-white rounded-full flex justify-center overflow-hidden border-2 border-white m-1`}
     >
       <Image
         src={avatarState}

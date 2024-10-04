@@ -6,6 +6,7 @@ import { useGame } from "./GameProvider";
 import PlayerGridCard from "./PlayerGridCard";
 import handlePlayerClick from "./handlePlayerClick";
 import { useGameAnimations } from "./GameAnimationsProvider";
+import { useAnimation } from "../providers/AnimationProvider";
 
 const GameGrid = () => {
   const { triggerSimpleMessage } = useGameAnimations();
@@ -31,6 +32,8 @@ const GameGrid = () => {
     actionType,
   } = useGame();
 
+  const { triggerAnimation } = useAnimation();
+
   const handleClick = (player) => {
     handlePlayerClick(
       actionType,
@@ -49,7 +52,8 @@ const GameGrid = () => {
       setSelectedPlayer,
       selectedPlayer1,
       setSelectedPlayer1,
-      setErrorMessage
+      setErrorMessage,
+      triggerAnimation
     );
   };
 

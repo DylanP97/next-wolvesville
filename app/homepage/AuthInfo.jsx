@@ -16,9 +16,11 @@ const AuthInfo = ({ username, isInRoom, avatar }) => {
   const randomIndex = Math.floor(Math.random() * welcomeMsgs.length);
 
   return (
-    <header className="mt-6 p-4 flex justify-center items-center">
-      <AvatarUI avatar={avatar} heightAndWidth={80} />
-      <div className="h-full">
+    <header className="m-2 p-4 flex justify-center items-center">
+      <div className="m-2">
+        <AvatarUI avatar={avatar} heightAndWidth={80} />
+      </div>
+      <div className="h-full flex flex-col justify-center">
         <p className="text-md text-white">{welcomeMsgs[randomIndex]}</p>
         <IsInRoomInfo isInRoom={isInRoom} />
       </div>

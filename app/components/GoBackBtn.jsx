@@ -3,9 +3,9 @@
 import { Button } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
 import { useToRender } from "../providers/RenderProvider";
-import Page from "../page";
 import HomePage from "../homepage/HomePage";
 import { useAuth } from "../providers/AuthProvider";
+import { btnClassNames, getBtnClassNames } from "../lib/styles";
 
 const GoBackBtn = () => {
   const { t } = useTranslation();
@@ -14,9 +14,9 @@ const GoBackBtn = () => {
 
   return (
     <Button
-      className="hover:animate-pulse hover:scale-[105%] w-60 transition-all"
+      className={getBtnClassNames('w-60')}
       color="secondary"
-      variant="solid"
+      variant="shadow"
       onClick={() =>
         setActiveComponent(
           <HomePage username={username} isInRoom={isInRoom} avatar={avatar} />

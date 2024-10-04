@@ -11,6 +11,7 @@ import {
 import { useAuth } from "./providers/AuthProvider";
 import GoBackBtn from "./components/GoBackBtn";
 import { useTranslation } from "react-i18next";
+import { btnClassNames } from "./lib/styles";
 
 const JoinRoom = () => {
   const { t } = useTranslation();
@@ -27,7 +28,7 @@ const JoinRoom = () => {
   };
 
   return (
-    <div className="flex flex-col justify-between flex-grow w-full bg-background p-4">
+    <div className="flex flex-col justify-between flex-grow w-full p-4">
       <h1 className="text-white text-3xl font-bold">{t("menu.1")}</h1>
       {rooms.length === 0 ? (
         <div className="m-4">
@@ -37,7 +38,7 @@ const JoinRoom = () => {
         rooms.map((room) => {
           let usersInTheRoom = room.usersInTheRoom;
           return (
-            <Card key={room.id} className="m-4">
+            <Card key={room.id} className="m-4 max-w-96">
               <CardBody>
                 {/* <p>id: {room.id}</p> */}
                 <p>{room.name}</p>
@@ -73,6 +74,7 @@ const JoinRoom = () => {
                 )}
                 {username == room.createdBy && (
                   <Button
+                    className={btnClassNames}
                     color="danger"
                     variant="ghost"
                     onClick={() => deleteRoom(room.id)}

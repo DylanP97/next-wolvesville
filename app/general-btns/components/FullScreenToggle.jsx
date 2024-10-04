@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { Button, Tooltip } from "@nextui-org/react";
 import { useKeys } from "../../providers/KeysProvider";
+import { btnClassNames, getBtnClassNames } from "../../lib/styles";
 
 const FullScreenToggle = ({}) => {
   const { currentKey, setCurrentKey } = useKeys();
@@ -52,7 +53,8 @@ const FullScreenToggle = ({}) => {
         size="sm"
         color="secondary"
         variant="solid"
-        className="icon-container"
+        className={getBtnClassNames("w-10")}
+        // className="icon-container"
         // aria-label={fullScreen ? t("toggle.quit") : t("toggle.go")}
         onPress={() => (fullScreen ? exitFullscreen() : enterFullscreen())}
       >

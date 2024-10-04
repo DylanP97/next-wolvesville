@@ -96,7 +96,7 @@ const Connexion = ({ logOption }) => {
         <div className="z-20 text-center text-white flex flex-col justify-center items-center m-2">
           <Spinner />
           <p>{t("intro.loading")}</p>
-          <span className="text-center text-xs text-gray-200">
+          <span className="text-center text-xs text-white">
             {t("intro.loading.info")}
           </span>
         </div>

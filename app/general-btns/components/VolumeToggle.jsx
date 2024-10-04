@@ -7,6 +7,7 @@ import { Tooltip } from "@nextui-org/react";
 import VolumeOffIcon from "./icons/VolumeOffIcon";
 import VolumeOnIcon from "./icons/VolumeOnIcon";
 import { useSound } from "../../providers/SoundProvider";
+import { getBtnClassNames } from "../../lib/styles";
 
 const VolumeToggle = () => {
   const { t } = useTranslation();
@@ -27,7 +28,7 @@ const VolumeToggle = () => {
         variant="solid"
         aria-label="volumeToggle"
         onPress={toggleVolume}
-        className="icon-container"
+        className={getBtnClassNames("w-10")}
       >
         {isVolumeOn ? <VolumeOffIcon /> : <VolumeOnIcon />}
       </Button>

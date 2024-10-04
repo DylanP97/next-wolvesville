@@ -39,6 +39,21 @@ export const fetchTeams = async () => {
   }
 };
 
+export const fetchTeamByName = async (name) => {
+  try {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_URL + `/api/teams/${name}`
+    );
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.error("Failed to fetch the team");
+    }
+  } catch (error) {
+    console.error("Error fetching teams:", error);
+  }
+};
+
 export const fetchLogout = async () => {
   try {
     return await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/user/logout", {

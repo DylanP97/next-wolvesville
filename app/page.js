@@ -27,5 +27,5 @@ export default function Page() {
     }
   }, [isConnected, isInRoom, isPlaying]);
 
-  return <div className="flex-grow">{activeComponent}</div>;
+  return <div className="flex flex-grow">{activeComponent}</div>;
 }

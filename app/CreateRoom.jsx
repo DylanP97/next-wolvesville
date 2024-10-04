@@ -9,6 +9,7 @@ import GoBackBtn from "./components/GoBackBtn";
 import { useTranslation } from "react-i18next";
 import { colorsForTeams } from "./lib/utils";
 import { fetchRoles, fetchTeams } from "./lib/fetch";
+import { btnClassNames } from "./lib/styles";
 
 const CreateRoom = () => {
   const { t } = useTranslation();
@@ -122,10 +123,10 @@ const CreateRoom = () => {
       case 1:
         return (
           <>
-            <p className="text-xs italic">
+            <p className="text-md italic">
               {t("create.info.numberOnEachRole")}
             </p>
-            <div className="flex flex-col md:flex-row justify-between my-2">
+            <div className="flex flex-col md:flex-row justify-between my-4">
               <div className="">
                 {availableRoles.map((role) => (
                   <RoleChoice
@@ -171,14 +172,14 @@ const CreateRoom = () => {
                 />
               ))}
             </div>
-            <p className="text-sm text-gray-200 my-2">
+            <p className="text-sm text-white my-2">
               {selectedRoles.length} {t("create.totalPlayers")}
             </p>
-            <p className="text-sm text-gray-200">
+            <p className="text-sm text-white">
               *{t("create.including")} {selectedRoles.length - nbrCPUPlayers}{" "}
               {t("create.userControlled")}
             </p>
-            <p className="text-sm text-gray-200">
+            <p className="text-sm text-white">
               *{t("create.including")} {nbrCPUPlayers}{" "}
               {t("create.CPUControlled")}
             </p>
@@ -220,7 +221,7 @@ const CreateRoom = () => {
   };
 
   return (
-    <div className="h-full w-full bg-background p-4 flex flex-grow flex-col justify-between">
+    <div className="w-full p-4 flex flex-grow flex-col justify-between">
       {created ? (
         <h1 className="text-white">{t("create.roomCreatedWaitingUsers")}</h1>
       ) : (
@@ -238,9 +239,9 @@ const CreateRoom = () => {
             <div className="flex flex-row gap-2">
               {creationStep > 1 && (
                 <Button
-                  className="hover:scale-[105%] transition-all"
+                  className={btnClassNames}
                   color="secondary"
-                  variant="solid"
+                  variant="shadow"
                   onClick={toPreviousStep}
                 >
                   {t("create.previousStep")}
@@ -248,9 +249,9 @@ const CreateRoom = () => {
               )}
               {creationStep < 3 && (
                 <Button
-                  className="hover:scale-[105%] transition-all"
+                  className={btnClassNames}
                   color="primary"
-                  variant="solid"
+                  variant="shadow"
                   onClick={toNextStep}
                 >
                   {t("create.nextStep")}
@@ -258,9 +259,9 @@ const CreateRoom = () => {
               )}
               {creationStep === 3 && (
                 <Button
+                  className={btnClassNames}
                   color="primary"
                   variant="shadow"
-                  className="animate-pulse text-white w-60 transition-all hover:scale-[105%]"
                   onClick={submitNewRoom}
                 >
                   {t("create.submit")}

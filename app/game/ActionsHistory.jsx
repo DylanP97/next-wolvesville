@@ -44,7 +44,7 @@ const ActionsHistory = () => {
     (clientPlayer.isAlive &&
       isJailer &&
       timeOfTheDay == "nighttime" &&
-      hasHandcuffed >= 0)
+      hasHandcuffed > 0)
       ? jail
       : timeOfTheDay == "nighttime" && isWolf
       ? wolves

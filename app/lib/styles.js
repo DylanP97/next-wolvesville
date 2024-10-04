@@ -3,4 +3,15 @@ export const divActionIcon =
 
 export const imgActionIcon = "max-h-[20px] max-w-[20px] object-contain";
 
-export const btnClassNames = "w-60 h-10 z-20 p-2 my-2 rounded-3xl bg-violet-900 text-sm text-center text-primary-foreground flex justify-center items-center hover:font-bold hover:scale-[105%] transition-all hover:cursor-pointer"
+export const btnClassNames =
+  "h-10 z-20 p-2 my-2 rounded-xl text-sm text-center flex justify-center items-center hover:scale-[105%] transition-all hover:cursor-pointer border-2 border-white";
+
+export const btnPrimary =
+  "bg-primary hover:bg-primary-focus text-primary-foreground";
+
+export const btnSecondary =
+  "bg-secondary hover:bg-secondary-focus text-secondary-foreground";
+
+export const getBtnClassNames = (width) => {
+  return `${btnClassNames} ${width}`;
+};

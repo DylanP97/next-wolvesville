@@ -13,9 +13,6 @@ export const GameProvider = ({ children }) => {
   const { generateNoise } = useSound();
   const { triggerAnimation } = useAnimation();
 
-  console.log('game')
-  console.log(game)
-
   const weatherColors = {
     daytime: "bg-sky-500",
     votetime: "bg-sky-700",

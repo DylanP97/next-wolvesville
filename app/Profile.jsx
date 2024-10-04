@@ -43,7 +43,7 @@ const Profile = () => {
   console.log("avState", avState);
 
   return (
-    <section className="bg-background h-screen w-full px-5 flex flex-col justify-center items-center ">
+    <section className="h-screen w-full px-5 flex flex-col justify-center items-center ">
       <div
         className={`bg-white rounded-full flex justify-center my-4 overflow-hidden`}
       >

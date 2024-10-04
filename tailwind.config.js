@@ -31,7 +31,7 @@ module.exports = {
               foreground: "#fff",
               DEFAULT: "#52525B",
             },
-            background: "#303030",
+            background: "#101010",
           },
         },
         dark: {
@@ -44,7 +44,7 @@ module.exports = {
               foreground: "#fff",
               DEFAULT: "#52525B",
             },
-            background: "#303030",
+            background: "#101010",
           },
         },
       },

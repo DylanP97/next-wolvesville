@@ -16,7 +16,7 @@
   --primary-default: #e50403;
   --secondary-foreground: #fff;
   --secondary-default: #52525b;
-  --background: #000000;
+  --background: #101010;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,7 +25,7 @@
     --primary-default: #e50403;
     --secondary-foreground: #fff;
     --secondary-default: #52525b;
-    --background: #000000;
+    --background: #101010;
   }
 }
 
@@ -163,7 +163,7 @@ body {
 .track-display {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
-  background-color: #545454;
+  background-color: var(--background);
   position: absolute;
   bottom: 8%;
   right: 1%;

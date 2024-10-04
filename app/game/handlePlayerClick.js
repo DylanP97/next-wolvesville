@@ -17,8 +17,10 @@ const handlePlayerClick = (
   setSelectedPlayer,
   selectedPlayer1,
   setSelectedPlayer1,
-  setErrorMessage
+  setErrorMessage,
+  triggerAnimation
 ) => {
+
   function selectionCompleted() {
     setSelectedPlayer(player);
     setIsBlocked(true);
@@ -40,6 +42,7 @@ const handlePlayerClick = (
 
         if (!player.isAlive) {
           setErrorMessage("This player is dead. Stop hitting its grave.");
+          triggerAnimation("loomingGrave");
           return;
         }
 
@@ -190,6 +193,7 @@ const handlePlayerClick = (
     }
   } else {
     setErrorMessage("You are dead. You can't do anything.");
+    triggerAnimation("deadStuck");
     return;
   }
 };
