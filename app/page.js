@@ -18,11 +18,7 @@ export default function Page() {
       setActiveComponent(<Game />);
     } else {
       setActiveComponent(
-        <HomePage
-          username={username}
-          isInRoom={isInRoom}
-          avatar={avatar}
-        />
+        <HomePage username={username} isInRoom={isInRoom} avatar={avatar} />
       );
     }
   }, [isConnected, isInRoom, isPlaying]);

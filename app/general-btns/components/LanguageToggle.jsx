@@ -8,7 +8,7 @@ import { getBtnClassNames } from "../../lib/styles";
 
 function LanguageToggle() {
   const { i18n, t } = useTranslation();
-  const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
+  const [currentLanguage, setCurrentLanguage] = useState(i18n.language.substring(0, 2));
 
   const toggleLanguage = () => {
     const newLanguage = currentLanguage === "en" ? "fr" : "en";

@@ -22,9 +22,9 @@ const RoleCard = ({ role }) => {
       <CardHeader className="flex gap-3">
         <Image
           alt={role.name}
-          height={40}
-          width={40}
-          radius="sm"
+          height={80}
+          width={80}
+          radius="xl"
           src={role.image}
           />
         <div className="flex flex-col">

@@ -17,10 +17,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={``}>
+    <html lang="en"
+    // {i18n.language ? i18n.language : "en"} 
+    className={``}>
       <body>
         <Providers>
-          <div className="flex flex-col justify-between w-full h-full min-h-screen max-h-screen pt-[72px]">
+          <div className="flex flex-col justify-between w-full pt-[72px]">
             <GeneralBtns />
             <RenderProvider>{children}</RenderProvider>
             <Footer />

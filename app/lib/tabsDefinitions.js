@@ -18,7 +18,7 @@ import { Tab } from "./tabsClasses";
 import localsJSON from "../../public/locals.json";
 import i18n from "../lib/i18n";
 
-const lang = i18n.language;
+let lang = i18n.language ? i18n.language.substring(0, 2) : "en";
 
 export const headTab = new Tab(
   `${localsJSON[lang]["translation"]["profile.head"]}`,
