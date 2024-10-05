@@ -9,6 +9,9 @@ import { Spinner } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
 import { fetchLogin, fetchSignUp } from "../lib/fetch";
 import Title from "../Title";
+import evilEyes from "../../public/game/evileyes.gif";
+import Image from "next/image";
+import GoBackBtn from "../components/GoBackBtn";
 
 const Connexion = ({ logOption }) => {
   const { t } = useTranslation();
@@ -60,8 +63,8 @@ const Connexion = ({ logOption }) => {
   };
 
   return (
-    <div className="flex flex-col flex-grow justify-center items-center bg-black">
-      {/* <Image
+    <div className="flex flex-col flex-grow justify-center items-center">
+      <Image
         priority
         className="absolute top-8"
         alt=""
@@ -69,8 +72,9 @@ const Connexion = ({ logOption }) => {
         height={700}
         width={700}
         style={{ width: "auto", height: "auto" }}
-      /> */}
-      <Title />
+      />
+
+      {/* <Title /> */}
 
       <ConnexionForm
         handleSubmit={handleSubmit}

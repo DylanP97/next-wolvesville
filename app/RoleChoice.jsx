@@ -34,7 +34,7 @@ const RoleChoice = ({ role, handleRoleChange }) => {
   }, [role.team]);
 
   return (
-    <div className="flex flex-row items-center gap-2">
+    <div className="flex flex-col items-center p-2">
       <div className="flex flex-row justify-center items-center gap-2">
         <Button
           isIconOnly
@@ -78,15 +78,15 @@ const RoleChoice = ({ role, handleRoleChange }) => {
       </div>
       <User
         avatarProps={{
-          size: "sm",
+          size: "md",
           src: role.image,
           radius: "xl",
         }}
-        className="p-1"
+        className="p-1 flex justify-center items-center w-full"
         name={
           <p className="text-xs text-white">
             {i18n.language === "fr" ? role.nameFR : role.name}
-            {` (${teamName})`} {/* Use the state value instead of the promise */}
+            {/* {` (${teamName})`} */}
           </p>
         }
       />

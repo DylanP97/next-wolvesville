@@ -2,6 +2,7 @@
 
 import { Button, Input } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
+import { getBtnClassNames } from "../lib/styles";
 
 const ConnexionForm = ({
   handleSubmit,
@@ -16,9 +17,9 @@ const ConnexionForm = ({
   const { t } = useTranslation();
 
   return (
-    <form className=" w-60 z-20" onSubmit={handleSubmit}>
+    <form className="w-60 z-20" onSubmit={handleSubmit}>
       {!isLogin && (
-        <div className="w-[95%] m-2">
+        <div className="my-2">
           <Input
             color="secondary"
             isRequired
@@ -30,7 +31,7 @@ const ConnexionForm = ({
           />
         </div>
       )}
-      <div className="w-[95%] m-2">
+      <div className="my-2">
         <Input
           color="secondary"
           isRequired
@@ -41,7 +42,7 @@ const ConnexionForm = ({
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
-      <div className="w-[95%] m-2">
+      <div className="my-2">
         <Input
           color="secondary"
           isRequired
@@ -56,9 +57,10 @@ const ConnexionForm = ({
 
       <div>
         <Button
+          className={getBtnClassNames("w-60")}
+          color="primary"
           variant="shadow"
-          color="secondary"
-          className="w-[95%] m-2 hover:bg-primary hover:text-primary-foreground animate-pulse"
+          // className="my-2 hover:bg-primary hover:text-primary-foreground animate-pulse"
           type="submit"
         >
           {isLogin ? t("intro.lo") : t("intro.si")}

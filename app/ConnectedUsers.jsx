@@ -46,7 +46,7 @@ const ConnectedUsers = () => {
           })}
         </div>
       )}
-      <h2 className="text-white text-3xl font-bold my-6">Not Connected</h2>
+      {/* <h2 className="text-white text-3xl font-bold my-6">Not Connected</h2>
       <div className="flex justify-start flex-wrap w-full mb-8">
         {nonConnectedUsers &&
           nonConnectedUsers.map((user) => {
@@ -58,7 +58,7 @@ const ConnectedUsers = () => {
               />
             );
           })}
-      </div>
+      </div> */}
       <GoBackBtn />
     </div>
   );

@@ -8,7 +8,7 @@ import LogoutBtn from "./components/LogoutBtn";
 const GeneralBtns = () => {
 
   return (
-    <div className="sticky top-0 w-full bg-black p-2 z-30 flex flex-row justify-end items-center gap-2">
+    <div className="fixed top-0 w-full p-2 z-30 flex flex-row justify-end items-center gap-2">
       <FullScreenToggle />
       <LanguageToggle />
       <VolumeToggle />

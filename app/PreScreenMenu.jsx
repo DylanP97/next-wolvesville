@@ -73,7 +73,7 @@ const PreScreenMenu = () => {
     return <Connexion logOption={logOption} />;
   } else {
     return (
-      <div className="flex flex-col flex-grow justify-center items-center bg-black">
+      <div className="flex flex-col flex-grow justify-center items-center my-4">
         <Title />
         <nav className="top-1/3 flex flex-col items-center py-4 w-full z-20">
           <Button

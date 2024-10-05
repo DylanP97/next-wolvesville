@@ -88,7 +88,10 @@ const CreateRoom = () => {
   };
 
   const handleNbrCPUPlayers = (event) => {
-    setNbrCPUPlayers(Number(event.target.value));
+    const value = Number(event.target.value);
+    if (value >= 0) {
+      setNbrCPUPlayers(value);
+    }
   };
 
   const submitNewRoom = () => {
@@ -123,21 +126,19 @@ const CreateRoom = () => {
       case 1:
         return (
           <>
-            <p className="text-md italic">
+            <div className="flex flex-row md:flex-row justify-between my-4 gap-2 overflow-x-auto">
+              {availableRoles.map((role) => (
+                <RoleChoice
+                  key={role.name + "-rolecheckbx"}
+                  role={role}
+                  handleRoleChange={handleRoleChange}
+                  setAvailableRoles={setAvailableRoles}
+                />
+              ))}
+            </div>
+            <p className="text-sm italic my-4">
               {t("create.info.numberOnEachRole")}
             </p>
-            <div className="flex flex-col md:flex-row justify-between my-4">
-              <div className="">
-                {availableRoles.map((role) => (
-                  <RoleChoice
-                    key={role.name + "-rolecheckbx"}
-                    role={role}
-                    handleRoleChange={handleRoleChange}
-                    setAvailableRoles={setAvailableRoles}
-                  />
-                ))}
-              </div>
-            </div>
           </>
         );
       case 2:
@@ -150,9 +151,20 @@ const CreateRoom = () => {
               type="number"
               label={t("create.labelCPUNumber")}
               value={nbrCPUPlayers}
-              min={0}
               max={CPUPlayersMax}
               onChange={handleNbrCPUPlayers}
+            />
+            <Input
+              isReadOnly
+              className="max-w-xs ws-60 bg-white rounded-xl"
+              label={t("create.userControlled")}
+              value={selectedRoles.length - nbrCPUPlayers}
+            />
+            <Input
+              isReadOnly
+              className="max-w-xs ws-60 bg-white rounded-xl"
+              label={t("create.totalPlayers")}
+              value={selectedRoles.length}
             />
           </div>
         );

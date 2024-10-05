@@ -18,7 +18,7 @@ const RoleCard = ({ role }) => {
   const teamsString = role.team.join(", ");
 
   return (
-    <Card className="max-w-[400px]">
+    <Card className="min-w-80 h-60 md:max-w-80">
       <CardHeader className="flex gap-3">
         <Image
           alt={role.name}
