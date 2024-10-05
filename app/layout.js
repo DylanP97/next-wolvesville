@@ -20,8 +20,8 @@ export default function RootLayout({ children }) {
     <html lang="en" className={``}>
       <body>
         <Providers>
-          <div className="flex flex-col justify-between w-full min-h-screen">
-            <GeneralBtns />
+          <div className="flex flex-col justify-between w-full h-full">
+            {/* <GeneralBtns /> */}
             <RenderProvider>{children}</RenderProvider>
             {/* <Footer /> */}
             <TrackDisplay />
