@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
     className={``}>
       <body>
         <Providers>
-          <div className="flex flex-col justify-between w-full pt-[72px]">
+          <div className="flex flex-col justify-between w-full h-[90vh] pt-[72px]">
             <GeneralBtns />
             <RenderProvider>{children}</RenderProvider>
             <Footer />

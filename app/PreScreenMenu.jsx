@@ -12,11 +12,14 @@ import { Button, Spinner } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
 import { btnClassNames, getBtnClassNames } from "./lib/styles";
 import { useAnimation } from "./providers/AnimationProvider";
+import Image from "next/image";
+import puzzledVillage from "../public/game/background1.jpeg";
 
 const PreScreenMenu = () => {
   const { t } = useTranslation();
   const [logOption, setLogOption] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [countdown, setCountdown] = useState(50); // Timer state
   const { setAuthInfo, setSocket, setToken, username, setIsGuest } = useAuth();
 
   const handleGuestLogin = async () => {
@@ -43,6 +46,7 @@ const PreScreenMenu = () => {
       });
     }
     setIsLoading(false);
+    setCountdown(50); // Reset the countdown when loading is finished
   };
 
   useEffect(() => {
@@ -52,6 +56,23 @@ const PreScreenMenu = () => {
     }
   }, [logOption]);
 
+  // Timer countdown logic
+  useEffect(() => {
+    let timer;
+    if (isLoading && countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown((prevCountdown) => prevCountdown - 1);
+      }, 1000);
+    }
+
+    if (countdown === 0) {
+      clearInterval(timer);
+      // Handle what happens when countdown reaches zero, if needed
+    }
+
+    return () => clearInterval(timer); // Cleanup the interval on component unmount
+  }, [isLoading, countdown]);
+
   if (isLoading) {
     return (
       <div className="z-20 text-center text-white flex flex-col justify-center items-center m-2">
@@ -60,6 +81,9 @@ const PreScreenMenu = () => {
         <span className="text-center text-xs text-white">
           {t("intro.loading.info")}
         </span>
+        <div className="text-center text-white text-xl mt-4">
+          {countdown}
+        </div>
       </div>
     );
   }
@@ -73,7 +97,15 @@ const PreScreenMenu = () => {
     return <Connexion logOption={logOption} />;
   } else {
     return (
-      <div className="flex flex-col flex-grow justify-center items-center my-4">
+      <div className="relative flex flex-col flex-grow justify-center items-center">
+        <Image
+          priority
+          className="absolute top-0 left-0 object-cover h-full w-full"
+          alt=""
+          src={puzzledVillage}
+          layout="fill" // Makes the image take up the entire parent
+          objectFit="cover" // Ensures the image covers the parent while maintaining aspect ratio
+        />
         <Title />
         <nav className="top-1/3 flex flex-col items-center py-4 w-full z-20">
           <Button
@@ -98,7 +130,7 @@ const PreScreenMenu = () => {
             onClick={() => setLogOption("register")}
             variant="shadow"
           >
-            {t("prescreen.register")} 
+            {t("prescreen.register")}
           </Button>
         </nav>
       </div>

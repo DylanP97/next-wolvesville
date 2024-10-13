@@ -9,7 +9,7 @@ import { Spinner } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
 import { fetchLogin, fetchSignUp } from "../lib/fetch";
 import Title from "../Title";
-import evilEyes from "../../public/game/evileyes.gif";
+import puzzledVillage from "../../public/game/background1.jpeg";
 import Image from "next/image";
 import GoBackBtn from "../components/GoBackBtn";
 
@@ -64,15 +64,6 @@ const Connexion = ({ logOption }) => {
 
   return (
     <div className="flex flex-col flex-grow justify-center items-center">
-      <Image
-        priority
-        className="absolute top-8"
-        alt=""
-        src={evilEyes}
-        height={700}
-        width={700}
-        style={{ width: "auto", height: "auto" }}
-      />
 
       {/* <Title /> */}
 

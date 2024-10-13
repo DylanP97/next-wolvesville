@@ -7,22 +7,26 @@ import ConnectedUsers from "../ConnectedUsers";
 import JoinRoom from "../JoinRoom";
 import RolesGrid from "../RolesGrid";
 import Profile from "../Profile";
-import { btnClassNames, btnPrimary, getBtnClassNames } from "../lib/styles";
+import { getBtnClassNames } from "../lib/styles";
 import { useToRender } from "../providers/RenderProvider";
 import { Button } from "@nextui-org/react";
 
 const NavigationMenu = () => {
   const { t } = useTranslation();
-  const { isGuest } = useAuth();
+  const { isGuest, socket, username, socketId, avatar } = useAuth();
   const { setActiveComponent, activeComponent } = useToRender();
+
+  const launchQuickGame = async () => {
+    await socket.emit("startQuickGame", username, socketId, avatar);
+  }
 
   const components = [
     {
       label: t("menu.2"),
       componentToReturn: (
         <CreateRoom
-          setActiveComponent={setActiveComponent}
-          activeComponent={activeComponent}
+        // setActiveComponent={setActiveComponent}
+        // activeComponent={activeComponent}
         />
       ),
       allowedForGuest: true,
@@ -31,8 +35,8 @@ const NavigationMenu = () => {
       label: t("menu.1"),
       componentToReturn: (
         <JoinRoom
-          setActiveComponent={setActiveComponent}
-          activeComponent={activeComponent}
+        // setActiveComponent={setActiveComponent}
+        // activeComponent={activeComponent}
         />
       ),
       allowedForGuest: true,
@@ -41,8 +45,8 @@ const NavigationMenu = () => {
       label: t("menu.3"),
       componentToReturn: (
         <ConnectedUsers
-          setActiveComponent={setActiveComponent}
-          activeComponent={activeComponent}
+        // setActiveComponent={setActiveComponent}
+        // activeComponent={activeComponent}
         />
       ),
       allowedForGuest: true,
@@ -51,8 +55,8 @@ const NavigationMenu = () => {
       label: t("menu.4"),
       componentToReturn: (
         <RolesGrid
-          setActiveComponent={setActiveComponent}
-          activeComponent={activeComponent}
+        // setActiveComponent={setActiveComponent}
+        // activeComponent={activeComponent}
         />
       ),
       allowedForGuest: true,
@@ -61,8 +65,8 @@ const NavigationMenu = () => {
       label: t("menu.5"),
       componentToReturn: (
         <Profile
-          setActiveComponent={setActiveComponent}
-          activeComponent={activeComponent}
+        // setActiveComponent={setActiveComponent}
+        // activeComponent={activeComponent}
         />
       ),
       allowedForGuest: false,
@@ -76,6 +80,15 @@ const NavigationMenu = () => {
   return (
     <div className="w-full h-full">
       <nav className="absolute top-1/3 flex flex-col items-center py-4 w-full z-20">
+        <Button
+          className={getBtnClassNames("w-60")}
+          color="primary"
+          variant="shadow"
+          onClick={() => launchQuickGame()}
+          key={"quickGame-navComponent"}
+        >
+          {t("menu.0")}
+        </Button>
         {filteredComponents.map((c, index) => (
           <Button
             className={getBtnClassNames("w-60")}
