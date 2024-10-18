@@ -20,7 +20,7 @@ const cpuNextMove = (
         player.isAlive &&
         !player.isUnderArrest &&
         player.id !== excludePlayerId && // Exclude the specific player
-        (!excludeWerewolves || player.role.team.join() !== "werewolves") &&
+        (!excludeWerewolves || player.role.team !== "Werewolves") &&
         (!excludeRevealed || !player.isRevealed)
     );
     if (potentialPlayers.length === 0) {

@@ -12,10 +12,10 @@ const ActionBar = ({ summaryIsOpen, setSummaryIsOpen }) => {
   return (
     <div className="flex flex-row w-full h-10">
       <PauseToggle />
-      <SideSummaryToggle
+      {/* <SideSummaryToggle
         summaryIsOpen={summaryIsOpen}
         setSummaryIsOpen={setSummaryIsOpen}
-      />
+      /> */}
       {clientPlayer.isAlive && <Chatbox />} 
       {clientPlayer.isAlive && <PlayingCommands />}
     </div>

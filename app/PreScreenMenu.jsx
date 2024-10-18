@@ -13,7 +13,9 @@ import io from "socket.io-client"; // Add this import
 import { btnClassNames, getBtnClassNames } from "./lib/styles";
 import { useAnimation } from "./providers/AnimationProvider";
 import Image from "next/image";
-import puzzledVillage from "../public/game/background1.jpeg";
+// import background1 from "../public/game/background1.jpeg";
+// import background2 from "../public/game/background2.jpeg";
+// import background3 from "../public/game/background3.jpeg";
 
 const PreScreenMenu = () => {
   const { t } = useTranslation();
@@ -98,14 +100,14 @@ const PreScreenMenu = () => {
   } else {
     return (
       <div className="relative flex flex-col flex-grow justify-center items-center">
-        <Image
+        {/* <Image
           priority
           className="absolute top-0 left-0 object-cover h-full w-full"
           alt=""
-          src={puzzledVillage}
+          src={background3}
           layout="fill" // Makes the image take up the entire parent
           objectFit="cover" // Ensures the image covers the parent while maintaining aspect ratio
-        />
+        /> */}
         <Title />
         <nav className="top-1/3 flex flex-col items-center py-4 w-full z-20">
           <Button

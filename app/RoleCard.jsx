@@ -15,7 +15,6 @@ import { useTranslation } from "react-i18next";
 
 const RoleCard = ({ role }) => {
   const { t } = useTranslation();
-  const teamsString = role.team.join(", ");
 
   return (
     <Card className="min-w-80 h-60 md:max-w-80">
@@ -32,8 +31,8 @@ const RoleCard = ({ role }) => {
             {i18n.language === "fr" ? role.nameFR : role.name}
           </p>
           <p className="text-xs text-default-500">
-            {t("roles.team")}
-            {role.team.length > 1 && "s"}: {teamsString}
+            {t("roles.team")} 
+            {i18n.language === "fr" ? ` : ${role.teamFR}` : `: ${role.team}`}
           </p>
         </div>
       </CardHeader>

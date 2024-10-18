@@ -2,12 +2,10 @@ import { Button, Input, User } from "@nextui-org/react";
 import i18n from "./lib/i18n";
 import Image from "next/image";
 import { getBtnClassNames } from "./lib/styles";
-import { fetchTeamByName } from "./lib/fetch";
 import { useEffect, useState } from "react";
 
 const RoleChoice = ({ role, handleRoleChange }) => {
-  const [teamName, setTeamName] = useState("");
-  const isSolo = !["village", "werewolves"].includes(role.team.join());
+  const isSolo = !["Village", "Werewolves"].includes(role.team);
   const allowMultiple = ["Villager", "Classic Werewolf"].includes(role.name);
 
   const handleIncrement = () => {
@@ -23,15 +21,6 @@ const RoleChoice = ({ role, handleRoleChange }) => {
       handleRoleChange(role.name, role.count - 1);
     }
   };
-
-  useEffect(() => {
-    const fetchTeamName = async () => {
-      const teamData = await fetchTeamByName(role.team.join());
-      setTeamName(i18n.language === "fr" ? teamData.nameFR : teamData.name);
-    };
-
-    fetchTeamName();
-  }, [role.team]);
 
   return (
     <div className="flex flex-col items-center p-2">
@@ -86,7 +75,7 @@ const RoleChoice = ({ role, handleRoleChange }) => {
         name={
           <p className="text-xs text-white">
             {i18n.language === "fr" ? role.nameFR : role.name}
-            {/* {` (${teamName})`} */}
+            {` (${i18n.language === "fr" ? role.teamFR : role.team})`}
           </p>
         }
       />

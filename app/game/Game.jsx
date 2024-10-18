@@ -25,12 +25,12 @@ export default function Game() {
                   setSummaryIsOpen={setSummaryIsOpen}
                 />
               </div>
-              {summaryIsOpen && (
+              {/* {summaryIsOpen && (
                 <SideSummary
                   summaryIsOpen={summaryIsOpen}
                   setSummaryIsOpen={setSummaryIsOpen}
                 />
-              )}
+              )} */}
             </GameAnimationsProvider>
           </InGameKeysProvider>
         </GameProvider>

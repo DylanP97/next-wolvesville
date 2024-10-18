@@ -7,6 +7,7 @@ import PlayerGridCard from "./PlayerGridCard";
 import handlePlayerClick from "./handlePlayerClick";
 import { useGameAnimations } from "./GameAnimationsProvider";
 import { useAnimation } from "../providers/AnimationProvider";
+import { useSound } from "../providers/SoundProvider";
 
 const GameGrid = () => {
   const { triggerSimpleMessage } = useGameAnimations();
@@ -16,6 +17,7 @@ const GameGrid = () => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const { socket } = useAuth();
+  const { generateNoise } = useSound();
 
   const {
     playersList,
@@ -65,6 +67,7 @@ const GameGrid = () => {
   useEffect(() => {
     if (errorMessage) {
       triggerSimpleMessage(errorMessage);
+      generateNoise("selectionError")
       setErrorMessage(null);
     }
   }, [errorMessage]);
@@ -76,7 +79,7 @@ const GameGrid = () => {
           player &&
           player.role &&
           player.role.team &&
-          player.role.team.includes("werewolves");
+          player.role.team === "Werewolves";
 
         return (
           <PlayerGridCard

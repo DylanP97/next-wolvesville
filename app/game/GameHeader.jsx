@@ -2,9 +2,11 @@
 
 import { useTranslation } from "react-i18next";
 import { useGame } from "./GameProvider";
+import i18n from "../lib/i18n";
 
 const GameHeader = () => {
-  const { timeOfTheDay, dayCount, timeCounter, weather } = useGame();
+  const { timeOfTheDay, dayCount, timeCounter, weather, clientPlayer } =
+    useGame();
   const { t } = useTranslation();
 
   return (
@@ -26,6 +28,13 @@ const GameHeader = () => {
             {t("game.left")}
           </>
         )}
+        <>
+          {" "}
+          -{" "}
+          {i18n.language === "fr"
+            ? clientPlayer.role.nameFR
+            : clientPlayer.role.name}
+        </>
       </p>
     </div>
   );

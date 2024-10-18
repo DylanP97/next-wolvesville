@@ -38,8 +38,12 @@ export const GameProvider = ({ children }) => {
   const wolvesChat = game.wolvesMessagesHistory;
   const generalChat = game.messagesHistory;
 
-  const isWolf = clientPlayer.role.team.includes("werewolves");
+  console.log("clientPlayer");
+  console.log(clientPlayer);
+
+  const isWolf = clientPlayer.role.team === "Werewolves";
   const isJailer = clientPlayer.role.name === "Jailer";
+  const isAlive = clientPlayer.isAlive;
   const isUnderArrest = clientPlayer.isUnderArrest;
   const hasHandcuffed = clientPlayer.hasHandcuffed;
 
@@ -68,6 +72,11 @@ export const GameProvider = ({ children }) => {
       triggerAnimation("happySun");
     }
   }, [timeOfTheDay]);
+
+  useEffect(() => {
+    console.log("isAlive", isAlive);
+    if (!isAlive) generateNoise("grunt");
+  }, [isAlive]);
 
   useEffect(() => {
     if (timeCounter == 4000 && game.createdBy === clientPlayer.name) {

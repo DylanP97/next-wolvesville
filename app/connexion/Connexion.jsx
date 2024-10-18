@@ -8,10 +8,6 @@ import ConnexionForm from "./ConnexionForm";
 import { Spinner } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
 import { fetchLogin, fetchSignUp } from "../lib/fetch";
-import Title from "../Title";
-import puzzledVillage from "../../public/game/background1.jpeg";
-import Image from "next/image";
-import GoBackBtn from "../components/GoBackBtn";
 
 const Connexion = ({ logOption }) => {
   const { t } = useTranslation();

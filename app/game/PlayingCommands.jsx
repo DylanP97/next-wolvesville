@@ -62,7 +62,7 @@ const PlayingCommands = () => {
         />
       )}
       {timeOfTheDay === "nighttime" &&
-        clientPlayer.role.team.join() === "werewolves" && (
+        clientPlayer.role.team === "Werewolves" && (
           <CmdVote
             activateSelection={activateSelection}
             isSelection={isSelection}

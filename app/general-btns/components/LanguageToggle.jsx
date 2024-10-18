@@ -27,7 +27,7 @@ function LanguageToggle() {
         onPress={toggleLanguage}
         className={getBtnClassNames("w-10")}
       >
-        {currentLanguage === "en" ? "🇫🇷" : "🇬🇧"}
+        {currentLanguage === "en" ? "🇬🇧" : "🇫🇷"}
       </Button>
     </Tooltip>
   );

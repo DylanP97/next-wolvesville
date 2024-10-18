@@ -87,9 +87,17 @@ export const SoundProvider = ({ children }) => {
       case "pianoPercussion":
         newNoise = new Audio("/audio/pianoPercussion.mp3");
         break;
+      case "grunt":
+        newNoise = new Audio("/audio/grunt.mp3");
+        break;
+      case "selectionError":
+        newNoise = new Audio("/audio/selectionError.mp3");
+        break;
       default:
         return;
     }
+
+    console.log(newNoise)
 
     newNoise.volume = 1;
     newNoise.play();
@@ -110,6 +118,7 @@ export const SoundProvider = ({ children }) => {
         setBgMusicVolume,
         playTrack,
         currentTrack,
+        setCurrentBgMusic
       }}
     >
       {children}

@@ -6,8 +6,6 @@ import i18n from "../lib/i18n";
 
 let lang = i18n.language ? i18n.language.substring(0, 2) : "en";
 
-console.log(lang)
-
 const data = {
   ...schema.properties,
   ...avataaars.schema.properties,

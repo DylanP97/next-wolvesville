@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   const [isGuest, setIsGuest] = useState(false);
   const [game, setGame] = useState(null);
 
-  const { playTrack, generateBackgroundMusic } = useSound();
+  const { playTrack, generateBackgroundMusic, setCurrentBgMusic } = useSound();
 
   const updateUserGameState = (newIsInRoom, newIsPlaying, newGame) => {
     setIsInRoom(newIsInRoom);
@@ -72,6 +72,10 @@ export const AuthProvider = ({ children }) => {
   }
 
   /** execution */
+
+  useEffect(() => {
+    setCurrentBgMusic(null);
+  }, [isPlaying]);
 
   useEffect(() => {
     if (authState.isConnected) {

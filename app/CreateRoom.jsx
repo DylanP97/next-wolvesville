@@ -63,7 +63,7 @@ const CreateRoom = () => {
 
   useEffect(() => {
     setCPUPlayersMax(selectedRoles.length - 1);
-    let selectedRolesTeamsArray = selectedRoles.map((role) => role.team.join());
+    let selectedRolesTeamsArray = selectedRoles.map((role) => role.team);
     let filteredTeams = availableTeams.filter((team) =>
       selectedRolesTeamsArray.includes(team.name)
     );

@@ -20,7 +20,6 @@ const handlePlayerClick = (
   setErrorMessage,
   triggerAnimation
 ) => {
-
   function selectionCompleted() {
     setSelectedPlayer(player);
     setIsBlocked(true);
@@ -71,7 +70,7 @@ const handlePlayerClick = (
         }
 
         if (actionType === "chooseJuniorWolfDeathRevenge") {
-          if (!player.role.team.includes("werewolves")) {
+          if (!player.role.team === "Werewolves") {
             socket.emit(
               "chooseJuniorWolfDeathRevenge",
               {
@@ -88,7 +87,7 @@ const handlePlayerClick = (
         }
 
         if (timeOfTheDay === "nighttime" && actionType === "wolfVote") {
-          if (!player.role.team.includes("werewolves")) {
+          if (!player.role.team === "Werewolves") {
             const nbr = clientPlayer.role.name === "Alpha Werewolf" ? 2 : 1;
             socket.emit("addWolfVote", player.id, nbr, gameId);
             selectionCompleted();
