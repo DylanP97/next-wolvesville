@@ -118,7 +118,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       socket.on("updateGame", (updatedGame) => {
-        !updatedGame.hasEnded && setGame(updatedGame);
+        setGame(updatedGame);
       });
 
       return () => {

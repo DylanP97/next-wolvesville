@@ -38,9 +38,6 @@ export const GameProvider = ({ children }) => {
   const wolvesChat = game.wolvesMessagesHistory;
   const generalChat = game.messagesHistory;
 
-  console.log("clientPlayer");
-  console.log(clientPlayer);
-
   const isWolf = clientPlayer.role.team === "Werewolves";
   const isJailer = clientPlayer.role.name === "Jailer";
   const isAlive = clientPlayer.isAlive;
@@ -50,8 +47,8 @@ export const GameProvider = ({ children }) => {
   if (!winningTeam) {
     socket.emit("checkForWinner", game.id);
   } else {
-    socket.emit("endGame", game.id);
-    updateUserGameState(true, false, game);
+    !game.hasEnded && socket.emit("endGame", game.id);
+    // updateUserGameState(true, false, game);
   }
 
   useEffect(() => {
@@ -74,7 +71,6 @@ export const GameProvider = ({ children }) => {
   }, [timeOfTheDay]);
 
   useEffect(() => {
-    console.log("isAlive", isAlive);
     if (!isAlive) generateNoise("grunt");
   }, [isAlive]);
 

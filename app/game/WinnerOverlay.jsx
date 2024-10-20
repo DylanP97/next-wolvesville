@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import i18n from "../lib/i18n";
 import { fetchTeams } from "../lib/fetch";
 import AvatarAndRole from "./AvatarAndRole";
+import { btnClassNames } from "../lib/styles";
 
 const WinnerOverlay = () => {
   const { t } = useTranslation();
@@ -18,7 +19,7 @@ const WinnerOverlay = () => {
 
   const handleExitGame = () => {
     updateUserGameState(null, false, null);
-    document.location.assign("/");
+    // document.location.assign("/");
     // socket.emit("deleteRoom", gameId);
   };
   useEffect(() => {
@@ -101,7 +102,7 @@ const WinnerOverlay = () => {
             </div>
           </div>
           <Button
-            className="bg-background hover:animate-pulse hover:scale-[105%] w-60 transition-all text-white mt-4"
+            className={btnClassNames}
             variant="solid"
             onClick={() => handleExitGame()}
           >
