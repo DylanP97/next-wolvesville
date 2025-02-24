@@ -27,6 +27,8 @@ const PreScreenMenu = () => {
   const handleGuestLogin = async () => {
     const data = await fetchGuestLogin();
 
+    console.log("data", data);
+
     if (data) {
       setToken(data.token);
       setIsGuest(true);

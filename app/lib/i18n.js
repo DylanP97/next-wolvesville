@@ -8,9 +8,10 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: "en", // Default language
+    fallbackLng: "fr", // Default language
+    lng: "fr", // Default language
     resources: {
-      en: locales.en,
+      // en: locales.en,
       fr: locales.fr,
     },
     detection: {

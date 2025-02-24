@@ -10,7 +10,7 @@ const GeneralBtns = () => {
   return (
     <div className="fixed top-0 w-full p-2 z-30 flex flex-row justify-end items-center gap-2">
       <FullScreenToggle />
-      <LanguageToggle />
+      {/* <LanguageToggle /> */}
       <VolumeToggle />
       <LogoutBtn />
     </div>
