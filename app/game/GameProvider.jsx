@@ -77,7 +77,7 @@ export const GameProvider = ({ children }) => {
   useEffect(() => {
     if (timeCounter == 4000 && game.createdBy === clientPlayer.name) {
       playersList.map((player) => {
-        if (player.isCPU && player.isAlive && !player.isUnderArrest) {
+        if (player.isCPU && player.isAlive && !player.isUnderArrest && timeCounter === player.randomSecond) {
           cpuNextMove(
             player,
             dayCount,
