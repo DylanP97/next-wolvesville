@@ -97,7 +97,7 @@ export const SoundProvider = ({ children }) => {
         return;
     }
 
-    console.log("newNoise", newNoise)
+    // console.log("newNoise", newNoise)
 
     newNoise.volume = 1;
     newNoise.play();

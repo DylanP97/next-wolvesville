@@ -9,6 +9,7 @@ import { useGameAnimations } from "./GameAnimationsProvider";
 import { useAnimation } from "../providers/AnimationProvider";
 import { useSound } from "../providers/SoundProvider";
 import i18n from "../lib/i18n";
+import { useTranslation } from "react-i18next";
 
 const GameGrid = () => {
   const { triggerSimpleMessage } = useGameAnimations();
@@ -20,7 +21,9 @@ const GameGrid = () => {
   const { socket } = useAuth();
   const { generateNoise } = useSound();
 
-  const language = i18n.language
+  const { t } = useTranslation();
+
+  const language = i18n.language;
 
   const {
     playersList,
@@ -70,8 +73,8 @@ const GameGrid = () => {
 
   useEffect(() => {
     if (errorMessage) {
-      triggerSimpleMessage(errorMessage);
-      generateNoise("selectionError")
+      triggerSimpleMessage(`${t(errorMessage)}`);
+      generateNoise("selectionError");
       setErrorMessage(null);
     }
   }, [errorMessage]);

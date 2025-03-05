@@ -11,7 +11,7 @@ const GameHeader = () => {
 
   return (
     <div className="p-2 z-10">
-      <p className="text-xs text-white">
+      <p className="text-xs text-white my-2">
         {timeOfTheDay === "daytime" ? (
           <>
             ☀️ {t("game.daytime")} n°{dayCount} - {timeCounter / 1000}s{" "}
@@ -35,6 +35,11 @@ const GameHeader = () => {
             ? clientPlayer.role.nameFR
             : clientPlayer.role.name}
         </>
+      </p>
+      <p className="text-xs italic">
+        {i18n.language === "fr"
+          ? clientPlayer.role.descriptionFR
+          : clientPlayer.role.description}
       </p>
     </div>
   );

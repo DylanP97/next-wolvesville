@@ -6,6 +6,7 @@ const cpuNextMove = (
   socket,
   gameId
 ) => {
+  console.log("hello cpuNextMove");
   function getPlayerWithId(id) {
     return playersList.find((ply) => ply.id === id);
   }
@@ -233,6 +234,7 @@ const cpuNextMove = (
   }
 
   function performVoteAction() {
+    console.log("hello performVoteAction");
     let voteTarget = getRandomAlivePlayer();
     if (voteTarget) {
       socket.emit(

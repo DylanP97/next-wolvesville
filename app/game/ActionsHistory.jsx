@@ -19,7 +19,6 @@ const ActionsHistory = () => {
     isJailer,
     isUnderArrest,
     hasHandcuffed,
-    weather,
     clientPlayer,
   } = useGame();
   const { t } = useTranslation();
@@ -32,7 +31,10 @@ const ActionsHistory = () => {
 
   class Chat {
     constructor(type, label, history, emoji) {
-      (this.type = type), (this.label = label), (this.history = history), (this.emoji = emoji);
+      (this.type = type),
+        (this.label = label),
+        (this.history = history),
+        (this.emoji = emoji);
     }
   }
 
@@ -41,12 +43,27 @@ const ActionsHistory = () => {
   const jail = new Chat("jail", t("game.jailChat"), jailChat, "👮‍♂️");
 
   const [usedChat, setUsedChat] = useState(general);
+  const [messages, setMessages] = useState(usedChat.history);
 
   useEffect(() => {
-    setUsedChat(general);
-  }, []);
+    if (timeOfTheDay == "nighttime" && isWolf) {
+      availableChats.push(wolves);
+      setUsedChat(wolves);
+    } else if (
+      (clientPlayer.isAlive && isUnderArrest) ||
+      (clientPlayer.isAlive &&
+        isJailer &&
+        timeOfTheDay == "nighttime" &&
+        hasHandcuffed > 0)
+    ) {
+      availableChats.push(jail);
+      setUsedChat(jail);
+    } else {
+      setUsedChat(general);
+    }
+  }, [timeOfTheDay, generalChat, wolvesChat, jailChat]);
 
-  const availableChats = [general]
+  const availableChats = [general];
 
   const selectChat = (type) => {
     switch (type) {
@@ -63,37 +80,36 @@ const ActionsHistory = () => {
         setUsedChat(general);
         break;
     }
-
   };
 
-  if (timeOfTheDay == "nighttime" && isWolf) availableChats.push(wolves)
-  if ((clientPlayer.isAlive && isUnderArrest) ||
-    (clientPlayer.isAlive &&
-      isJailer &&
-      timeOfTheDay == "nighttime" &&
-      hasHandcuffed > 0)) availableChats.push(jail)
+  useEffect(() => {
+    setMessages(usedChat.history); // Update messages when the chat changes
+  }, [usedChat.history]);
 
   return (
     <div
-      className={`w-full z-10 p-2 relative overflow-hidden flex flex-col flex-grow min-h-[220px] bg-black`}
+      className={`w-full z-10 relative overflow-hidden flex flex-col flex-grow min-h-[220px] bg-black opacity-50`}
     >
-      <div className="flex justify-center items-start w-full h-12">
-        {
-          availableChats.map((chat, index) => {
-            return (
-              <div className={`${chat.type === usedChat.type ? "bg-gray-500" : "bg-black"} flex justify-center items-center cursor-pointer`} key={"chattab-" + index} onClick={(() => selectChat(chat.type))}>
-                <h2 className="text-white text-sm">
-                  {chat.label} {chat.emoji}
-                </h2>
-              </div>
-            )
-          })
-        }
-
+      <div className="flex justify-center items-start w-full h-12 bg-gray-300">
+        {availableChats.map((chat, index) => {
+          return (
+            <div
+              className={`${
+                chat.type === usedChat.type ? "bg-gray-500" : "bg-black"
+              } flex justify-center items-center cursor-pointer h-full px-4`}
+              key={"chattab-" + index}
+              onClick={() => selectChat(chat.type)}
+            >
+              <h2 className="text-white text-sm">
+                {chat.label} {chat.emoji}
+              </h2>
+            </div>
+          );
+        })}
       </div>
       <div className="z-10 p-2 object-bottom overflow-y-auto max-h-80">
         <ul className="actions-list text-white text-sm">
-          {usedChat.history.map((msg, index) => {
+          {messages.map((msg, index) => {
             if (msg.author) {
               return (
                 <li

@@ -75,17 +75,20 @@ export const GameProvider = ({ children }) => {
   }, [isAlive]);
 
   useEffect(() => {
-    if (timeCounter == 4000 && game.createdBy === clientPlayer.name) {
+    if (game.createdBy === clientPlayer.name) {
       playersList.map((player) => {
-        if (player.isCPU && player.isAlive && !player.isUnderArrest && timeCounter === player.randomSecond) {
-          cpuNextMove(
-            player,
-            dayCount,
-            timeOfTheDay,
-            playersList,
-            socket,
-            gameId
-          );
+        if (player.isCPU && player.isAlive && !player.isUnderArrest) {
+          if (timeCounter === player.randomSecond) {
+            console.log("cpu move", player.randomSecond, player.name);
+            cpuNextMove(
+              player,
+              dayCount,
+              timeOfTheDay,
+              playersList,
+              socket,
+              gameId
+            );
+          }
         }
       });
     }
