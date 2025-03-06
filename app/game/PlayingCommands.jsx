@@ -4,11 +4,11 @@ import CmdVote from "./CmdVote";
 import CmdPerform from "./CmdPerform";
 import { useGame } from "./GameProvider";
 import { useAuth } from "../providers/AuthProvider";
-import { useGameAnimations } from "./GameAnimationsProvider";
+import { useAnimation } from "../providers/AnimationProvider";
 
 const PlayingCommands = () => {
   const { socket } = useAuth();
-  const { triggerSimpleMessage } = useGameAnimations();
+  const { triggerSimpleMessage } = useAnimation();
 
   const {
     clientPlayer,

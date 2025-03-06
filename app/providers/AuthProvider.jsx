@@ -22,7 +22,12 @@ export const AuthProvider = ({ children }) => {
   const [isGuest, setIsGuest] = useState(false);
   const [game, setGame] = useState(null);
 
-  const { playTrack, generateBackgroundMusic, setCurrentBgMusic } = useSound();
+  const {
+    playTrack,
+    generateBackgroundMusic,
+    setCurrentBgMusic,
+    generateNoise,
+  } = useSound();
 
   const updateUserGameState = (newIsInRoom, newIsPlaying, newGame) => {
     setIsInRoom(newIsInRoom);
@@ -119,6 +124,10 @@ export const AuthProvider = ({ children }) => {
 
       socket.on("updateGame", (updatedGame) => {
         setGame(updatedGame);
+      });
+
+      socket.on("triggerSoundForAll", (sound) => {
+        generateNoise(sound);
       });
 
       return () => {

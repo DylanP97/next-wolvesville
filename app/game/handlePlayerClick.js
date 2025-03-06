@@ -157,8 +157,6 @@ const handlePlayerClick = (
                 );
               }
             } else if (actionType === "shoot") {
-              console.log("before shootbullet emit")
-              console.log(clientPlayer)
               socket.emit(
                 "shootBullet",
                 {
@@ -169,8 +167,6 @@ const handlePlayerClick = (
                 },
                 gameId
               );
-              console.log("after shootbullet emit")
-              console.log(clientPlayer)
             } else if (actionType === "heal") {
               socket.emit(
                 "heal",

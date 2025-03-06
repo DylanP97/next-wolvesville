@@ -70,14 +70,15 @@ export const SoundProvider = ({ children }) => {
     }
   };
 
-  const generateNoise = (audioType) => {
+  const generateNoise = (sound) => {
+    console.log(sound);
     if (currentBgMusic) {
       setBgMusicVolume(0.2);
     }
 
     let newNoise;
 
-    switch (audioType) {
+    switch (sound) {
       case "wolfHowl":
         newNoise = new Audio("/audio/wolfHowling.mp3");
         break;
@@ -92,6 +93,9 @@ export const SoundProvider = ({ children }) => {
         break;
       case "selectionError":
         newNoise = new Audio("/audio/selectionError.mp3");
+        break;
+      case "gunshot":
+        newNoise = new Audio("/audio/gunshot.mp3");
         break;
       default:
         return;
@@ -118,7 +122,7 @@ export const SoundProvider = ({ children }) => {
         setBgMusicVolume,
         playTrack,
         currentTrack,
-        setCurrentBgMusic
+        setCurrentBgMusic,
       }}
     >
       {children}

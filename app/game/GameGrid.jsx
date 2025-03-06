@@ -5,14 +5,13 @@ import { useAuth } from "../providers/AuthProvider";
 import { useGame } from "./GameProvider";
 import PlayerGridCard from "./PlayerGridCard";
 import handlePlayerClick from "./handlePlayerClick";
-import { useGameAnimations } from "./GameAnimationsProvider";
-import { useAnimation } from "../providers/AnimationProvider";
 import { useSound } from "../providers/SoundProvider";
 import i18n from "../lib/i18n";
 import { useTranslation } from "react-i18next";
+import { useAnimation } from "../providers/AnimationProvider";
 
 const GameGrid = () => {
-  const { triggerSimpleMessage } = useGameAnimations();
+  const { triggerSimpleMessage } = useAnimation();
 
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [selectedPlayer1, setSelectedPlayer1] = useState(null);

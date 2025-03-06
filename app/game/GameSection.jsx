@@ -23,7 +23,7 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
         summaryIsOpen={summaryIsOpen}
         setSummaryIsOpen={setSummaryIsOpen}
       />
-      <Background />
+      {/* <Background /> */}
       {winningTeam !== null && (
         <>
           <Confetti width={width} height={height} style={{ zIndex: "999" }} />

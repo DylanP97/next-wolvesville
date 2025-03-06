@@ -7,13 +7,13 @@ import { useAuth } from "../providers/AuthProvider";
 import { useInGameKeys } from "./InGameKeysProvider";
 import { useTranslation } from "react-i18next";
 import i18n from "../lib/i18n";
-import { useGameAnimations } from "./GameAnimationsProvider";
+import { useAnimation } from "../providers/AnimationProvider";
 
 const Chatbox = () => {
   const { socket, username } = useAuth();
   const { timeOfTheDay, gameId, clientPlayer, isWolf, isJailer } = useGame();
   const { currentKey, setCurrentKey } = useInGameKeys();
-  const { triggerSimpleMessage } = useGameAnimations();
+  const { triggerSimpleMessage } = useAnimation();
   const [message, setMessage] = useState("");
   const { t } = useTranslation();
 

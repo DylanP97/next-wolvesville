@@ -10,8 +10,8 @@ const animations = [
   new Animation("intoTheNight", 1500, "/animations/1726857462074.json"),
   new Animation("moon", 1500, "/animations/1726857466615.json"),
   new Animation("happySun", 1500, "/animations/1726857610320.json"),
-  new Animation("deadStuck", 1000, "/animations/1728039673722.json"),
-  new Animation("loomingGrave", 1000, "/animations/1728040347241.json"),
+  new Animation("deadStuck", 1500, "/animations/1728039673722.json"),
+  new Animation("loomingGrave", 1500, "/animations/1728040347241.json"),
 ];
 
 export default animations;

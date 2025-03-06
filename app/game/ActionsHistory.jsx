@@ -88,7 +88,7 @@ const ActionsHistory = () => {
 
   return (
     <div
-      className={`w-full z-10 relative overflow-hidden flex flex-col flex-grow min-h-[220px] bg-black opacity-50`}
+      className={`w-full z-10 relative overflow-hidden flex flex-col flex-grow min-h-[220px] bg-black`}
     >
       <div className="flex justify-center items-start w-full h-12 bg-gray-300">
         {availableChats.map((chat, index) => {

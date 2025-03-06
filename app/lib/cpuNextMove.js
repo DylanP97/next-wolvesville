@@ -6,7 +6,7 @@ const cpuNextMove = (
   socket,
   gameId
 ) => {
-  console.log("hello cpuNextMove");
+  // console.log("hello cpuNextMove");
   function getPlayerWithId(id) {
     return playersList.find((ply) => ply.id === id);
   }
@@ -37,11 +37,18 @@ const cpuNextMove = (
       case "Classic Werewolf":
       case "Alpha Werewolf":
         let target = getRandomAlivePlayer(true, false, null);
+        const nbr = cpu.role.name === "Alpha Werewolf" ? 2 : 1;
+        // ok console.log("wolftarget", target);
         if (target) {
           socket.emit(
             "addWolfVote",
-            target.id,
-            cpu.role.name === "Alpha Werewolf" ? 2 : 1,
+            {
+              playerId: cpu.id,
+              playerName: cpu.name,
+              selectedPlayerId: target.id,
+              selectedPlayerName: target.name,
+              nbr: nbr,
+            },
             gameId
           );
         }
@@ -150,7 +157,7 @@ const cpuNextMove = (
           if (handcuffedPlayer) {
             console.log(
               "nombre d'exécutions restantes " +
-              cpu.role.canPerform2.nbrLeftToPerform
+                cpu.role.canPerform2.nbrLeftToPerform
             );
             if (cpu.role.canPerform2.nbrLeftToPerform > 0) {
               if (Math.random() < 0.5) {
@@ -234,15 +241,19 @@ const cpuNextMove = (
   }
 
   function performVoteAction() {
-    console.log("hello performVoteAction");
     let voteTarget = getRandomAlivePlayer();
     if (voteTarget) {
+      const nbr = cpu.role.name === "Mayor" && cpu.isRevealed ? 2 : 1;
       socket.emit(
         "addVote",
-        voteTarget.id,
-        cpu.role.name === "Mayor" && cpu.role.canPerform1.nbrLeftToPerform === 0
-          ? 2
-          : 1,
+        {
+          type: "addVote",
+          playerId: cpu.id,
+          playerName: cpu.name,
+          selectedPlayerId: voteTarget.id,
+          selectedPlayerName: voteTarget.name,
+          nbr: nbr,
+        },
         gameId
       );
     }
