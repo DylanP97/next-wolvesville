@@ -79,7 +79,7 @@ export const GameProvider = ({ children }) => {
       playersList.map((player) => {
         if (player.isCPU && player.isAlive && !player.isUnderArrest) {
           if (timeCounter === player.randomSecond) {
-            console.log("cpu move", player.randomSecond, player.name);
+            // console.log("cpu move", player.randomSecond, player.name);
             cpuNextMove(
               player,
               dayCount,

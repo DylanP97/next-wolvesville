@@ -88,7 +88,7 @@ const ActionsHistory = () => {
 
   return (
     <div
-      className={`w-full z-10 relative overflow-hidden flex flex-col flex-grow min-h-[220px] bg-black`}
+      className={`w-full z-10 relative overflow-hidden flex flex-col flex-grow min-h-[220px]`}
     >
       <div className="flex justify-center items-start w-full h-12 bg-gray-300">
         {availableChats.map((chat, index) => {
@@ -132,7 +132,7 @@ const ActionsHistory = () => {
           })}
         </ul>
       </div>
-      <Image
+      {/* <Image
         src={timeOfDayImages[timeOfTheDay]}
         alt="bg-time"
         width={130}
@@ -140,7 +140,7 @@ const ActionsHistory = () => {
         priority
         style={{ height: "auto", width: "auto" }}
         className="m-2 absolute bottom-[0px] right-[-60px] opacity-30 z-0"
-      />
+      /> */}
     </div>
   );
 };

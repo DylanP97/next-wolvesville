@@ -9,6 +9,7 @@ import GameGrid from "./GameGrid";
 import { useGame } from "./GameProvider";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
+import CloudAnimation from "./CloudAnimation";
 
 const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { winningTeam, weather } = useGame();
@@ -16,20 +17,22 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
 
   return (
     <section className={`w-full flex flex-col flex-grow relative`}>
-      <GameHeader />
-      <GameGrid />
-      <ActionsHistory />
-      <ActionBar
-        summaryIsOpen={summaryIsOpen}
-        setSummaryIsOpen={setSummaryIsOpen}
-      />
-      {/* <Background /> */}
-      {winningTeam !== null && (
-        <>
-          <Confetti width={width} height={height} style={{ zIndex: "999" }} />
-          <WinnerOverlay />
-        </>
-      )}
+      <CloudAnimation >
+        <GameHeader />
+        <GameGrid />
+        <ActionsHistory />
+        <ActionBar
+          summaryIsOpen={summaryIsOpen}
+          setSummaryIsOpen={setSummaryIsOpen}
+        />
+        {/* <Background /> */}
+        {winningTeam !== null && (
+          <>
+            <Confetti width={width} height={height} style={{ zIndex: "999" }} />
+            <WinnerOverlay />
+          </>
+        )}
+      </ CloudAnimation>
     </section>
   );
 };
