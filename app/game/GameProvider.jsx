@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useAuth } from "../providers/AuthProvider";
 import cpuNextMove from "../lib/cpuNextMove";
 import { useSound } from "../providers/SoundProvider";
@@ -74,12 +74,17 @@ export const GameProvider = ({ children }) => {
     if (!isAlive) generateNoise("grunt");
   }, [isAlive]);
 
+  const processedSecondRef = useRef(null);
+
   useEffect(() => {
+    if (processedSecondRef.current === timeCounter) return; // Skip if already processed
+    processedSecondRef.current = timeCounter; // Mark this second as processed
     if (game.createdBy === clientPlayer.name) {
       playersList.map((player) => {
         if (player.isCPU && player.isAlive && !player.isUnderArrest) {
+          console.log("cpu move before time", player.name, player.randomSecond);
           if (timeCounter === player.randomSecond) {
-            // console.log("cpu move", player.randomSecond, player.name);
+            console.log("cpu move", player.name, player.randomSecond);
             cpuNextMove(
               player,
               dayCount,

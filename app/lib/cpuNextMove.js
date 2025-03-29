@@ -40,10 +40,7 @@ const cpuNextMove = (
   function performNightAction() {
     switch (cpu.role.name) {
       case "Classic Werewolf":
-      case "Alpha Werewolf":
         let target = getRandomAlivePlayer(true, false, null);
-        const nbr = cpu.role.name === "Alpha Werewolf" ? 2 : 1;
-        // ok console.log("wolftarget", target);
         if (target) {
           socket.emit(
             "addWolfVote",
@@ -52,7 +49,23 @@ const cpuNextMove = (
               playerName: cpu.name,
               selectedPlayerId: target.id,
               selectedPlayerName: target.name,
-              nbr: nbr,
+              nbr: 1,
+            },
+            gameId
+          );
+        }
+        break;
+      case "Alpha Werewolf":
+        let alphaTarget = getRandomAlivePlayer(true, false, null);
+        if (alphaTarget) {
+          socket.emit(
+            "addWolfVote",
+            {
+              playerId: cpu.id,
+              playerName: cpu.name,
+              selectedPlayerId: alphaTarget.id,
+              selectedPlayerName: alphaTarget.name,
+              nbr: 2,
             },
             gameId
           );
@@ -246,8 +259,10 @@ const cpuNextMove = (
   }
 
   function performVoteAction() {
-    // let voteTarget = getRandomAlivePlayer();
-    let voteTarget = getFool()
+    let voteTarget = getRandomAlivePlayer();
+    // console.log("votetarget", voteTarget);
+    // voteTarget && console.log('true');
+    // let voteTarget = getFool()
     if (voteTarget) {
       const nbr = cpu.role.name === "Mayor" && cpu.isRevealed ? 2 : 1;
       socket.emit(
