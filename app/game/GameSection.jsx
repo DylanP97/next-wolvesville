@@ -15,9 +15,11 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { winningTeam, weather } = useGame();
   const { width, height } = useWindowSize();
 
+  console.log(winningTeam)
+
   return (
     <section className={`w-full flex flex-col flex-grow relative`}>
-      <CloudAnimation >
+      {/* <CloudAnimation > */}
         <GameHeader />
         <GameGrid />
         <ActionsHistory />
@@ -32,7 +34,7 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
             <WinnerOverlay />
           </>
         )}
-      </ CloudAnimation>
+      {/* </ CloudAnimation> */}
     </section>
   );
 };

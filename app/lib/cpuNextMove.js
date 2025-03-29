@@ -11,6 +11,11 @@ const cpuNextMove = (
     return playersList.find((ply) => ply.id === id);
   }
 
+  function getFool() {
+    const fool = playersList.find((ply) => ply.role.name === 'Fool')
+    return fool;
+  }
+
   function getRandomAlivePlayer(
     excludeWerewolves = false,
     excludeRevealed = false,
@@ -157,7 +162,7 @@ const cpuNextMove = (
           if (handcuffedPlayer) {
             console.log(
               "nombre d'exécutions restantes " +
-                cpu.role.canPerform2.nbrLeftToPerform
+              cpu.role.canPerform2.nbrLeftToPerform
             );
             if (cpu.role.canPerform2.nbrLeftToPerform > 0) {
               if (Math.random() < 0.5) {
@@ -241,7 +246,8 @@ const cpuNextMove = (
   }
 
   function performVoteAction() {
-    let voteTarget = getRandomAlivePlayer();
+    // let voteTarget = getRandomAlivePlayer();
+    let voteTarget = getFool()
     if (voteTarget) {
       const nbr = cpu.role.name === "Mayor" && cpu.isRevealed ? 2 : 1;
       socket.emit(
