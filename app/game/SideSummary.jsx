@@ -12,7 +12,7 @@ const SideSummary = ({ summaryIsOpen, setSummaryIsOpen }) => {
   return (
     <div className="bg-background w-[30%] min-w-[250px] rounded-l-3xl flex flex-col items-center absolute top-0 right-0 z-40 p-4 overflow-y-auto max-h-[80vh] mt-4">
       <div className="mb-2 flex flex-row w-full items-center justify-items-stretch">
-        <h3 className="flex-grow font-bold">{t("game.sideSummary.title")}</h3>
+        <h3 className="flex-grow font-bold font-wolf">{t("game.sideSummary.title")}</h3>
         <Button
           color="secondary"
           variant="solid"

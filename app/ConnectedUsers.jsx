@@ -32,7 +32,7 @@ const ConnectedUsers = () => {
 
   return (
     <div className="flex flex-grow flex-col justify-between w-full p-4">
-      <h1 className="text-white text-3xl font-bold my-6">
+      <h1 className="text-white text-3xl font-bold my-6 font-wolf">
         {t("connected.title")}
       </h1>
       {!connectedUsers ? (

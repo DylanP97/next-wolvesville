@@ -239,10 +239,10 @@ const CreateRoom = () => {
       ) : (
         <div className="py-4">
           <div>
-            <h1 className="text-white text-3xl font-bold mb-2">
+            <h1 className="text-white text-3xl font-bold mb-2 font-wolf">
               {t("menu.2")}
             </h1>
-            <h2 className="text-white font-bold mb-2">
+            <h2 className="text-white font-bold mb-2 font-wolf">
               {creationStep}. {steps[creationStep]}
             </h2>
           </div>

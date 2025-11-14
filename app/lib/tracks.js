@@ -51,6 +51,12 @@ const tracks = [
     330000,
     "/audio/wildBoarsInn.mp3"
   ),
+  new Track(
+    "Nomadic Sunset",
+    "Alexander Nakarada",
+    201000,
+    "/audio/nomadicSunset.mp3"
+  ),
 ];
 
 export default tracks;

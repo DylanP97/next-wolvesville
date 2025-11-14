@@ -51,7 +51,7 @@ const FullScreenToggle = ({}) => {
       <Button
         isIconOnly
         size="sm"
-        color="secondary"
+        color={fullScreen ? "success" : "secondary"}
         variant="solid"
         className={getBtnClassNames("w-10")}
         // className="icon-container"

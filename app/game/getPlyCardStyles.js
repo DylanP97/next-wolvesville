@@ -61,11 +61,19 @@ export const getPlyCardBackground = (
   }
 
   function wolfNightChoice() {
-    return isWolf && !isAlsoWolf && timeOfTheDay === "nighttime";
+    return isWolf && timeOfTheDay === "nighttime" && actionType === "wolfVote";
   }
 
   function itsVillageVoteTime() {
     return clientPlayer.role.canVote && timeOfTheDay === "votetime";
+  }
+
+  function wolfSeerSelection() {
+    return (
+      clientPlayer.role.name === "Wolf Seer" &&
+      actionType === "uncoverRole" &&
+      timeOfTheDay === "nighttime"
+    );
   }
 
   function basicSelection() {
@@ -73,6 +81,7 @@ export const getPlyCardBackground = (
       !itsVillageVoteTime() &&
       !wolfNightChoice() &&
       !choosingPreyAsJuniorWolfAction() &&
+      !wolfSeerSelection() &&
       ((timeOfTheDay === "daytime" &&
         clientPlayer.role.canPerform1 &&
         clientPlayer.role.canPerform1.actionTime === "day") ||
@@ -90,11 +99,43 @@ export const getPlyCardBackground = (
 
   // cases when to display the card as a potentially selected item
   if (selectionRemaining()) {
+    // Wolf Seer specific selection logic
+    if (wolfSeerSelection() && !player.isUnderArrest) {
+      // Check if player is selectable by Wolf Seer
+      if (player.role.team === "Werewolves" || player.isRevealed) {
+        // Non-selectable players: other wolves and already revealed players
+        return "cursor-not-allowed opacity-50";
+      } else {
+        // Selectable players: non-wolves and non-revealed players
+        return "bg-slate-500 hover:bg-slate-400 cursor-pointer animate-pulse hover:animate-none";
+      }
+    }
+    
+    // Wolf vote selection logic
+    if (wolfNightChoice() && !player.isUnderArrest) {
+      if (player.role.team === "Werewolves") {
+        // Non-selectable players: other wolves
+        return "cursor-not-allowed opacity-50";
+      } else {
+        // Selectable players: non-wolves
+        return "bg-slate-500 hover:bg-slate-400 cursor-pointer animate-pulse hover:animate-none";
+      }
+    }
+    
+    // Junior Wolf revenge selection logic
+    if (choosingPreyAsJuniorWolfAction() && !player.isUnderArrest) {
+      if (player.role.team === "Werewolves") {
+        // Non-selectable players: other wolves
+        return "cursor-not-allowed opacity-50";
+      } else {
+        // Selectable players: non-wolves
+        return "bg-slate-500 hover:bg-slate-400 cursor-pointer animate-pulse hover:animate-none";
+      }
+    }
+    
+    // General selection logic for other cases
     if (
-      (itsVillageVoteTime() ||
-        wolfNightChoice() ||
-        choosingPreyAsJuniorWolfAction() ||
-        basicSelection()) &&
+      (itsVillageVoteTime() || basicSelection()) &&
       !player.isUnderArrest
     )
       return "bg-slate-500 hover:bg-slate-400 cursor-pointer animate-pulse hover:animate-none";

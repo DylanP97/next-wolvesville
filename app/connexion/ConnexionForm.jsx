@@ -57,7 +57,7 @@ const ConnexionForm = ({
 
       <div>
         <Button
-          className={getBtnClassNames("w-60")}
+          className={getBtnClassNames("w-60") + " font-wolf"}
           color="primary"
           variant="shadow"
           // className="my-2 hover:bg-primary hover:text-primary-foreground animate-pulse"

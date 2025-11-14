@@ -105,7 +105,7 @@ const WinnerOverlay = () => {
             </div>
           </div>
           <Button
-            className={btnClassNames}
+            className={btnClassNames + " font-wolf"}
             variant="solid"
             onClick={() => handleExitGame()}
           >

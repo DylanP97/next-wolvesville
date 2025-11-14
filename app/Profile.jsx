@@ -8,6 +8,7 @@ import { tabs } from "./lib/tabsDefinitions";
 import ProfileSelect from "./ProfileSelect";
 import GoBackBtn from "./components/GoBackBtn";
 import AvatarUI from "./components/AvatarUI";
+import { getBtnClassNames } from "./lib/styles";
 
 const Profile = () => {
   const [response, setResponse] = useState("");
@@ -86,7 +87,7 @@ const Profile = () => {
       <div className="flex gap-2 my-4">
         <GoBackBtn />
         <Button
-          className="text-black hover:text-primary"
+          className={getBtnClassNames('w-60')}
           color="primary"
           variant="faded"
           onClick={handleSubmit}

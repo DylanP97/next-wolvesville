@@ -6,6 +6,7 @@ import { KeysProvider } from "./KeysProvider";
 import { SoundProvider } from "./SoundProvider";
 import { AnimationProvider } from "./AnimationProvider";
 import { AuthProvider } from "./AuthProvider";
+import { DevModeProvider } from "./DevModeProvider";
 import i18n from "../lib/i18n";
 // import ClientOnly from "../components/ClientOnly";
 
@@ -14,13 +15,15 @@ export function Providers({ children }) {
     // <ClientOnly>
     <I18nextProvider i18n={i18n}>
       <NextUIProvider>
-        <KeysProvider>
-          <SoundProvider>
-            <AnimationProvider>
-              <AuthProvider>{children}</AuthProvider>
-            </AnimationProvider>
-          </SoundProvider>
-        </KeysProvider>
+        <DevModeProvider>
+          <KeysProvider>
+            <SoundProvider>
+              <AnimationProvider>
+                <AuthProvider>{children}</AuthProvider>
+              </AnimationProvider>
+            </SoundProvider>
+          </KeysProvider>
+        </DevModeProvider>
       </NextUIProvider>
     </I18nextProvider>
     // </ClientOnly>

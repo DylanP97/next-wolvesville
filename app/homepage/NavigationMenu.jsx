@@ -82,7 +82,7 @@ const NavigationMenu = () => {
     <div className="w-full h-full">
       <nav className="absolute top-1/3 flex flex-col items-center py-4 w-full z-20">
         <Button
-          className={getBtnClassNames("w-60")}
+          className={getBtnClassNames("w-80") + " text-md font-medium h-12 font-wolf"}
           color="primary"
           variant="shadow"
           onClick={() => launchQuickGame()}
@@ -92,7 +92,7 @@ const NavigationMenu = () => {
         </Button>
         {filteredComponents.map((c, index) => (
           <Button
-            className={getBtnClassNames("w-60")}
+            className={getBtnClassNames("w-80") + " text-md font-medium h-12 font-wolf"}
             color="primary"
             variant="shadow"
             onClick={() => setActiveComponent(c.componentToReturn)}

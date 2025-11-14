@@ -6,6 +6,7 @@ import IconReveal from "./IconReveal";
 import PlayerAvatar from "./PlayerAvatar";
 import { useGame } from "./GameProvider";
 import { getPlyCardBackground, getPlyCardLayout } from "./getPlyCardStyles";
+import { useDevMode } from "../providers/DevModeProvider";
 import i18n from "../lib/i18n";
 
 const PlayerGridCard = ({
@@ -25,6 +26,7 @@ const PlayerGridCard = ({
     weather,
     actionType,
   } = useGame();
+  const { isDevMode } = useDevMode();
 
   const onClickHandler = () => {
     handleClick(player);
@@ -76,13 +78,14 @@ const PlayerGridCard = ({
 
       {(player.isRevealed ||
         player.id == clientPlayer.id ||
-        (isAlsoWolf && isWolf)) && <IconReveal roleIcon={player.role.image} />}
+        (isAlsoWolf && isWolf) ||
+        (player.isRevealedByWolfSeer && isWolf)) && <IconReveal roleIcon={player.role.image} />}
 
-      {
+      {/* {
         <p className="text-sm text-white ">
-          {player.isRevealed ? "REVEALED" : "NOT"}
+          DEV -- {player.isRevealed ? "REVEALED" : "NOT"}
         </p>
-      }
+      } */}
 
       <PlayerAvatar
         isAlive={player.isAlive}
@@ -91,10 +94,16 @@ const PlayerGridCard = ({
       />
 
       <p className="text-xs">
-        {player.name} - {i18n.language === "fr"
+        {player.name}
+      </p>
+      {isDevMode && (
+        <p className="text-xs">
+          DEV --{" "}
+          {i18n.language === "fr"
             ? player.role.nameFR
             : player.role.name}
-      </p>
+        </p>
+      )}
     </div>
   );
 };

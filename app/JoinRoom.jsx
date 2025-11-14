@@ -29,7 +29,7 @@ const JoinRoom = () => {
 
   return (
     <div className="flex flex-col justify-between flex-grow w-full p-4">
-      <h1 className="text-white text-3xl font-bold">{t("menu.1")}</h1>
+      <h1 className="text-white text-3xl font-bold font-wolf">{t("menu.1")}</h1>
       {rooms.length === 0 ? (
         <div className="m-4">
           <p className="text-white">{t("join.noroom")}</p>

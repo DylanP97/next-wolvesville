@@ -4,6 +4,7 @@ import VolumeToggle from "./components/VolumeToggle";
 import LanguageToggle from "./components/LanguageToggle";
 import FullScreenToggle from "./components/FullScreenToggle";
 import LogoutBtn from "./components/LogoutBtn";
+import DevModeToggle from "./components/DevModeToggle";
 
 const GeneralBtns = () => {
 
@@ -12,6 +13,7 @@ const GeneralBtns = () => {
       <FullScreenToggle />
       {/* <LanguageToggle /> */}
       <VolumeToggle />
+      <DevModeToggle />
       <LogoutBtn />
     </div>
   );

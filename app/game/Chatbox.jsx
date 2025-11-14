@@ -11,18 +11,19 @@ import { useAnimation } from "../providers/AnimationProvider";
 
 const Chatbox = () => {
   const { socket, username } = useAuth();
-  const { timeOfTheDay, gameId, clientPlayer, isWolf, isJailer } = useGame();
+  const { timeOfTheDay, gameId, clientPlayer, isWolf, isJailer, usedChat } = useGame();
   const { currentKey, setCurrentKey } = useInGameKeys();
   const { triggerSimpleMessage } = useAnimation();
   const [message, setMessage] = useState("");
   const { t } = useTranslation();
 
-  const isJailerChat =
-    clientPlayer.isUnderArrest ||
-    (isJailer &&
-      timeOfTheDay == "nighttime" &&
-      clientPlayer.hasHandcuffed >= 0);
-  const isWolvesChat = timeOfTheDay == "nighttime" && isWolf ? true : false;
+  // const isJailerChat =
+  //   clientPlayer.isUnderArrest ||
+  //   (isJailer &&
+  //     timeOfTheDay == "nighttime" &&
+  //     clientPlayer.hasHandcuffed >= 0);
+
+  // const isWolvesChat = timeOfTheDay == "nighttime" && isWolf ? true : false;
 
   const sendMessage = (message) => {
     if (clientPlayer.isAlive) {
@@ -32,8 +33,8 @@ const Chatbox = () => {
           message,
           gameId,
           username,
-          isWolvesChat,
-          isJailerChat,
+          usedChat.type === "wolves",
+          usedChat.type === "jail",
           isJailer,
           i18n.language === "fr" ? "fr" : "en"
         );
@@ -58,7 +59,8 @@ const Chatbox = () => {
     setMessage("");
   }, [timeOfTheDay]);
 
-  if (!isWolf && !isJailerChat && timeOfTheDay === "nighttime") {
+
+  if (usedChat.type === "general" && timeOfTheDay === "nighttime") {
     return <></>;
   } else {
     return (

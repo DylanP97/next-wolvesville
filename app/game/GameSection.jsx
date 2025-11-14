@@ -9,10 +9,9 @@ import GameGrid from "./GameGrid";
 import { useGame } from "./GameProvider";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
-import CloudAnimation from "./CloudAnimation";
 
 const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
-  const { winningTeam, weather } = useGame();
+  const { winningTeam } = useGame();
   const { width, height } = useWindowSize();
 
   return (

@@ -7,6 +7,8 @@
   font-family: "SevenMonsters", sans-serif;
 }
 
+/* Werewolf theme font - Creepster is loaded via next/font/google in layout.js */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -165,11 +167,6 @@ body {
 .track-display {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
-  background-color: var(--background);
-  position: absolute;
-  bottom: 8%;
-  right: 1%;
-  z-index: 80;
 }
 
 .track-display.fade-in {

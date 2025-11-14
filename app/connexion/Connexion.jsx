@@ -5,11 +5,12 @@ import { useAuth } from "../providers/AuthProvider";
 import { defaultAvatar } from "../lib/utils";
 import { useTranslation } from "react-i18next";
 import ConnexionForm from "./ConnexionForm";
-import { Spinner } from "@nextui-org/react";
+import { Spinner, Button } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
 import { fetchLogin, fetchSignUp } from "../lib/fetch";
+import { getBtnClassNames } from "../lib/styles";
 
-const Connexion = ({ logOption }) => {
+const Connexion = ({ logOption, onBack }) => {
   const { t } = useTranslation();
   const { setAuthInfo, setSocket, setToken } = useAuth();
   const [username, setUsername] = useState("");
@@ -76,12 +77,23 @@ const Connexion = ({ logOption }) => {
 
       <span
         onClick={handleSwitch}
-        className="z-20 text-white text-sm hover:underline hover:cursor-pointer hover:text-primary"
+        className="z-20 text-white text-sm hover:underline hover:cursor-pointer hover:text-primary mt-2"
       >
         {isLogin
           ? `${t("intro.nry")} ${t("intro.si")}`
           : `${t("intro.ar")} ${t("intro.lo")}`}
       </span>
+
+      {onBack && (
+        <Button
+          className={getBtnClassNames("w-60 mt-4") + " font-wolf"}
+          color="secondary"
+          variant="shadow"
+          onClick={onBack}
+        >
+          {t("goback")}
+        </Button>
+      )}
 
       {isLoading && (
         <div className="z-20 text-center text-white flex flex-col justify-center items-center m-2">

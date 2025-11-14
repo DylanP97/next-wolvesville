@@ -24,7 +24,7 @@ const VolumeToggle = () => {
       <Button
         isIconOnly
         size="sm"
-        color="secondary"
+        color={!isVolumeOn ? "success" : "danger"}
         variant="solid"
         aria-label="volumeToggle"
         onPress={toggleVolume}

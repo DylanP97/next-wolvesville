@@ -84,6 +84,21 @@ const cpuNextMove = (
           );
         }
         break;
+      case "Wolf Seer":
+        let playerToUncover = getRandomAlivePlayer(false, true, cpu.id);
+        if (playerToUncover && playerToUncover.id !== cpu.id) {
+          socket.emit(
+            "uncoverRole",
+            {
+              type: "uncoverRole",
+              wolfSeerId: cpu.id,
+              selectedPlayerId: playerToUncover.id,
+              selectedPlayerName: playerToUncover.name,
+            },
+            gameId
+          );
+        }
+        break;
       case "Witch":
         let witchTarget = getRandomAlivePlayer(false, false, cpu.id);
         if (witchTarget) {
@@ -259,7 +274,7 @@ const cpuNextMove = (
   }
 
   function performVoteAction() {
-    let voteTarget = getRandomAlivePlayer();
+    let voteTarget = getRandomAlivePlayer(false, false, cpu.id);
     // console.log("votetarget", voteTarget);
     // voteTarget && console.log('true');
     // let voteTarget = getFool()

@@ -122,7 +122,15 @@ const handlePlayerClick = (
               },
               gameId
             );
-            selectionCompleted();
+            // For Wolf Seer, don't block selection after wolf vote
+            // so they can still perform uncover role in the same night
+            if (clientPlayer.role.name === "Wolf Seer") {
+              setSelectedPlayer(player);
+              setIsSelection(false);
+              // Don't call selectionCompleted() here
+            } else {
+              selectionCompleted();
+            }
           } else {
             setErrorMessage("errorMessage.0007");
           }
@@ -200,6 +208,35 @@ const handlePlayerClick = (
                 },
                 gameId
               );
+            } else if (actionType === "uncoverRole") {
+              // Wolf Seer can't select other wolves
+              if (player.role.team === "Werewolves") {
+                setErrorMessage("errorMessage.0007");
+                return;
+              }
+              
+              // Wolf Seer can't select already revealed players
+              if (player.isRevealed) {
+                setErrorMessage("errorMessage.0008");
+                return;
+              }
+              
+              socket.emit(
+                "uncoverRole",
+                {
+                  type: actionType,
+                  wolfSeerId: clientPlayer.id,
+                  selectedPlayerId: player.id,
+                  selectedPlayerName: player.name,
+                },
+                gameId
+              );
+              // For Wolf Seer, don't block selection after uncovering role
+              // so they can still perform wolf vote in the same night
+              setSelectedPlayer(player);
+              setIsSelection(false);
+              // Don't call selectionCompleted() here
+              return;
             } else {
               socket.emit(
                 "registerAction",

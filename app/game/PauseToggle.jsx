@@ -3,13 +3,16 @@
 import Image from "next/image";
 import { useAuth } from "../providers/AuthProvider";
 import { useGame } from "./GameProvider";
+import { useDevMode } from "../providers/DevModeProvider";
 import { Tooltip } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { divActionIcon, imgActionIcon } from "../lib/styles";
+import { prefixDevText } from "../lib/devUtils";
 
 const PauseToggle = () => {
   const { socket } = useAuth();
   const { gameId, isPaused } = useGame();
+  const { isDevMode } = useDevMode();
   const [gamePaused, setGamePaused] = useState(false);
 
   // Sync the local state with the game state from the server
@@ -27,8 +30,12 @@ const PauseToggle = () => {
     setGamePaused(false);
   };
 
+  if (!isDevMode) {
+    return null;
+  }
+
   return (
-    <Tooltip content="Play/Pause Game" color="secondary" variant="flat">
+    <Tooltip content={prefixDevText("Allow the developer to pause and resume the game", isDevMode)} color="secondary" variant="flat">
       <div
         onClick={gamePaused ? resumeGame : pauseGame}
         className={`${

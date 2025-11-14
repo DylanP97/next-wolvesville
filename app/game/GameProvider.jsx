@@ -5,6 +5,7 @@ import { useAuth } from "../providers/AuthProvider";
 import cpuNextMove from "../lib/cpuNextMove";
 import { useSound } from "../providers/SoundProvider";
 import { useAnimation } from "../providers/AnimationProvider";
+import { useTranslation } from "react-i18next";
 
 const GameContext = createContext();
 
@@ -12,6 +13,7 @@ export const GameProvider = ({ children }) => {
   const { game, socket, username, updateUserGameState } = useAuth();
   const { generateNoise } = useSound();
   const { triggerAnimation } = useAnimation();
+  const { t } = useTranslation();
 
   const weatherColors = {
     daytime: "bg-sky-500",
@@ -38,11 +40,30 @@ export const GameProvider = ({ children }) => {
   const wolvesChat = game.wolvesMessagesHistory;
   const generalChat = game.messagesHistory;
 
+  class Chat {
+    constructor(type, label, history, emoji) {
+      (this.type = type),
+        (this.label = label),
+        (this.history = history),
+        (this.emoji = emoji);
+    }
+  }
+
+  const general = new Chat("general", t("game.generalChat"), generalChat, "🏘️");
+  const wolves = new Chat("wolves", t("game.wolvesChat"), wolvesChat, "🐺");
+  const jail = new Chat("jail", t("game.jailChat"), jailChat, "👮‍♂️");
+
+  const [usedChat, setUsedChat] = useState(general);
+  const [availableChats, setAvailableChats] = useState([general]);
+
   const isWolf = clientPlayer.role.team === "Werewolves";
   const isJailer = clientPlayer.role.name === "Jailer";
   const isAlive = clientPlayer.isAlive;
   const isUnderArrest = clientPlayer.isUnderArrest;
   const hasHandcuffed = clientPlayer.hasHandcuffed;
+
+
+
 
   if (!winningTeam) {
     socket.emit("checkForWinner", game.id);
@@ -68,6 +89,24 @@ export const GameProvider = ({ children }) => {
       generateNoise("rooster");
       triggerAnimation("happySun");
     }
+
+    // Reset available chats state
+    if (timeOfTheDay == "nighttime" && isWolf) {
+      setAvailableChats([general, wolves]);
+      setUsedChat(wolves);
+    } else if (
+      (clientPlayer.isAlive && isUnderArrest) ||
+      (clientPlayer.isAlive &&
+        isJailer &&
+        timeOfTheDay == "nighttime" &&
+        hasHandcuffed > 0)
+    ) {
+      setAvailableChats([general, jail]);
+      setUsedChat(jail);
+    } else {
+      setAvailableChats([general]);
+      setUsedChat(general);
+    }
   }, [timeOfTheDay]);
 
   useEffect(() => {
@@ -82,7 +121,7 @@ export const GameProvider = ({ children }) => {
     if (game.createdBy === clientPlayer.name) {
       playersList.map((player) => {
         if (player.isCPU && player.isAlive && !player.isUnderArrest) {
-          console.log("cpu move before time", player.name, player.randomSecond);
+          // console.log("cpu move before time", player.name, player.randomSecond);
           if (timeCounter === player.randomSecond) {
             console.log("cpu move", player.name, player.randomSecond);
             cpuNextMove(
@@ -118,6 +157,9 @@ export const GameProvider = ({ children }) => {
         jailChat,
         wolvesChat,
         generalChat,
+        jail,
+        wolves,
+        general,
         isSelection,
         isDoubleSelection,
         isBlocked,
@@ -127,6 +169,10 @@ export const GameProvider = ({ children }) => {
         actionType,
         setActionType,
         weather,
+        usedChat,
+        setUsedChat,
+        availableChats,
+        setAvailableChats
       }}
     >
       {children}

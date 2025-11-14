@@ -22,7 +22,7 @@ const RolesGrid = () => {
 
   return (
     <section className="flex flex-col w-full p-4 mb-12">
-      <h1 className="text-white text-3xl font-bold p-5">{t("roles.title")}</h1>
+      <h1 className="text-white text-3xl font-bold p-5 font-wolf">{t("roles.title")}</h1>
       {/* <ScrollShadow
         // hideScrollBar
         offset={200}

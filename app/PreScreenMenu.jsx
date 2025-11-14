@@ -96,7 +96,7 @@ const PreScreenMenu = () => {
     );
   } else if (logOption === "login" || logOption === "register") {
     console.log("logOption", logOption);
-    return <Connexion logOption={logOption} />;
+    return <Connexion logOption={logOption} onBack={() => setLogOption("")} />;
   } else {
     return (
       <div className="relative flex flex-col flex-grow justify-center items-center">
@@ -111,7 +111,7 @@ const PreScreenMenu = () => {
         <Title />
         <nav className="top-1/3 flex flex-col items-center py-4 w-full z-20">
           <Button
-            className={getBtnClassNames("w-60")}
+            className={getBtnClassNames("w-80") + " text-md font-medium h-12 font-wolf"}
             color="primary"
             variant="shadow"
             onClick={() => setLogOption("guestPlay")}
@@ -119,7 +119,7 @@ const PreScreenMenu = () => {
             {t("prescreen.guest")}
           </Button>
           <Button
-            className={getBtnClassNames("w-60")}
+            className={getBtnClassNames("w-80") + " text-md font-medium h-12 font-wolf"}
             color="primary"
             onClick={() => setLogOption("login")}
             variant="shadow"
@@ -127,7 +127,7 @@ const PreScreenMenu = () => {
             {t("prescreen.logIn")}
           </Button>
           <Button
-            className={getBtnClassNames("w-60")}
+            className={getBtnClassNames("w-80") + " text-md font-medium h-12 font-wolf"}
             color="primary"
             onClick={() => setLogOption("register")}
             variant="shadow"
@@ -135,6 +135,7 @@ const PreScreenMenu = () => {
             {t("prescreen.register")}
           </Button>
         </nav>
+        <p className="pt-4text-center text-white text-sm">{t("intro.additionalInfo")}</p>
       </div>
     );
   }

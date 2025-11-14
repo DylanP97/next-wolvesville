@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSound } from "./providers/SoundProvider";
 import { useAuth } from "./providers/AuthProvider";
+import { btnPrimary, getBtnClassNames } from "./lib/styles";
 
 const TrackDisplay = () => {
   const { isPlaying } = useAuth();
@@ -27,12 +28,10 @@ const TrackDisplay = () => {
   if (currentTrack && !isPlaying) {
     return (
       <div
-        className={`track-display rounded-xl w-fit m-4 ${
-          isNewSong ? "fade-in p-4 animate-pulse" : "fade-out"
-        }`}
+        className={`${btnPrimary} h-fit w-fit z-20 p-4 my-2 rounded-xl text-sm absolute bottom-8 right-4 flex-col justify-start items-start hover:scale-[105%] transition-all hover:cursor-pointer border-2 border-white track-display " ${isNewSong ? "fade-in p-4 animate-pulse" : "fade-out"}`}
       >
-        <p className="text-white text-xs">Now playing:</p>
-        <p className="text-white text-sm">
+        <p className="text-xs">Now playing:</p>
+        <p className="text-sm">
           {currentTrack.title} - {currentTrack.artist}
         </p>
         <p className="text-white text-xs">{formatDuration(currentTrack.ms)}</p>
