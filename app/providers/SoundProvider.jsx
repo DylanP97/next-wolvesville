@@ -40,6 +40,8 @@ export const SoundProvider = ({ children }) => {
   };
 
   const playTrack = (track) => {
+    if (typeof window === 'undefined') return;
+    
     if (currentBgMusic) {
       currentBgMusic.pause();
       currentBgMusic.currentTime = 0;
@@ -71,6 +73,8 @@ export const SoundProvider = ({ children }) => {
   };
 
   const generateNoise = (sound) => {
+    if (typeof window === 'undefined') return;
+    
     console.log(sound);
     if (currentBgMusic) {
       setBgMusicVolume(0.2);

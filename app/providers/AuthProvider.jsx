@@ -51,6 +51,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   async function checkAuth() {
+    if (typeof window === 'undefined') return;
+    
     const response = await fetch(
       process.env.NEXT_PUBLIC_API_URL + "/api/user/checkAuth",
       {

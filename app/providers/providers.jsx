@@ -8,11 +8,13 @@ import { AnimationProvider } from "./AnimationProvider";
 import { AuthProvider } from "./AuthProvider";
 import { DevModeProvider } from "./DevModeProvider";
 import i18n from "../lib/i18n";
-// import ClientOnly from "../components/ClientOnly";
 
+/**
+ * Providers component that wraps all context providers.
+ * Fully client-side to avoid `document is not defined` errors during SSR.
+ */
 export function Providers({ children }) {
   return (
-    // <ClientOnly>
     <I18nextProvider i18n={i18n}>
       <NextUIProvider>
         <DevModeProvider>
@@ -26,6 +28,5 @@ export function Providers({ children }) {
         </DevModeProvider>
       </NextUIProvider>
     </I18nextProvider>
-    // </ClientOnly>
   );
 }

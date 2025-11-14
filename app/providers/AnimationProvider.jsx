@@ -1,5 +1,6 @@
-import { createContext, useContext, useState } from "react";
-import Lottie from "react-lottie";
+"use client";
+
+import { createContext, useContext, useState, useEffect } from "react";
 import animationsData from "../lib/animations";
 
 const AnimationContext = createContext();
@@ -8,21 +9,29 @@ export const AnimationProvider = ({ children }) => {
   const [showAnimation, setShowAnimation] = useState(false);
   const [currentAnimation, setCurrentAnimation] = useState(null);
   const [animationData, setAnimationData] = useState(null);
-  const [fadeOut, setFadeOut] = useState(false); // Unified fade state
+  const [fadeOut, setFadeOut] = useState(false);
   const [simpleMessage, setSimpleMessage] = useState(null);
+  const [Lottie, setLottie] = useState(null);
+
+  useEffect(() => {
+    // Dynamically import Lottie only on client side
+    import("react-lottie").then((module) => {
+      setLottie(() => module.default);
+    });
+  }, []);
 
   const triggerSimpleMessage = (text) => {
     setSimpleMessage(text);
     setShowAnimation(true);
-    setFadeOut(false); // Ensure fade-in happens
+    setFadeOut(false);
 
     setTimeout(() => {
-      setFadeOut(true); // Start fade-out
+      setFadeOut(true);
       setTimeout(() => {
         setSimpleMessage(null);
         setShowAnimation(false);
-      }, 500); // Fade-out duration
-    }, 2000); // Display duration before fading out
+      }, 500);
+    }, 2000);
   };
 
   const triggerAnimation = async (animationName) => {
@@ -37,16 +46,16 @@ export const AnimationProvider = ({ children }) => {
         const animationJSON = await response.json();
         setAnimationData(animationJSON);
         setShowAnimation(true);
-        setFadeOut(false); // Reset fade-out when starting new animation
+        setFadeOut(false);
 
         setTimeout(() => {
-          setFadeOut(true); // Start fading out
+          setFadeOut(true);
           setTimeout(() => {
             setShowAnimation(false);
             setCurrentAnimation(null);
             setAnimationData(null);
-          }, 500); // Fade-out duration
-        }, animation.ms); // Start fade-out after animation duration
+          }, 500);
+        }, animation.ms);
       } catch (error) {
         console.error("Failed to load animation:", error);
       }
@@ -73,11 +82,11 @@ export const AnimationProvider = ({ children }) => {
               justifyContent: "center",
               alignItems: "center",
               backgroundColor: "rgba(0, 0, 0, 0.5)",
-              opacity: fadeOut ? 0 : 1, // Unified fade effect
+              opacity: fadeOut ? 0 : 1,
               transition: "opacity 1.5s ease-out",
             }}
           >
-            {currentAnimation && animationData && (
+            {currentAnimation && animationData && Lottie && (
               <Lottie
                 options={{
                   loop: false,

@@ -9,6 +9,8 @@ export const KeysProvider = ({ children }) => {
   const [onInput, setOnInput] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const handleFocus = (event) => {
       if (event.target.tagName === "INPUT") {
         setOnInput(true);

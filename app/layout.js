@@ -1,12 +1,13 @@
 // layout.js
 import "./globals.css";
 import { Providers } from "./providers/providers";
-import GeneralBtns from "./general-btns/GeneralBtns";
 import Footer from "./components/Footer";
-import TrackDisplay from "./TrackDisplay";
 import { RenderProvider } from "./providers/RenderProvider";
+import TrackDisplay from "./TrackDisplay";
 import DevModeBorder from "./components/DevModeBorder";
+import GeneralBtns from "./general-btns/GeneralBtns";
 import { Creepster } from "next/font/google";
+import ClientOnly from "./components/ClientOnly";
 
 const creepster = Creepster({
   weight: "400",
@@ -26,20 +27,20 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="fr"
-    // {i18n.language ? i18n.language : "en"} 
-    className={creepster.variable}>
+    <html lang="fr" className={creepster.variable}>
       <body>
-        <Providers>
-          <DevModeBorder>
-            <div className="flex flex-col justify-between w-full h-[100vh] pt-[72px]">
-              <GeneralBtns />
-              <RenderProvider>{children}</RenderProvider>
-              {/* <Footer /> */}
-              <TrackDisplay />
-            </div>
-          </DevModeBorder>
-        </Providers>
+        <ClientOnly>
+          <Providers>
+            <DevModeBorder>
+              <div className="flex flex-col justify-between w-full h-[100vh] pt-[72px]">
+                <GeneralBtns />
+                <RenderProvider>{children}</RenderProvider>
+                {/* <Footer /> */}
+                <TrackDisplay />
+              </div>
+            </DevModeBorder>
+          </Providers>
+        </ClientOnly>
       </body>
     </html>
   );

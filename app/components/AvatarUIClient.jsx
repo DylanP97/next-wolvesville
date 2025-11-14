@@ -4,12 +4,10 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@nextui-org/react";
 
-const AvatarUI = ({ avatar, heightAndWidth }) => {
+const AvatarUIClient = ({ avatar, heightAndWidth }) => {
   const [avatarState, setAvatarState] = useState();
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
     // Dynamic import to avoid SSR issues
     Promise.all([
       import("@dicebear/core"),
@@ -58,4 +56,4 @@ const AvatarUI = ({ avatar, heightAndWidth }) => {
   );
 };
 
-export default AvatarUI;
+export default AvatarUIClient;

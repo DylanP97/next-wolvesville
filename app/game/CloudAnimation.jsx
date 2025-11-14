@@ -18,6 +18,8 @@ const CloudAnimation = ({ children }) => {
 
     // Update size based on the component's container
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+        
         const updateSize = () => {
             if (containerRef.current) {
                 setSize({
@@ -37,6 +39,7 @@ const CloudAnimation = ({ children }) => {
     }, []);
 
     useEffect(() => {
+        if (typeof window === 'undefined') return;
         if (size.width === 0 || size.height === 0) return; // Wait until size is set
 
         const canvas = canvasRef.current;
