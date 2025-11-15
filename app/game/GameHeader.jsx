@@ -10,7 +10,7 @@ const GameHeader = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="p-2 z-10">
+    <div className="p-2 px-6 z-10">
       <p className="text-xs text-white my-2">
         {timeOfTheDay === "daytime" ? (
           <>
@@ -28,15 +28,12 @@ const GameHeader = () => {
             {t("game.left")}
           </>
         )}
-        <>
-          {" "}
-          -{" "}
-          {i18n.language === "fr"
-            ? clientPlayer.role.nameFR
-            : clientPlayer.role.name}
-        </>
       </p>
-      <p className="text-xs italic">
+      <p className="text-sm italic">
+        {i18n.language === "fr"
+            ? clientPlayer.role.nameFR
+            : clientPlayer.role.name} {" "}
+          -{" "}
         {i18n.language === "fr"
           ? clientPlayer.role.descriptionFR
           : clientPlayer.role.description}

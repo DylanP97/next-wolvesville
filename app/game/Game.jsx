@@ -12,7 +12,7 @@ export default function Game() {
   const { isConnected, game } = useAuth();
 
   return (
-    <div className="flex flex-col flex-grow mb-16">
+    <div className="flex flex-col flex-grow pb-20">
       {isConnected && game ? (
         <GameProvider>
           <InGameKeysProvider>

@@ -58,34 +58,29 @@ const PlayerGridCard = ({
         actionType
       )} ${getPlyCardLayout()} `}
     >
-      {timeOfTheDay == "votetime" && <VoteCount voteNbr={player.voteAgainst} />}
+      {timeOfTheDay == "votetime" && player.isAlive && <VoteCount voteNbr={player.voteAgainst} />}
 
-      {timeOfTheDay == "nighttime" && isWolf && !clientPlayer.isUnderArrest && (
+      {timeOfTheDay == "nighttime" && isWolf && !clientPlayer.isUnderArrest && !isAlsoWolf && player.isAlive && (
         <VoteCount voteNbr={player.wolfVoteAgainst} />
       )}
 
       {((clientPlayer.role.name == "Cupid" && player.isInLove) ||
         (clientPlayer.isInLove && player.isInLove)) && (
-        <div className="absolute bottom-0 left-0 m-2 h-4 aspect-square flex justify-center items-center animate-pulse">
-          <Image
-            src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706531451/selection/resuscitation_tqyfkl.png"
-            alt="lover"
-            width={40}
-            height={40}
-          />
-        </div>
-      )}
+          <div className="absolute bottom-0 left-0 m-2 h-4 aspect-square flex justify-center items-center animate-pulse">
+            <Image
+              src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706531451/selection/resuscitation_tqyfkl.png"
+              alt="lover"
+              width={40}
+              height={40}
+            />
+          </div>
+        )}
 
       {(player.isRevealed ||
         player.id == clientPlayer.id ||
         (isAlsoWolf && isWolf) ||
-        (player.isRevealedByWolfSeer && isWolf)) && <IconReveal roleIcon={player.role.image} />}
-
-      {/* {
-        <p className="text-sm text-white ">
-          DEV -- {player.isRevealed ? "REVEALED" : "NOT"}
-        </p>
-      } */}
+        (player.isRevealedByWolfSeer && isWolf) ||
+        isDevMode) && <IconReveal roleIcon={player.role.image} isRevealed={player.isRevealed || player.id == clientPlayer.id || (isAlsoWolf && isWolf) || (player.isRevealedByWolfSeer && isWolf)} />}
 
       <PlayerAvatar
         isAlive={player.isAlive}
@@ -93,17 +88,10 @@ const PlayerGridCard = ({
         avatar={player.avatar}
       />
 
-      <p className="text-xs">
+      <p className="text-xs text-white font-semibold">
         {player.name}
       </p>
-      {isDevMode && (
-        <p className="text-xs">
-          DEV --{" "}
-          {i18n.language === "fr"
-            ? player.role.nameFR
-            : player.role.name}
-        </p>
-      )}
+
     </div>
   );
 };

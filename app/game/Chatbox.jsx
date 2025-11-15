@@ -71,7 +71,7 @@ const Chatbox = () => {
           }
           placeholder={t("game.writeMessage")}
           value={message}
-          className="outline-none border-none p-1 flex flex-grow w-full text-xs text-black h-14"
+          className="outline-none border-none p-1 flex flex-grow w-full text-md text-black h-24 rounded-md"
           onChange={(e) => setMessage(e.target.value)}
         />
         <CmdSend sendMessage={sendMessage} message={message} />

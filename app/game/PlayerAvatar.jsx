@@ -9,27 +9,27 @@ const PlayerAvatar = ({ isAlive, isUnderArrest, avatar }) => {
     <>
       {!isAlive ? (
         <Image
-          width={40}
-          height={40}
-          className="max-h-[40px] object-contain "
+          width={56}
+          height={56}
+          className="max-h-[56px] object-contain "
           src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1717509814/grave_nmqqmp.png"
           alt="tombstone"
         />
       ) : isUnderArrest ? (
         <Image
-          className="max-h-[40px] "
-          width={40}
-          height={40}
+          className="max-h-[56px] "
+          width={56}
+          height={56}
           src={prison}
           alt="prison"
         />
       ) : avatar ? (
-        <AvatarUI heightAndWidth={40} avatar={avatar} />
+        <AvatarUI heightAndWidth={56} avatar={avatar} />
       ) : (
         <Image
           src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1717510105/cpu_ir0roq.png"
-          height={40}
-          width={40}
+          height={56}
+          width={56}
           alt="cpu-player-avatar"
         />
       )}

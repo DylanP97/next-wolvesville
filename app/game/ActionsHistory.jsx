@@ -105,7 +105,7 @@ const ActionsHistory = () => {
 
   return (
     <div
-      className={`w-full z-10 relative overflow-hidden flex flex-col flex-grow min-h-[220px]`}
+      className={`w-full z-10 relative overflow-hidden flex flex-col max-h-fit`}
     >
 
       {/* header of the chat */}
@@ -128,7 +128,7 @@ const ActionsHistory = () => {
       </div>
 
       {/* content of the chat */}
-      <div className="bg-slate-400 z-10 p-2 object-bottom overflow-y-auto max-h-80">
+      <div className="bg-slate-400 z-10 p-2 object-bottom overflow-y-auto flex-grow max-h-40">
         <ul className="actions-list text-black text-sm">
           {filteredMessages.length === 0 ? (
             <li className="text-sm z-20 italic text-slate-600">

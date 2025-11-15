@@ -17,7 +17,7 @@ const RoleCard = ({ role }) => {
   const { t } = useTranslation();
 
   return (
-    <Card className="min-w-80 h-60 md:max-w-80">
+    <Card className="min-w-80 h-60 md:max-w-80 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 hover:border-slate-600 shadow-lg hover:shadow-xl transition-all duration-200">
       <CardHeader className="flex gap-3">
         <Image
           alt={role.name}
@@ -25,20 +25,21 @@ const RoleCard = ({ role }) => {
           width={80}
           radius="xl"
           src={role.image}
+          className="border border-slate-600"
           />
         <div className="flex flex-col">
-          <p className="text-md">
+          <p className="text-md font-semibold text-white">
             {i18n.language === "fr" ? role.nameFR : role.name}
           </p>
-          <p className="text-xs text-default-500">
+          <p className="text-xs text-slate-400">
             {t("roles.team")} 
             {i18n.language === "fr" ? ` : ${role.teamFR}` : `: ${role.team}`}
           </p>
         </div>
       </CardHeader>
-      <Divider />
+      <Divider className="bg-slate-700" />
       <CardBody>
-        <p className="text-xs">
+        <p className="text-xs text-slate-200">
           {i18n.language === "fr" ? role.descriptionFR : role.description}
         </p>
       </CardBody>

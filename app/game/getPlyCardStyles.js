@@ -14,19 +14,19 @@ export const getPlyCardBackground = (
   weather,
   actionType
 ) => {
-  // if player is dead, return black
-  if (!player.isAlive) return "bg-black text-yellow-500";
+  // if player is dead, return black with fade
+  if (!player.isAlive) return "bg-black text-yellow-500 border-yellow-600 opacity-20 grayscale cursor-not-allowed";
 
   // if player is user, return slate
   if (clientPlayer.id === player.id)
-    return "bg-slate-400 border-red-500 border-2 text-black";
+    return "bg-gradient-to-br from-blue-500 to-slate-600 border-red-500 border-2 text-white shadow-md";
 
   if (selectedPlayer) {
-    if (player.id === selectedPlayer.id) return "bg-red-500";
+    if (player.id === selectedPlayer.id) return "bg-gradient-to-br from-red-600 to-red-700 shadow-lg shadow-red-500/50";
   }
 
   if (selectedPlayer1) {
-    if (player.id === selectedPlayer1.id) return "bg-green-500";
+    if (player.id === selectedPlayer1.id) return "bg-gradient-to-br from-green-600 to-green-700 shadow-lg shadow-green-500/50";
   }
 
   function selectionRemaining() {
@@ -45,7 +45,7 @@ export const getPlyCardBackground = (
       selectionRemaining()
     ) {
       if (player.isUnderArrest) {
-        return "bg-slate-500 hover:bg-slate-400 cursor-pointer animate-pulse hover:animate-none";
+        return "bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 cursor-pointer animate-pulse hover:animate-none shadow-md hover:shadow-lg transition-all";
       } else {
         return `${weather}`;
       }
@@ -104,10 +104,10 @@ export const getPlyCardBackground = (
       // Check if player is selectable by Wolf Seer
       if (player.role.team === "Werewolves" || player.isRevealed) {
         // Non-selectable players: other wolves and already revealed players
-        return "cursor-not-allowed opacity-50";
+        return "cursor-not-allowed opacity-40 grayscale";
       } else {
         // Selectable players: non-wolves and non-revealed players
-        return "bg-slate-500 hover:bg-slate-400 cursor-pointer animate-pulse hover:animate-none";
+        return "bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 cursor-pointer animate-pulse hover:animate-none shadow-md hover:shadow-lg transition-all";
       }
     }
     
@@ -115,10 +115,10 @@ export const getPlyCardBackground = (
     if (wolfNightChoice() && !player.isUnderArrest) {
       if (player.role.team === "Werewolves") {
         // Non-selectable players: other wolves
-        return "cursor-not-allowed opacity-50";
+        return "cursor-not-allowed opacity-80 grayscale";
       } else {
         // Selectable players: non-wolves
-        return "bg-slate-500 hover:bg-slate-400 cursor-pointer animate-pulse hover:animate-none";
+        return "bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 cursor-pointer animate-pulse hover:animate-none shadow-md hover:shadow-lg transition-all";
       }
     }
     
@@ -126,10 +126,10 @@ export const getPlyCardBackground = (
     if (choosingPreyAsJuniorWolfAction() && !player.isUnderArrest) {
       if (player.role.team === "Werewolves") {
         // Non-selectable players: other wolves
-        return "cursor-not-allowed opacity-50";
+        return "cursor-not-allowed opacity-40 grayscale";
       } else {
         // Selectable players: non-wolves
-        return "bg-slate-500 hover:bg-slate-400 cursor-pointer animate-pulse hover:animate-none";
+        return "bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 cursor-pointer animate-pulse hover:animate-none shadow-md hover:shadow-lg transition-all";
       }
     }
     
@@ -138,11 +138,11 @@ export const getPlyCardBackground = (
       (itsVillageVoteTime() || basicSelection()) &&
       !player.isUnderArrest
     )
-      return "bg-slate-500 hover:bg-slate-400 cursor-pointer animate-pulse hover:animate-none";
+      return "bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 cursor-pointer animate-pulse hover:animate-none shadow-md hover:shadow-lg transition-all";
   }
   return `bg-transparent`;
 };
 
 export const getPlyCardLayout = () => {
-  return "w-full h-24 flex flex-col gap-2 justify-center items-center relative p-2";
+  return "w-full h-32 flex flex-col gap-2 justify-center items-center relative p-3 rounded-lg border border-gray-700 transition-all duration-200 hover:shadow-lg";
 };
