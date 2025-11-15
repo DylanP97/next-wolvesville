@@ -13,60 +13,98 @@ const PlayingCommands = () => {
   const {
     clientPlayer,
     timeOfTheDay,
-    isSelection,
-    setIsSelection,
-    isDoubleSelection,
-    setIsDoubleSelection,
-    isBlocked,
-    setActionType,
+    selectionState,      // <-- ADD
+    selectionHelpers,    // <-- ADD
     gameId,
   } = useGame();
 
   const { role: { canVote, canPerform1, canPerform2 } = {} } = clientPlayer;
 
-  const activateSelection = (actionType) => {
-    if (!isBlocked) {
-      setIsSelection(!isSelection);
-      setActionType(actionType);
-    } else {
-      triggerSimpleMessage(
-        "you already select something, now selection mode is blocked"
-      );
+  // const activateSelection = (newActionType) => {
+  //   if (!isBlocked) {
+  //     if (isSelection && actionType === newActionType) {
+  //       setIsSelection(false);
+  //       setActionType("");
+  //     } else {
+  //       // Switch to new action
+  //       setActionType(newActionType);
+  //       setIsSelection(true);
+  //       setIsDoubleSelection(false);
+  //     }
+  //   } else {
+  //     triggerSimpleMessage(
+  //       "you already select something, now selection mode is blocked"
+  //     );
+  //   }
+  // };
+
+  // const activateDoubleSelection = (newActionType) => {
+  //   if (!isBlocked) {
+  //     if (isSelection && actionType === newActionType) {
+  //       setIsDoubleSelection(false);
+  //       setActionType("");
+  //     } else {
+  //       // Switch to new action
+  //       setActionType(newActionType);
+  //       setIsDoubleSelection(true);
+  //       setIsSelection(false);
+  //     }
+  //   } else {
+  //     triggerSimpleMessage(
+  //       "you already select something, now doubleSelection mode is blocked"
+  //     );
+  //   }
+  // };
+
+  // const noSelectionAction = (actionType) => {
+  //   if (clientPlayer.role.name === "Mayor" && actionType === "assertDuty") {
+  //     socket.emit("assertDuty", clientPlayer.name, gameId);
+  //   }
+  // };
+
+
+
+  // Access actionType from selectionState:
+  const actionType = selectionState.actionType;
+
+  // Check if vote is blocked:
+  const isVoteBlocked = selectionHelpers.isActionBlocked('wolfVote') ||
+    selectionHelpers.isActionBlocked('vote');
+
+  const activateSelection = (newActionType, needsDouble = false) => {
+    if (selectionHelpers.isActionBlocked(newActionType)) {
+      triggerSimpleMessage("This action has already been used");
+      return;
     }
+    selectionHelpers.toggle(newActionType, needsDouble);
   };
 
-  const activateDoubleSelection = (actionType) => {
-    if (!isBlocked) {
-      setIsDoubleSelection(!isDoubleSelection);
-      setActionType(actionType);
-    } else {
-      triggerSimpleMessage(
-        "you already select something, now doubleSelection mode is blocked"
-      );
-    }
-  };
-
+  // ADD THESE BACK:
   const noSelectionAction = (actionType) => {
     if (clientPlayer.role.name === "Mayor" && actionType === "assertDuty") {
       socket.emit("assertDuty", clientPlayer.name, gameId);
     }
   };
 
+  const activateDoubleSelection = (newActionType) => {
+    activateSelection(newActionType, true); // Just call activateSelection with needsDouble=true
+  };
+
   return (
     <>
-      {timeOfTheDay === "votetime" && canVote && (
+      {timeOfTheDay === "votetime" && canVote && !isVoteBlocked && (
         <CmdVote
           activateSelection={activateSelection}
-          isSelection={isSelection}
           wolfVote={false}
+          actionType={actionType}
         />
       )}
       {timeOfTheDay === "nighttime" &&
-        clientPlayer.role.team === "Werewolves" && (
+        clientPlayer.role.team === "Werewolves" && !isVoteBlocked && (
           <CmdVote
             activateSelection={activateSelection}
-            isSelection={isSelection}
             wolfVote={true}
+            actionType={actionType}
           />
         )}
       {canPerform1 && (

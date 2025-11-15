@@ -9,7 +9,7 @@ import ChatModal from "./ChatModal";
 import { Tooltip } from "@nextui-org/react";
 
 const ActionBar = ({ summaryIsOpen, setSummaryIsOpen }) => {
-  const { clientPlayer, usedChat } = useGame();
+  const { clientPlayer, usedChat, actionType } = useGame();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const { divActionIcon } = require("../lib/styles");
   const { t } = useTranslation();
@@ -22,12 +22,13 @@ const ActionBar = ({ summaryIsOpen, setSummaryIsOpen }) => {
         <Tooltip content={t("game.tooltip.seeOrWriteMessage")} color="secondary" variant="flat">
           <button
             onClick={() => setIsChatOpen(!isChatOpen)}
-            className={`${divActionIcon} ${isChatOpen ? "bg-red-600 hover:bg-red-500" : "bg-blue-600 hover:bg-blue-500"}`}
+            className={`${divActionIcon} ${isChatOpen ? "bg-blue-600 hover:bg-blue-800" : "bg-slate-900 hover:bg-slate-700"}`}
           >
             <span className="text-3xl">💬</span>
           </button>
         </Tooltip>
       </div>
+      {actionType && <p>selection is: {actionType}</p>}
       <ChatModal isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
     </>
   );

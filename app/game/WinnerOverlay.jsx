@@ -53,9 +53,8 @@ const WinnerOverlay = () => {
             <Image
               src={winningTeam.image}
               alt="winner"
-              height={40}
-              width={40}
-              style={{ height: "auto", width: "auto" }}
+              height={24}   // Match your w-6 h-6 class
+              width={24}    // Match your w-6 h-6 class
               className="w-6 h-6"
             />
             <p className="text-xs">
@@ -82,9 +81,8 @@ const WinnerOverlay = () => {
               <Image
                 src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1717509814/grave_nmqqmp.png"
                 alt="graveyard"
-                height={40}
-                width={40}
-                style={{ height: "auto", width: "auto" }}
+                height={24}   // Match your w-6 h-6 class
+                width={24}    // Match your w-6 h-6 class
                 className="w-6 h-6"
               />
               <p className="text-xs">{t("winnerOverlay.graveyard")}</p>

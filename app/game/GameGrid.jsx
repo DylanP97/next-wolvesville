@@ -30,38 +30,23 @@ const GameGrid = () => {
     gameId,
     clientPlayer,
     isJailer,
-    isSelection,
-    setIsSelection,
-    isDoubleSelection,
-    setIsDoubleSelection,
-    isBlocked,
-    setIsBlocked,
-    actionType,
+    selectionState,      // <-- ADD
+    selectionHelpers,    // <-- ADD
   } = useGame();
 
   const { triggerAnimation } = useAnimation();
 
   const handleClick = (player) => {
     handlePlayerClick(
-      actionType,
+      player,
       clientPlayer,
       gameId,
-      isJailer,
       socket,
       timeOfTheDay,
-      isBlocked,
-      isSelection,
-      isDoubleSelection,
-      setIsBlocked,
-      setIsSelection,
-      setIsDoubleSelection,
-      player,
-      setSelectedPlayer,
-      selectedPlayer1,
-      setSelectedPlayer1,
-      setErrorMessage,
       triggerAnimation,
-      language
+      setErrorMessage,
+      selectionState,      // <-- ADD
+      selectionHelpers     // <-- ADD
     );
   };
 

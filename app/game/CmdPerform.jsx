@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Tooltip } from "@nextui-org/react";
 import { useGame } from "./GameProvider";
 import { divActionIcon, imgActionIcon } from "../lib/styles";
+import i18n from "../lib/i18n";
 
 const CmdPerform = ({
   canPerform,
@@ -15,15 +16,15 @@ const CmdPerform = ({
     dayCount,
     timeOfTheDay,
     isUnderArrest,
-    isSelection,
-    isDoubleSelection,
-    isBlocked,
+    selectionState,     // <-- ADD
+    selectionHelpers,   // <-- ADD (for future use)
     isJailer,
-    hasHandcuffed
+    hasHandcuffed,
   } = useGame();
 
   const {
     label = undefined,
+    labelFR = undefined,
     emoji = undefined,
     type = undefined,
     needSelection = undefined,
@@ -40,24 +41,24 @@ const CmdPerform = ({
       (timeOfTheDay === "nighttime" && actionTime === "night") ||
       (timeOfTheDay === "nighttime" &&
         dayCount === 0 &&
-        actionTime === "1stnight")) && 
-        (isJailer && type === "execute" ? Boolean(hasHandcuffed) : true)
+        actionTime === "1stnight")) &&
+    (isJailer && type === "execute" ? Boolean(hasHandcuffed) : true)
   ) {
+
+    const actionType = selectionState.actionType; // <-- GET FROM STATE
+
     return (
-      <Tooltip content={label} color="secondary" variant="flat">
+      <Tooltip content={i18n.language === "fr" ? labelFR : label} color="secondary" variant="flat">
         <div
           onClick={() => {
             if (needSelection) activateSelection(type);
             else if (needDoubleSelection) activateDoubleSelection(type);
             else noSelectionAction(type);
           }}
-          className={`${
-            isBlocked
-              ? "bg-slate-500"
-              : isSelection || isDoubleSelection
-              ? "bg-red-600 hover:bg-red-500"
-              : "bg-green-600 hover:bg-green-500"
-          } ${divActionIcon} relative`}
+          className={`${actionType === type
+            ? "bg-green-600 hover:bg-green-500"
+            : "bg-slate-900 hover:bg-slate-700"
+            } ${divActionIcon} relative`}
         >
           <Image
             src={emoji}

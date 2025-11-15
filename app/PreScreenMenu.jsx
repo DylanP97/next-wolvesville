@@ -135,7 +135,7 @@ const PreScreenMenu = () => {
             {t("prescreen.register")}
           </Button>
         </nav>
-        <p className="pt-4text-center text-white text-sm">{t("intro.additionalInfo")}</p>
+        <p className="pt-4 px-8 text-center text-white text-sm">{t("intro.additionalInfo")}</p>
       </div>
     );
   }

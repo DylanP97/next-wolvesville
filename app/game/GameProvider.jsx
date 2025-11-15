@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState, useMemo } from "react";
 import { useAuth } from "../providers/AuthProvider";
 import cpuNextMove from "../lib/cpuNextMove";
 import { useSound } from "../providers/SoundProvider";
@@ -21,10 +21,103 @@ export const GameProvider = ({ children }) => {
     nighttime: "bg-black",
   };
 
-  const [isSelection, setIsSelection] = useState(false);
-  const [isDoubleSelection, setIsDoubleSelection] = useState(false);
-  const [isBlocked, setIsBlocked] = useState(false);
-  const [actionType, setActionType] = useState("");
+  const [selectionState, setSelectionState] = useState({
+    mode: 'idle', // 'idle' | 'single' | 'double' | 'completed'
+    actionType: null,
+    blockedActions: new Set(), // Track which actions are blocked
+    selectedPlayers: [], // Array to hold selected player(s)
+  });
+
+  // NEW: Helper functions using useMemo so they don't recreate on every render
+  const selectionHelpers = useMemo(() => ({
+    // Start a new selection
+    startSelection(actionType, needsDouble = false) {
+      setSelectionState({
+        mode: needsDouble ? 'double' : 'single',
+        actionType,
+        blockedActions: new Set(),
+        selectedPlayers: [],
+      });
+    },
+
+    // NEW METHOD: Reset to idle but preserve blocked actions
+    resetToIdle() {
+      setSelectionState(prev => ({
+        ...prev,
+        mode: 'idle',
+        actionType: null,
+        selectedPlayers: [],
+        // Keep blockedActions - don't reset them
+      }));
+    },
+
+    // Add a selected player
+    addPlayer(player) {
+      setSelectionState(prev => ({
+        ...prev,
+        selectedPlayers: [...prev.selectedPlayers, player],
+      }));
+    },
+
+    // Complete the selection
+    complete(actionType) {
+      setSelectionState(prev => ({
+        ...prev,
+        mode: 'completed',
+        blockedActions: new Set([...prev.blockedActions, actionType]),
+      }));
+    },
+
+    // Block specific action type (for Wolf Seer vote case)
+    blockAction(actionType) {
+      setSelectionState(prev => ({
+        ...prev,
+        blockedActions: new Set([...prev.blockedActions, actionType]),
+      }));
+    },
+
+    // Reset on new phase
+    reset() {
+      setSelectionState({
+        mode: 'idle',
+        actionType: null,
+        blockedActions: new Set(),
+        selectedPlayers: [],
+      });
+    },
+
+    // Toggle selection mode
+    toggle(actionType, needsDouble = false) {
+      setSelectionState(prev => {
+        // If clicking same action, deactivate
+        if (prev.actionType === actionType && prev.mode !== 'idle') {
+          return { ...prev, mode: 'idle', actionType: null, selectedPlayers: [] };
+        }
+        // Start new selection
+        return {
+          mode: needsDouble ? 'double' : 'single',
+          actionType,
+          blockedActions: prev.blockedActions,
+          selectedPlayers: [],
+        };
+      });
+    },
+
+    // Check if action is available
+    isActionBlocked(actionType) {
+      return selectionState.blockedActions.has(actionType);
+    },
+
+    // Check if we're in selection mode
+    isSelecting() {
+      return selectionState.mode === 'single' || selectionState.mode === 'double';
+    },
+
+    // Check if action is active
+    isActionActive(actionType) {
+      return selectionState.actionType === actionType && selectionHelpers.isSelecting();
+    },
+  }), [selectionState]);
 
   const gameId = game.id;
   const isPaused = game.isPaused;
@@ -73,10 +166,7 @@ export const GameProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    setIsSelection(false);
-    setIsDoubleSelection(false);
-    setIsBlocked(false);
-    setActionType("");
+    selectionHelpers.reset(); // Instead of setting individual states
     setWeather(weatherColors[timeOfTheDay]);
     if (timeOfTheDay === "nighttime" && !winningTeam) {
       generateNoise("wolfHowl");
@@ -160,14 +250,22 @@ export const GameProvider = ({ children }) => {
         jail,
         wolves,
         general,
-        isSelection,
-        isDoubleSelection,
-        isBlocked,
-        setIsSelection,
-        setIsDoubleSelection,
-        setIsBlocked,
-        actionType,
-        setActionType,
+
+        // isSelection,
+        // isDoubleSelection,
+        // isBlocked,
+        // isVoteBlocked,
+        // setIsSelection,
+        // setIsDoubleSelection,
+        // setIsBlocked,
+        // setIsVoteBlocked,
+        // actionType,
+        // setActionType,
+
+        selectionState,
+        setSelectionState,
+        selectionHelpers,
+
         weather,
         usedChat,
         setUsedChat,

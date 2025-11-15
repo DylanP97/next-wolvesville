@@ -20,17 +20,20 @@ const PlayerGridCard = ({
     timeOfTheDay,
     clientPlayer,
     isWolf,
-    isSelection,
-    isDoubleSelection,
-    isBlocked,
+    selectionState,    // <-- ADD
     weather,
-    actionType,
   } = useGame();
   const { isDevMode } = useDevMode();
 
   const onClickHandler = () => {
     handleClick(player);
   };
+
+  // Pass these to getPlyCardBackground:
+  const { mode, actionType } = selectionState;
+  const isSelection = mode === 'single';
+  const isDoubleSelection = mode === 'double';
+  const isBlocked = mode === 'completed';
 
   // console.log("player")
   // console.log(player)
@@ -58,10 +61,10 @@ const PlayerGridCard = ({
         actionType
       )} ${getPlyCardLayout()} `}
     >
-      {timeOfTheDay == "votetime" && player.isAlive && <VoteCount voteNbr={player.voteAgainst} />}
+      {timeOfTheDay == "votetime" && player.isAlive && <VoteCount voteNbr={player.voteAgainst} isWolfVote={false} />}
 
       {timeOfTheDay == "nighttime" && isWolf && !clientPlayer.isUnderArrest && !isAlsoWolf && player.isAlive && (
-        <VoteCount voteNbr={player.wolfVoteAgainst} />
+        <VoteCount voteNbr={player.wolfVoteAgainst} isWolfVote={true} />
       )}
 
       {((clientPlayer.role.name == "Cupid" && player.isInLove) ||
@@ -80,7 +83,14 @@ const PlayerGridCard = ({
         player.id == clientPlayer.id ||
         (isAlsoWolf && isWolf) ||
         (player.isRevealedByWolfSeer && isWolf) ||
-        isDevMode) && <IconReveal roleIcon={player.role.image} isRevealed={player.isRevealed || player.id == clientPlayer.id || (isAlsoWolf && isWolf) || (player.isRevealedByWolfSeer && isWolf)} />}
+        isDevMode) && (
+          <IconReveal
+            roleIcon={player.role.image}
+            isRevealed={player.isRevealed}
+            isWolfTeammate={(isAlsoWolf && isWolf) || (player.isRevealedByWolfSeer && isWolf)}
+            isDevMode={isDevMode}
+          />
+        )}
 
       <PlayerAvatar
         isAlive={player.isAlive}
