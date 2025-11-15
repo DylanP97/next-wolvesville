@@ -85,6 +85,8 @@ const PlayerGridCard = ({
         (player.isRevealedByWolfSeer && isWolf) ||
         isDevMode) && (
           <IconReveal
+            playerId={player.id}
+            clientPlayerId={clientPlayer.id}
             roleIcon={player.role.image}
             isRevealed={player.isRevealed}
             isWolfTeammate={(isAlsoWolf && isWolf) || (player.isRevealedByWolfSeer && isWolf)}

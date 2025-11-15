@@ -4,62 +4,32 @@ import { useGame } from "./GameProvider";
 import { useTranslation } from "react-i18next";
 import { replacePlaceholders } from "../lib/utils";
 import { useDevMode } from "../providers/DevModeProvider";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 
 const ActionsHistory = () => {
   const {
     general,
     wolves,
     jail,
-    // timeOfTheDay,
-    // isWolf,
-    // isJailer,
-    // isUnderArrest,
-    // hasHandcuffed,
-    // clientPlayer,
     usedChat,
     setUsedChat,
     availableChats,
-    // setAvailableChats
   } = useGame();
   const { isDevMode } = useDevMode();
   const { t } = useTranslation();
 
-  // class Chat {
-  //   constructor(type, label, history, emoji) {
-  //     (this.type = type),
-  //       (this.label = label),
-  //       (this.history = history),
-  //       (this.emoji = emoji);
-  //   }
-  // }
-
-  // const general = new Chat("general", t("game.generalChat"), generalChat, "🏘️");
-  // const wolves = new Chat("wolves", t("game.wolvesChat"), wolvesChat, "🐺");
-  // const jail = new Chat("jail", t("game.jailChat"), jailChat, "👮‍♂️");
-
-  // const [usedChat, setUsedChat] = useState(general);
   const [messages, setMessages] = useState(usedChat.history);
-  // const [availableChats, setAvailableChats] = useState([general]);
+  const containerRef = useRef(null);
 
-  // useEffect(() => {
-  //   if (timeOfTheDay == "nighttime" && isWolf) {
-  //     setAvailableChats([general, wolves]);
-  //     setUsedChat(wolves);
-  //   } else if (
-  //     (clientPlayer.isAlive && isUnderArrest) ||
-  //     (clientPlayer.isAlive &&
-  //       isJailer &&
-  //       timeOfTheDay == "nighttime" &&
-  //       hasHandcuffed > 0)
-  //   ) {
-  //     setAvailableChats([general, jail]);
-  //     setUsedChat(jail);
-  //   } else {
-  //     setAvailableChats([general]);
-  //     setUsedChat(general);
-  //   }
-  // }, [timeOfTheDay]);
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    if (containerRef.current) {
+      // Small delay to ensure DOM has updated
+      setTimeout(() => {
+        containerRef.current.scrollTop = containerRef.current.scrollHeight;
+      }, 0);
+    }
+  }, [messages]);
 
   useEffect(() => {
     switch (usedChat.type) {
@@ -86,6 +56,11 @@ const ActionsHistory = () => {
     });
   }, [messages, isDevMode]);
 
+  // Reverse so oldest is first (top), newest is last (bottom)
+  const displayMessages = useMemo(() => {
+    return [...filteredMessages].reverse();
+  }, [filteredMessages]);
+
   const selectChat = (type) => {
     switch (type) {
       case "general":
@@ -104,72 +79,73 @@ const ActionsHistory = () => {
   };
 
   return (
-    <div
-      className={`w-full z-10 relative overflow-hidden flex flex-col max-h-fit`}
-    >
-
+    <div className={`w-full z-10 relative overflow-hidden flex flex-col max-h-fit`}>
       {/* header of the chat */}
       <div className="h-12 flex justify-center">
         {availableChats.map((chat, index) => {
           return (
-            <>
-              <div
-                className={`${chat.type === usedChat.type ? "bg-slate-400 border-red-500" : "bg-transparent"} cursor-pointer px-4 flex items-center`}
-                key={"chattab-" + index}
-                onClick={() => selectChat(chat.type)}
+            <div
+              className={`${
+                chat.type === usedChat.type
+                  ? "bg-slate-400 border-red-500"
+                  : "bg-transparent"
+              } cursor-pointer px-4 flex items-center`}
+              key={"chattab-" + index}
+              onClick={() => selectChat(chat.type)}
+            >
+              <h2
+                className={`${
+                  chat.type === usedChat.type ? "text-black" : "text-white "
+                } text-sm`}
               >
-                <h2 className={`${chat.type === usedChat.type ? "text-black" : "text-white "} text-sm`}>
-                  {chat.label} {chat.emoji}
-                </h2>
-              </div>
-            </>
+                {chat.label} {chat.emoji}
+              </h2>
+            </div>
           );
         })}
       </div>
 
-      {/* content of the chat */}
-      <div className="bg-slate-400 z-10 p-2 object-bottom overflow-y-auto flex-grow max-h-40">
-        <ul className="actions-list text-black text-sm">
-          {filteredMessages.length === 0 ? (
-            <li className="text-sm z-20 italic text-slate-600">
+      {/* content of the chat - ADD flex-col-reverse and justify-end */}
+      <div 
+        ref={containerRef}
+        className="bg-slate-400 z-10 p-2 overflow-y-auto flex-grow max-h-40 flex flex-col-reverse"
+      >
+        <div className="flex flex-col justify-end">
+          {displayMessages.length === 0 ? (
+            <div className="text-sm z-20 italic text-slate-600">
               {usedChat.type === "general" && t("game.emptyGeneralChat")}
               {usedChat.type === "wolves" && t("game.emptyWolvesChat")}
               {usedChat.type === "jail" && t("game.emptyJailChat")}
-            </li>
+            </div>
           ) : (
-            filteredMessages.map((msg, index) => {
-              if (msg.author) {
+            <div className="actions-list text-black text-sm space-y-1">
+              {displayMessages.map((msg, index) => {
+                // Last message (at bottom) should be bold
+                const isNewest = index === displayMessages.length - 1;
+                
+                if (msg.author) {
+                  return (
+                    <div
+                      key={index + "msg"}
+                      className={`text-sm z-20 ${isNewest && "font-bold"}`}
+                    >
+                      {msg.time} -- {msg.author}: {replacePlaceholders(msg.msg)}
+                    </div>
+                  );
+                }
                 return (
-                  <li
+                  <div
+                    className={`text-sm z-20 ${isNewest && "font-bold"}`}
                     key={index + "msg"}
-                    datatype={index + "msg"}
-                    className={`text-sm z-20 ${index == 0 && "font-bold"}`}
                   >
-                    {msg.time} -- {msg.author}: {replacePlaceholders(msg.msg)}
-                  </li>
+                    {msg.time} - {replacePlaceholders(msg.msg)}
+                  </div>
                 );
-              }
-              return (
-                <li
-                  className={`text-sm z-20 ${index == 0 && "font-bold"}`}
-                  key={index + "msg"}
-                >
-                  {msg.time} - {replacePlaceholders(msg.msg)}
-                </li>
-              );
-            })
+              })}
+            </div>
           )}
-        </ul>
+        </div>
       </div>
-      {/* <Image
-        src={timeOfDayImages[timeOfTheDay]}
-        alt="bg-time"
-        width={130}
-        height={130}
-        priority
-        style={{ height: "auto", width: "auto" }}
-        className="m-2 absolute bottom-[0px] right-[-60px] opacity-30 z-0"
-      /> */}
     </div>
   );
 };

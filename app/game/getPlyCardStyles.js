@@ -14,8 +14,21 @@ export const getPlyCardBackground = (
   weather,
   actionType
 ) => {
+
+  const isGraveRobber = clientPlayer.role.name === "Grave Robber";
+
   // if player is dead, return black with fade
   if (!player.isAlive) return "bg-black text-yellow-500 border-yellow-600 opacity-20 grayscale cursor-not-allowed";
+
+  // Grave Robber can't loot dead players
+  if (isGraveRobber && actionType === "loot" && player.isAlive) {
+    return "bg-transparent opacity-20 grayscale cursor-not-allowed";
+  }
+
+  // Grave Robber looting dead players
+  if (isGraveRobber && actionType === "loot" && !player.isAlive) {
+    return "bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 cursor-pointer animate-pulse hover:animate-none shadow-md hover:shadow-lg transition-all";
+  }
 
   // if player is user, return slate
   if (clientPlayer.id === player.id)

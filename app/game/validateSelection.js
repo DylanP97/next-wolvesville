@@ -11,14 +11,14 @@ const validateSelection = (player, clientPlayer, actionType, timeOfTheDay) => {
   // Dead player checks
   if (!player.isAlive) {
     if (isGraveRobber && actionType === "loot") {
-      return { valid: true }; // Grave Robber can loot dead
+      return { valid: true }; // Grave Robber can loot dead ✅
     }
     return { valid: false, errorCode: "errorMessage.0002", animation: "loomingGrave" };
   }
 
   // Grave Robber can't loot alive players
   if (isGraveRobber && actionType === "loot") {
-    return { valid: false, errorCode: "errorMessage.0003" };
+    return { valid: false, errorCode: "errorMessage.0003" }; // ❌ This blocks ALIVE players
   }
 
   // Jail checks

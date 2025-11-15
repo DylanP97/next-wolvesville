@@ -12,25 +12,16 @@ import { useAnimation } from "../providers/AnimationProvider";
 const Chatbox = () => {
   const { socket, username } = useAuth();
   const { timeOfTheDay, gameId, clientPlayer, isWolf, isJailer, usedChat } = useGame();
-  const { currentKey, setCurrentKey } = useInGameKeys();
   const { triggerSimpleMessage } = useAnimation();
   const [message, setMessage] = useState("");
   const { t } = useTranslation();
 
-  // const isJailerChat =
-  //   clientPlayer.isUnderArrest ||
-  //   (isJailer &&
-  //     timeOfTheDay == "nighttime" &&
-  //     clientPlayer.hasHandcuffed >= 0);
-
-  // const isWolvesChat = timeOfTheDay == "nighttime" && isWolf ? true : false;
-
-  const sendMessage = (message) => {
+  const sendMessage = (messageToSend) => {
     if (clientPlayer.isAlive) {
-      if (message) {
+      if (messageToSend && messageToSend.trim()) {
         socket.emit(
           "sendMessage",
-          message,
+          messageToSend,
           gameId,
           username,
           usedChat.type === "wolves",
@@ -38,44 +29,44 @@ const Chatbox = () => {
           isJailer,
           i18n.language === "fr" ? "fr" : "en"
         );
-        setMessage("");
+        setMessage(""); // Vider le textarea après envoi
       } else {
-        triggerSimpleMessage("You can't send an empty message...");
+        triggerSimpleMessage("Vous ne pouvez pas envoyer un message vide...");
       }
     } else {
-      triggerSimpleMessage("You can speak... you're dead... remember?");
+      triggerSimpleMessage("Vous ne pouvez pas parler... vous êtes mort... rappelez-vous?");
     }
   };
 
-  useEffect(() => {
-    if (currentKey == "Enter") {
+  // Gérer la touche Enter
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault(); // Empêcher le saut à la ligne
       sendMessage(message);
-      setCurrentKey(null);
-      setMessage("");
     }
-  }, [currentKey]);
+  };
 
+  // SUPPRIMÉ le useEffect avec currentKey qui causait le double envoi
+  
   useEffect(() => {
     setMessage("");
   }, [timeOfTheDay]);
-
 
   if (usedChat.type === "general" && timeOfTheDay === "nighttime") {
     return <></>;
   } else {
     return (
-      <>
-        <input
-          disabled={
-            !timeOfTheDay === "nighttime" && (!isJailerChat || !isWolf) && false
-          }
+      <div className="flex flex-row gap-2 w-full items-stretch">
+        <textarea
           placeholder={t("game.writeMessage")}
           value={message}
-          className="outline-none border-none p-1 flex flex-grow w-full text-md text-black h-24 rounded-md"
+          className="outline-none border-none p-3 flex-grow text-sm text-black rounded-lg resize-none"
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
+          rows={3}
         />
         <CmdSend sendMessage={sendMessage} message={message} />
-      </>
+      </div>
     );
   }
 };

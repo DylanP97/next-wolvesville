@@ -90,7 +90,13 @@ const handleSingleSelection = (player, clientPlayer, gameId, socket, actionType,
         },
 
         loot: () => {
-            // Handled via validation, just complete
+            socket.emit("lootGrave", {
+                type: actionType,
+                graveRobberId: clientPlayer.id,
+                selectedPlayerId: player.id,
+                selectedPlayerName: player.name,
+                selectedPlayerRole: player.role, // Send the dead player's role
+            }, gameId);
         },
 
         chooseJuniorWolfDeathRevenge: () => socket.emit("chooseJuniorWolfDeathRevenge", {

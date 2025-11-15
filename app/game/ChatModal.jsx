@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useGame } from "./GameProvider";
 import { useTranslation } from "react-i18next";
 import { replacePlaceholders } from "../lib/utils";
 import { useDevMode } from "../providers/DevModeProvider";
-import { useMemo } from "react";
 import Chatbox from "./Chatbox";
 
 const ChatModal = ({ isOpen, setIsOpen }) => {
@@ -21,8 +20,17 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
   const { isDevMode } = useDevMode();
   const { t } = useTranslation();
   const [messages, setMessages] = useState(usedChat.history);
+  const messagesEndRef = useRef(null);
+  const containerRef = useRef(null);
 
-  useMemo(() => {
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  useEffect(() => {
     switch (usedChat.type) {
       case "general":
         setMessages(general.history);
@@ -45,6 +53,11 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
       return !messageText.includes("DEV --");
     });
   }, [messages, isDevMode]);
+
+  // Reverse so oldest is at top, newest at bottom
+  const displayMessages = useMemo(() => {
+    return [...filteredMessages].reverse();
+  }, [filteredMessages]);
 
   const selectChat = (type) => {
     switch (type) {
@@ -97,36 +110,88 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
           </div>
 
           {/* Messages */}
-          <div className="flex-grow overflow-y-auto p-4 bg-slate-850">
-            <ul className="actions-list text-white text-sm space-y-2">
-              {filteredMessages.length === 0 ? (
-                <li className="text-sm italic text-slate-500">
-                  {usedChat.type === "general" && t("game.emptyGeneralChat")}
-                  {usedChat.type === "wolves" && t("game.emptyWolvesChat")}
-                  {usedChat.type === "jail" && t("game.emptyJailChat")}
-                </li>
-              ) : (
-                filteredMessages.map((msg, index) => {
-                  if (msg.author) {
-                    return (
-                      <li key={index + "msg"} className={`text-sm ${index === 0 && "font-bold text-blue-300"}`}>
-                        <span className="text-slate-400">{msg.time}</span> <span className="text-slate-200 font-semibold">{msg.author}:</span> <span className="text-slate-100">{replacePlaceholders(msg.msg)}</span>
-                      </li>
-                    );
-                  }
+          <div
+            ref={containerRef}
+            className="flex-grow overflow-y-auto p-4 bg-slate-900/50 space-y-3"
+          >
+            {displayMessages.length === 0 ? (
+              <div className="text-sm italic text-slate-500 text-center mt-8">
+                {usedChat.type === "general" && t("game.emptyGeneralChat")}
+                {usedChat.type === "wolves" && t("game.emptyWolvesChat")}
+                {usedChat.type === "jail" && t("game.emptyJailChat")}
+              </div>
+            ) : (
+              displayMessages.map((msg, index) => {
+                // Last message (newest at bottom) should be highlighted
+                const isNewest = index === displayMessages.length - 1;
+
+                if (msg.author) {
+                  // User message - chat bubble style
+                  const isOwnMessage = msg.author === clientPlayer.name;
+
                   return (
-                    <li key={index + "msg"} className={`text-sm text-slate-300 ${index === 0 && "font-bold text-blue-300"}`}>
-                      <span className="text-slate-400">{msg.time}</span> - {replacePlaceholders(msg.msg)}
-                    </li>
+                    <div
+                      key={index + "msg"}
+                      className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'} animate-fade-in`}
+                    >
+                      <div className={`max-w-[80%] ${isOwnMessage ? 'order-2' : 'order-1'}`}>
+                        {/* Author name */}
+                        {!isOwnMessage && (
+                          <div className="text-xs text-slate-400 mb-1 ml-2 font-semibold">
+                            {msg.author}
+                          </div>
+                        )}
+
+                        {/* Message bubble */}
+                        <div className={`
+                          rounded-2xl px-4 py-2 shadow-md
+                          ${isOwnMessage
+                            ? 'bg-blue-600 text-white rounded-tr-sm'
+                            : 'bg-slate-700 text-slate-100 rounded-tl-sm'
+                          }
+                          ${isNewest && 'ring-2 ring-blue-400/50'}
+                        `}>
+                          <p className="text-sm break-words">
+                            {replacePlaceholders(msg.msg)}
+                          </p>
+                        </div>
+
+                        {/* Timestamp */}
+                        <div className={`text-xs text-slate-500 mt-1 ${isOwnMessage ? 'text-right mr-2' : 'ml-2'}`}>
+                          {msg.time}
+                        </div>
+                      </div>
+                    </div>
                   );
-                })
-              )}
-            </ul>
+                } else {
+                  // System message - left style
+                  return (
+                    <div
+                      key={index + "msg"}
+                      className={`flex justify-left animate-fade-in ${isNewest && 'opacity-100'}`}
+                    >
+                      <div className={`
+                        max-w-[85%] bg-slate-800/70 rounded-lg px-4 py-2 border border-slate-700/50
+                        ${isNewest && 'ring-2 ring-blue-400/30 shadow-lg shadow-blue-500/20'}
+                      `}>
+                        <div className="flex items-center gap-2">
+                          <span className="text-slate-500 text-xs">{msg.time}</span>
+                          <span className="text-slate-300 text-xs">
+                            {replacePlaceholders(msg.msg)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })
+            )}
+            <div ref={messagesEndRef} />
           </div>
 
-          {/* Chat input only */}
+          {/* Chat input */}
           {clientPlayer.isAlive && (
-            <div className="border-t border-slate-700 bg-slate-800 rounded-b-lg flex flex-row gap-2 p-2 h-32">
+            <div className="h-40 border-t border-slate-700 bg-slate-800 rounded-b-lg p-3">
               <Chatbox />
             </div>
           )}
@@ -137,5 +202,3 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
 };
 
 export default ChatModal;
-
-
