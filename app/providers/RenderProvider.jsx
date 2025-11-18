@@ -1,18 +1,26 @@
-// RenderProvider.js
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 const RenderContext = createContext();
 
 export function RenderProvider({ children }) {
   const [activeComponent, setActiveComponent] = useState(null);
 
+  // ⭐ New global state for your exit menu
+  const [exitMenuOpen, setExitMenuOpen] = useState(false);
+  const toggleExitMenu = () => setExitMenuOpen(prev => !prev);
+
   return (
     <RenderContext.Provider
       value={{
         activeComponent,
         setActiveComponent,
+
+        // expose exit menu state globally
+        exitMenuOpen,
+        setExitMenuOpen,
+        toggleExitMenu,
       }}
     >
       {children}

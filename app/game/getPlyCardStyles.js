@@ -35,11 +35,11 @@ export const getPlyCardBackground = (
     return "bg-gradient-to-br from-blue-500 to-slate-600 border-red-500 border-2 text-white shadow-md";
 
   if (selectedPlayer) {
-    if (player.id === selectedPlayer.id) return "bg-gradient-to-br from-red-600 to-red-700 shadow-lg shadow-red-500/50";
+    if (player.id === selectedPlayer) return "bg-gradient-to-br from-red-600 to-red-700 shadow-lg shadow-red-500/50";
   }
 
   if (selectedPlayer1) {
-    if (player.id === selectedPlayer1.id) return "bg-gradient-to-br from-green-600 to-green-700 shadow-lg shadow-green-500/50";
+    if (player.id === selectedPlayer1) return "bg-gradient-to-br from-green-600 to-green-700 shadow-lg shadow-green-500/50";
   }
 
   function selectionRemaining() {

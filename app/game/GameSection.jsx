@@ -1,6 +1,5 @@
 "use client";
 
-import Background from "./Background";
 import WinnerOverlay from "./WinnerOverlay";
 import ActionBar from "./ActionBar";
 import GameHeader from "./GameHeader";
@@ -9,11 +8,14 @@ import ChatModal from "./ChatModal";
 import { useGame } from "./GameProvider";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
-import GoBackBtn from "../components/GoBackBtn";
+import GameMenuExitOverlay from "./GameMenuExitOverlay";
+import { useToRender } from "../providers/RenderProvider";
 
 const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { winningTeam, timeOfTheDay } = useGame();
   const { width, height } = useWindowSize();
+  const { exitMenuOpen, toggleExitMenu } = useToRender();
+
 
   const getBackgroundGradient = () => {
     switch (timeOfTheDay) {
@@ -29,10 +31,9 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   };
 
   return (
-    <section className={`w-full h-screen relative flex flex-col ${getBackgroundGradient()}`}>
-      <GoBackBtn />
+    <section className={`w-full flex flex-col ${getBackgroundGradient()}`}>
       <GameHeader />
-      <div className="overflow-y-auto flex-1">
+      <div className="h-screen flex flex-col flex-grow overflow-hidden pt-[88px]">
         <GameGrid />
       </div>
       <ChatModal />
@@ -46,6 +47,11 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
           <WinnerOverlay />
         </>
       )}
+      <GameMenuExitOverlay
+        isOpen={exitMenuOpen}
+        onClose={toggleExitMenu}
+      />
+
     </section>
   );
 };

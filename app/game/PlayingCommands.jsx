@@ -13,56 +13,12 @@ const PlayingCommands = () => {
   const {
     clientPlayer,
     timeOfTheDay,
-    selectionState,      // <-- ADD
-    selectionHelpers,    // <-- ADD
+    selectionState,
+    selectionHelpers,
     gameId,
   } = useGame();
 
   const { role: { canVote, canPerform1, canPerform2 } = {} } = clientPlayer;
-
-  // const activateSelection = (newActionType) => {
-  //   if (!isBlocked) {
-  //     if (isSelection && actionType === newActionType) {
-  //       setIsSelection(false);
-  //       setActionType("");
-  //     } else {
-  //       // Switch to new action
-  //       setActionType(newActionType);
-  //       setIsSelection(true);
-  //       setIsDoubleSelection(false);
-  //     }
-  //   } else {
-  //     triggerSimpleMessage(
-  //       "you already select something, now selection mode is blocked"
-  //     );
-  //   }
-  // };
-
-  // const activateDoubleSelection = (newActionType) => {
-  //   if (!isBlocked) {
-  //     if (isSelection && actionType === newActionType) {
-  //       setIsDoubleSelection(false);
-  //       setActionType("");
-  //     } else {
-  //       // Switch to new action
-  //       setActionType(newActionType);
-  //       setIsDoubleSelection(true);
-  //       setIsSelection(false);
-  //     }
-  //   } else {
-  //     triggerSimpleMessage(
-  //       "you already select something, now doubleSelection mode is blocked"
-  //     );
-  //   }
-  // };
-
-  // const noSelectionAction = (actionType) => {
-  //   if (clientPlayer.role.name === "Mayor" && actionType === "assertDuty") {
-  //     socket.emit("assertDuty", clientPlayer.name, gameId);
-  //   }
-  // };
-
-
 
   // Access actionType from selectionState:
   const actionType = selectionState.actionType;
@@ -71,12 +27,12 @@ const PlayingCommands = () => {
   const isVoteBlocked = selectionHelpers.isActionBlocked('wolfVote') ||
     selectionHelpers.isActionBlocked('vote');
 
-  const activateSelection = (newActionType, needsDouble = false) => {
+  const activateSelection = (newActionType, emoji, needsDouble = false) => {
     if (selectionHelpers.isActionBlocked(newActionType)) {
       triggerSimpleMessage("This action has already been used");
       return;
     }
-    selectionHelpers.toggle(newActionType, needsDouble);
+    selectionHelpers.toggle(newActionType, emoji, needsDouble);
   };
 
   // ADD THESE BACK:
@@ -86,8 +42,8 @@ const PlayingCommands = () => {
     }
   };
 
-  const activateDoubleSelection = (newActionType) => {
-    activateSelection(newActionType, true); // Just call activateSelection with needsDouble=true
+  const activateDoubleSelection = (newActionType, emoji) => {
+    activateSelection(newActionType, emoji, true);
   };
 
   return (

@@ -51,8 +51,8 @@ const CmdPerform = ({
       <Tooltip content={i18n.language === "fr" ? labelFR : label} color="secondary" variant="flat">
         <div
           onClick={() => {
-            if (needSelection) activateSelection(type);
-            else if (needDoubleSelection) activateDoubleSelection(type);
+            if (needSelection) activateSelection(type, emoji);
+            else if (needDoubleSelection) activateDoubleSelection(type, emoji);
             else noSelectionAction(type);
           }}
           className={`${actionType === type

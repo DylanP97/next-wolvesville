@@ -1,9 +1,10 @@
 class Track {
-  constructor(title, artist, ms, path) {
+  constructor(title, artist, ms, path, role = null) {
     (this.title = title),
       (this.artist = artist),
       (this.ms = ms),
       (this.path = path);
+    (this.role = role)
   }
 }
 
@@ -61,7 +62,15 @@ const tracks = [
     "Serial Killer Vibe",
     "Unknown Artist",
     240000,
-    "/audio/serialKillerVibe.mp3"
+    "/audio/serialKillerVibe.mp3",
+    "Serial Killer"
+  ),
+  new Track(
+    "Fly Chicken",
+    "Alexander Nakarada",
+    150000,
+    "/audio/flyChicken.mp3",
+    "Fool"
   ),
 ];
 

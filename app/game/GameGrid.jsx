@@ -34,9 +34,13 @@ const GameGrid = () => {
     selectionHelpers,
   } = useGame();
 
+  const { mode } = selectionState;
+
   const { triggerAnimation } = useAnimation();
 
   const handleClick = (player) => {
+    if (mode === 'single') setSelectedPlayer(player.id);
+    if (mode === 'double') setSelectedPlayer1(player.id);
     handlePlayerClick(
       player,
       clientPlayer,

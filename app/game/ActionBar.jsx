@@ -15,7 +15,7 @@ const ActionBar = ({ summaryIsOpen, setSummaryIsOpen }) => {
 
   return (
     <>
-      <div className="fixed pb-6 bottom-0 left-0 right-0 flex flex-col w-full h-48 z-20 bg-gradient-to-t from-slate-900 to-slate-800 border-t border-slate-700 shadow-2xl items-center justify-center gap-4">
+      <div className="fixed pb-6 bottom-0 left-0 right-0 flex flex-col w-full h-[22%] z-20 bg-gradient-to-t from-slate-900 to-slate-800 border-t border-slate-700 shadow-2xl items-center justify-center gap-4">
         <h2>{t("game.actionBar.title")} </h2>
         <div className="flex flex-row gap-4">
           <PauseToggle />

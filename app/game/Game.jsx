@@ -16,7 +16,7 @@ export default function Game() {
   const showRoleReveal = game?.showingRoleReveal && clientPlayer;
 
   return (
-    <div className="flex flex-col flex-grow overflow-y-hidden">
+    <div className="flex flex-col flex-grow h-screen">
       {isConnected && game ? (
         <>
           {showRoleReveal ? (
@@ -26,7 +26,7 @@ export default function Game() {
             // Show normal game
             <GameProvider>
               <InGameKeysProvider>
-                <div className="flex flex-col flex-grow">
+                <div className="flex flex-col">
                   <GameSection
                     summaryIsOpen={summaryIsOpen}
                     setSummaryIsOpen={setSummaryIsOpen}

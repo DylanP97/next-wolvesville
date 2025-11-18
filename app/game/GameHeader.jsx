@@ -10,7 +10,7 @@ const GameHeader = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="p-2 px-6 z-10 bg-black/20">
+    <div className="px-6 z-20 fixed w-full py-2 bg-gradient-to-t from-slate-700 to-slate-800 border-b border-slate-600 shadow-2xl">
       <p className="text-xs text-white my-2">
         {timeOfTheDay === "daytime" ? (
           <>

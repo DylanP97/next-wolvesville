@@ -4,6 +4,7 @@ import Image from "next/image";
 import VoteCount from "./VoteCount";
 import IconReveal from "./IconReveal";
 import PlayerAvatar from "./PlayerAvatar";
+import ActionSet from "./ActionSet"
 import { useGame } from "./GameProvider";
 import { getPlyCardBackground, getPlyCardLayout } from "./getPlyCardStyles";
 import { useDevMode } from "../providers/DevModeProvider";
@@ -20,7 +21,7 @@ const PlayerGridCard = ({
     timeOfTheDay,
     clientPlayer,
     isWolf,
-    selectionState,    // <-- ADD
+    selectionState,
     weather,
   } = useGame();
   const { isDevMode } = useDevMode();
@@ -30,17 +31,10 @@ const PlayerGridCard = ({
   };
 
   // Pass these to getPlyCardBackground:
-  const { mode, actionType } = selectionState;
+  const { mode, actionType, actionEmoji } = selectionState;
   const isSelection = mode === 'single';
   const isDoubleSelection = mode === 'double';
   const isBlocked = mode === 'completed';
-
-  // console.log("player")
-  // console.log(player)
-  // console.log("player.role")
-  // console.log(player.role)
-  // console.log("player.role.image")
-  // console.log(player.role.name)
 
   return (
     <div
@@ -93,6 +87,10 @@ const PlayerGridCard = ({
             isDevMode={isDevMode}
           />
         )}
+
+      {
+        player.id === (selectedPlayer || selectedPlayer1) && <ActionSet />
+      }
 
       <PlayerAvatar
         isAlive={player.isAlive}

@@ -22,7 +22,7 @@ export const InGameKeysProvider = ({ children }) => {
       <div
         onKeyDown={handleKeyDown}
         tabIndex={0}
-        className="flex flex-col flex-grow"
+        className="flex flex-col"
       >
         {children}
       </div>

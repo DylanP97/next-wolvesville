@@ -32,12 +32,14 @@ export default function RootLayout({ children }) {
         <ClientOnly>
           <Providers>
             <DevModeBorder>
-              <div className="flex flex-col justify-between w-full h-[100vh] pt-[72px]">
-                <GeneralBtns />
-                <RenderProvider>{children}</RenderProvider>
-                {/* <Footer /> */}
-                <TrackDisplay />
-              </div>
+              <RenderProvider>
+                <div className="flex flex-col justify-between w-full h-[100vh] pt-[70px] ">
+                  <GeneralBtns />
+                  {children}
+                  {/* <Footer /> */}
+                  <TrackDisplay />
+                </div>
+              </RenderProvider>
             </DevModeBorder>
           </Providers>
         </ClientOnly>
