@@ -32,9 +32,9 @@ const TrackDisplay = () => {
       >
         <p className="text-xs">Now playing:</p>
         <p className="text-sm">
-          {currentTrack.title} - {currentTrack.artist}
+          {currentTrack.meta.title} - {currentTrack.meta.artist}
         </p>
-        <p className="text-white text-xs">{formatDuration(currentTrack.ms)}</p>
+        <p className="text-white text-xs">{formatDuration(currentTrack.meta.ms)}</p>
       </div>
     );
   }

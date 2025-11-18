@@ -57,6 +57,13 @@ const tracks = [
     201000,
     "/audio/nomadicSunset.mp3"
   ),
+  new Track(
+    "Serial Killer Vibe",
+    "Unknown Artist",
+    240000,
+    "/audio/serialKillerVibe.mp3"
+  ),
 ];
+
 
 export default tracks;

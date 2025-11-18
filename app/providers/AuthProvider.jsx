@@ -23,11 +23,11 @@ export const AuthProvider = ({ children }) => {
   const [game, setGame] = useState(null);
 
   const {
-    playTrack,
-    generateBackgroundMusic,
-    setCurrentBgMusic,
     generateNoise,
+    generateBackgroundMusic,
+    stopMusic,
   } = useSound();
+
 
   const updateUserGameState = (newIsInRoom, newIsPlaying, newGame) => {
     setIsInRoom(newIsInRoom);
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
 
   async function checkAuth() {
     if (typeof window === 'undefined') return;
-    
+
     const response = await fetch(
       process.env.NEXT_PUBLIC_API_URL + "/api/user/checkAuth",
       {
@@ -81,14 +81,16 @@ export const AuthProvider = ({ children }) => {
   /** execution */
 
   useEffect(() => {
-    setCurrentBgMusic(null);
-  }, [isPlaying]);
+    if (!authState.isConnected) return;
 
-  useEffect(() => {
-    if (authState.isConnected) {
+    // If the user is not in a game → menu music
+    if (!isPlaying) {
+      stopMusic();
       generateBackgroundMusic();
+      return;
     }
-  }, [authState.isConnected]);
+
+  }, [authState.isConnected, isPlaying]);
 
   useEffect(() => {
     checkAuth();
@@ -109,22 +111,20 @@ export const AuthProvider = ({ children }) => {
       });
 
       socket.on("launchRoom", (game) => {
+        // console.log("launchRoom received", game);
+
         game.playersList.forEach((player) => {
           if (player.isCPU) {
             socket.emit("sendNewConnectedUser", player);
           }
         });
+
+        // ALWAYS set these to navigate to the game screen
         setGame(game);
         setIsPlaying(true);
-        const clientPlayer = game.playersList.find(
-          (ply) => ply.name === authState.username
-        );
-        if (clientPlayer?.role.name === "Serial Killer") {
-          playTrack("/audio/serialKillerVibe.mp3");
-        }
       });
 
-      socket.on("updateGame", (updatedGame) => {
+      socket.on("updateGame", updatedGame => {
         setGame(updatedGame);
       });
 

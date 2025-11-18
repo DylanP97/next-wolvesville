@@ -17,7 +17,7 @@ const NavigationMenu = () => {
   const { setActiveComponent, activeComponent } = useToRender();
 
   const launchQuickGame = async () => {
-    console.log("launchQuickGame", username, socketId, avatar)
+    // console.log("launchQuickGame", username, socketId, avatar)
     await socket.emit("startQuickGame", username, socketId, avatar);
   }
 

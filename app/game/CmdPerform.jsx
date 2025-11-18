@@ -57,7 +57,7 @@ const CmdPerform = ({
           }}
           className={`${actionType === type
             ? "bg-green-600 hover:bg-green-500"
-            : "bg-slate-900 hover:bg-slate-700"
+            : "bg-blue-500 hover:bg-blue-700 animate-pulse"
             } ${divActionIcon} relative`}
         >
           <Image

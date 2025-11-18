@@ -1,132 +1,114 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from "react";
 import tracksData from "../lib/tracks";
 
 const SoundContext = createContext();
 
 export const SoundProvider = ({ children }) => {
-  const [currentBgMusic, setCurrentBgMusic] = useState(null);
-  const [bgMusicVolume, setBgMusicVolume] = useState(0.5);
-  const [currentTrack, setCurrentTrack] = useState(null);
-  const tracks = tracksData.map((track) => ({
-    title: track.title,
-    artist: track.artist,
-    ms: track.ms,
-    path: track.path,
-  }));
+  const [currentTrack, setCurrentTrack] = useState(null); // { audio, meta, isSpecial }
+  const [isMuted, setIsMuted] = useState(false);
+  
+  // Use ref to track the actual audio element independently
+  const audioRef = useRef(null);
 
+  const tracks = tracksData.map(t => ({ title: t.title, artist: t.artist, ms: t.ms, path: t.path }));
+
+  // Clean up on unmount
   useEffect(() => {
-    // Cleanup audio when component unmounts
     return () => {
-      if (currentBgMusic) {
-        currentBgMusic.pause();
-        currentBgMusic.currentTime = 0;
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
       }
     };
-  }, [currentBgMusic]);
+  }, []);
 
+  // Apply mute/unmute to current track using ref
   useEffect(() => {
-    // Update the volume of the current background music whenever bgMusicVolume changes
-    if (currentBgMusic) {
-      currentBgMusic.volume = bgMusicVolume;
+    if (audioRef.current) {
+      audioRef.current.volume = isMuted ? 0 : 1;
     }
-  }, [bgMusicVolume, currentBgMusic]);
+  }, [isMuted]); // Remove currentTrack from dependencies
+
+  /** Helper to create audio with mute applied */
+  const createAudio = (path) => {
+    if (typeof window === "undefined") return null;
+    const audio = new Audio(path);
+    audio.volume = isMuted ? 0 : 1;
+    return audio;
+  };
+
+  const stopMusic = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    setCurrentTrack(null);
+  };
+
+  const playTrack = (trackMeta, isSpecial = false) => {
+    // If the same track is already playing, don't restart it
+    if (currentTrack?.meta?.title === trackMeta.title && audioRef.current) {
+      return;
+    }
+
+    // Stop previous track
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+
+    // Use createAudio to respect isMuted state
+    const audio = createAudio(trackMeta.path);
+    if (!audio) return;
+
+    if (isSpecial) audio.loop = true;
+
+    audio.play().catch(err => console.error("Audio play failed:", err));
+    
+    // Store in ref for mute control
+    audioRef.current = audio;
+    setCurrentTrack({ audio, meta: trackMeta, isSpecial });
+  };
 
   const playRandomTrack = () => {
-    const randomIndex = Math.floor(Math.random() * tracks.length);
-    const randomTrack = tracks[randomIndex];
+    const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
     playTrack(randomTrack);
   };
 
-  const playTrack = (track) => {
-    if (typeof window === 'undefined') return;
-    
-    if (currentBgMusic) {
-      currentBgMusic.pause();
-      currentBgMusic.currentTime = 0;
-    }
-
-    let newBgMusic = new Audio(track.path);
-
-    newBgMusic.volume = bgMusicVolume;
-    newBgMusic.play();
-    setCurrentBgMusic(newBgMusic);
-    setCurrentTrack(track);
-
-    newBgMusic.onended = () => {
-      if (currentBgMusic) {
-        // Play the same special role track
-        playTrack(track);
-      } else {
-        // Play the next track when current track ends
-        playRandomTrack();
-      }
-    };
-  };
-
   const generateBackgroundMusic = () => {
-    if (!currentBgMusic) {
-      // Start playing random track if no track is currently playing
-      playRandomTrack();
-    }
+    if (!currentTrack) playRandomTrack();
   };
 
   const generateNoise = (sound) => {
-    if (typeof window === 'undefined') return;
-    
-    console.log(sound);
-    if (currentBgMusic) {
-      setBgMusicVolume(0.2);
-    }
-
-    let newNoise;
-
+    let file;
     switch (sound) {
-      case "wolfHowl":
-        newNoise = new Audio("/audio/wolfHowling.mp3");
-        break;
-      case "rooster":
-        newNoise = new Audio("/audio/rooster.mp3");
-        break;
-      case "pianoPercussion":
-        newNoise = new Audio("/audio/pianoPercussion.mp3");
-        break;
-      case "grunt":
-        newNoise = new Audio("/audio/grunt.mp3");
-        break;
-      case "selectionError":
-        newNoise = new Audio("/audio/selectionError.mp3");
-        break;
-      case "gunshot":
-        newNoise = new Audio("/audio/gunshot.mp3");
-        break;
-      default:
-        return;
+      case "wolfHowl": file = "/audio/wolfHowling.mp3"; break;
+      case "rooster": file = "/audio/rooster.mp3"; break;
+      case "pianoPercussion": file = "/audio/pianoPercussion.mp3"; break;
+      case "grunt": file = "/audio/grunt.mp3"; break;
+      case "selectionError": file = "/audio/selectionError.mp3"; break;
+      case "gunshot": file = "/audio/gunshot.mp3"; break;
+      default: return;
     }
 
-    // console.log("newNoise", newNoise)
-
-    newNoise.volume = 1;
-    newNoise.play();
-
-    newNoise.onended = () => {
-      if (currentBgMusic) {
-        setBgMusicVolume(0.5);
-      }
-    };
+    const noise = createAudio(file); // respects isMuted
+    noise?.play().catch(err => console.error("Noise play failed:", err));
   };
 
   return (
     <SoundContext.Provider
       value={{
-        generateNoise,
-        generateBackgroundMusic,
-        bgMusicVolume,
-        setBgMusicVolume,
-        playTrack,
         currentTrack,
-        setCurrentBgMusic,
+        stopMusic,
+        playTrack,
+        playRandomTrack,
+        generateBackgroundMusic,
+        generateNoise,
+        isMuted,
+        setIsMuted,
       }}
     >
       {children}

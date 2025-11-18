@@ -30,6 +30,18 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
     }
   }, [messages]);
 
+  // Scroll to bottom when modal opens
+  useEffect(() => {
+    if (isOpen && containerRef.current) {
+      // Use setTimeout to ensure DOM is fully rendered
+      setTimeout(() => {
+        if (containerRef.current) {
+          containerRef.current.scrollTop = containerRef.current.scrollHeight;
+        }
+      }, 0);
+    }
+  }, [isOpen]);
+
   useEffect(() => {
     switch (usedChat.type) {
       case "general":

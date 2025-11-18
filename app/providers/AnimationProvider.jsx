@@ -99,7 +99,7 @@ export const AnimationProvider = ({ children }) => {
               />
             )}
             {simpleMessage && (
-              <p className="text-3xl font-bold italic text-white bg-yellow-500 z-50 p-4 rounded-lg">
+              <p className="text-3xl font-bold italic text-white bg-yellow-500 z-50 p-4 m-4 rounded-lg">
                 {simpleMessage}
               </p>
             )}

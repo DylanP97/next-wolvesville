@@ -11,6 +11,13 @@ const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
   const { game, socket, username, updateUserGameState } = useAuth();
+
+
+  // Safety check: don't initialize if showing role reveal
+  if (!game || game.showingRoleReveal) {
+    return null;
+  }
+  
   const { generateNoise } = useSound();
   const { triggerAnimation } = useAnimation();
   const { t } = useTranslation();

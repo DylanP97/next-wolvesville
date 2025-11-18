@@ -22,7 +22,7 @@ const CmdVote = ({ activateSelection, wolfVote }) => {
         onClick={() => activateSelection(wolfVote ? "wolfVote" : "vote")}
         className={`${actionType === (wolfVote ? "wolfVote" : "vote")
           ? "bg-green-600 hover:bg-green-500"
-          : "bg-slate-900 hover:bg-slate-700"
+          : "bg-slate-900 hover:bg-slate-700 animate-pulse"
           } ${divActionIcon}`}
       >
         <Image

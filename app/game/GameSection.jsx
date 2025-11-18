@@ -9,6 +9,7 @@ import ChatModal from "./ChatModal";
 import { useGame } from "./GameProvider";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
+import GoBackBtn from "../components/GoBackBtn";
 
 const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { winningTeam, timeOfTheDay } = useGame();
@@ -28,9 +29,12 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   };
 
   return (
-    <section className={`w-full flex flex-col flex-grow relative ${getBackgroundGradient()}`}>
+    <section className={`w-full h-screen relative flex flex-col ${getBackgroundGradient()}`}>
+      <GoBackBtn />
       <GameHeader />
-      <GameGrid />
+      <div className="overflow-y-auto flex-1">
+        <GameGrid />
+      </div>
       <ChatModal />
       <ActionBar
         summaryIsOpen={summaryIsOpen}

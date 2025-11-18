@@ -107,7 +107,7 @@ const WinnerOverlay = () => {
             variant="solid"
             onClick={() => handleExitGame()}
           >
-            {t("goback")}
+            {t("gobackmenu")}
           </Button>
           {/* <Image
             src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1720534502/eye_yee8gi.png"
