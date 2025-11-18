@@ -184,21 +184,6 @@ export const GameProvider = ({ children }) => {
   }), [selectionState]);
 
 
-
-  // Safety check: don't initialize if showing role reveal
-  if (!game || game.showingRoleReveal) {
-    return null;
-  }
-
-
-
-  if (!winningTeam) {
-    socket.emit("checkForWinner", game.id);
-  } else {
-    !game.hasEnded && socket.emit("endGame", game.id);
-    // updateUserGameState(true, false, game);
-  }
-
   useEffect(() => {
     selectionHelpers.reset(); // Instead of setting individual states
     setWeather(weatherColors[timeOfTheDay]);
@@ -258,6 +243,21 @@ export const GameProvider = ({ children }) => {
       });
     }
   }, [timeCounter]);
+
+  // Safety check: don't initialize if showing role reveal
+  if (!game || game.showingRoleReveal) {
+    return null;
+  }
+
+
+  if (!winningTeam) {
+    socket.emit("checkForWinner", game.id);
+  } else {
+    !game.hasEnded && socket.emit("endGame", game.id);
+    // updateUserGameState(true, false, game);
+  }
+
+
 
   return (
     <GameContext.Provider
