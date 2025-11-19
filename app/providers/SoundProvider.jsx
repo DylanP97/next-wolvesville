@@ -88,7 +88,8 @@ export const SoundProvider = ({ children }) => {
       case "wolfHowl": file = "/audio/wolfHowling.mp3"; break;
       case "rooster": file = "/audio/rooster.mp3"; break;
       case "pianoPercussion": file = "/audio/pianoPercussion.mp3"; break;
-      case "grunt": file = "/audio/grunt.mp3"; break;
+      case "maleScreamFear": file = "/audio/maleScreamFear.mp3"; break;
+      case "digitalFail": file = "/audio/digitalFail.mp3"; break;
       case "selectionError": file = "/audio/selectionError.mp3"; break;
       case "gunshot": file = "/audio/gunshot.mp3"; break;
       default: return;

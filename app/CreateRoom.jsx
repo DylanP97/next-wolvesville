@@ -1,6 +1,6 @@
 "use client";
 
-import { Input, User, Button, Divider } from "@nextui-org/react";
+import { Input, User, Button, Divider, Select, SelectItem } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import { useAuth } from "./providers/AuthProvider";
 import RoleChoice from "./RoleChoice";
@@ -23,13 +23,16 @@ const CreateRoom = () => {
   const [created, setCreated] = useState(false);
   const [nbrCPUPlayers, setNbrCPUPlayers] = useState(0);
   const [CPUPlayersMax, setCPUPlayersMax] = useState();
+  const [preferredRole, setPreferredRole] = useState(null);
+
 
   const [creationStep, setCreationStep] = useState(1);
 
   const steps = {
     1: t("create.stepTwo"),
     2: t("create.stepThree"),
-    3: `${t("create.stepFour")}: ${roomName}`,
+    3: t("create.stepFour"),
+    4: `${t("create.stepFive")}: ${roomName}`,
   };
 
   useEffect(() => {
@@ -94,6 +97,17 @@ const CreateRoom = () => {
     }
   };
 
+  const handleRoleSelection = (keys) => {
+    const selected = Array.from(keys)[0];
+    setPreferredRole(selected || null);
+  };
+
+  const getAvailableRolesForSelection = () => {
+    // Get unique roles that have at least 1 count
+    const uniqueRoles = availableRoles.filter(role => role.count > 0);
+    return uniqueRoles;
+  };
+
   const submitNewRoom = () => {
     if (selectedRoles.length < 2 || selectedRoles.length > 16) {
       setErrorMessage(t("create.error.numberOfPlayers"));
@@ -112,7 +126,7 @@ const CreateRoom = () => {
       nbrUserPlayers: selectedRoles.length - nbrCPUPlayers,
       nbrCPUPlayers: nbrCPUPlayers,
       selectedRoles: selectedRoles,
-      usersInTheRoom: [{ username, socketId, avatar }],
+      usersInTheRoom: [{ username, socketId, avatar, preferredRole }],
       isLaunched: false,
     };
 
@@ -170,6 +184,50 @@ const CreateRoom = () => {
         );
       case 3:
         return (
+          <div className="flex flex-col py-2 gap-4">
+            <Select
+              label={t("create.preferredRole")}
+              placeholder={t("create.selectRole")}
+              className="max-w-xs bg-white rounded-xl"
+              selectedKeys={preferredRole ? [preferredRole] : []}
+              onSelectionChange={handleRoleSelection}
+            >
+              {getAvailableRolesForSelection().map((role) => (
+                <SelectItem
+                  key={role.name}
+                  value={role.name}
+                  startContent={
+                    <img
+                      src={role.image}
+                      alt={role.name}
+                      className="w-6 h-6 rounded text-black"
+                    />
+                  }
+                >
+                  {role.name}
+                </SelectItem>
+              ))}
+            </Select>
+            {preferredRole && (
+              <div className="flex items-center gap-2 p-2 bg-white/10 rounded-lg">
+                <User
+                  avatarProps={{
+                    size: "sm",
+                    src: availableRoles.find(r => r.name === preferredRole)?.image,
+                    radius: "lg",
+                  }}
+                  name={preferredRole}
+                  className="text-white"
+                />
+              </div>
+            )}
+            {/* <p className="text-xs text-white/70 italic">
+              {t("create.roleSelectionNote")}
+            </p> */}
+          </div>
+        );
+      case 4:
+        return (
           <div className="flex flex-col py-2">
             <div className="flex flex-row flex-wrap items-center my-2">
               {selectedRoles.map((r, i) => (
@@ -184,17 +242,25 @@ const CreateRoom = () => {
                 />
               ))}
             </div>
-            <p className="text-sm text-white my-2">
-              {selectedRoles.length} {t("create.totalPlayers")}
-            </p>
-            <p className="text-sm text-white">
-              *{t("create.including")} {selectedRoles.length - nbrCPUPlayers}{" "}
-              {t("create.userControlled")}
-            </p>
-            <p className="text-sm text-white">
-              *{t("create.including")} {nbrCPUPlayers}{" "}
-              {t("create.CPUControlled")}
-            </p>
+            <Divider className="my-4" />
+            <div className="space-y-2">
+              <p className="text-sm text-white">
+                {selectedRoles.length} {t("create.totalPlayers")}
+              </p>
+              <p className="text-sm text-white">
+                *{t("create.including")} {selectedRoles.length - nbrCPUPlayers}{" "}
+                {t("create.userControlled")}
+              </p>
+              <p className="text-sm text-white">
+                *{t("create.including")} {nbrCPUPlayers}{" "}
+                {t("create.CPUControlled")}
+              </p>
+              {preferredRole && (
+                <p className="text-sm text-white font-bold mt-4">
+                  {username}: {preferredRole}
+                </p>
+              )}
+            </div>
           </div>
         );
       default:
@@ -259,7 +325,7 @@ const CreateRoom = () => {
                   {t("create.previousStep")}
                 </Button>
               )}
-              {creationStep < 3 && (
+              {creationStep < 4 && (
                 <Button
                   className={btnClassNames}
                   color="primary"
@@ -269,7 +335,7 @@ const CreateRoom = () => {
                   {t("create.nextStep")}
                 </Button>
               )}
-              {creationStep === 3 && (
+              {creationStep === 4 && (
                 <Button
                   className={btnClassNames}
                   color="primary"

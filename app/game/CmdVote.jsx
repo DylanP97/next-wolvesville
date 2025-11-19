@@ -13,7 +13,7 @@ const CmdVote = ({ activateSelection, wolfVote }) => {
   const actionType = selectionState.actionType; // <-- ADD THIS
 
   // ✅ Define emojis
-  const voteEmoji = "https://res.cloudinary.com/dnhq4fcyp/image/upload/v1717423963/wolfvote2_ba9iir.webp";
+  const voteEmoji = "https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706535348/vote-time_edpfll.png";
   const wolfVoteEmoji = "https://res.cloudinary.com/dnhq4fcyp/image/upload/v1717423963/wolfvote2_ba9iir.webp";
 
   return (

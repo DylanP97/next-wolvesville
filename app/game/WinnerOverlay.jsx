@@ -22,17 +22,17 @@ const WinnerOverlay = () => {
     // document.location.assign("/");
     // socket.emit("deleteRoom", gameId);
   };
+
   useEffect(() => {
     const fetchAndSetTeamData = async () => {
       try {
         const teamsData = await fetchTeams();
-        console.log("teamsData", teamsData)
+        // console.log("teamsData", teamsData)
         if (winningTeam) {
-          console.log("hey hey")
           setWTeamData(
             teamsData.find((team) => team.name === winningTeam.name)
           );
-          console.log("wTeamData", wTeamData)
+          // console.log("wTeamData", wTeamData)
         }
       } catch (error) {
         console.error("Failed to fetch teams data", error);
@@ -47,14 +47,14 @@ const WinnerOverlay = () => {
       <div className="winner-overlay">
         <div
           id="winner-message"
-          className="winner-message p-4 flex flex-col justify-center relative"
+          className="winner-message p-4 flex flex-col justify-center relative max-h-[90vh] overflow-y-auto"
         >
           <div className="flex items-center gap-2">
             <Image
               src={winningTeam.image}
               alt="winner"
-              height={24}   // Match your w-6 h-6 class
-              width={24}    // Match your w-6 h-6 class
+              height={24}
+              width={24}
               className="w-6 h-6"
             />
             <p className="text-xs">
@@ -64,7 +64,7 @@ const WinnerOverlay = () => {
             </p>
           </div>
           <Divider className="my-4" />
-          <div className="flex flex-row justify-center flex-wrap">
+          <div className="flex flex-row justify-center flex-wrap gap-2">
             {winningTeam.winnerPlayers.map((ply) => {
               return (
                 <AvatarAndRole
@@ -81,8 +81,8 @@ const WinnerOverlay = () => {
               <Image
                 src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1717509814/grave_nmqqmp.png"
                 alt="graveyard"
-                height={24}   // Match your w-6 h-6 class
-                width={24}    // Match your w-6 h-6 class
+                height={24}
+                width={24}
                 className="w-6 h-6"
               />
               <p className="text-xs">{t("winnerOverlay.graveyard")}</p>
@@ -103,21 +103,12 @@ const WinnerOverlay = () => {
             </div>
           </div>
           <Button
-            className={btnClassNames + " font-wolf"}
+            className={btnClassNames + " font-wolf mt-4"}
             variant="solid"
             onClick={() => handleExitGame()}
           >
             {t("gobackmenu")}
           </Button>
-          {/* <Image
-            src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1720534502/eye_yee8gi.png"
-            alt="eyec"
-            height={40}
-            width={40}
-            style={{ height: "auto", width: "auto" }}
-            className={`w-6 h-6 absolute top-2 right-2 eyeImage`}
-            id="winner-overlay-eyec"
-          /> */}
         </div>
       </div>
     );

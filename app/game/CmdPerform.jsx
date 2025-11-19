@@ -16,8 +16,7 @@ const CmdPerform = ({
     dayCount,
     timeOfTheDay,
     isUnderArrest,
-    selectionState,     // <-- ADD
-    selectionHelpers,   // <-- ADD (for future use)
+    selectionState,
     isJailer,
     hasHandcuffed,
   } = useGame();
@@ -44,6 +43,8 @@ const CmdPerform = ({
         actionTime === "1stnight")) &&
     (isJailer && type === "execute" ? Boolean(hasHandcuffed) : true)
   ) {
+
+    console.log("nbrLeftToPerform ", type, " : ", nbrLeftToPerform);
 
     const actionType = selectionState.actionType; // <-- GET FROM STATE
 

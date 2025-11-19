@@ -23,7 +23,7 @@ const GoBackBtn = () => {
         )
       }
     >
-      {t("goback")}
+      {t("gobackmenu")}
     </Button>
   );
 };

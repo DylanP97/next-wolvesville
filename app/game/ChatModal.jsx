@@ -176,18 +176,14 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
                     </div>
                   );
                 } else {
+                  const containsSkull = replacePlaceholders(msg.msg)?.includes("💀");
+
                   // System message - left style
                   return (
-                    <div
-                      key={index + "msg"}
-                      className={`flex justify-left animate-fade-in ${isNewest && 'opacity-100'}`}
-                    >
-                      <div className={`
-                        max-w-[85%] bg-slate-800/70 rounded-lg px-4 py-2 border border-slate-700/50
-                        ${isNewest && 'ring-2 ring-blue-400/30 shadow-lg shadow-blue-500/20'}
-                      `}>
+                    <div key={index + "msg"} className={`flex justify-left animate-fade-in ${isNewest && 'opacity-100'}`}>
+                      <div className={`max-w-[85%] rounded-lg px-4 py-2 border ${containsSkull ? 'bg-red-700 border-red-500/50' : 'bg-slate-800/70 border-slate-700/50'} ${isNewest && 'ring-2 ring-blue-400/30 shadow-lg shadow-blue-500/20'}`}>
                         <div className="flex items-center gap-2">
-                          <span className="text-slate-500 text-xs">{msg.time}</span>
+                          <span className="text-slate-300 text-xs">{msg.time}</span>
                           <span className="text-slate-300 text-xs">
                             {replacePlaceholders(msg.msg)}
                           </span>

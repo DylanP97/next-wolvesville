@@ -6,7 +6,6 @@ const cpuNextMove = (
   socket,
   gameId
 ) => {
-  // console.log("hello cpuNextMove");
   function getPlayerWithId(id) {
     return playersList.find((ply) => ply.id === id);
   }

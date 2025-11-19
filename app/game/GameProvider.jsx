@@ -13,13 +13,15 @@ export const GameProvider = ({ children }) => {
   const { game, socket, username, updateUserGameState } = useAuth();
 
   const { generateNoise } = useSound();
-  const { triggerAnimation } = useAnimation();
+  const { triggerAnimation, triggerSimpleMessage } = useAnimation();
   const { t } = useTranslation();
 
   const weatherColors = {
     daytime: "bg-sky-500",
     votetime: "bg-sky-700",
+    votetimeAftermath: "bg-sky-900",
     nighttime: "bg-black",
+    nighttimeAftermath: "bg-blue-900",
   };
 
   const [selectionState, setSelectionState] = useState({
@@ -29,6 +31,8 @@ export const GameProvider = ({ children }) => {
     blockedActions: new Set(), // Track which actions are blocked
     selectedPlayers: [], // Array to hold selected player(s)
   });
+
+  const [showDeathFlash, setShowDeathFlash] = useState(false);
 
   const gameId = game.id;
   const isPaused = game.isPaused;
@@ -219,7 +223,16 @@ export const GameProvider = ({ children }) => {
   }, [timeOfTheDay]);
 
   useEffect(() => {
-    if (!isAlive) generateNoise("grunt");
+    if (!isAlive) {
+      generateNoise("maleScreamFear");
+      triggerSimpleMessage(t("game.youDied"));
+
+      // Trigger death flash effect
+      setShowDeathFlash(true);
+      setTimeout(() => {
+        setShowDeathFlash(false);
+      }, 300); // Flash lasts 300ms
+    }
   }, [isAlive]);
 
   useEffect(() => {
@@ -281,27 +294,15 @@ export const GameProvider = ({ children }) => {
         jail,
         wolves,
         general,
-
-        // isSelection,
-        // isDoubleSelection,
-        // isBlocked,
-        // isVoteBlocked,
-        // setIsSelection,
-        // setIsDoubleSelection,
-        // setIsBlocked,
-        // setIsVoteBlocked,
-        // actionType,
-        // setActionType,
-
         selectionState,
         setSelectionState,
         selectionHelpers,
-
         weather,
         usedChat,
         setUsedChat,
         availableChats,
-        setAvailableChats
+        setAvailableChats,
+        showDeathFlash,
       }}
     >
       {children}
