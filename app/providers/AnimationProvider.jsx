@@ -71,7 +71,7 @@ export const AnimationProvider = ({ children }) => {
         {showAnimation && (
           <div
             style={{
-              position: "absolute",
+              position: "fixed",
               top: 0,
               left: 0,
               width: "100vw",
@@ -84,6 +84,8 @@ export const AnimationProvider = ({ children }) => {
               backgroundColor: "rgba(0, 0, 0, 0.5)",
               opacity: fadeOut ? 0 : 1,
               transition: "opacity 1.5s ease-out",
+              // pointerEvents: "none", // Permet de cliquer à travers l'animation
+
             }}
           >
             {currentAnimation && animationData && Lottie && (

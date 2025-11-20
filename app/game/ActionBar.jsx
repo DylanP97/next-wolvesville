@@ -15,14 +15,15 @@ const ActionBar = ({ summaryIsOpen, setSummaryIsOpen }) => {
 
   return (
     <>
-      <div className="fixed pb-6 bottom-0 left-0 right-0 flex flex-col w-full h-[22%] z-20 bg-gradient-to-t from-slate-900 to-slate-800 border-t border-slate-700 shadow-2xl items-center justify-center gap-4">
-        <h2>{t("game.actionBar.title")} </h2>
-        <div className="flex flex-row gap-4">
-          <PauseToggle />
-          {clientPlayer.isAlive && <PlayingCommands />}
-          <ChatButton isChatOpen={isChatOpen} setIsChatOpen={setIsChatOpen} />
+      <div className="w-full bg-gradient-to-t from-slate-900 to-slate-800 border-t border-slate-700 shadow-2xl py-4 pb-16">
+        <div className="container mx-auto">
+          <h2 className="text-white text-center mb-4 text-sm">{t("game.actionBar.title")}</h2>
+          <div className="flex flex-row gap-4 justify-center">
+            <PauseToggle />
+            {clientPlayer.isAlive && <PlayingCommands />}
+            <ChatButton isChatOpen={isChatOpen} setIsChatOpen={setIsChatOpen} />
+          </div>
         </div>
-
       </div>
       <ChatModal isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
     </>

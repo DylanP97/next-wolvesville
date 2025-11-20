@@ -14,7 +14,7 @@ const GameHeader = () => {
   }
 
   return (
-    <div className="px-6 z-20 fixed w-full py-2 bg-gradient-to-t from-slate-700 to-slate-800 border-b border-slate-600 shadow-2xl">
+    <div className="px-6 z-20 w-full py-2 bg-gradient-to-t from-slate-700 to-slate-800 border-b border-slate-600 shadow-2xl flex-shrink-0">
       <p className="text-xs text-white my-2">
         {timeOfTheDay === "daytime" ? (
           <>

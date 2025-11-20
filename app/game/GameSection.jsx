@@ -36,17 +36,30 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   };
 
   return (
-    <section className={`w-full flex flex-col ${getBackgroundGradient()}`}>
+    <div className={`relative w-full h-screen ${getBackgroundGradient()}`}>
       <DeathFlash />
-      <GameHeader />
-      <div className="h-screen flex flex-col flex-grow overflow-hidden pt-[88px]">
-        <GameGrid />
+
+      {/* Header fixe en haut */}
+      <div className="sticky top-[70px] left-0 right-0 z-30">
+        <GameHeader />
       </div>
-      <ChatModal />
-      <ActionBar
-        summaryIsOpen={summaryIsOpen}
-        setSummaryIsOpen={setSummaryIsOpen}
-      />
+
+      {/* Container principal avec padding pour header et action bar */}
+      <div className="h-full overflow-hidden">
+        {/* pt-16 pour le header, pb-32 pour l'action bar */}
+        <div className="overflow-y-auto">
+          <GameGrid />
+        </div>
+      </div>
+
+      {/* Action Bar fixe en bas */}
+      <div className="fixed bottom-0 left-0 right-0 z-30">
+        <ActionBar
+          summaryIsOpen={summaryIsOpen}
+          setSummaryIsOpen={setSummaryIsOpen}
+        />
+      </div>
+
       {winningTeam !== null && (
         <>
           <Confetti width={width} height={height} style={{ zIndex: "999" }} />
@@ -57,8 +70,8 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
         isOpen={exitMenuOpen}
         onClose={toggleExitMenu}
       />
-
-    </section>
+      <ChatModal />
+    </div>
   );
 };
 

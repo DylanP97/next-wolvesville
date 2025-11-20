@@ -152,7 +152,8 @@
       "errorMessage.0008": "You can't reveal a player that is not revealed",
       "errorMessage.0009": "You must select an action",
       "errorMessage.0010": "selection's blocked ",
-      "errorMessage.0011": "You are dead. You can't do anything."
+      "errorMessage.0011": "You are dead. You can't do anything.",
+      "errorMessage.0012": "This action has already been used."
     }
   },
   "fr": {
@@ -308,7 +309,8 @@
       "errorMessage.0008": "Tu ne peux pas révéler un joueur qui n'est pas révélé",
       "errorMessage.0009": "Choisissez une action",
       "errorMessage.0010": "Sélection bloqué ",
-      "errorMessage.0011": "Tu es mort ! Tu ne peux rien faire."
+      "errorMessage.0011": "Tu es mort ! Tu ne peux rien faire.",
+      "errorMessage.0012": "Vous avez déjà utilisé cette action."
     }
   }
 }

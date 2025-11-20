@@ -68,7 +68,7 @@ const GameGrid = () => {
   }, [errorMessage]);
 
   return (
-    <div className="grid grid-cols-3 md:grid-cols-4 gap-4 place-items-start z-10 px-4 py-6">
+    <div className="grid grid-cols-3 md:grid-cols-4 gap-4 place-items-start z-10 px-6 my-8 ">
       {playersList.map((player) => {
         const isAlsoWolf =
           player &&

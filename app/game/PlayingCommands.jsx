@@ -5,10 +5,12 @@ import CmdPerform from "./CmdPerform";
 import { useGame } from "./GameProvider";
 import { useAuth } from "../providers/AuthProvider";
 import { useAnimation } from "../providers/AnimationProvider";
+import { useTranslation } from "react-i18next";
 
 const PlayingCommands = () => {
   const { socket } = useAuth();
   const { triggerSimpleMessage } = useAnimation();
+  const { t } = useTranslation();
 
   const {
     clientPlayer,
@@ -29,7 +31,7 @@ const PlayingCommands = () => {
 
   const activateSelection = (newActionType, emoji, needsDouble = false) => {
     if (selectionHelpers.isActionBlocked(newActionType)) {
-      triggerSimpleMessage("This action has already been used");
+      triggerSimpleMessage(t("errorMessage.0012"));
       return;
     }
     selectionHelpers.toggle(newActionType, emoji, needsDouble);
