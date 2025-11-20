@@ -1,13 +1,14 @@
 "use client";
 
-import { Input, User, Button, Divider, Select, SelectItem } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import { useAuth } from "./providers/AuthProvider";
-import RoleChoice from "./RoleChoice";
-import TeamCounter from "./TeamCounter";
+import CreateRoomStep1 from "./CreateRoomStep1";
+import CreateRoomStep2 from "./CreateRoomStep2";
+import CreateRoomStep3 from "./CreateRoomStep3";
+import CreateRoomStep4 from "./CreateRoomStep4";
 import GoBackBtn from "./components/GoBackBtn";
 import { useTranslation } from "react-i18next";
-import { colorsForTeams } from "./lib/utils";
 import { fetchRoles, fetchTeams } from "./lib/fetch";
 import { btnClassNames } from "./lib/styles";
 
@@ -21,10 +22,8 @@ const CreateRoom = () => {
   const [selectedRoles, setSelectedRoles] = useState([]);
   const [selectedRolesTeam, setSelectedRolesTeam] = useState([]);
   const [created, setCreated] = useState(false);
-  const [nbrCPUPlayers, setNbrCPUPlayers] = useState(0);
-  const [CPUPlayersMax, setCPUPlayersMax] = useState();
+  const [nbrUserPlayers, setNbrUserPlayers] = useState(1);
   const [preferredRole, setPreferredRole] = useState(null);
-
 
   const [creationStep, setCreationStep] = useState(1);
 
@@ -55,22 +54,30 @@ const CreateRoom = () => {
   useEffect(() => {
     let updatedRoles = [];
 
-    availableRoles.map((r) => {
+    availableRoles.forEach((r) => {
       for (let i = 0; i < r.count; i++) {
         updatedRoles.push(r);
       }
     });
 
     setSelectedRoles(updatedRoles);
+    // Set default user players to total players (all human, no CPU)
+    if (updatedRoles.length > 0 && nbrUserPlayers === 0) {
+      setNbrUserPlayers(updatedRoles.length);
+    }
   }, [availableRoles]);
 
   useEffect(() => {
-    setCPUPlayersMax(selectedRoles.length - 1);
     let selectedRolesTeamsArray = selectedRoles.map((role) => role.team);
     let filteredTeams = availableTeams.filter((team) =>
       selectedRolesTeamsArray.includes(team.name)
     );
     setSelectedRolesTeam(filteredTeams);
+
+    // Update nbrUserPlayers if it exceeds new total
+    if (nbrUserPlayers > selectedRoles.length) {
+      setNbrUserPlayers(selectedRoles.length);
+    }
   }, [selectedRoles]);
 
   useEffect(() => {
@@ -90,20 +97,12 @@ const CreateRoom = () => {
     );
   };
 
-  const handleNbrCPUPlayers = (event) => {
-    const value = Number(event.target.value);
-    if (value >= 0) {
-      setNbrCPUPlayers(value);
-    }
-  };
-
   const handleRoleSelection = (keys) => {
     const selected = Array.from(keys)[0];
     setPreferredRole(selected || null);
   };
 
   const getAvailableRolesForSelection = () => {
-    // Get unique roles that have at least 1 count
     const uniqueRoles = availableRoles.filter(role => role.count > 0);
     return uniqueRoles;
   };
@@ -118,12 +117,14 @@ const CreateRoom = () => {
       return;
     }
 
+    const nbrCPUPlayers = selectedRoles.length - nbrUserPlayers;
+
     const newRoom = {
       id: Date.now(),
       name: roomName,
       createdBy: username,
       nbrOfPlayers: selectedRoles.length,
-      nbrUserPlayers: selectedRoles.length - nbrCPUPlayers,
+      nbrUserPlayers: nbrUserPlayers,
       nbrCPUPlayers: nbrCPUPlayers,
       selectedRoles: selectedRoles,
       usersInTheRoom: [{ username, socketId, avatar, preferredRole }],
@@ -135,133 +136,61 @@ const CreateRoom = () => {
     setCreated(true);
   };
 
+  const autoFillRoles = () => {
+    setAvailableRoles(prev =>
+      prev.map(role => ({
+        ...role,
+        count: selectedRoles.length === 0 ? 1 : 0
+      }))
+    );
+  };
+
+
   const generateStep = () => {
     switch (creationStep) {
       case 1:
         return (
-          <>
-            <div className="flex flex-row md:flex-row justify-between my-4 gap-2 overflow-x-auto">
-              {availableRoles.map((role) => (
-                <RoleChoice
-                  key={role.name + "-rolecheckbx"}
-                  role={role}
-                  handleRoleChange={handleRoleChange}
-                  setAvailableRoles={setAvailableRoles}
-                />
-              ))}
-            </div>
-            <p className="text-sm italic my-4">
-              {t("create.info.numberOnEachRole")}
-            </p>
-          </>
+          <CreateRoomStep1
+            availableRoles={availableRoles}
+            handleRoleChange={handleRoleChange}
+            selectedRoles={selectedRoles}
+            onNext={toNextStep}
+            errorMessage={errorMessage}
+            autoFillRoles={autoFillRoles}
+          />
         );
       case 2:
         return (
-          <div className="flex flex-col gap-4 py-2">
-            <Input
-              color="secondary"
-              className="max-w-xs ws-60 bg-white rounded-xl"
-              isRequired
-              type="number"
-              label={t("create.labelCPUNumber")}
-              value={nbrCPUPlayers}
-              max={CPUPlayersMax}
-              onChange={handleNbrCPUPlayers}
-            />
-            <Input
-              isReadOnly
-              className="max-w-xs ws-60 bg-white rounded-xl"
-              label={t("create.userControlled")}
-              value={selectedRoles.length - nbrCPUPlayers}
-            />
-            <Input
-              isReadOnly
-              className="max-w-xs ws-60 bg-white rounded-xl"
-              label={t("create.totalPlayers")}
-              value={selectedRoles.length}
-            />
-          </div>
+          <CreateRoomStep2
+            totalPlayers={selectedRoles.length}
+            nbrUserPlayers={nbrUserPlayers}
+            setNbrUserPlayers={setNbrUserPlayers}
+            onNext={toNextStep}
+            onPrevious={toPreviousStep}
+            errorMessage={errorMessage}
+          />
         );
       case 3:
         return (
-          <div className="flex flex-col py-2 gap-4">
-            <Select
-              label={t("create.preferredRole")}
-              placeholder={t("create.selectRole")}
-              className="max-w-xs bg-white rounded-xl"
-              selectedKeys={preferredRole ? [preferredRole] : []}
-              onSelectionChange={handleRoleSelection}
-            >
-              {getAvailableRolesForSelection().map((role) => (
-                <SelectItem
-                  key={role.name}
-                  value={role.name}
-                  startContent={
-                    <img
-                      src={role.image}
-                      alt={role.name}
-                      className="w-6 h-6 rounded text-black"
-                    />
-                  }
-                >
-                  {role.name}
-                </SelectItem>
-              ))}
-            </Select>
-            {preferredRole && (
-              <div className="flex items-center gap-2 p-2 bg-white/10 rounded-lg">
-                <User
-                  avatarProps={{
-                    size: "sm",
-                    src: availableRoles.find(r => r.name === preferredRole)?.image,
-                    radius: "lg",
-                  }}
-                  name={preferredRole}
-                  className="text-white"
-                />
-              </div>
-            )}
-            {/* <p className="text-xs text-white/70 italic">
-              {t("create.roleSelectionNote")}
-            </p> */}
-          </div>
+          <CreateRoomStep3
+            preferredRole={preferredRole}
+            handleRoleSelection={handleRoleSelection}
+            getAvailableRolesForSelection={getAvailableRolesForSelection}
+            availableRoles={availableRoles}
+            onNext={toNextStep}
+            onPrevious={toPreviousStep}
+          />
         );
       case 4:
         return (
-          <div className="flex flex-col py-2">
-            <div className="flex flex-row flex-wrap items-center my-2">
-              {selectedRoles.map((r, i) => (
-                <User
-                  key={r.name + i + "-uc"}
-                  avatarProps={{
-                    size: "sm",
-                    src: r.image,
-                    radius: "lg",
-                  }}
-                  className={`p-1 bg-[${colorsForTeams[r.team]}]`}
-                />
-              ))}
-            </div>
-            <Divider className="my-4" />
-            <div className="space-y-2">
-              <p className="text-sm text-white">
-                {selectedRoles.length} {t("create.totalPlayers")}
-              </p>
-              <p className="text-sm text-white">
-                *{t("create.including")} {selectedRoles.length - nbrCPUPlayers}{" "}
-                {t("create.userControlled")}
-              </p>
-              <p className="text-sm text-white">
-                *{t("create.including")} {nbrCPUPlayers}{" "}
-                {t("create.CPUControlled")}
-              </p>
-              {preferredRole && (
-                <p className="text-sm text-white font-bold mt-4">
-                  {username}: {preferredRole}
-                </p>
-              )}
-            </div>
-          </div>
+          <CreateRoomStep4
+            selectedRoles={selectedRoles}
+            nbrUserPlayers={nbrUserPlayers}
+            preferredRole={preferredRole}
+            username={username}
+            onPrevious={toPreviousStep}
+            onSubmit={submitNewRoom}
+          />
         );
       default:
         return null;
@@ -288,11 +217,8 @@ const CreateRoom = () => {
       setErrorMessage(t("create.error.numberOfPlayers"));
       return;
     }
-    if (
-      creationStep === 2 &&
-      (nbrCPUPlayers < 0 || nbrCPUPlayers > CPUPlayersMax)
-    ) {
-      setErrorMessage(t("create.error.CPUNbrNotPossible"));
+    if (creationStep === 2 && nbrUserPlayers < 1) {
+      setErrorMessage(t("create.error.needAtLeastOnePlayer"));
       return;
     }
     setCreationStep(creationStep + 1);
@@ -314,39 +240,7 @@ const CreateRoom = () => {
           </div>
           <div className="flex flex-grow flex-col">
             {generateStep()}
-            <div className="flex flex-row gap-2">
-              {creationStep > 1 && (
-                <Button
-                  className={btnClassNames}
-                  color="secondary"
-                  variant="shadow"
-                  onClick={toPreviousStep}
-                >
-                  {t("create.previousStep")}
-                </Button>
-              )}
-              {creationStep < 4 && (
-                <Button
-                  className={btnClassNames}
-                  color="primary"
-                  variant="shadow"
-                  onClick={toNextStep}
-                >
-                  {t("create.nextStep")}
-                </Button>
-              )}
-              {creationStep === 4 && (
-                <Button
-                  className={btnClassNames}
-                  color="primary"
-                  variant="shadow"
-                  onClick={submitNewRoom}
-                >
-                  {t("create.submit")}
-                </Button>
-              )}
-            </div>
-            {errorMessage && (
+            {errorMessage && creationStep !== 1 && (
               <p className="mt-2 text-primary-foreground text-sm">
                 {errorMessage}
               </p>

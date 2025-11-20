@@ -47,13 +47,15 @@ const Chatbox = () => {
   };
 
   // SUPPRIMÉ le useEffect avec currentKey qui causait le double envoi
-  
+
   useEffect(() => {
     setMessage("");
   }, [timeOfTheDay]);
 
   if (usedChat.type === "general" && timeOfTheDay === "nighttime") {
-    return <></>;
+    return (
+      <div className="flex justify-center text-sm text-slate-300 italic"><p>{t("game.goBackToSleep")}</p></div>
+    );
   } else {
     return (
       <div className="flex flex-row gap-2 w-full items-stretch">

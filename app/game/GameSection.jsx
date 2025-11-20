@@ -40,14 +40,14 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
       <DeathFlash />
 
       {/* Header fixe en haut */}
-      <div className="sticky top-[70px] left-0 right-0 z-30">
+      <div className="sticky top-0 left-0 right-0 z-30">
         <GameHeader />
       </div>
 
       {/* Container principal avec padding pour header et action bar */}
       <div className="h-full overflow-hidden">
         {/* pt-16 pour le header, pb-32 pour l'action bar */}
-        <div className="overflow-y-auto">
+        <div className="h-full overflow-y-auto">
           <GameGrid />
         </div>
       </div>

@@ -36,6 +36,16 @@ const cpuNextMove = (
     return randomPlayer;
   }
 
+  function getRandomDeadPlayer() {
+    let deadPlayers = playersList.filter((player) => !player.isAlive);
+    if (deadPlayers.length === 0) {
+      return null;
+    }
+    let randomDeadPlayer =
+      deadPlayers[Math.floor(Math.random() * deadPlayers.length)];
+    return randomDeadPlayer;
+  }
+
   function performNightAction() {
     switch (cpu.role.name) {
       case "Classic Werewolf":
@@ -187,12 +197,8 @@ const cpuNextMove = (
           let handcuffedPlayerId = cpu.hasHandcuffed;
           let handcuffedPlayer = getPlayerWithId(handcuffedPlayerId);
           if (handcuffedPlayer) {
-            console.log(
-              "nombre d'exécutions restantes " +
-              cpu.role.canPerform2.nbrLeftToPerform
-            );
             if (cpu.role.canPerform2.nbrLeftToPerform > 0) {
-              if (Math.random() < 0.5) {
+              if (Math.random() < 0.3) {
                 socket.emit(
                   "executePrisoner",
                   {
@@ -208,6 +214,22 @@ const cpuNextMove = (
           }
         }
         break;
+      case "Grave Robber":
+        if (Math.random() < 0.3) {
+          console.log("grave robber CPU action");
+          let deadPlayer = getRandomDeadPlayer();
+          if (deadPlayer) {
+            socket.emit("lootGrave", {
+              type: actionType,
+              graveRobberId: clientPlayer.id,
+              selectedPlayerId: player.id,
+              selectedPlayerName: player.name,
+              selectedPlayerRole: player.role, // Send the dead player's role
+            }, gameId);
+          }
+        }
+        break;
+
       // Add more roles as needed
       default:
         break;

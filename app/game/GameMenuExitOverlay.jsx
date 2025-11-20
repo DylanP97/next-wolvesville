@@ -3,6 +3,8 @@
 import GoBackBtn from "../components/GoBackBtn";
 import DevModeToggle from "../general-btns/components/DevModeToggle";
 import LogoutBtn from "../general-btns/components/LogoutBtn";
+import VolumeToggle from "../general-btns/components/VolumeToggle";
+import FullScreenToggle from "../general-btns/components/FullScreenToggle";
 
 const GameMenuExitOverlay = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
@@ -14,6 +16,11 @@ const GameMenuExitOverlay = ({ isOpen, onClose }) => {
             onClick={onClose}
         >
             <div className="flex flex-col gap-4 items-center justify-center ">
+                <div className="flex gap-2">
+                    <VolumeToggle />
+                    <FullScreenToggle />
+
+                </div>
                 <DevModeToggle />
                 <GoBackBtn />
                 <LogoutBtn />

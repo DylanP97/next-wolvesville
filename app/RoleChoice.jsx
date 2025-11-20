@@ -1,17 +1,14 @@
-import { Button, Input, User } from "@nextui-org/react";
-import i18n from "./lib/i18n";
+import { Card, CardBody, Badge, Button } from "@nextui-org/react";
 import Image from "next/image";
-import { getBtnClassNames } from "./lib/styles";
-import { useEffect, useState } from "react";
+import i18n from "./lib/i18n";
 
 const RoleChoice = ({ role, handleRoleChange }) => {
   const isSolo = !["Village", "Werewolves"].includes(role.team);
   const allowMultiple = ["Villager", "Classic Werewolf"].includes(role.name);
+  const maxCount = allowMultiple ? 3 : 1;
 
   const handleIncrement = () => {
-    if (allowMultiple && role.count < 3) {
-      handleRoleChange(role.name, role.count + 1);
-    } else if (!allowMultiple && role.count < 1) {
+    if (role.count < maxCount) {
       handleRoleChange(role.name, role.count + 1);
     }
   };
@@ -22,64 +19,78 @@ const RoleChoice = ({ role, handleRoleChange }) => {
     }
   };
 
-  return (
-    <div className="flex flex-col items-center p-2">
-      <div className="flex flex-row justify-center items-center gap-2">
-        <Button
-          isIconOnly
-          size="sm"
-          color="secondary"
-          variant="solid"
-          aria-label="volumeToggle"
-          onClick={handleDecrement}
-          className={getBtnClassNames("w-10")}
-        >
-          <Image
-            src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1720704973/minus_nvg56t.png"
-            alt="minus"
-            width={15}
-            height={15}
-            className="m-auto"
-          />
-        </Button>
+  const displayName = i18n.language === "fr" ? role.nameFR : role.name;
+  const displayTeam = i18n.language === "fr" ? role.teamFR : role.team;
 
-        <div className="h-10 z-20 p-2 my-2 rounded-xl text-sm text-center flex justify-center items-center hover:scale-[105%] transition-all hover:cursor-pointer border-2 border-secondary bg-white w-10">
-          <p className="text-black">{role.count}</p>
+  return (
+    <Card className="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.67rem)] bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/15 transition-all duration-200 ">
+      <CardBody className="p-4 relative">
+        {/* {role.count > 0 && (
+          <Badge
+            content={role.count}
+            color="primary"
+            className="absolute top-0 right-0"
+            size="lg"
+          />
+        )} */}
+        <div className="flex items-center gap-3 mb-3">
+          <div className="">
+            <img
+              src={role.image}
+              alt={displayName}
+              className="w-14 h-14 rounded-lg object-cover"
+            />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="text-white font-semibold text-sm truncate">
+              {displayName}
+            </h3>
+            <p className="text-white/60 text-xs truncate">{displayTeam}</p>
+
+            <p className="text-white/50 text-xs italic">Max: {maxCount}</p>
+
+          </div>
         </div>
 
-        <Button
-          isIconOnly
-          size="sm"
-          color="secondary"
-          variant="solid"
-          aria-label="volumeToggle"
-          onClick={handleIncrement}
-          className={getBtnClassNames("w-10")}
-        >
-          <Image
-            src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1720704972/plus_flbowi.png"
-            alt="plus"
-            width={15}
-            height={15}
-            className="m-auto"
-          />
-        </Button>
-      </div>
-      <User
-        avatarProps={{
-          size: "md",
-          src: role.image,
-          radius: "xl",
-        }}
-        className="p-1 flex justify-center items-center w-full"
-        name={
-          <p className="text-xs text-white">
-            {i18n.language === "fr" ? role.nameFR : role.name}
-            {` (${i18n.language === "fr" ? role.teamFR : role.team})`}
-          </p>
-        }
-      />
-    </div>
+        <div className="flex items-center justify-between gap-2">
+          <Button
+            isIconOnly
+            size="sm"
+            color="secondary"
+            variant="flat"
+            onClick={handleDecrement}
+            isDisabled={role.count === 0}
+            className="min-w-8 h-8"
+          >
+            <Image
+              src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1720704973/minus_nvg56t.png"
+              alt="minus"
+              width={15}
+              height={15}
+            />
+          </Button>
+          <div className="flex-1 text-center">
+            <span className="text-white font-bold text-lg">{role.count}</span>
+          </div>
+          <Button
+            isIconOnly
+            size="sm"
+            color="primary"
+            variant="flat"
+            onClick={handleIncrement}
+            isDisabled={role.count >= maxCount}
+            className="min-w-8 h-8"
+          >
+            <Image
+              src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1720704972/plus_flbowi.png"
+              alt="plus"
+              width={15}
+              height={15}
+            />
+          </Button>
+        </div>
+      </CardBody>
+    </Card>
   );
 };
 

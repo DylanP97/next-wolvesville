@@ -25,7 +25,7 @@ const LogoutBtn = () => {
     <>
       {isConnected && (
         <Button
-          className={getBtnClassNames("w-40")}
+          className={getBtnClassNames("w-36")}
           variant="solid"
           color="secondary"
           size="sm"

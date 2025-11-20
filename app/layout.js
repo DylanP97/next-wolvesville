@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
           <Providers>
             <DevModeBorder>
               <RenderProvider>
-                <div className="flex flex-col justify-between w-full h-[100vh] pt-[70px] ">
+                <div className="flex flex-col justify-between w-full h-[100vh]">
                   <GeneralBtns />
                   {children}
                   {/* <Footer /> */}

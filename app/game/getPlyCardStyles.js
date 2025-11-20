@@ -157,5 +157,5 @@ export const getPlyCardBackground = (
 };
 
 export const getPlyCardLayout = () => {
-  return "w-full h-32 flex flex-col gap-2 justify-center items-center relative p-3 rounded-lg border border-gray-700 transition-all duration-200 hover:shadow-lg";
+  return "w-full h-28 flex flex-col gap-1 justify-center items-center relative p-3 rounded-lg border border-gray-700 transition-all duration-200 hover:shadow-lg";
 };
