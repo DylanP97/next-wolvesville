@@ -5,7 +5,7 @@ import HamburgerIcon from "./icons/HamburgerIcon";
 import { useToRender } from "../../providers/RenderProvider";
 import { divActionIcon, getBtnClassNames } from "../../lib/styles";
 
-const TopExitMenuBtn = () => {
+const GameMenuExitBtn = () => {
   const { toggleExitMenu } = useToRender();
 
   return (
@@ -23,4 +23,4 @@ const TopExitMenuBtn = () => {
   );
 };
 
-export default TopExitMenuBtn;
+export default GameMenuExitBtn;

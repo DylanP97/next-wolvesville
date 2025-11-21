@@ -16,6 +16,7 @@ import Image from "next/image";
 // import background1 from "../public/game/background1.jpeg";
 // import background2 from "../public/game/background2.jpeg";
 // import background3 from "../public/game/background3.jpeg";
+import WerewolfBackground from "./WerewolfBackground";
 
 const PreScreenMenu = () => {
   const { t } = useTranslation();
@@ -100,6 +101,7 @@ const PreScreenMenu = () => {
   } else {
     return (
       <div className="relative flex flex-col flex-grow justify-center items-center">
+        <WerewolfBackground />
         {/* <Image
           priority
           className="absolute top-0 left-0 object-cover h-full w-full"

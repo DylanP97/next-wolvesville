@@ -117,23 +117,23 @@ body {
 }
 
 .slider {
-  box-shadow: 0 10px 20px -5px rgba(var(--background), 0.125);
+  /* box-shadow: 0 10px 20px -5px rgba(var(--background), 0.125); */
   height: 120px;
   margin: auto;
   overflow: hidden;
   position: absolute;
   inset: 50% 0%;
   width: 90vw;
-  opacity: 0.4;
+  /* opacity: 0.4; */
 }
 
 .slider::before,
 .slider::after {
-  background: linear-gradient(
+  /* background: linear-gradient(
     to right,
     var(--background) 0%,
     rgba(255, 255, 255, 0) 100%
-  );
+  ); */
   content: "";
   height: 120px;
   position: absolute;
@@ -153,7 +153,7 @@ body {
 }
 
 .slide-track {
-  background-color: var(--background);
+  /* background-color: var(--background); */
   animation: scroll 20s linear infinite;
   display: flex;
   width: calc(250px * 40);

@@ -12,7 +12,7 @@ import { getBtnClassNames } from "../lib/styles";
 
 const Connexion = ({ logOption, onBack }) => {
   const { t } = useTranslation();
-  const { setAuthInfo, setSocket, setToken } = useAuth();
+  const { setAuthInfo, setSocket, setToken, setIsDev } = useAuth();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,6 +33,7 @@ const Connexion = ({ logOption, onBack }) => {
 
         if (data) {
           setToken(data.token);
+          setIsDev(data.isDev || false);
           const newSocket = io(process.env.NEXT_PUBLIC_API_URL, {
             query: { token: data.token },
           });

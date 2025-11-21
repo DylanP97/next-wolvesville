@@ -11,7 +11,7 @@ const AvatarAndRole = ({ ply, alive }) => {
   return (
     <div
       key={ply.name + "--wo-div"}
-      className="flex flex-col items-center w-44"
+      className="flex flex-col items-center min-w-0 w-full"
     >
       <div className="flex relative">
         <Image
@@ -37,8 +37,9 @@ const AvatarAndRole = ({ ply, alive }) => {
           )}
         </div>
       </div>
-      <p className="m-2 text-white text-xs text-clip italic">
-        {ply.name} {alive ? t("winnerOverlay.as") : t("winnerOverlay.wasA")} {" "}
+
+      <p className="m-2 text-white text-xs text-center text-clip italic min-w-0">
+        {ply.name} {alive ? t("winnerOverlay.as") : t("winnerOverlay.wasA")}{" "}
         {i18n.language === "fr" ? ply.role.nameFR : ply.role.name}
       </p>
     </div>

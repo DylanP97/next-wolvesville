@@ -3,7 +3,6 @@
 import { useAuth } from "./providers/AuthProvider";
 import { useTranslation } from "react-i18next";
 import ConnectedUserCard from "./ConnectedUserCard";
-import GoBackBtn from "./components/GoBackBtn";
 import { useEffect, useState } from "react";
 import { fetchUsers } from "./lib/fetch";
 import AvatarUI from "./components/AvatarUI";
@@ -31,7 +30,7 @@ const ConnectedUsers = () => {
   }, []);
 
   return (
-    <div className="flex flex-grow flex-col justify-between w-full p-4">
+    <div className="relative pt-[70px] flex flex-grow flex-col justify-between w-full p-4">
       <h1 className="text-white text-3xl font-bold my-6 font-wolf">
         {t("connected.title")}
       </h1>
@@ -59,7 +58,6 @@ const ConnectedUsers = () => {
             );
           })}
       </div> */}
-      <GoBackBtn />
     </div>
   );
 };

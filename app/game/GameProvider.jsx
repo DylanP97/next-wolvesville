@@ -204,18 +204,18 @@ export const GameProvider = ({ children }) => {
     }
 
     // Reset available chats state
-    if (timeOfTheDay == "nighttime" && isWolf) {
-      setAvailableChats([general, wolves]);
-      setUsedChat(wolves);
-    } else if (
+    if (
       (clientPlayer.isAlive && isUnderArrest) ||
       (clientPlayer.isAlive &&
         isJailer &&
-        timeOfTheDay == "nighttime" &&
+        timeOfTheDay === "nighttime" &&
         hasHandcuffed > 0)
     ) {
       setAvailableChats([general, jail]);
       setUsedChat(jail);
+    } else if (timeOfTheDay === "nighttime" && isWolf) {
+      setAvailableChats([general, wolves]);
+      setUsedChat(wolves);
     } else {
       setAvailableChats([general]);
       setUsedChat(general);

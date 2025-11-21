@@ -18,7 +18,7 @@ const cpuNextMove = (
   function getRandomAlivePlayer(
     excludeWerewolves = false,
     excludeRevealed = false,
-    excludePlayerId = null // New parameter to exclude a specific player
+    excludePlayerId = null, // New parameter to exclude a specific player
   ) {
     let potentialPlayers = playersList.filter(
       (player) =>
@@ -94,18 +94,27 @@ const cpuNextMove = (
         }
         break;
       case "Wolf Seer":
-        let playerToUncover = getRandomAlivePlayer(false, true, cpu.id);
-        if (playerToUncover && playerToUncover.id !== cpu.id) {
-          socket.emit(
-            "uncoverRole",
-            {
-              type: "uncoverRole",
-              wolfSeerId: cpu.id,
-              selectedPlayerId: playerToUncover.id,
-              selectedPlayerName: playerToUncover.name,
-            },
-            gameId
+        if (cpu.role.canPerform1.nbrLeftToPerform > 0) {
+          let playerToUncover = playersList.find(
+            (player) =>
+              player.isAlive &&
+              !player.isUnderArrest &&
+              player.id !== cpu.id &&
+              !player.isRevealedByWolfSeer
           );
+
+          if (playerToUncover) {
+            socket.emit(
+              "uncoverRole",
+              {
+                type: "uncoverRole",
+                wolfSeerId: cpu.id,
+                selectedPlayerId: playerToUncover.id,
+                selectedPlayerName: playerToUncover.name,
+              },
+              gameId
+            );
+          }
         }
         break;
       case "Witch":

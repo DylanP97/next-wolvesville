@@ -5,8 +5,10 @@ import DevModeToggle from "../general-btns/components/DevModeToggle";
 import LogoutBtn from "../general-btns/components/LogoutBtn";
 import VolumeToggle from "../general-btns/components/VolumeToggle";
 import FullScreenToggle from "../general-btns/components/FullScreenToggle";
+import { useAuth } from "../providers/AuthProvider";
 
 const GameMenuExitOverlay = ({ isOpen, onClose }) => {
+    const { isDev } = useAuth();
     if (!isOpen) return null;
 
     return (
@@ -19,9 +21,10 @@ const GameMenuExitOverlay = ({ isOpen, onClose }) => {
                 <div className="flex gap-2">
                     <VolumeToggle />
                     <FullScreenToggle />
-
                 </div>
-                <DevModeToggle />
+                {
+                    isDev && <DevModeToggle />
+                }
                 <GoBackBtn />
                 <LogoutBtn />
             </div>

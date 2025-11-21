@@ -16,7 +16,7 @@ const AuthInfo = ({ username, isInRoom, avatar }) => {
   const randomIndex = Math.floor(Math.random() * welcomeMsgs.length);
 
   return (
-    <header className="m-2 p-4 flex justify-center items-center">
+    <header className="relative top-[70px] m-2 p-4 flex justify-center items-center">
       <div className="m-2">
         <AvatarUI avatar={avatar} heightAndWidth={80} />
       </div>

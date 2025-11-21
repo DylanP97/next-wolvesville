@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { Button, Tab, Tabs } from "@nextui-org/react";
 import { tabs } from "./lib/tabsDefinitions";
 import ProfileSelect from "./ProfileSelect";
-import GoBackBtn from "./components/GoBackBtn";
 import AvatarUI from "./components/AvatarUI";
 import { getBtnClassNames } from "./lib/styles";
 
@@ -44,7 +43,7 @@ const Profile = () => {
   console.log("avState", avState);
 
   return (
-    <section className="h-screen w-full px-5 flex flex-col justify-center items-center ">
+    <section className="h-screen w-full px-5 flex flex-col justify-center items-center pt-[70px]">
       <div
         className={`bg-white rounded-full flex justify-center my-4 overflow-hidden`}
       >
@@ -85,7 +84,6 @@ const Profile = () => {
       </div>
 
       <div className="flex gap-2 my-4">
-        <GoBackBtn />
         <Button
           className={getBtnClassNames('w-60')}
           color="primary"

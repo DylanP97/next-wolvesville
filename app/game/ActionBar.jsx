@@ -7,7 +7,7 @@ import PlayingCommands from "./PlayingCommands";
 import PauseToggle from "./PauseToggle";
 import ChatModal from "./ChatModal";
 import ChatButton from "./ChatButton";
-import TopExitMenuBtn from "../general-btns/components/TopExitMenuBtn";
+import GameMenuExitBtn from "../general-btns/components/GameMenuExitBtn";
 
 const ActionBar = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { clientPlayer, actionType } = useGame();
@@ -21,7 +21,7 @@ const ActionBar = ({ summaryIsOpen, setSummaryIsOpen }) => {
           <h2 className="text-white text-center mb-4 text-sm">{t("game.actionBar.title")}</h2>
           <div className="flex flex-row gap-4 justify-center">
             {/* <div className="fixed top-0 left-0 mx-1 z-50"> */}
-              <TopExitMenuBtn />
+              <GameMenuExitBtn />
             {/* </div> */}
             <PauseToggle />
             {clientPlayer.isAlive && <PlayingCommands />}

@@ -44,11 +44,12 @@ const WinnerOverlay = () => {
 
   if (winningTeam && wTeamData) {
     return (
-      <div className="winner-overlay">
+      <div className="winner-overlay fixed inset-0 bg-black/60 overflow-y-auto flex justify-center p-4">
         <div
           id="winner-message"
-          className="winner-message p-4 flex flex-col justify-center relative max-h-[90vh] overflow-y-auto"
-        >
+          className="winner-message w-full max-w-lg p-4 bg-gray-800 rounded-lg overflow-y-auto">
+
+          {/* winning team row */}
           <div className="flex items-center gap-2">
             <Image
               src={winningTeam.image}
@@ -64,7 +65,9 @@ const WinnerOverlay = () => {
             </p>
           </div>
           <Divider className="my-4" />
-          <div className="flex flex-row justify-center flex-wrap gap-2">
+
+          {/* Winner players */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full min-w-0">
             {winningTeam.winnerPlayers.map((ply) => {
               return (
                 <AvatarAndRole
@@ -76,6 +79,8 @@ const WinnerOverlay = () => {
             })}
           </div>
           <Divider className="my-4" />
+
+          {/* Graveyard Title*/}
           <div className="flex flex-col justify-center my-2">
             <div className="flex items-center gap-2">
               <Image
@@ -88,7 +93,9 @@ const WinnerOverlay = () => {
               <p className="text-xs">{t("winnerOverlay.graveyard")}</p>
             </div>
             <Divider className="my-4" />
-            <div className="flex flex-row justify-center mt-4 gap-2 flex-wrap">
+
+            {/* Graveyard */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full min-w-0">
               {playersList
                 .filter((ply) => !ply.isAlive)
                 .map((ply) => {
@@ -103,9 +110,11 @@ const WinnerOverlay = () => {
             </div>
           </div>
           <Button
-            className={btnClassNames + " font-wolf mt-4"}
-            variant="solid"
+            color="primary"
+            variant="shadow"
             onClick={() => handleExitGame()}
+            size="lg"
+            className={"flex-1 font-wolf mt-4"}
           >
             {t("gobackmenu")}
           </Button>

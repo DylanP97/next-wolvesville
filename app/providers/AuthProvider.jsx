@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isGuest, setIsGuest] = useState(false);
   const [game, setGame] = useState(null);
+  const [isDev, setIsDev] = useState(false);
 
   const {
     generateNoise,
@@ -69,6 +70,7 @@ export const AuthProvider = ({ children }) => {
       setIsPlaying(data.isPlaying);
       setIsInRoom(data.isInRoom);
       setGame(data.game);
+      setIsDev(data.isDev || false);
       const newSocket = io(process.env.NEXT_PUBLIC_API_URL, {
         query: { token: data.token },
       });
@@ -83,7 +85,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (!authState.isConnected) return;
 
-    // If the user is not in a game → menu music
     if (!isPlaying) {
       stopMusic();
       generateBackgroundMusic();
@@ -111,7 +112,6 @@ export const AuthProvider = ({ children }) => {
       });
 
       socket.on("launchRoom", (game) => {
-        // console.log("launchRoom received", game);
 
         game.playersList.forEach((player) => {
           if (player.isCPU) {
@@ -119,7 +119,6 @@ export const AuthProvider = ({ children }) => {
           }
         });
 
-        // ALWAYS set these to navigate to the game screen
         setGame(game);
         setIsPlaying(true);
       });
@@ -155,6 +154,8 @@ export const AuthProvider = ({ children }) => {
         updateUserGameState,
         isGuest,
         setIsGuest,
+        isDev,
+        setIsDev,
       }}
     >
       {children}

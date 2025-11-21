@@ -7,7 +7,6 @@ import CreateRoomStep1 from "./CreateRoomStep1";
 import CreateRoomStep2 from "./CreateRoomStep2";
 import CreateRoomStep3 from "./CreateRoomStep3";
 import CreateRoomStep4 from "./CreateRoomStep4";
-import GoBackBtn from "./components/GoBackBtn";
 import { useTranslation } from "react-i18next";
 import { fetchRoles, fetchTeams } from "./lib/fetch";
 import { btnClassNames } from "./lib/styles";
@@ -225,7 +224,7 @@ const CreateRoom = () => {
   };
 
   return (
-    <div className="w-full p-4 flex flex-grow flex-col justify-between">
+    <div className="relative top-[70px] w-full p-4 flex flex-grow flex-col justify-between">
       {created ? (
         <h1 className="text-white">{t("create.roomCreatedWaitingUsers")}</h1>
       ) : (
@@ -248,7 +247,6 @@ const CreateRoom = () => {
           </div>
         </div>
       )}
-      <GoBackBtn />
     </div>
   );
 };

@@ -2,7 +2,6 @@
 
 import RoleCard from "./RoleCard";
 import { useEffect, useState } from "react";
-import GoBackBtn from "./components/GoBackBtn";
 import { useTranslation } from "react-i18next";
 import { fetchRoles } from "./lib/fetch";
 import { ScrollShadow } from "@nextui-org/react";
@@ -21,7 +20,7 @@ const RolesGrid = () => {
   }, []);
 
   return (
-    <section className="flex flex-col w-full p-4 mb-12">
+    <section className="flex flex-col w-full p-4 pt-[70px] mb-12">
       <h1 className="text-white text-3xl font-bold p-5 font-wolf">{t("roles.title")}</h1>
       <div className="flex flex-row gap-6 p-4 overflow-x-auto md:overflow-x-hidden md:flex-wrap">
         {availableRoles
@@ -29,9 +28,6 @@ const RolesGrid = () => {
           .map((role) => (
             <RoleCard key={role.name} role={role} />
           ))}
-      </div>
-      <div className="px-5 py-2">
-        <GoBackBtn />
       </div>
     </section>
   );
