@@ -1,10 +1,11 @@
 "use client";
 
-import { Button } from "@nextui-org/react";
+import { Button, Tooltip } from "@nextui-org/react";
 import { useAuth } from "../../providers/AuthProvider";
 import { useTranslation } from "react-i18next";
 import { fetchLogout } from "../../lib/fetch";
 import { btnClassNames, getBtnClassNames } from "../../lib/styles";
+import LogoutIcon from "./icons/LogoutIcon";
 
 const LogoutBtn = () => {
   const { isConnected, setAuthInfo, socket, setSocket, username, isGuest } = useAuth();
@@ -22,21 +23,24 @@ const LogoutBtn = () => {
   };
 
   return (
-    <>
-      {isConnected && (
-        <Button
-          className={getBtnClassNames("w-36")}
-          variant="solid"
-          color="secondary"
-          size="sm"
-          aria-label={t("logout")}
-          onPress={() => logout()}
-        >
-          {t("logout")}
-        </Button>
-      )}
-    </>
-  );
+    <Tooltip
+      content={t("logout")}
+      color="secondary"
+      variant="flat"
+    >
+      <Button
+        isIconOnly
+        size="sm"
+        color="secondary"
+        className={getBtnClassNames("w-10")}
+        variant="solid"
+        aria-label={t("logout")}
+        onPress={() => logout()}
+      >
+        <LogoutIcon />
+      </Button>
+    </Tooltip>
+  )
 };
 
 export default LogoutBtn;

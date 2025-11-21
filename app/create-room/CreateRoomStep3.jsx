@@ -2,7 +2,6 @@
 
 import { Card, CardBody, Select, SelectItem, Button, User } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
-import { btnClassNames } from "./lib/styles";
 
 const CreateRoomStep3 = ({
   preferredRole,

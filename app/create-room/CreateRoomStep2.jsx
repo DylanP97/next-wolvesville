@@ -1,6 +1,5 @@
 import { Card, CardBody, Button, Chip } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
 
 const CreateRoomStep2 = ({
     totalPlayers,

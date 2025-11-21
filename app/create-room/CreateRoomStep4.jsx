@@ -2,8 +2,7 @@
 
 import { Card, CardBody, User, Chip, Button, Divider } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
-import { colorsForTeams } from "./lib/utils";
-import { btnClassNames } from "./lib/styles";
+import { colorsForTeams } from "../lib/utils";
 
 const CreateRoomStep4 = ({
   selectedRoles,

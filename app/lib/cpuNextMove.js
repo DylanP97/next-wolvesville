@@ -229,7 +229,7 @@ const cpuNextMove = (
           let deadPlayer = getRandomDeadPlayer();
           if (deadPlayer) {
             socket.emit("lootGrave", {
-              type: actionType,
+              type: "loot",
               graveRobberId: clientPlayer.id,
               selectedPlayerId: player.id,
               selectedPlayerName: player.name,

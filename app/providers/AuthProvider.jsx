@@ -109,6 +109,7 @@ export const AuthProvider = ({ children }) => {
 
       socket.on("updateRooms", (updatedRooms) => {
         setRooms(updatedRooms);
+        console.log("Rooms updated:", updatedRooms);
       });
 
       socket.on("launchRoom", (game) => {

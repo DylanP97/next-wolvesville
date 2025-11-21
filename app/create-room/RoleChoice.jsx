@@ -1,6 +1,6 @@
 import { Card, CardBody, Badge, Button } from "@nextui-org/react";
 import Image from "next/image";
-import i18n from "./lib/i18n";
+import i18n from "../lib/i18n";
 
 const RoleChoice = ({ role, handleRoleChange }) => {
   const isSolo = !["Village", "Werewolves"].includes(role.team);

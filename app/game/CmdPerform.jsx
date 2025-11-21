@@ -44,8 +44,6 @@ const CmdPerform = ({
     (isJailer && type === "execute" ? Boolean(hasHandcuffed) : true)
   ) {
 
-    console.log("nbrLeftToPerform ", type, " : ", nbrLeftToPerform);
-
     const actionType = selectionState.actionType; // <-- GET FROM STATE
 
     return (

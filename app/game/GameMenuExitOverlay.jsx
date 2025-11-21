@@ -19,6 +19,7 @@ const GameMenuExitOverlay = ({ isOpen, onClose }) => {
         >
             <div className="flex flex-col gap-4 items-center justify-center ">
                 <div className="flex gap-2">
+                    <LogoutBtn />
                     <VolumeToggle />
                     <FullScreenToggle />
                 </div>
@@ -26,7 +27,6 @@ const GameMenuExitOverlay = ({ isOpen, onClose }) => {
                     isDev && <DevModeToggle />
                 }
                 <GoBackBtn />
-                <LogoutBtn />
             </div>
         </div>
     );

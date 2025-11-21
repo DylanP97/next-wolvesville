@@ -3,10 +3,10 @@
 import { Button } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import { useAuth } from "./providers/AuthProvider";
-import CreateRoomStep1 from "./CreateRoomStep1";
-import CreateRoomStep2 from "./CreateRoomStep2";
-import CreateRoomStep3 from "./CreateRoomStep3";
-import CreateRoomStep4 from "./CreateRoomStep4";
+import CreateRoomStep1 from "./create-room/CreateRoomStep1";
+import CreateRoomStep2 from "./create-room/CreateRoomStep2";
+import CreateRoomStep3 from "./create-room/CreateRoomStep3";
+import CreateRoomStep4 from "./create-room/CreateRoomStep4";
 import { useTranslation } from "react-i18next";
 import { fetchRoles, fetchTeams } from "./lib/fetch";
 import { btnClassNames } from "./lib/styles";
