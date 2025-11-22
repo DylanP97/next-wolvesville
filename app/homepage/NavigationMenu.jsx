@@ -80,7 +80,7 @@ const NavigationMenu = () => {
 
   return (
     <div className="w-full h-full">
-      <nav className="absolute top-1/3 flex flex-col items-center py-4 w-full z-20">
+      <nav className="absolute top-1/3 flex flex-col items-center py-4 w-full z-40">
         <Button
           className={getBtnClassNames("w-80") + " text-md font-medium h-12 font-wolf"}
           color="primary"

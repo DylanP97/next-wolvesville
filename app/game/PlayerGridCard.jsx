@@ -9,6 +9,7 @@ import { useGame } from "./GameProvider";
 import { getPlyCardBackground, getPlyCardLayout } from "./getPlyCardStyles";
 import { useDevMode } from "../providers/DevModeProvider";
 import i18n from "../lib/i18n";
+import { useAuth } from "../providers/AuthProvider";
 
 const PlayerGridCard = ({
   player,
@@ -25,6 +26,7 @@ const PlayerGridCard = ({
     weather,
   } = useGame();
   const { isDevMode } = useDevMode();
+  const { isDev } = useAuth();
 
   const onClickHandler = () => {
     handleClick(player);
@@ -77,7 +79,7 @@ const PlayerGridCard = ({
         player.id == clientPlayer.id ||
         (isAlsoWolf && isWolf) ||
         (player.isRevealedByWolfSeer && isWolf) ||
-        isDevMode) && (
+        isDevMode && isDev) && (
           <IconReveal
             playerId={player.id}
             clientPlayerId={clientPlayer.id}
@@ -85,6 +87,7 @@ const PlayerGridCard = ({
             isRevealed={player.isRevealed}
             isWolfTeammate={(isAlsoWolf && isWolf) || (player.isRevealedByWolfSeer && isWolf)}
             isDevMode={isDevMode}
+            isDev={isDev}
           />
         )}
 

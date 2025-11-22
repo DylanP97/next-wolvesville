@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }) => {
       setIsPlaying(data.isPlaying);
       setIsInRoom(data.isInRoom);
       setGame(data.game);
-      setIsDev(data.isDev || false);
+      setIsDev(data.isDev);
       const newSocket = io(process.env.NEXT_PUBLIC_API_URL, {
         query: { token: data.token },
       });
@@ -83,7 +83,11 @@ export const AuthProvider = ({ children }) => {
   /** execution */
 
   useEffect(() => {
-    if (!authState.isConnected) return;
+    if (!authState.isConnected) {
+      console.log("heelloo")
+      setIsDev(false);
+      return;
+    }
 
     if (!isPlaying) {
       stopMusic();
@@ -92,6 +96,7 @@ export const AuthProvider = ({ children }) => {
     }
 
   }, [authState.isConnected, isPlaying]);
+
 
   useEffect(() => {
     checkAuth();
@@ -109,7 +114,6 @@ export const AuthProvider = ({ children }) => {
 
       socket.on("updateRooms", (updatedRooms) => {
         setRooms(updatedRooms);
-        console.log("Rooms updated:", updatedRooms);
       });
 
       socket.on("launchRoom", (game) => {

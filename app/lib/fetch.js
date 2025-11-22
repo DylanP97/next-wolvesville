@@ -91,7 +91,6 @@ export const fetchLogin = async (email, password) => {
 };
 
 export const fetchGuestLogin = async () => {
-  console.log("fetchGuestLogin called");
   try {
     const response = await fetch(
       process.env.NEXT_PUBLIC_API_URL + "/api/user/guestLogin",

@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 
-const IconReveal = ({ playerId, clientPlayerId, roleIcon, isRevealed, isWolfTeammate, isDevMode }) => {
+const IconReveal = ({ playerId, clientPlayerId, roleIcon, isRevealed, isWolfTeammate, isDevMode, isDev }) => {
   const getBorderColor = () => {
     if (playerId === clientPlayerId) return "border-gray-500";
     if (isWolfTeammate) return "border-blue-500";
     if (isRevealed) return "bg-yellow-800";
-    if (isDevMode) return "border-red-600";
+    if (isDevMode && isDev) return "border-red-600";
     return "border-green-500";
   };
 

@@ -96,7 +96,6 @@ const PreScreenMenu = () => {
       <HomePage username={username} isInRoom={false} avatar={defaultAvatar} />
     );
   } else if (logOption === "login" || logOption === "register") {
-    console.log("logOption", logOption);
     return <Connexion logOption={logOption} onBack={() => setLogOption("")} />;
   } else {
     return (

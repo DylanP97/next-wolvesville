@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { replacePlaceholders } from "../lib/utils";
 import { useDevMode } from "../providers/DevModeProvider";
 import Chatbox from "./Chatbox";
+import { useAuth } from "../providers/AuthProvider";
 
 const ChatModal = ({ isOpen, setIsOpen }) => {
   const {
@@ -18,6 +19,8 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
     clientPlayer,
   } = useGame();
   const { isDevMode } = useDevMode();
+    const { isDev } = useAuth();
+
   const { t } = useTranslation();
   const [messages, setMessages] = useState(usedChat.history);
   const messagesEndRef = useRef(null);
@@ -57,14 +60,14 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
   }, [general, wolves, jail, usedChat.type]);
 
   const filteredMessages = useMemo(() => {
-    if (isDevMode) {
+    if (isDevMode && isDev) {
       return messages;
     }
     return messages.filter((msg) => {
       const messageText = msg.msg || "";
       return !messageText.includes("DEV --");
     });
-  }, [messages, isDevMode]);
+  }, [messages, isDevMode, isDev]);
 
   // Reverse so oldest is at top, newest at bottom
   const displayMessages = useMemo(() => {

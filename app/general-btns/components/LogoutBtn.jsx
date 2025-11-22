@@ -8,7 +8,7 @@ import { btnClassNames, getBtnClassNames } from "../../lib/styles";
 import LogoutIcon from "./icons/LogoutIcon";
 
 const LogoutBtn = () => {
-  const { isConnected, setAuthInfo, socket, setSocket, username, isGuest } = useAuth();
+  const { isConnected, setAuthInfo, socket, setSocket, username, isGuest, setIsDev } = useAuth();
   const { t } = useTranslation();
 
   const logout = async () => {
@@ -16,6 +16,7 @@ const LogoutBtn = () => {
     console.log(response)
     if (response.ok) {
       setAuthInfo(null, null, false, null);
+      setIsDev(false);
       socket.emit("logout");
       setSocket(null);
       document.location.assign("/");

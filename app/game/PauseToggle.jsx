@@ -10,7 +10,7 @@ import { divActionIcon, imgActionIcon } from "../lib/styles";
 import { prefixDevText } from "../lib/devUtils";
 
 const PauseToggle = () => {
-  const { socket } = useAuth();
+  const { socket, isDev } = useAuth();
   const { gameId, isPaused } = useGame();
   const { isDevMode } = useDevMode();
   const [gamePaused, setGamePaused] = useState(false);
@@ -30,7 +30,7 @@ const PauseToggle = () => {
     setGamePaused(false);
   };
 
-  if (!isDevMode) {
+  if (!isDevMode || !isDev) {
     return null;
   }
 
