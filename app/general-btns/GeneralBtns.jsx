@@ -25,7 +25,7 @@ const GeneralBtns = () => {
             }
             <LogoutBtn />
             {
-              activeComponent?.type?.name !== "HomePage" &&
+              activeComponent?.type?.displayName !== "HomePage" &&
               <GoBackBtn />
             }
           </>

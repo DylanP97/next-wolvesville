@@ -20,24 +20,10 @@ module.exports = {
       },
     },
   },
-  darkMode: "class",
   plugins: [
     nextui({
       themes: {
         light: {
-          colors: {
-            primary: {
-              foreground: "#fbfb23",
-              DEFAULT: "#e50403",
-            },
-            secondary: {
-              foreground: "#fff",
-              DEFAULT: "#52525B",
-            },
-            background: "#101010",
-          },
-        },
-        dark: {
           colors: {
             primary: {
               foreground: "#fbfb23",

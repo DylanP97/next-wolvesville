@@ -6,12 +6,12 @@ import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { Button, Tooltip } from "@nextui-org/react";
 import { useKeys } from "../../providers/KeysProvider";
-import { btnClassNames, getBtnClassNames } from "../../lib/styles";
+import { getBtnClassNames } from "../../lib/styles";
 
 const FullScreenToggle = ({}) => {
   const { currentKey, setCurrentKey } = useKeys();
   const { t } = useTranslation();
-  const [fullScreen, setFullScreen] = useState(false);
+  const [fullScreen, setFullScreen] = useState(document.fullscreenElement !== null ? true : false);
 
   useEffect(() => {
     const handleFullScreenChange = () => {

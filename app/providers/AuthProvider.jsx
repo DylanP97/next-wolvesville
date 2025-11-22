@@ -82,9 +82,14 @@ export const AuthProvider = ({ children }) => {
 
   /** execution */
 
+  
+  
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
   useEffect(() => {
     if (!authState.isConnected) {
-      console.log("heelloo")
       setIsDev(false);
       return;
     }
@@ -96,11 +101,6 @@ export const AuthProvider = ({ children }) => {
     }
 
   }, [authState.isConnected, isPlaying]);
-
-
-  useEffect(() => {
-    checkAuth();
-  }, []);
 
   useEffect(() => {
     if (socket) {
