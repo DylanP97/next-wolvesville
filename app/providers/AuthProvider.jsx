@@ -117,7 +117,6 @@ export const AuthProvider = ({ children }) => {
       });
 
       socket.on("launchRoom", (game) => {
-
         game.playersList.forEach((player) => {
           if (player.isCPU) {
             socket.emit("sendNewConnectedUser", player);

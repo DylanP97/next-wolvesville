@@ -3,6 +3,7 @@
 import { useTranslation } from "react-i18next";
 import HomePage from "./homepage/HomePage";
 import Connexion from "./connexion/Connexion";
+import PreServerLoadingScreen from "./connexion/PreServerLoadingScreen";
 import Title from "./Title";
 import { useEffect, useState } from "react";
 import { defaultAvatar } from "./lib/utils";
@@ -78,16 +79,9 @@ const PreScreenMenu = () => {
 
   if (isLoading) {
     return (
-      <div className="z-20 text-center text-white flex flex-col justify-center items-center m-2">
-        <Spinner />
-        <p>{t("intro.loading")}</p>
-        <span className="text-center text-xs text-white">
-          {t("intro.loading.info")}
-        </span>
-        <div className="text-center text-white text-xl mt-4">
-          {countdown}
-        </div>
-      </div>
+      <PreServerLoadingScreen
+        countdown={countdown}
+      />
     );
   }
 

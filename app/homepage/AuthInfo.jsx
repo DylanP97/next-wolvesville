@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import AvatarUI from "../components/AvatarUI";
 import IsInRoomInfo from "../components/IsInRoomInfo";
 
-const AuthInfo = ({ username, isInRoom, avatar }) => {
+const AuthInfo = ({ username, isInRoom, isPlaying, avatar }) => {
   const { t } = useTranslation();
 
   const welcomeMsgs = [
@@ -22,7 +22,7 @@ const AuthInfo = ({ username, isInRoom, avatar }) => {
       </div>
       <div className="h-full flex flex-col justify-center">
         <p className="text-md text-white">{welcomeMsgs[randomIndex]}</p>
-        <IsInRoomInfo isInRoom={isInRoom} />
+        <IsInRoomInfo isInRoom={isInRoom} isPlaying={isPlaying} />
       </div>
     </header>
   );

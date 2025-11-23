@@ -9,6 +9,8 @@ import { Spinner, Button } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
 import { fetchLogin, fetchSignUp } from "../lib/fetch";
 import { getBtnClassNames } from "../lib/styles";
+import PreServerLoadingScreen from "./PreServerLoadingScreen";
+import { useEffect } from "react";
 
 const Connexion = ({ logOption, onBack }) => {
   const { t } = useTranslation();
@@ -18,6 +20,8 @@ const Connexion = ({ logOption, onBack }) => {
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(logOption === "login");
   const [isLoading, setIsLoading] = useState(false);
+  const [countdown, setCountdown] = useState(50); // Timer state
+
 
   const handleSwitch = () => {
     setIsLogin((prevIsLogin) => !prevIsLogin);
@@ -57,8 +61,26 @@ const Connexion = ({ logOption, onBack }) => {
       const resOk = fetchSignUp(username, email, password, defaultAvatar);
       if (resOk) setIsLogin(true);
       setIsLoading(false);
+      setCountdown(50); // Reset the countdown when loading is finished
     }
   };
+
+  // Timer countdown logic
+  useEffect(() => {
+    let timer;
+    if (isLoading && countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown((prevCountdown) => prevCountdown - 1);
+      }, 1000);
+    }
+
+    if (countdown === 0) {
+      clearInterval(timer);
+      // Handle what happens when countdown reaches zero, if needed
+    }
+
+    return () => clearInterval(timer); // Cleanup the interval on component unmount
+  }, [isLoading, countdown]);
 
   return (
     <div className="flex flex-col flex-grow justify-center items-center">
@@ -97,13 +119,9 @@ const Connexion = ({ logOption, onBack }) => {
       )}
 
       {isLoading && (
-        <div className="z-20 text-center text-white flex flex-col justify-center items-center m-2">
-          <Spinner />
-          <p>{t("intro.loading")}</p>
-          <span className="text-center text-xs text-white">
-            {t("intro.loading.info")}
-          </span>
-        </div>
+        <PreServerLoadingScreen
+          countdown={countdown}
+        />
       )}
     </div>
   );

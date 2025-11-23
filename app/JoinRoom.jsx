@@ -25,6 +25,9 @@ const JoinRoom = () => {
     socket.emit("deleteRoom", roomId);
   };
 
+  console.log(rooms)
+
+
   return (
     <div className="relative pt-[70px] flex flex-col w-full p-4">
       <h1 className="text-white text-3xl font-bold font-wolf">{t("menu.1")}</h1>
@@ -38,7 +41,15 @@ const JoinRoom = () => {
           {rooms.map((room) => {
             let usersInTheRoom = room.usersInTheRoom;
             return (
-              <Card key={room.id} className="max-w-96 w-full">
+              <Card
+                key={room.id}
+                className={`${room.isLaunched
+                    ? "animate-pulse bg-yellow-500 cursor-not-allowed"
+                    : !room.isLaunched && usersInTheRoom.length < room.nbrOfPlayers && !usersInTheRoom.some((usr) => usr.username === username)
+                      ? "bg-green-400"
+                      : ""
+                  } max-w-96 w-full`}
+              >
                 <CardBody>
                   <p>{room.name}</p>
                   <p>
@@ -57,7 +68,7 @@ const JoinRoom = () => {
                 <Divider className="my-2" />
 
                 <CardFooter className="flex flex-col items-start">
-                  {usersInTheRoom.length < room.nbrOfPlayers &&
+                  {!room.isLaunched && usersInTheRoom.length < room.nbrOfPlayers &&
                     !usersInTheRoom.some((usr) => usr.username === username) && (
                       <Button
                         className="w-full hover:text-white hover:scale-[105%]"
@@ -85,6 +96,12 @@ const JoinRoom = () => {
                       {t("join.deleteRoom")}
                     </Button>
                   )}
+
+                  {room.isLaunched && (
+                    <p className="text-center italic ">{t("join.theRoomIsLaunched")}</p>
+                  )}
+
+
                 </CardFooter>
               </Card>
             );

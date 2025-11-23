@@ -30,7 +30,7 @@ const TrackDisplay = () => {
       <div
         className={`${btnPrimary} h-fit w-fit z-50 p-4 my-2 rounded-xl text-sm absolute bottom-8 right-4 flex-col justify-start items-start hover:scale-[105%] transition-all hover:cursor-pointer border-2 border-white track-display " ${isNewSong ? "fade-in p-4 animate-pulse" : "fade-out"}`}
       >
-        <p className="text-xs">Now playing:</p>
+        <p className="text-xs">🎵 Now playing:</p>
         <p className="text-sm">
           {currentTrack.meta.title} - {currentTrack.meta.artist}
         </p>
