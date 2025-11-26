@@ -82,11 +82,37 @@ export const fetchLogin = async (email, password) => {
         credentials: "include",
       }
     );
-    if (response.ok) {
-      return response.json();
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      // Handle specific error messages from backend
+      if (data.error) {
+
+        console.log(data.error)
+
+        // Map backend errors to user-friendly messages
+        if (data.error === "incorrect email" || data.error === "no user found") {
+          return { error: "No account found with this email" };
+        }
+        if (data.error === "incorrect password") {
+          return { error: "Incorrect password. Please try again." };
+        }
+        return { error: data.error };
+      }
+
+      // Fallback for status codes without specific error message
+      if (response.status === 401) {
+        return { error: "Invalid email or password" };
+      }
+
+      return { error: data.message || "Login failed. Please try again." };
     }
+
+    return data;
   } catch (error) {
     console.error("Login error:", error);
+    return { error: "Unable to connect to server. Please try again." };
   }
 };
 
@@ -123,9 +149,27 @@ export const fetchSignUp = async (username, email, password, defaultAvatar) => {
         credentials: "include",
       }
     );
-    console.log("Signup response:", response);
-    return response.ok;
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      // Handle errors object from backend
+      if (data.errors && typeof data.errors === 'object') {
+        // Convert errors object to a user-friendly message
+        const errorMessages = [];
+        if (data.errors.password) errorMessages.push(data.errors.password);
+        if (data.errors.email) errorMessages.push(data.errors.email);
+        if (data.errors.general) errorMessages.push(data.errors.general);
+
+        return { error: errorMessages.join('. ') || "Signup failed" };
+      }
+
+      return { error: data.message || "Signup failed" };
+    }
+
+    return { success: true, data };
   } catch (error) {
     console.error("Signup error:", error);
+    return { error: "Unable to connect to server. Please try again." };
   }
 };

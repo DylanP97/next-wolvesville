@@ -15,8 +15,8 @@ const ConnectedUserCard = ({ user }) => {
     <div
       className={`${getBgColor()} flex flex-row p-2 m-2 h-fit rounded-3xl hover:opacity-90 cursor-pointer max-w-[350px]`}
     >
-      <AvatarUI heightAndWidth={50} avatar={user.avatar} />
-      <div className="flex flex-col items-start">
+      <AvatarUI heightAndWidth={60} avatar={user.avatar} />
+      <div className="flex flex-col items-start flex-1">
         <p className="text-md">{user.username}</p>
         <IsInRoomInfo isInRoom={user.isInRoom} />
       </div>

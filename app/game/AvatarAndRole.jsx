@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import AvatarUI from "../components/AvatarUI"; 
+import AvatarUI from "../components/AvatarUI";
 import { useTranslation } from "react-i18next";
 import i18n from "../lib/i18n";
 
@@ -20,8 +20,18 @@ const AvatarAndRole = ({ ply, alive }) => {
           height={40}
           width={40}
           style={{ height: "auto", width: "auto" }}
-          className="p-2 absolute top-[-15%] left-[55%]"
+          className="p-2 absolute top-[-15%] left-[55%] z-40"
         />
+        {ply.role.wasGraveRobber && (
+          <Image
+            src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706531396/roles/grave-robber_yc0x5n.png"
+            alt={ply.role.name + "--wo-gr-icon"}
+            height={40}
+            width={40}
+            style={{ height: "auto", width: "auto" }}
+            className="p-2 absolute top-[-40%] left-[100%] z-30"
+          />
+        )}
         <div className="p-2 rounded-full">
           {ply.avatar ? (
             <AvatarUI heightAndWidth={40} avatar={ply.avatar} />
@@ -40,7 +50,7 @@ const AvatarAndRole = ({ ply, alive }) => {
 
       <p className="m-2 text-white text-xs text-center text-clip italic min-w-0">
         {ply.name} {alive ? t("winnerOverlay.as") : t("winnerOverlay.wasA")}{" "}
-        {i18n.language === "fr" ? ply.role.nameFR : ply.role.name}
+        {i18n.language === "fr" ? ply.role.nameFR : ply.role.name}{ply.role.wasGraveRobber && " " + t("winnerOverlay.wasGraveRobber")}
       </p>
     </div>
   );

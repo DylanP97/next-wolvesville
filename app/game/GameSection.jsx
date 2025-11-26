@@ -11,32 +11,33 @@ import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
 import GameMenuExitOverlay from "./GameMenuExitOverlay";
 import { useToRender } from "../providers/RenderProvider";
+import MedievalVillageDaytimeBackground from "./MedievalVillageDaytimeBackground";
+import MedievalVillageNighttimeBackground from "./MedievalVillageNighttimeBackground";
+import MedievalVillageVotetimeBackground from "./MedievalVillageVotetimeBackground";
 
 const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { winningTeam, timeOfTheDay } = useGame();
   const { width, height } = useWindowSize();
   const { exitMenuOpen, toggleExitMenu } = useToRender();
 
-
-  const getBackgroundGradient = () => {
+  const getBackgroundComponent = () => {
     switch (timeOfTheDay) {
       case "daytime":
-        return "bg-gradient-to-b from-sky-500 via-sky-200 to-sky-100";
+        return <MedievalVillageDaytimeBackground />;
       case "votetime":
-        return "bg-gradient-to-b from-orange-400 via-orange-300 to-amber-200";
       case "votetimeAftermath":
-        return "bg-gradient-to-b from-orange-700 via-orange-600 to-amber-700";
+        return <MedievalVillageVotetimeBackground />;
       case "nighttime":
-        return "bg-gradient-to-b from-slate-900 via-slate-800 to-blue-900";
       case "nighttimeAftermath":
-        return "bg-gradient-to-b from-slate-700 via-slate-600 to-blue-800";
+        return <MedievalVillageNighttimeBackground />;
       default:
-        return "bg-gradient-to-b from-slate-900 to-blue-900";
+        return <MedievalVillageNighttimeBackground />;
     }
   };
 
   return (
-    <div className={`relative w-full h-screen ${getBackgroundGradient()}`}>
+    <div className="relative w-full h-screen">
+      {getBackgroundComponent()}
       <DeathFlash />
 
       {/* Header fixe en haut */}
@@ -46,7 +47,6 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
 
       {/* Container principal avec padding pour header et action bar */}
       <div className="h-full overflow-hidden">
-        {/* pt-16 pour le header, pb-32 pour l'action bar */}
         <div className="h-full overflow-y-auto">
           <GameGrid />
         </div>

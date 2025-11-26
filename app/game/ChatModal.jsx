@@ -19,16 +19,32 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
     clientPlayer,
   } = useGame();
   const { isDevMode } = useDevMode();
-    const { isDev } = useAuth();
+  const { isDev } = useAuth();
 
   const { t } = useTranslation();
   const [messages, setMessages] = useState(usedChat.history);
   const messagesEndRef = useRef(null);
   const containerRef = useRef(null);
+  const isAtBottom = useRef(true);
 
-  // Auto-scroll to bottom when messages change
-  useEffect(() => {
+  // Check if user is at the bottom
+  const checkIfAtBottom = () => {
+    if (!containerRef.current) return true;
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    const threshold = 50; // pixels from bottom
+    return scrollHeight - scrollTop - clientHeight < threshold;
+  };
+
+  // Handle user scroll
+  const handleScroll = () => {
     if (containerRef.current) {
+      isAtBottom.current = checkIfAtBottom();
+    }
+  };
+
+  // Auto-scroll to bottom ONLY if user is already at the bottom
+  useEffect(() => {
+    if (containerRef.current && isAtBottom.current) {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
   }, [messages]);
@@ -36,10 +52,10 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
   // Scroll to bottom when modal opens
   useEffect(() => {
     if (isOpen && containerRef.current) {
-      // Use setTimeout to ensure DOM is fully rendered
       setTimeout(() => {
         if (containerRef.current) {
           containerRef.current.scrollTop = containerRef.current.scrollHeight;
+          isAtBottom.current = true;
         }
       }, 0);
     }
@@ -127,6 +143,7 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
           {/* Messages */}
           <div
             ref={containerRef}
+            onScroll={handleScroll}
             className="flex-grow overflow-y-auto p-4 bg-slate-900/50 space-y-3"
           >
             {displayMessages.length === 0 ? (

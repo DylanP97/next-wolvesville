@@ -4,7 +4,7 @@ import NavigationMenu from "./NavigationMenu";
 import AuthInfo from "./AuthInfo";
 import { useAuth } from "../providers/AuthProvider";
 import RolesCarousel from "./RolesCarousel";
-import MedievalVillageDaytimeBackground from "../MedievalVillageDaytimeBackground";
+import MedievalVillageDaytimeBackground from "../game/MedievalVillageDaytimeBackground";
 import { useEffect } from "react";
 
 const HomePage = ({ username, isPlaying, isInRoom, avatar }) => {
@@ -19,7 +19,7 @@ const HomePage = ({ username, isPlaying, isInRoom, avatar }) => {
 
   return (
     <div className="object-contain overflow-hidden flex flex-col justify-between flex-grow">
-      <MedievalVillageDaytimeBackground />
+      {/* <MedievalVillageDaytimeBackground /> */}
       <AuthInfo username={username} isInRoom={isInRoom} isPlaying={isPlaying} avatar={avatar} />
       <RolesCarousel />
       <NavigationMenu />

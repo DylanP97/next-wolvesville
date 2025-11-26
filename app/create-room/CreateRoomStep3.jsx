@@ -2,6 +2,7 @@
 
 import { Card, CardBody, Select, SelectItem, Button, User } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
+import i18n from "../lib/i18n";
 
 const CreateRoomStep3 = ({
   preferredRole,
@@ -12,6 +13,13 @@ const CreateRoomStep3 = ({
   onPrevious,
 }) => {
   const { t } = useTranslation();
+
+  // Helper function to get translated role name for display
+  const getTranslatedRoleName = (roleName) => {
+    const role = availableRoles.find((r) => r.name === roleName);
+    return role ? (i18n.language === "fr" ? role.nameFR : role.name) : roleName;
+  };
+
 
   return (
     <div className="flex flex-col gap-6">
@@ -35,11 +43,12 @@ const CreateRoomStep3 = ({
               <SelectItem
                 key={role.name}
                 value={role.name}
+                className="text-slate-800"
                 startContent={
                   <img src={role.image} alt={role.name} className="w-6 h-6 rounded" />
                 }
               >
-                {role.name}
+                {i18n.language === "fr" ? role.nameFR : role.name}
               </SelectItem>
             ))}
           </Select>
@@ -47,7 +56,7 @@ const CreateRoomStep3 = ({
           {preferredRole && (
             <div className="mt-6 flex items-center gap-3 bg-white/10 border border-white/20 rounded-xl p-3">
               <User
-                name={preferredRole}
+                name={getTranslatedRoleName(preferredRole)}
                 avatarProps={{
                   size: "sm",
                   src: availableRoles.find((r) => r.name === preferredRole)?.image,

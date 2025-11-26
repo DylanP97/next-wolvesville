@@ -3,17 +3,23 @@
 import { useTranslation } from "react-i18next";
 import AvatarUI from "../components/AvatarUI";
 import IsInRoomInfo from "../components/IsInRoomInfo";
+import { useEffect, useState } from "react";
 
 const AuthInfo = ({ username, isInRoom, isPlaying, avatar }) => {
+  const [welcomeMsg, setWelcomeMsg] = useState("");
   const { t } = useTranslation();
-
   const welcomeMsgs = [
     `👋 ${t("home.1")} ${username}${t("questionmark")}`,
     `😀 ${t("home.2")} ${username}${t("exclamation")}`,
     `🐺 ${t("home.3")} ${username}${t("questionmark")}`,
   ];
 
-  const randomIndex = Math.floor(Math.random() * welcomeMsgs.length);
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * welcomeMsgs.length);
+    setWelcomeMsg(welcomeMsgs[randomIndex]);
+  }, [])
+
+
 
   return (
     <header className="relative top-[70px] m-2 p-4 flex justify-center items-center">
@@ -21,7 +27,7 @@ const AuthInfo = ({ username, isInRoom, isPlaying, avatar }) => {
         <AvatarUI avatar={avatar} heightAndWidth={80} />
       </div>
       <div className="h-full flex flex-col justify-center">
-        <p className="text-md text-white">{welcomeMsgs[randomIndex]}</p>
+        <p className="text-md text-white">{welcomeMsg}</p>
         <IsInRoomInfo isInRoom={isInRoom} isPlaying={isPlaying} />
       </div>
     </header>

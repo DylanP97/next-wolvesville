@@ -67,6 +67,8 @@ const GameGrid = () => {
     }
   }, [errorMessage]);
 
+  // console.log(playersList)
+
   return (
     <div className="grid grid-cols-4 md:grid-cols-4 gap-2 place-items-start z-10 px-6 my-8  pb-40">
       {playersList.map((player) => {

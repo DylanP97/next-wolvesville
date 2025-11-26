@@ -48,6 +48,7 @@ const AvatarUIClient = ({ avatar, heightAndWidth }) => {
         src={avatarState}
         height={heightAndWidth || 60}
         width={heightAndWidth || 60}
+        style={{ height: "auto", width: "auto" }}
         alt="Avatar"
       />
     </div>

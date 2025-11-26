@@ -21,19 +21,28 @@ const Connexion = ({ logOption, onBack }) => {
   const [isLogin, setIsLogin] = useState(logOption === "login");
   const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(50); // Timer state
+  const [error, setError] = useState("");
 
 
   const handleSwitch = () => {
     setIsLogin((prevIsLogin) => !prevIsLogin);
+    setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(""); // Clear previous errors
 
     if (isLogin) {
-      const login = async () => {
+      try {
         const data = await fetchLogin(email, password);
+
+        if (data.error) {
+          setError(data.error);
+          setIsLoading(false);
+          return;
+        }
 
         if (data) {
           setToken(data.token);
@@ -54,14 +63,34 @@ const Connexion = ({ logOption, onBack }) => {
             newSocket.emit("sendNewConnectedUser", user);
           });
         }
-      };
-      login();
-      setIsLoading(false);
+      } catch (err) {
+        setError("An unexpected error occurred. Please try again.");
+        console.error("Login error:", err);
+      } finally {
+        setIsLoading(false);
+      }
     } else {
-      const resOk = fetchSignUp(username, email, password, defaultAvatar);
-      if (resOk) setIsLogin(true);
-      setIsLoading(false);
-      setCountdown(50); // Reset the countdown when loading is finished
+      try {
+        const result = await fetchSignUp(username, email, password, defaultAvatar);
+
+        if (result.error) {
+          setError(result.error);
+          setIsLoading(false);
+          return;
+        }
+
+        if (result.success) {
+          setIsLogin(true);
+          setError(""); // Clear any errors
+          // Optionally show success message
+        }
+      } catch (err) {
+        setError("An unexpected error occurred. Please try again.");
+        console.error("Signup error:", err);
+      } finally {
+        setIsLoading(false);
+        setCountdown(50);
+      }
     }
   };
 
@@ -84,8 +113,15 @@ const Connexion = ({ logOption, onBack }) => {
 
   return (
     <div className="flex flex-col flex-grow justify-center items-center">
+      <h1 className="text-white text-center text-4xl mb-2 font-wolf">
+        {isLogin ? t("intro.lo") : t("intro.si")}
+      </h1>
 
-      {/* <Title /> */}
+      {error && (
+        <div className="w-60 mb-4 p-3 bg-red-500/20 border border-red-500 rounded-lg">
+          <p className="text-red-200 text-sm text-center">{error}</p>
+        </div>
+      )}
 
       <ConnexionForm
         handleSubmit={handleSubmit}
@@ -118,11 +154,7 @@ const Connexion = ({ logOption, onBack }) => {
         </Button>
       )}
 
-      {isLoading && (
-        <PreServerLoadingScreen
-          countdown={countdown}
-        />
-      )}
+      {isLoading && <PreServerLoadingScreen countdown={countdown} />}
     </div>
   );
 };

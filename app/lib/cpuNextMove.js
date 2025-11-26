@@ -121,34 +121,36 @@ const cpuNextMove = (
         let witchTarget = getRandomAlivePlayer(false, false, cpu.id);
         if (witchTarget) {
           if (Math.random() < 0.5) {
-            if (cpu.role.canPerform1.nbrLeftToPerform > 0) {
-              socket.emit(
-                "protectPotion",
-                {
-                  type: cpu.role.canPerform1.type,
-                  playerId: cpu.id,
-                  selectedPlayerId: witchTarget.id,
-                  selectedPlayerName: witchTarget.name,
-                },
-                gameId
-              );
+            if (Math.random() < 0.5) {
+              if (cpu.role.canPerform1.nbrLeftToPerform > 0) {
+                socket.emit(
+                  "protectPotion",
+                  {
+                    type: cpu.role.canPerform1.type,
+                    playerId: cpu.id,
+                    selectedPlayerId: witchTarget.id,
+                    selectedPlayerName: witchTarget.name,
+                  },
+                  gameId
+                );
+              } else {
+                console.log("no protectPotion remaining for witch");
+              }
             } else {
-              console.log("no action remaining for witch");
-            }
-          } else {
-            if (cpu.role.canPerform2.nbrLeftToPerform > 0) {
-              socket.emit(
-                "poisonPotion",
-                {
-                  type: cpu.role.canPerform2.type,
-                  playerId: cpu.id,
-                  selectedPlayerId: witchTarget.id,
-                  selectedPlayerName: witchTarget.name,
-                },
-                gameId
-              );
-            } else {
-              console.log("no action remaining for witch");
+              if (cpu.role.canPerform2.nbrLeftToPerform > 0) {
+                socket.emit(
+                  "poisonPotion",
+                  {
+                    type: cpu.role.canPerform2.type,
+                    playerId: cpu.id,
+                    selectedPlayerId: witchTarget.id,
+                    selectedPlayerName: witchTarget.name,
+                  },
+                  gameId
+                );
+              } else {
+                console.log("no poisonPotion remaining for witch");
+              }
             }
           }
         }
@@ -189,16 +191,18 @@ const cpuNextMove = (
       case "Doctor":
         let playerToHeal = getRandomAlivePlayer();
         if (playerToHeal) {
-          socket.emit(
-            "heal",
-            {
-              type: "heal",
-              playerId: cpu.id,
-              selectedPlayerId: playerToHeal.id,
-              selectedPlayerName: playerToHeal.name,
-            },
-            gameId
-          );
+          if (Math.random() < 0.7) {
+            socket.emit(
+              "heal",
+              {
+                type: "heal",
+                playerId: cpu.id,
+                selectedPlayerId: playerToHeal.id,
+                selectedPlayerName: playerToHeal.name,
+              },
+              gameId
+            );
+          }
         }
         break;
       case "Jailer":
@@ -225,15 +229,14 @@ const cpuNextMove = (
         break;
       case "Grave Robber":
         if (Math.random() < 0.3) {
-          console.log("grave robber CPU action");
           let deadPlayer = getRandomDeadPlayer();
           if (deadPlayer) {
             socket.emit("lootGrave", {
               type: "loot",
-              graveRobberId: clientPlayer.id,
-              selectedPlayerId: player.id,
-              selectedPlayerName: player.name,
-              selectedPlayerRole: player.role, // Send the dead player's role
+              graveRobberId: cpu.id,
+              selectedPlayerId: deadPlayer.id,
+              selectedPlayerName: deadPlayer.name,
+              selectedPlayerRole: deadPlayer.role, // Send the dead player's role
             }, gameId);
           }
         }

@@ -19,6 +19,7 @@ const CmdPerform = ({
     selectionState,
     isJailer,
     hasHandcuffed,
+    selectionHelpers,
   } = useGame();
 
   const {
@@ -45,6 +46,10 @@ const CmdPerform = ({
   ) {
 
     const actionType = selectionState.actionType; // <-- GET FROM STATE
+    const actionDone = selectionHelpers.isActionBlocked(actionType)
+
+    if (actionDone) return null;
+
 
     return (
       <Tooltip content={i18n.language === "fr" ? labelFR : label} color="secondary" variant="flat">

@@ -14,7 +14,7 @@ const GameHeader = () => {
   }
 
   return (
-    <div className="px-6 pt-8 z-20 w-full py-2 bg-gradient-to-t from-slate-700 to-slate-800 border-b border-slate-600 shadow-2xl flex-shrink-0">
+    <div className="px-6 py-4 z-20 w-full bg-gradient-to-t from-slate-700 to-slate-800 border-b border-slate-600 shadow-2xl flex-shrink-0 opacity-70">
       <p className="text-xs text-white my-2">
         {timeOfTheDay === "daytime" ? (
           <>
@@ -43,7 +43,7 @@ const GameHeader = () => {
           </>
         ) : null}
       </p>
-      <p className="text-sm italic">
+      <p className="text-xs italic">
         {t("game.youAre")}{" "}
         {i18n.language === "fr"
           ? clientPlayer.role.nameFR
