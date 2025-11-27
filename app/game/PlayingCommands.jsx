@@ -37,10 +37,19 @@ const PlayingCommands = () => {
     selectionHelpers.toggle(newActionType, emoji, needsDouble);
   };
 
-  // ADD THESE BACK:
   const noSelectionAction = (actionType) => {
     if (clientPlayer.role.name === "Mayor" && actionType === "assertDuty") {
       socket.emit("assertDuty", clientPlayer.name, gameId);
+    }
+    if (clientPlayer.role.name === "Pyromaniac" && actionType === "burn") {
+      if (clientPlayer.nbrOfPouredPlayers > 0) {
+        socket.emit("burnThemDown", {
+          type: "burn",
+          pyroId: clientPlayer.id,
+        }, gameId);
+      } else {
+        triggerSimpleMessage(t("errorMessage.0013"));
+      }
     }
   };
 

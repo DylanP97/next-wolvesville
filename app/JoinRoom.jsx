@@ -25,9 +25,6 @@ const JoinRoom = () => {
     socket.emit("deleteRoom", roomId);
   };
 
-  console.log(rooms)
-
-
   return (
     <div className="relative pt-[70px] flex flex-col w-full p-4">
       <h1 className="text-white text-3xl font-bold font-wolf">{t("menu.1")}</h1>

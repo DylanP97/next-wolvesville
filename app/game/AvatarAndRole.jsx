@@ -32,6 +32,16 @@ const AvatarAndRole = ({ ply, alive }) => {
             className="p-2 absolute top-[-40%] left-[100%] z-30"
           />
         )}
+        {ply.role.wasCursed && (
+          <Image
+            src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706531396/roles/cursed_omsixt.png"
+            alt={ply.role.name + "--wo-cu-icon"}
+            height={40}
+            width={40}
+            style={{ height: "auto", width: "auto" }}
+            className="p-2 absolute top-[-40%] left-[100%] z-30"
+          />
+        )}
         <div className="p-2 rounded-full">
           {ply.avatar ? (
             <AvatarUI heightAndWidth={40} avatar={ply.avatar} />
@@ -50,7 +60,7 @@ const AvatarAndRole = ({ ply, alive }) => {
 
       <p className="m-2 text-white text-xs text-center text-clip italic min-w-0">
         {ply.name} {alive ? t("winnerOverlay.as") : t("winnerOverlay.wasA")}{" "}
-        {i18n.language === "fr" ? ply.role.nameFR : ply.role.name}{ply.role.wasGraveRobber && " " + t("winnerOverlay.wasGraveRobber")}
+        {i18n.language === "fr" ? ply.role.nameFR : ply.role.name}{ply.role.wasGraveRobber && " " + t("winnerOverlay.wasGraveRobber")}{ply.role.wasCursed && " " + t("winnerOverlay.wasCursed")}
       </p>
     </div>
   );

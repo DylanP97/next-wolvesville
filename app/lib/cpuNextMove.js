@@ -15,6 +15,16 @@ const cpuNextMove = (
     return fool;
   }
 
+  function getNbrOfPlayersMarkedWithGasoline() {
+    let nbr = 0
+    playersList.forEach((ply) => {
+      if (ply.isMarkedWithGasoline) {
+        nbr += 1
+      }
+    })
+    return nbr
+  }
+
   function getRandomAlivePlayer(
     excludeWerewolves = false,
     excludeRevealed = false,
@@ -120,7 +130,7 @@ const cpuNextMove = (
       case "Witch":
         let witchTarget = getRandomAlivePlayer(false, false, cpu.id);
         if (witchTarget) {
-          if (Math.random() < 0.5) {
+          if (Math.random() < 0.4) {
             if (Math.random() < 0.5) {
               if (cpu.role.canPerform1.nbrLeftToPerform > 0) {
                 socket.emit(
@@ -241,6 +251,25 @@ const cpuNextMove = (
           }
         }
         break;
+      case "Pyromaniac":
+        if (getNbrOfPlayersMarkedWithGasoline() >= 2 && Math.random() < 0.3) {
+          socket.emit("burnThemDown", {
+            type: "burn",
+            pyroId: cpu.id,
+          }, gameId);
+        } else {
+          let playerToPour = getRandomAlivePlayer();
+          if (playerToPour) {
+            socket.emit("pourGasoline", {
+              type: "pour",
+              pyroId: cpu.id,
+              selectedPlayerId: playerToPour.id,
+              selectedPlayerName: playerToPour.name,
+            }, gameId);
+          }
+        }
+        break;
+
 
       // Add more roles as needed
       default:
@@ -285,7 +314,7 @@ const cpuNextMove = (
           );
         }
         break;
-      case "Shooter":
+      case "Gunner":
         let targetToShoot = getRandomAlivePlayer();
         if (targetToShoot) {
           socket.emit(

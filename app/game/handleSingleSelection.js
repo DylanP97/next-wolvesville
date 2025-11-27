@@ -99,10 +99,21 @@ const handleSingleSelection = (player, clientPlayer, gameId, socket, actionType,
             }, gameId);
         },
 
-        chooseJuniorWolfDeathRevenge: () => socket.emit("chooseJuniorWolfDeathRevenge", {
-            juniorWolfId: player.id,
-            selectedPlayerId: player.id,
-        }, gameId),
+        chooseJuniorWolfDeathRevenge: () => {
+            socket.emit("chooseJuniorWolfDeathRevenge", {
+                juniorWolfId: player.id,
+                selectedPlayerId: player.id,
+            }, gameId)
+        },
+
+        pour: () => {
+            socket.emit("pourGasoline", {
+                type: actionType,
+                pyroId: clientPlayer.id,
+                selectedPlayerId: player.id,
+                selectedPlayerName: player.name,
+            }, gameId)
+        },
     };
 
     // Execute the action

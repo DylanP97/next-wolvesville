@@ -75,6 +75,18 @@ const PlayerGridCard = ({
           </div>
         )}
 
+      {/* Pyromaniac marked as pour with gasoline */}
+      {(clientPlayer.role.name === "Pyromaniac" && player.isMarkedWithGasoline) && (
+        <div className="absolute bottom-0 left-0 m-2 h-6 aspect-square flex justify-center items-center">
+          <Image
+            src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706535328/spilled_tsishg.png"
+            alt={"gas-marked-" + player.id}
+            width={60}
+            height={60}
+          />
+        </div>
+      )}
+
       {(player.isRevealed ||
         player.id == clientPlayer.id ||
         (isAlsoWolf && isWolf) ||

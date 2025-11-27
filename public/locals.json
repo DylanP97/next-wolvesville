@@ -133,6 +133,7 @@
       "winnerOverlay.as": "as",
       "winnerOverlay.wasA": "was a",
       "winnerOverlay.wasGraveRobber": "but also the Grave Robber",
+      "winnerOverlay.wasCursed": "but also the Cursed Villager",
       "serverContent.action.message.addVote": " voted against ",
       "serverContent.action.message.addWolfVote": " voted to eat ",
       "serverContent.action.message.protectPotion": " has drank the witch protection potion!",
@@ -148,10 +149,12 @@
       "serverContent.action.message.wasHealed": "👩‍⚕️ Someone wounds were healed by the doctor last night!",
       "serverContent.action.message.killedBySK": " was murdered last night by the serial killer...",
       "serverContent.action.message.graveRobber": "🪦 The grave robber loot tonight the grave of... ",
+      "serverContent.action.message.heal": "If something happens, the doctor prepares his bandages for ",
+      "serverContent.action.message.pourGasoline": "The pyro poured gasoline onto ",
+      "serverContent.action.message.burnThemDown": "🔥 The pyromaniac lights up his fire!",
       "serverContent.wolfVote.outcome.null": "❌ The wolves counldn't decide who to kill!",
       "serverContent.wolfVote.outcome.unableToKillSK": "❌ The wolves couldn't kill their target (serial killer)!",
       "serverContent.wolfVote.outcome.healedByDoctor": "❌ The wolves couldn't kill their target! (healed by the doctor)!",
-      "serverContent.action.message.heal": "If something happens, the doctor prepares his bandages for ",
       "serverContent.villageVote.outcome.basic": "💀✉️ Has a result of the village vote, the town decided to kill ",
       "serverContent.villageVote.outcome.foolWins": "🤡 The fool wins! 🤡",
       "serverContent.villageVote.outcome.null": "🤔 The town couldn't decide who to kill!",
@@ -173,7 +176,8 @@
       "errorMessage.0009": "You must select an action",
       "errorMessage.0010": "selection's blocked ",
       "errorMessage.0011": "You are dead. You can't do anything.",
-      "errorMessage.0012": "This action has already been used."
+      "errorMessage.0012": "This action has already been used.",
+      "errorMessage.0013": "There's no one to burn, pour the gasoline first"
     }
   },
   "fr": {
@@ -310,6 +314,7 @@
       "winnerOverlay.as": "comme",
       "winnerOverlay.wasA": "était un",
       "winnerOverlay.wasGraveRobber": "mais aussi le Pilleur de Tombe",
+      "winnerOverlay.wasCursed": "mais aussi le Villageois Maudit",
       "serverContent.action.message.addVote": " a voté contre ",
       "serverContent.action.message.addWolfVote": " a voté pour dévourer ",
       "serverContent.action.message.protectPotion": " a bu la potion de protection de la sorcière !",
@@ -325,10 +330,12 @@
       "serverContent.action.message.wasHealed": "👩‍⚕️ Les blessures d'un joueur ont été guerris par le docteur la nuit passée !",
       "serverContent.action.message.killedBySK": " a été assasiné la nuit dernière par le tueur en série...",
       "serverContent.action.message.graveRobber": "🪦 Le pilleur de tombe a déterrer cette nuit la tombe de ... ",
+      "serverContent.action.message.heal": "Si quelque chose se passe ce soir, le docteur a préparer ses pansements pour ",
+      "serverContent.action.message.pourGasoline": "Le pyro a déverser de l'essence sur ",
+      "serverContent.action.message.burnThemDown": "🔥 Le pyromane a mis le feu !!!",
       "serverContent.wolfVote.outcome.null": "❌ Les loups n'ont pas pu décidé qui tuer !",
       "serverContent.wolfVote.outcome.unableToKillSK": "❌ Les loups n'ont pas pu tué leur cible (tueur en série) !",
       "serverContent.wolfVote.outcome.healedByDoctor": "❌ Les loups n'ont pas pu tué leur cible (soigné par le docteur) !",
-      "serverContent.action.message.heal": "Si quelque chose se passe ce soir, le docteur a préparer ses pansements pour ",
       "serverContent.villageVote.outcome.basic": "💀✉️ Après vote, le village a décidé de tuer ",
       "serverContent.villageVote.outcome.foolWins": "🤡 Le fou a gagné ! 🤡",
       "serverContent.villageVote.outcome.null": "🤔 Le village n'a pas su décider qui éliminé !",
@@ -350,7 +357,8 @@
       "errorMessage.0009": "Choisissez une action",
       "errorMessage.0010": "Sélection bloqué ",
       "errorMessage.0011": "Tu es mort ! Tu ne peux rien faire.",
-      "errorMessage.0012": "Vous avez déjà utilisé cette action."
+      "errorMessage.0012": "Vous avez déjà utilisé cette action.",
+      "errorMessage.0013": "Il n'y a personne à brûler, déverser de l'essence d'abord"
     }
   }
 }
