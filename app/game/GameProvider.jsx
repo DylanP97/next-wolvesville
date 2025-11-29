@@ -257,6 +257,20 @@ export const GameProvider = ({ children }) => {
     }
   }, [timeCounter]);
 
+  useEffect(() => {
+    if (timeOfTheDay === "votetime" && timeCounter === 25000) {
+      generateNoise("softSuspense");
+    }
+    if (timeOfTheDay === "votetime" && timeCounter === 4000) {
+      generateNoise("riserVotetime");
+    }
+    if (timeOfTheDay === "nighttime" && timeCounter === 20000) {
+      generateNoise("mysteriousArea");
+    }
+  }, [timeCounter, timeOfTheDay]);
+
+
+
   // Safety check: don't initialize if showing role reveal
   if (!game || game.showingRoleReveal) {
     return null;

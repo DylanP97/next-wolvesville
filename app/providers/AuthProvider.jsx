@@ -94,6 +94,11 @@ export const AuthProvider = ({ children }) => {
       return;
     }
 
+    if (isPlaying) {
+      stopMusic();
+      return;
+    }
+
     if (!isPlaying) {
       stopMusic();
       generateBackgroundMusic();

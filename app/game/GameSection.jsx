@@ -36,24 +36,22 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   };
 
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative w-full h-full flex flex-col ">
       {getBackgroundComponent()}
       <DeathFlash />
 
       {/* Header fixe en haut */}
-      <div className="sticky top-0 left-0 right-0 z-30">
+      <div className="z-30">
         <GameHeader />
       </div>
 
       {/* Container principal avec padding pour header et action bar */}
-      <div className="h-full overflow-hidden">
-        <div className="h-full overflow-y-auto">
+      <div className="flex flex-grow flex-1 justify-center items-center">
           <GameGrid />
-        </div>
       </div>
 
       {/* Action Bar fixe en bas */}
-      <div className="fixed bottom-0 left-0 right-0 z-30">
+      <div className="bottom-0 left-0 right-0 z-30">
         <ActionBar
           summaryIsOpen={summaryIsOpen}
           setSummaryIsOpen={setSummaryIsOpen}

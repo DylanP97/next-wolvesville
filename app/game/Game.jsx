@@ -26,7 +26,7 @@ export default function Game() {
             // Show normal game
             <GameProvider>
               <InGameKeysProvider>
-                <div className="flex flex-col">
+                <div className="flex flex-col h-full">
                   <GameSection
                     summaryIsOpen={summaryIsOpen}
                     setSummaryIsOpen={setSummaryIsOpen}

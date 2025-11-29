@@ -70,7 +70,7 @@ const GameGrid = () => {
   // console.log(playersList)
 
   return (
-    <div className="grid grid-cols-4 md:grid-cols-4 gap-2 place-items-start z-10 px-6 my-8  pb-40">
+    <div className="grid grid-cols-4 md:grid-cols-4 gap-2 place-items-start z-10 px-6 py-2 flex-1">
       {playersList.map((player) => {
         const isAlsoWolf =
           player &&

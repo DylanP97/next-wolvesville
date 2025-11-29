@@ -24,7 +24,9 @@ const PreScreenMenu = () => {
   const [logOption, setLogOption] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(50); // Timer state
+  const [isFullscreen, setIsFullscreen] = useState(false); // Add this state
   const { setAuthInfo, setSocket, setToken, username, setIsGuest } = useAuth();
+
 
   const handleGuestLogin = async () => {
     const data = await fetchGuestLogin();
@@ -52,6 +54,23 @@ const PreScreenMenu = () => {
     setIsLoading(false);
     setCountdown(50); // Reset the countdown when loading is finished
   };
+
+  // Add this useEffect to track fullscreen changes
+  useEffect(() => {
+    const handleFullScreenChange = () => {
+      setIsFullscreen(document.fullscreenElement !== null);
+    };
+
+    // Set initial state
+    setIsFullscreen(document.fullscreenElement !== null);
+
+    // Listen for fullscreen changes
+    document.addEventListener("fullscreenchange", handleFullScreenChange);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullScreenChange);
+    };
+  }, []);
 
   useEffect(() => {
     if (logOption === "guestPlay") {
@@ -130,7 +149,10 @@ const PreScreenMenu = () => {
             {t("prescreen.register")}
           </Button>
         </nav>
-        <p className="pt-4 px-8 text-center text-white text-sm">{t("intro.additionalInfo")}</p>
+        <p className="italic pt-4 px-8 text-center text-white text-xs max-w-[500px] z-20">{t("intro.additionalInfo")}</p>
+        {
+          !isFullscreen && (<p className="absolute top-16 right-6 italic text-center text-white text-xs z-20 animate-pulse">{t("intro.betterExperience")}</p>)
+        }
       </div>
     );
   }

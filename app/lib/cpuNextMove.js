@@ -18,7 +18,7 @@ const cpuNextMove = (
   function getNbrOfPlayersMarkedWithGasoline() {
     let nbr = 0
     playersList.forEach((ply) => {
-      if (ply.isMarkedWithGasoline) {
+      if (ply.isMarkedWithGasoline && ply.isAlive) {
         nbr += 1
       }
     })
@@ -201,7 +201,7 @@ const cpuNextMove = (
       case "Doctor":
         let playerToHeal = getRandomAlivePlayer();
         if (playerToHeal) {
-          if (Math.random() < 0.7) {
+          if (Math.random() < 0.8) {
             socket.emit(
               "heal",
               {
@@ -315,18 +315,20 @@ const cpuNextMove = (
         }
         break;
       case "Gunner":
-        let targetToShoot = getRandomAlivePlayer();
-        if (targetToShoot) {
-          socket.emit(
-            "shootBullet",
-            {
-              type: "shoot",
-              gunnerId: cpu.id,
-              selectedPlayerId: targetToShoot.id,
-              selectedPlayerName: targetToShoot.name,
-            },
-            gameId
-          );
+        if (cpu.role.canPerform1.nbrLeftToPerform > 0 && Math.random() < 0.7) {
+          let targetToShoot = getRandomAlivePlayer();
+          if (targetToShoot) {
+            socket.emit(
+              "shootBullet",
+              {
+                type: "shoot",
+                gunnerId: cpu.id,
+                selectedPlayerId: targetToShoot.id,
+                selectedPlayerName: targetToShoot.name,
+              },
+              gameId
+            );
+          }
         }
         break;
       // Add more roles as needed
@@ -336,10 +338,26 @@ const cpuNextMove = (
   }
 
   function performVoteAction() {
-    let voteTarget = getRandomAlivePlayer(false, false, cpu.id);
-    // console.log("votetarget", voteTarget);
-    // voteTarget && console.log('true');
-    // let voteTarget = getFool()
+    let voteTarget = null;
+
+    // Check if there's a revealed Serial Killer
+    const revealedSerialKiller = playersList.find(
+      (player) =>
+        player.isAlive &&
+        !player.isUnderArrest &&
+        player.id !== cpu.id &&
+        player.isRevealed &&
+        player.role.name === "Serial Killer"
+    );
+
+    // 80% chance to vote for revealed Serial Killer if one exists
+    if (revealedSerialKiller && Math.random() < 0.8) {
+      voteTarget = revealedSerialKiller;
+    } else {
+      // Otherwise vote randomly
+      voteTarget = getRandomAlivePlayer(false, false, cpu.id);
+    }
+
     if (voteTarget) {
       const nbr = cpu.role.name === "Mayor" && cpu.isRevealed ? 2 : 1;
       socket.emit(

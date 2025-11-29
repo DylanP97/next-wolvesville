@@ -92,6 +92,9 @@ export const SoundProvider = ({ children }) => {
       case "digitalFail": file = "/audio/digitalFail.mp3"; break;
       case "selectionError": file = "/audio/selectionError.mp3"; break;
       case "gunshot": file = "/audio/gunshot.mp3"; break;
+      case "softSuspense": file = "/audio/softSuspense.mp3"; break;
+      case "riserVotetime": file = "/audio/riserVotetime.mp3"; break;
+      case "mysteriousArea": file = "/audio/mysteriousArea.mp3"; break;
       default: return;
     }
 
