@@ -20,6 +20,7 @@ const CmdPerform = ({
     isJailer,
     hasHandcuffed,
     selectionHelpers,
+    clientPlayer,
   } = useGame();
 
   const {
@@ -33,9 +34,13 @@ const CmdPerform = ({
     nbrLeftToPerform = undefined,
   } = canPerform || {};
 
+  // Check if player has nightmares - they can't use night abilities
+  const hasNightmares = clientPlayer?.willHaveNightmares && actionTime === "night";
+  
   if (
     canPerform &&
     !isUnderArrest &&
+    !hasNightmares &&
     (nbrLeftToPerform === undefined || nbrLeftToPerform > 0) &&
     ((timeOfTheDay === "daytime" && actionTime === "day") ||
       (timeOfTheDay === "nighttime" && actionTime === "night") ||

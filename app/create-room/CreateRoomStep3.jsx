@@ -20,7 +20,6 @@ const CreateRoomStep3 = ({
     return role ? (i18n.language === "fr" ? role.nameFR : role.name) : roleName;
   };
 
-
   return (
     <div className="flex flex-col gap-6">
 
@@ -31,6 +30,10 @@ const CreateRoomStep3 = ({
           <h3 className="text-white text-lg font-semibold mb-4">
             {t("create.preferredRoleTitle") || t("create.preferredRole")}
           </h3>
+
+          <p className="text-white/70 text-sm mb-4">
+            {t("create.preferredRoleDescription") || "Choose your preferred role for this game. Other players will choose their roles when they join."}
+          </p>
 
           <Select
             label={t("create.preferredRole")}

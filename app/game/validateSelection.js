@@ -54,6 +54,11 @@ const validateSelection = (player, clientPlayer, actionType, timeOfTheDay) => {
     return { valid: false, errorCode: "errorMessage.0006" };
   }
 
+  // Nightmare Werewolf can't select other wolves
+  if (actionType === "putNightmare" && player.role.team === "Werewolves") {
+    return { valid: false, errorCode: "errorMessage.0007" };
+  }
+
   return { valid: true };
 };
 

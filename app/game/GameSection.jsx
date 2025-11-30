@@ -3,6 +3,7 @@
 import WinnerOverlay from "./WinnerOverlay";
 import ActionBar from "./ActionBar";
 import DeathFlash from "./DeathFlash";
+import NightmareOverlay from "./NightmareOverlay";
 import GameHeader from "./GameHeader";
 import GameGrid from "./GameGrid";
 import ChatModal from "./ChatModal";
@@ -39,6 +40,7 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
     <div className="relative w-full h-full flex flex-col ">
       {getBackgroundComponent()}
       <DeathFlash />
+      <NightmareOverlay />
 
       {/* Header fixe en haut */}
       <div className="z-30">

@@ -22,6 +22,11 @@ const handlePlayerClick = (
     return;
   }
 
+  if (clientPlayer?.willHaveNightmares && timeOfTheDay === "nighttime") {
+    setErrorMessage("errorMessage.0014");
+    return;
+  }
+
   // Guard: Must be in selection mode
   if (mode === 'idle' || mode === 'completed') {
     setErrorMessage("errorMessage.0009");

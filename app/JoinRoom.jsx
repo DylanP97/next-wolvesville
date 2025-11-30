@@ -7,18 +7,55 @@ import {
   CardFooter,
   Divider,
 } from "@nextui-org/react";
+import { useState, useEffect } from "react";
 import { useAuth } from "./providers/AuthProvider";
 import { useTranslation } from "react-i18next";
 import { btnClassNames } from "./lib/styles";
+import RoleSelectionModal from "./join-room/RoleSelectionModal";
+import { fetchRoles } from "./lib/fetch";
 
 const JoinRoom = () => {
   const { t } = useTranslation();
   const { rooms, username, socketId, avatar, socket, updateUserGameState } =
     useAuth();
+  const [showRoleModal, setShowRoleModal] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [availableRoles, setAvailableRoles] = useState([]);
 
-  const joinRoom = (roomId, userJoining) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const rolesData = await fetchRoles();
+        setAvailableRoles(rolesData || []);
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const joinRoom = (roomId, userJoining, preferredRole = null) => {
     updateUserGameState(roomId, false, null);
-    socket.emit("joinRoom", roomId, userJoining);
+    socket.emit("joinRoom", roomId, { ...userJoining, preferredRole });
+  };
+
+  const handleJoinClick = (room) => {
+    // Check if room allows role selection
+    if (room.allowRoleSelection && !room.isLaunched) {
+      setSelectedRoom(room);
+      setShowRoleModal(true);
+    } else {
+      // Join without role selection
+      joinRoom(room.id, { username, socketId, avatar });
+    }
+  };
+
+  const handleRoleConfirm = (selectedRole) => {
+    if (selectedRoom) {
+      joinRoom(selectedRoom.id, { username, socketId, avatar }, selectedRole);
+      setSelectedRoom(null);
+    }
+    setShowRoleModal(false);
   };
 
   const deleteRoom = (roomId) => {
@@ -40,7 +77,9 @@ const JoinRoom = () => {
             return (
               <Card
                 key={room.id}
-                className={`${room.isLaunched
+                className={`${room.hasEnded
+                  ? "bg-gray-400 cursor-not-allowed opacity-75"
+                  : room.isLaunched
                     ? "animate-pulse bg-yellow-500 cursor-not-allowed"
                     : !room.isLaunched && usersInTheRoom.length < room.nbrOfPlayers && !usersInTheRoom.some((usr) => usr.username === username)
                       ? "bg-green-400"
@@ -52,6 +91,7 @@ const JoinRoom = () => {
                   <p>
                     {t("join.createdBy")} {room.createdBy}
                   </p>
+                  <p>{new Date(room.id).toLocaleTimeString('fr-FR')}</p>
                   <p>
                     {room.nbrOfPlayers} {t("join.playersIncluding")}{" "}
                     {room.nbrCPUPlayers} CPU
@@ -71,9 +111,7 @@ const JoinRoom = () => {
                         className="w-full hover:text-white hover:scale-[105%]"
                         color="secondary"
                         variant="solid"
-                        onClick={() =>
-                          joinRoom(room.id, { username, socketId, avatar })
-                        }
+                        onClick={() => handleJoinClick(room)}
                       >
                         {t("join.joinRoom")}
                       </Button>
@@ -98,6 +136,13 @@ const JoinRoom = () => {
                     <p className="text-center italic ">{t("join.theRoomIsLaunched")}</p>
                   )}
 
+                  {room.winningTeam && (
+                    <p className="text-center italic ">{winningTeam.name}</p>
+                  )}
+
+                  {room.hasEnded && (
+                    <p className="text-center italic ">{t(join.gameHasEnded)}</p>
+                  )}
 
                 </CardFooter>
               </Card>
@@ -105,6 +150,18 @@ const JoinRoom = () => {
           })}
         </div>
       )}
+
+      <RoleSelectionModal
+        isOpen={showRoleModal}
+        onClose={() => {
+          setShowRoleModal(false);
+          setSelectedRoom(null);
+        }}
+        onConfirm={handleRoleConfirm}
+        availableRoles={availableRoles}
+        room={selectedRoom}
+        username={username}
+      />
     </div>
   );
 };

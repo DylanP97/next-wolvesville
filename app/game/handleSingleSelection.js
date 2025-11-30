@@ -114,6 +114,16 @@ const handleSingleSelection = (player, clientPlayer, gameId, socket, actionType,
                 selectedPlayerName: player.name,
             }, gameId)
         },
+
+        putNightmare: () => {
+            socket.emit("putNightmare", {
+                type: actionType,
+                playerId: clientPlayer.id,
+                playerName: clientPlayer.name,
+                selectedPlayerId: player.id,
+                selectedPlayerName: player.name,
+            }, gameId);
+        },
     };
 
     // Execute the action

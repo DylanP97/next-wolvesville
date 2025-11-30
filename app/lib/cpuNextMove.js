@@ -57,9 +57,15 @@ const cpuNextMove = (
   }
 
   function performNightAction() {
+    // Check if CPU has nightmares - they can't use their ability
+    if (cpu.willHaveNightmares) {
+      console.log(cpu.name, "can't do action because of nightmare")
+      return; // Action blocked
+    }
+
     switch (cpu.role.name) {
       case "Classic Werewolf":
-        let target = getRandomAlivePlayer(true, false, null);
+        let target = getRandomAlivePlayer(true, false, cpu.id);
         if (target) {
           socket.emit(
             "addWolfVote",
@@ -75,7 +81,7 @@ const cpuNextMove = (
         }
         break;
       case "Alpha Werewolf":
-        let alphaTarget = getRandomAlivePlayer(true, false, null);
+        let alphaTarget = getRandomAlivePlayer(true, false, cpu.id);
         if (alphaTarget) {
           socket.emit(
             "addWolfVote",
@@ -182,8 +188,8 @@ const cpuNextMove = (
         break;
       case "Cupid":
         if (dayCount === 0) {
-          let lover1 = getRandomAlivePlayer();
-          let lover2 = getRandomAlivePlayer();
+          let lover1 = getRandomAlivePlayer(false, false, cpu.id);
+          let lover2 = getRandomAlivePlayer(false, false, cpu.id);
           if (lover1 && lover2 && lover1.id !== lover2.id) {
             socket.emit(
               "registerAction",
@@ -199,7 +205,7 @@ const cpuNextMove = (
         }
         break;
       case "Doctor":
-        let playerToHeal = getRandomAlivePlayer();
+        let playerToHeal = getRandomAlivePlayer(false, false, cpu.id);
         if (playerToHeal) {
           if (Math.random() < 0.8) {
             socket.emit(
@@ -258,7 +264,7 @@ const cpuNextMove = (
             pyroId: cpu.id,
           }, gameId);
         } else {
-          let playerToPour = getRandomAlivePlayer();
+          let playerToPour = getRandomAlivePlayer(false, false, cpu.id);
           if (playerToPour) {
             socket.emit("pourGasoline", {
               type: "pour",
@@ -314,9 +320,27 @@ const cpuNextMove = (
           );
         }
         break;
+      case "Nightmare Werewolf":
+        if (cpu.role.canPerform1.nbrLeftToPerform > 0 && Math.random() < 0.5) {
+          let nightmareTarget = getRandomAlivePlayer(true, false, cpu.id);
+          if (nightmareTarget) {
+            socket.emit(
+              "putNightmare",
+              {
+                type: "putNightmare",
+                playerId: cpu.id,
+                playerName: cpu.name,
+                selectedPlayerId: nightmareTarget.id,
+                selectedPlayerName: nightmareTarget.name,
+              },
+              gameId
+            );
+          }
+        }
+        break;
       case "Gunner":
         if (cpu.role.canPerform1.nbrLeftToPerform > 0 && Math.random() < 0.7) {
-          let targetToShoot = getRandomAlivePlayer();
+          let targetToShoot = getRandomAlivePlayer(false, false, cpu.id);
           if (targetToShoot) {
             socket.emit(
               "shootBullet",

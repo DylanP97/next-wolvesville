@@ -89,6 +89,14 @@ export const getPlyCardBackground = (
     );
   }
 
+  function nightmareWerewolfSelection() {
+    return (
+      clientPlayer.role.name === "Nightmare Werewolf" &&
+      actionType === "putNightmare" &&
+      timeOfTheDay === "daytime"
+    );
+  }
+
   function basicSelection() {
     return (
       !itsVillageVoteTime() &&
@@ -112,6 +120,17 @@ export const getPlyCardBackground = (
 
   // cases when to display the card as a potentially selected item
   if (selectionRemaining()) {
+    // Nightmare Werewolf selection logic - can't select other wolves
+    if (nightmareWerewolfSelection() && !player.isUnderArrest) {
+      if (player.role.team === "Werewolves") {
+        // Non-selectable players: other wolves
+        return "bg-transparent opacity-20 grayscale cursor-not-allowed";
+      } else {
+        // Selectable players: non-wolves
+        return "bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 cursor-pointer animate-pulse hover:animate-none shadow-md hover:shadow-lg transition-all";
+      }
+    }
+
     // Wolf Seer specific selection logic
     if (wolfSeerSelection() && !player.isUnderArrest) {
       // Check if player is selectable by Wolf Seer

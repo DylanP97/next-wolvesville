@@ -128,6 +128,7 @@ const CreateRoom = () => {
       selectedRoles: selectedRoles,
       usersInTheRoom: [{ username, socketId, avatar, preferredRole }],
       isLaunched: false,
+      allowRoleSelection: true, // Flag to enable role selection for joiners
     };
 
     socket.emit("createRoom", newRoom);
