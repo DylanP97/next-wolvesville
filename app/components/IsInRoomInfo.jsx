@@ -1,9 +1,14 @@
 "use client";
 
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 const IsInRoomInfo = ({ isInRoom, isPlaying }) => {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    // console.log("IsInRoomInfo updated:", { isInRoom, isPlaying });
+  }, [isInRoom, isPlaying]);
 
   if (isPlaying && isInRoom)
     return (

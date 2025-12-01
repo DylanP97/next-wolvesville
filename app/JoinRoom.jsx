@@ -74,6 +74,9 @@ const JoinRoom = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
           {rooms.map((room) => {
             let usersInTheRoom = room.usersInTheRoom;
+
+            console.log(room.name, room.hasEnded)
+
             return (
               <Card
                 key={room.id}
@@ -137,11 +140,11 @@ const JoinRoom = () => {
                   )}
 
                   {room.winningTeam && (
-                    <p className="text-center italic ">{winningTeam.name}</p>
+                    <p className="text-center italic ">Équipe gagnante : {room.winningTeam.name}</p>
                   )}
 
                   {room.hasEnded && (
-                    <p className="text-center italic ">{t(join.gameHasEnded)}</p>
+                    <p className="text-center italic ">{t("join.gameHasEnded")}</p>
                   )}
 
                 </CardFooter>

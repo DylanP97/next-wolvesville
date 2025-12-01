@@ -13,7 +13,7 @@ const GeneralBtns = () => {
   const { isInRoom, isPlaying, isConnected, isDev } = useAuth();
   const { activeComponent } = useToRender();
 
-  if (!isInRoom && !isPlaying) return (
+  if (!isPlaying) return (
     <div className="absolute top-0 h-[70px] w-full p-4 z-30 flex flex-row justify-end items-center gap-2 z-50">
       <VolumeToggle />
       <FullScreenToggle />

@@ -21,7 +21,7 @@ const ConnectedUserCard = ({ user }) => {
       <AvatarUI heightAndWidth={60} avatar={user.avatar} />
       <div className="flex flex-col items-start flex-1">
         <p className="text-md">{user.username}</p>
-        <IsInRoomInfo isInRoom={user.isInRoom} />
+        <IsInRoomInfo isInRoom={user.isInRoom} isPlaying={user.isPlaying} />
       </div>
     </div>
   );

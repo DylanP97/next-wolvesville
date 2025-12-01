@@ -110,7 +110,7 @@ const cpuNextMove = (
         }
         break;
       case "Wolf Seer":
-        if (cpu.role.canPerform1.nbrLeftToPerform > 0) {
+        if (cpu.role.canPerform1.nbrLeftToPerform > 0 && Math.random() < 0.8) {
           let playerToUncover = playersList.find(
             (player) =>
               player.isAlive &&
@@ -131,6 +131,20 @@ const cpuNextMove = (
               gameId
             );
           }
+        }
+        let wolfSeerVoteTarget = getRandomAlivePlayer(true, false, cpu.id);
+        if (wolfSeerVoteTarget) {
+          socket.emit(
+            "addWolfVote",
+            {
+              playerId: cpu.id,
+              playerName: cpu.name,
+              selectedPlayerId: wolfSeerVoteTarget.id,
+              selectedPlayerName: wolfSeerVoteTarget.name,
+              nbr: 1,
+            },
+            gameId
+          );
         }
         break;
       case "Witch":
@@ -315,6 +329,7 @@ const cpuNextMove = (
               seerId: cpu.id,
               selectedPlayerId: playerToReveal.id,
               selectedPlayerName: playerToReveal.name,
+              selectedPlayerRole: playerToReveal.role,
             },
             gameId
           );

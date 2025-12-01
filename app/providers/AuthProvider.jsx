@@ -82,8 +82,8 @@ export const AuthProvider = ({ children }) => {
 
   /** execution */
 
-  
-  
+
+
   useEffect(() => {
     checkAuth();
   }, []);
