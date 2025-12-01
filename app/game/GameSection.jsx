@@ -4,6 +4,8 @@ import WinnerOverlay from "./WinnerOverlay";
 import ActionBar from "./ActionBar";
 import DeathFlash from "./DeathFlash";
 import NightmareOverlay from "./NightmareOverlay";
+import DeathOverlay from "./DeathOverlay";
+import PrisonOverlay from "./PrisonOverlay";
 import GameHeader from "./GameHeader";
 import GameGrid from "./GameGrid";
 import ChatModal from "./ChatModal";
@@ -20,6 +22,7 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { winningTeam, timeOfTheDay } = useGame();
   const { width, height } = useWindowSize();
   const { exitMenuOpen, toggleExitMenu } = useToRender();
+  
 
   const getBackgroundComponent = () => {
     switch (timeOfTheDay) {
@@ -41,6 +44,7 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
       {getBackgroundComponent()}
       <DeathFlash />
       <NightmareOverlay />
+      <DeathOverlay />
 
       {/* Header fixe en haut */}
       <div className="z-30">
@@ -48,8 +52,9 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
       </div>
 
       {/* Container principal avec padding pour header et action bar */}
-      <div className="flex flex-grow flex-1 justify-center items-center">
+      <div className="flex flex-grow flex-1 justify-center items-center relative">
           <GameGrid />
+          <PrisonOverlay />
       </div>
 
       {/* Action Bar fixe en bas */}

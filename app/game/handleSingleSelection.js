@@ -1,4 +1,6 @@
 
+import i18n from "../lib/i18n";
+
 const handleSingleSelection = (player, clientPlayer, gameId, socket, actionType,
     selectionHelpers) => {
     const voteActions = {
@@ -46,7 +48,7 @@ const handleSingleSelection = (player, clientPlayer, gameId, socket, actionType,
             seerId: clientPlayer.id,
             selectedPlayerId: player.id,
             selectedPlayerName: player.name,
-            selectedPlayerRole: player.role,
+            selectedPlayerRole: i18n.language === "fr" ? player.role.nameFR : player.role.name,
         }, gameId),
 
         shoot: () => socket.emit("shootBullet", {

@@ -18,6 +18,7 @@ const PlayingCommands = () => {
     selectionState,
     selectionHelpers,
     gameId,
+    isUnderArrest,
   } = useGame();
 
   const { role: { canVote, canPerform1, canPerform2 } = {} } = clientPlayer;
@@ -69,7 +70,7 @@ const PlayingCommands = () => {
         />
       )}
       {timeOfTheDay === "nighttime" &&
-        clientPlayer.role.team === "Werewolves" && !isVoteBlocked && (
+        clientPlayer.role.team === "Werewolves" && !isVoteBlocked && !isUnderArrest && (
           <CmdVote
             activateSelection={activateSelection}
             wolfVote={true}

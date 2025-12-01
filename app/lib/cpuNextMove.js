@@ -1,3 +1,6 @@
+
+import i18n from "./i18n";
+
 const cpuNextMove = (
   cpu,
   dayCount,
@@ -141,6 +144,22 @@ const cpuNextMove = (
               playerName: cpu.name,
               selectedPlayerId: wolfSeerVoteTarget.id,
               selectedPlayerName: wolfSeerVoteTarget.name,
+              nbr: 1,
+            },
+            gameId
+          );
+        }
+        break;
+      case "Nightmare Werewolf":
+        let nightmareWolfVoteTarget = getRandomAlivePlayer(true, false, cpu.id);
+        if (nightmareWolfVoteTarget) {
+          socket.emit(
+            "addWolfVote",
+            {
+              playerId: cpu.id,
+              playerName: cpu.name,
+              selectedPlayerId: nightmareWolfVoteTarget.id,
+              selectedPlayerName: nightmareWolfVoteTarget.name,
               nbr: 1,
             },
             gameId
@@ -321,7 +340,7 @@ const cpuNextMove = (
         break;
       case "Seer":
         let playerToReveal = getRandomAlivePlayer(false, true, cpu.id);
-        if (playerToReveal && playerToReveal.id !== cpu.id) {
+        if (playerToReveal) {
           socket.emit(
             "revealPlayer",
             {
@@ -329,7 +348,7 @@ const cpuNextMove = (
               seerId: cpu.id,
               selectedPlayerId: playerToReveal.id,
               selectedPlayerName: playerToReveal.name,
-              selectedPlayerRole: playerToReveal.role,
+              selectedPlayerRole: i18n.language === "fr" ? playerToReveal.role.nameFR : playerToReveal.role.name,
             },
             gameId
           );
