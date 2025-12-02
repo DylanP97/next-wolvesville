@@ -30,16 +30,16 @@ export const AuthProvider = ({ children }) => {
   } = useSound();
 
 
-  const updateUserGameState = (newIsInRoom, newIsPlaying, newGame) => {
+  const updateUserGameState = (newIsInRoom, newIsPlaying) => {
     setIsInRoom(newIsInRoom);
     setIsPlaying(newIsPlaying);
-    setGame(newGame);
+    // setGame(newGame);
+    console.log("called??")
     socket.emit(
       "updateUserGameState",
       authState.username,
       newIsInRoom,
-      newIsPlaying,
-      newGame
+      newIsPlaying
     );
   };
 
@@ -113,7 +113,17 @@ export const AuthProvider = ({ children }) => {
         let user = updatedUsers.find(
           (user) => user.username === authState.username
         );
-        if (user?.isInRoom) setIsInRoom(user.isInRoom);
+        if (user) setIsInRoom(user.isInRoom);
+
+        console.log("isInRoom set ??", isInRoom)
+
+        console.log("updatedUsers received: ",
+          updatedUsers.map((usr) => ({
+            username: usr.username,
+            isInRoom: usr.isInRoom,
+            isPlaying: usr.isPlaying
+          })))
+
         setConnectedUsers(updatedUsers.filter((usr) => !usr.isCPU));
       });
 

@@ -8,14 +8,11 @@ import MedievalVillageDaytimeBackground from "../game/MedievalVillageDaytimeBack
 import { useEffect } from "react";
 
 const HomePage = ({ username, isPlaying, isInRoom, avatar }) => {
-  const { updateUserGameState } = useAuth();
 
   // !room.isLaunched && usersInTheRoom.length < room.nbrOfPlayers && !usersInTheRoom.some((usr) => usr.username === username)
 
   // the user shouldn't be in the homepage if is playing so this delete his game state to prevent errors
-  useEffect(() => {
-    if (isPlaying) updateUserGameState(null, false, null)
-  }, [])
+
 
   return (
     <div className="object-contain overflow-hidden flex flex-col justify-between flex-grow">

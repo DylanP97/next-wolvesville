@@ -5,12 +5,19 @@ import { useTranslation } from "react-i18next";
 import { useToRender } from "../providers/RenderProvider";
 import HomePage from "../homepage/HomePage";
 import { useAuth } from "../providers/AuthProvider";
-import { btnClassNames, getBtnClassNames } from "../lib/styles";
+import { getBtnClassNames } from "../lib/styles";
+import { useEffect } from "react";
 
 const GoBackBtn = () => {
   const { t } = useTranslation();
   const { setActiveComponent } = useToRender();
   const { username, isInRoom, avatar, updateUserGameState } = useAuth();
+
+  console.log("GoBackBtn rendered with isInRoom:", isInRoom);
+  // be sure to have the latest isInRoom value
+  // useEffect(() => {
+  //   console.log("GoBackBtn rendered with isInRoom:", isInRoom);
+  // }, [isInRoom]);
 
   return (
     <Button
@@ -18,7 +25,7 @@ const GoBackBtn = () => {
       color="secondary"
       variant="shadow"
       onClick={() => {
-        updateUserGameState(null, false, null)
+        updateUserGameState(isInRoom, false)
         setActiveComponent(
           <HomePage username={username} isInRoom={isInRoom} avatar={avatar} />
         )

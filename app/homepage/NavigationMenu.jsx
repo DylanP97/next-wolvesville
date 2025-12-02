@@ -13,83 +13,61 @@ import { Button } from "@nextui-org/react";
 
 const NavigationMenu = () => {
   const { t } = useTranslation();
-  const { isGuest, socket, username, socketId, avatar } = useAuth();
+  const { isGuest, socket, username, socketId, avatar, isInRoom } = useAuth();
   const { setActiveComponent, activeComponent } = useToRender();
 
   const launchQuickGame = async () => {
-    // console.log("launchQuickGame", username, socketId, avatar)
     await socket.emit("startQuickGame", username, socketId, avatar);
   }
 
   const components = [
     {
       label: t("menu.2"),
-      componentToReturn: (
-        <CreateRoom
-        // setActiveComponent={setActiveComponent}
-        // activeComponent={activeComponent}
-        />
-      ),
+      componentToReturn: <CreateRoom />,
       allowedForGuest: true,
+      hideWhenInRoom: true,   // 👈 added flag
     },
     {
       label: t("menu.1"),
-      componentToReturn: (
-        <JoinRoom
-        // setActiveComponent={setActiveComponent}
-        // activeComponent={activeComponent}
-        />
-      ),
+      componentToReturn: <JoinRoom />,
       allowedForGuest: true,
     },
     {
       label: t("menu.3"),
-      componentToReturn: (
-        <ConnectedUsers
-        // setActiveComponent={setActiveComponent}
-        // activeComponent={activeComponent}
-        />
-      ),
+      componentToReturn: <ConnectedUsers />,
       allowedForGuest: true,
     },
     {
       label: t("menu.4"),
-      componentToReturn: (
-        <RolesGrid
-        // setActiveComponent={setActiveComponent}
-        // activeComponent={activeComponent}
-        />
-      ),
+      componentToReturn: <RolesGrid />,
       allowedForGuest: true,
     },
     {
       label: t("menu.5"),
-      componentToReturn: (
-        <Profile
-        // setActiveComponent={setActiveComponent}
-        // activeComponent={activeComponent}
-        />
-      ),
+      componentToReturn: <Profile />,
       allowedForGuest: false,
     },
   ];
 
-  const filteredComponents = components.filter((c) =>
-    isGuest ? c.allowedForGuest : true
+  const filteredComponents = components.filter(
+    (c) => (isGuest ? c.allowedForGuest : true) && !(isInRoom && c.hideWhenInRoom)
   );
 
   return (
     <div className="w-full h-full">
       <nav className="absolute top-1/3 flex flex-col items-center py-4 w-full z-40">
-        <Button
-          className={getBtnClassNames("w-80") + " text-md font-medium h-12 font-wolf"}
-          color="primary"
-          variant="shadow"
-          onClick={() => launchQuickGame()}
-          key={"quickGame-navComponent"}
-        >
-          {t("menu.0")}
-        </Button>
+        {!isInRoom && (   // 👈 hide Quick Game when in room
+          <Button
+            className={getBtnClassNames("w-80") + " text-md font-medium h-12 font-wolf"}
+            color="primary"
+            variant="shadow"
+            onClick={launchQuickGame}
+            key={"quickGame-navComponent"}
+          >
+            {t("menu.0")}
+          </Button>
+        )}
+
         {filteredComponents.map((c, index) => (
           <Button
             className={getBtnClassNames("w-80") + " text-md font-medium h-12 font-wolf"}

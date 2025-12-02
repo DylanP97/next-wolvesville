@@ -10,24 +10,24 @@ import AvatarUI from "./components/AvatarUI";
 const ConnectedUsers = () => {
   const { t } = useTranslation();
   const { connectedUsers } = useAuth();
-  const [nonConnectedUsers, setNonConnectedUsers] = useState([]);
+  // const [nonConnectedUsers, setNonConnectedUsers] = useState([]);
 
-  const defineNonConnectedUsers = async () => {
-    const allUsers = await fetchUsers();
-    if (allUsers) {
-      const membersNotHere = allUsers.data.filter(
-        (user) =>
-          !connectedUsers.some(
-            (connectedUser) => connectedUser.username === user.username
-          )
-      );
-      setNonConnectedUsers(membersNotHere);
-    }
-  };
+  // const defineNonConnectedUsers = async () => {
+  //   const allUsers = await fetchUsers();
+  //   if (allUsers) {
+  //     const membersNotHere = allUsers.data.filter(
+  //       (user) =>
+  //         !connectedUsers.some(
+  //           (connectedUser) => connectedUser.username === user.username
+  //         )
+  //     );
+  //     setNonConnectedUsers(membersNotHere);
+  //   }
+  // };
 
-  useEffect(() => {
-    defineNonConnectedUsers();
-  }, []);
+  // useEffect(() => {
+  //   defineNonConnectedUsers();
+  // }, []);
 
   return (
     <div className="relative pt-[70px] flex flex-grow flex-col justify-between w-full p-4">

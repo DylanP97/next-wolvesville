@@ -3,8 +3,18 @@
 import Image from "next/image";
 import prison from "../../public/game/prison.png";
 import AvatarUI from "../components/AvatarUI";
+import { useAuth } from "../providers/AuthProvider";
+import { useEffect } from "react";
 
 const PlayerAvatar = ({ isAlive, isUnderArrest, avatar }) => {
+
+  const { connectedUsers } = useAuth();
+
+  useEffect(() => { 
+    console.log("PlayerAvatar - connectedUsers changed:", connectedUsers);
+  }, [connectedUsers]);
+
+
   return (
     <>
       {!isAlive ? (

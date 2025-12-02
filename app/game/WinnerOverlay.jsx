@@ -18,7 +18,7 @@ const WinnerOverlay = () => {
   const [wTeamData, setWTeamData] = useState();
 
   const handleExitGame = () => {
-    updateUserGameState(null, false, null);
+    updateUserGameState(null, false);
     // document.location.assign("/");
     // socket.emit("deleteRoom", gameId);
   };

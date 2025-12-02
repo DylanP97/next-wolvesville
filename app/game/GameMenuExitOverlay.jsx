@@ -1,6 +1,6 @@
 "use client";
 
-import GoBackBtn from "../components/GoBackBtn";
+import QuitGameBtn from "../components/QuitGameBtn";
 import DevModeToggle from "../general-btns/components/DevModeToggle";
 import LogoutBtn from "../general-btns/components/LogoutBtn";
 import VolumeToggle from "../general-btns/components/VolumeToggle";
@@ -26,7 +26,7 @@ const GameMenuExitOverlay = ({ isOpen, onClose }) => {
                 {
                     isDev && <DevModeToggle />
                 }
-                <GoBackBtn />
+                <QuitGameBtn />
             </div>
         </div>
     );

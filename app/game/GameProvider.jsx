@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
-  const { game, socket, username, updateUserGameState } = useAuth();
+  const { game, socket, username } = useAuth();
 
   const { generateNoise } = useSound();
   const { triggerAnimation, triggerSimpleMessage } = useAnimation();
@@ -281,7 +281,6 @@ export const GameProvider = ({ children }) => {
     socket.emit("checkForWinner", game.id);
   } else {
     !game.hasEnded && socket.emit("endGame", game.id);
-    // updateUserGameState(true, false, game);
   }
 
 

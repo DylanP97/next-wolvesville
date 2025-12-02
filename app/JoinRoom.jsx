@@ -35,7 +35,7 @@ const JoinRoom = () => {
   }, []);
 
   const joinRoom = (roomId, userJoining, preferredRole = null) => {
-    updateUserGameState(roomId, false, null);
+    updateUserGameState(roomId, false);
     socket.emit("joinRoom", roomId, { ...userJoining, preferredRole });
   };
 
@@ -75,17 +75,15 @@ const JoinRoom = () => {
           {rooms.map((room) => {
             let usersInTheRoom = room.usersInTheRoom;
 
-            console.log(room.name, room.hasEnded)
-
             return (
               <Card
                 key={room.id}
                 className={`${room.hasEnded
                   ? "bg-gray-400 cursor-not-allowed opacity-75"
                   : room.isLaunched
-                    ? "animate-pulse bg-yellow-500 cursor-not-allowed"
+                    ? "animate-pulse bg-green-500 cursor-not-allowed"
                     : !room.isLaunched && usersInTheRoom.length < room.nbrOfPlayers && !usersInTheRoom.some((usr) => usr.username === username)
-                      ? "bg-green-400"
+                      ? "bg-yellow-400"
                       : ""
                   } max-w-96 w-full`}
               >
@@ -103,6 +101,7 @@ const JoinRoom = () => {
                   {usersInTheRoom.map((userInRoom, index) => (
                     <p key={"uitr" + index}>{userInRoom.username}</p>
                   ))}
+                  <p>{room.nbrOfPlayers - (room.nbrCPUPlayers + usersInTheRoom.length)}{" "}{t("join.NbrLeftToJoin")}</p>
                 </CardBody>
 
                 <Divider className="my-2" />

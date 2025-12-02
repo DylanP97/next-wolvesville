@@ -5,8 +5,6 @@ import IsInRoomInfo from "./components/IsInRoomInfo";
 
 const ConnectedUserCard = ({ user }) => {
 
-  console.log(user.isPlaying, user.username)
-
   // Determine the background color based on isPlaying and isInRoom
   const getBgColor = () => {
     if (user.isPlaying && user.isInRoom) return "bg-green-500";
