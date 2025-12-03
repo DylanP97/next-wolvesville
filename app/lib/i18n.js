@@ -13,7 +13,7 @@ if (typeof window !== 'undefined') {
       fallbackLng: "fr", // Default language
       lng: "fr", // Default language
       resources: {
-        // en: locales.en,
+        en: locales.en,
         fr: locales.fr,
       },
       detection: {

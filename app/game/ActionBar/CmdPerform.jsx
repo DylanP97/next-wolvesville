@@ -36,7 +36,7 @@ const CmdPerform = ({
 
   // Check if player has nightmares - they can't use night abilities
   const hasNightmares = clientPlayer?.willHaveNightmares && actionTime === "night";
-  
+
   if (
     canPerform &&
     !isUnderArrest &&

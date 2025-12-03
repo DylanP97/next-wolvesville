@@ -17,12 +17,36 @@ import { useToRender } from "../providers/RenderProvider";
 import MedievalVillageDaytimeBackground from "./Backgrounds/MedievalVillageDaytimeBackground";
 import MedievalVillageNighttimeBackground from "./Backgrounds/MedievalVillageNighttimeBackground";
 import MedievalVillageVotetimeBackground from "./Backgrounds/MedievalVillageVotetimeBackground";
+import { useEffect, useRef, useState } from "react";
 
 const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { winningTeam, timeOfTheDay } = useGame();
   const { width, height } = useWindowSize();
   const { exitMenuOpen, toggleExitMenu } = useToRender();
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const containerRef = useRef(null);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
 
+  // Measure the container size
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const updateSize = () => {
+      if (containerRef.current) {
+        setContainerSize({
+          width: containerRef.current.offsetWidth,
+          height: containerRef.current.offsetHeight,
+        });
+      }
+    };
+
+    // Initial measurement
+    updateSize();
+
+    // Update on window resize
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
 
   const getBackgroundComponent = () => {
     switch (timeOfTheDay) {
@@ -52,15 +76,23 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
       </div>
 
       {/* Container principal avec padding pour header et action bar */}
-      <div className="flex flex-grow flex-1 justify-center items-center relative">
-        <GameGrid />
-        <PrisonOverlay />
-        {winningTeam !== null && (
+      <div ref={containerRef} className="flex flex-grow flex-1 justify-center items-center relative">
+        {winningTeam !== null ? (
           <>
-            <Confetti width={width} height={height} style={{ zIndex: "999" }} />
+            <Confetti
+              width={containerSize.width}
+              height={containerSize.height}
+              style={{ zIndex: "999" }}
+            />
             <WinnerOverlay />
           </>
+        ) : (
+          <>
+            <GameGrid />
+            <PrisonOverlay />
+          </>
         )}
+        <ChatModal isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
       </div>
 
       {/* Action Bar fixe en bas */}
@@ -68,6 +100,8 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
         <ActionBar
           summaryIsOpen={summaryIsOpen}
           setSummaryIsOpen={setSummaryIsOpen}
+          isChatOpen={isChatOpen}
+          setIsChatOpen={setIsChatOpen}
         />
       </div>
 
@@ -75,7 +109,6 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
         isOpen={exitMenuOpen}
         onClose={toggleExitMenu}
       />
-      <ChatModal />
     </div>
   );
 };

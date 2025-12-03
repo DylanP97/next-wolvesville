@@ -13,7 +13,7 @@ const GoBackBtn = () => {
   const { setActiveComponent } = useToRender();
   const { username, isInRoom, avatar, updateUserGameState } = useAuth();
 
-  console.log("GoBackBtn rendered with isInRoom:", isInRoom);
+  // console.log("GoBackBtn rendered with isInRoom:", isInRoom);
   // be sure to have the latest isInRoom value
   // useEffect(() => {
   //   console.log("GoBackBtn rendered with isInRoom:", isInRoom);

@@ -5,13 +5,11 @@ import { useTranslation } from "react-i18next";
 import { useGame } from "../GameProvider";
 import PlayingCommands from "./PlayingCommands";
 import PauseToggle from "./PauseToggle";
-import ChatModal from "./ChatModal";
 import ChatButton from "./ChatButton";
 import GameMenuExitBtn from "../../general-btns/components/GameMenuExitBtn";
 
-const ActionBar = ({ summaryIsOpen, setSummaryIsOpen }) => {
+const ActionBar = ({ summaryIsOpen, setSummaryIsOpen, isChatOpen, setIsChatOpen}) => {
   const { clientPlayer, actionType } = useGame();
-  const [isChatOpen, setIsChatOpen] = useState(false);
   const { t } = useTranslation();
 
   return (
@@ -26,7 +24,7 @@ const ActionBar = ({ summaryIsOpen, setSummaryIsOpen }) => {
           <PauseToggle />
         </div>
       </div>
-      <ChatModal isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+      
     </>
   );
 };

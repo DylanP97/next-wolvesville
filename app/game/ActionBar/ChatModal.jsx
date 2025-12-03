@@ -110,11 +110,13 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 md:inset-0 bottom-20 md:bottom-auto z-40 bg-black/30 backdrop-blur-none md:backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-      )}
+        <div
+          className="absolute inset-0 z-40 bg-black/30 backdrop-blur-sm"
+          onClick={() => setIsOpen(false)}
+        />)}
 
       {isOpen && (
-        <div className="fixed inset-2 md:inset-auto md:bottom-24 md:right-4 md:w-[500px] md:h-[600px] z-50 bg-slate-900 border-2 border-slate-700 rounded-lg shadow-2xl flex flex-col">
+        <div className="absolute inset-2 md:inset-auto md:bottom-4 md:right-4 md:w-[500px] md:h-[600px] z-50 bg-slate-900 border-2 border-slate-700 rounded-lg shadow-2xl flex flex-col">
           {/* Close button */}
           <button
             onClick={() => setIsOpen(false)}
@@ -132,7 +134,7 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
                   key={"chattab-" + index}
                   onClick={() => selectChat(chat.type)}
                 >
-                  <h2 className={`${chat.type === usedChat.type ? "text-white font-bold" : "text-slate-300"} text-sm`}>
+                  <h2 className={`${chat.type === usedChat.type ? "text-white font-bold" : "text-slate-300"} text-xs`}>
                     {chat.emoji} {chat.label}
                   </h2>
                 </div>
@@ -144,7 +146,7 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
           <div
             ref={containerRef}
             onScroll={handleScroll}
-            className="flex-grow overflow-y-auto p-4 bg-slate-900/50 space-y-3"
+            className="flex-grow overflow-y-auto p-2 bg-slate-900/50 space-y-2"
           >
             {displayMessages.length === 0 ? (
               <div className="text-sm italic text-slate-500 text-center mt-8">
@@ -220,7 +222,7 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
 
           {/* Chat input */}
           {clientPlayer.isAlive && (
-            <div className="h-40 border-t border-slate-700 bg-slate-800 rounded-b-lg p-3">
+            <div className="h-28 border-t border-slate-700 bg-slate-800 rounded-b-lg p-3">
               <Chatbox />
             </div>
           )}

@@ -65,7 +65,7 @@ const Chatbox = () => {
           className="outline-none border-none p-3 flex-grow text-sm text-black rounded-lg resize-none"
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
-          rows={3}
+          rows={1}
         />
         <CmdSend sendMessage={sendMessage} message={message} />
       </div>

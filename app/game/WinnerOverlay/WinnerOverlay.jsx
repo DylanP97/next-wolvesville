@@ -47,7 +47,7 @@ const WinnerOverlay = () => {
       // <div className="winner-overlay fixed inset-0 bg-black/60 overflow-y-auto flex justify-center p-4">
       <div
         id="winner-message"
-        className="winner-message w-full max-w-lg p-4 bg-gray-800 rounded-lg overflow-y-auto">
+        className="winner-message w-full p-4 m-2 bg-gray-800 rounded-lg overflow-y-auto">
 
         {/* Winning team row */}
         <div className="flex items-center gap-2">
