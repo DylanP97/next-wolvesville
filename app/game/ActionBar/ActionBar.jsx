@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useGame } from "./GameProvider";
+import { useGame } from "../GameProvider";
 import PlayingCommands from "./PlayingCommands";
 import PauseToggle from "./PauseToggle";
 import ChatModal from "./ChatModal";
 import ChatButton from "./ChatButton";
-import GameMenuExitBtn from "../general-btns/components/GameMenuExitBtn";
+import GameMenuExitBtn from "../../general-btns/components/GameMenuExitBtn";
 
 const ActionBar = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { clientPlayer, actionType } = useGame();

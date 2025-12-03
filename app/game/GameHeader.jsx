@@ -9,10 +9,14 @@ const GameHeader = () => {
   const { t } = useTranslation();
 
   const secondsLeft = timeCounter / 1000;
-  const isEndingSoon = secondsLeft <= 3;
+  const isEndingSoon = secondsLeft <= 5;
 
   const getTimeString = () => {
-    return `n°${dayCount} - ${secondsLeft}s `;
+    return (
+      <>
+        n°{dayCount} - <span className={isEndingSoon ? "text-red-400 font-bold" : ""}>{secondsLeft}s</span>{" "}
+      </>
+    );
   };
 
   return (
@@ -20,42 +24,27 @@ const GameHeader = () => {
       <p className="text-xs text-white my-2">
         {timeOfTheDay === "daytime" ? (
           <>
-            ☀️ {t("game.daytime")}{" "}
-            <span className={isEndingSoon ? "text-red-400 font-bold" : ""}>
-              {getTimeString()}
-            </span>
+            ☀️ {t("game.daytime")} {getTimeString()}
             {t("game.left")}
           </>
         ) : timeOfTheDay === "votetime" ? (
           <>
-            🌅🗳️ {t("game.votetime")}{" "}
-            <span className={isEndingSoon ? "text-red-400 font-bold" : ""}>
-              {getTimeString()}
-            </span>
+            🌅🗳️ {t("game.votetime")} {getTimeString()}
             {t("game.left")}
           </>
         ) : timeOfTheDay === "votetimeAftermath" ? (
           <>
-            🌅😮 {t("game.votetimeAftermath")}{" "}
-            <span className={isEndingSoon ? "text-red-400 font-bold" : ""}>
-              {getTimeString()}
-            </span>
+            🌅😮 {t("game.votetimeAftermath")} {getTimeString()}
             {t("game.left")}
           </>
         ) : timeOfTheDay === "nighttime" ? (
           <>
-            🌙 {t("game.nighttime")}{" "}
-            <span className={isEndingSoon ? "text-red-400 font-bold" : ""}>
-              {getTimeString()}
-            </span>
+            🌙 {t("game.nighttime")} {getTimeString()}
             {t("game.left")}
           </>
         ) : timeOfTheDay === "nighttimeAftermath" ? (
           <>
-            🌙😮 {t("game.nighttimeAftermath")}{" "}
-            <span className={isEndingSoon ? "text-red-400 font-bold" : ""}>
-              {getTimeString()}
-            </span>
+            🌙😮 {t("game.nighttimeAftermath")} {getTimeString()}
             {t("game.left")}
           </>
         ) : null}

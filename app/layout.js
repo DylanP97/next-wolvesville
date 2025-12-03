@@ -3,7 +3,6 @@ import "./globals.css";
 import { Providers } from "./providers/providers";
 import Footer from "./components/Footer";
 import { RenderProvider } from "./providers/RenderProvider";
-import TrackDisplay from "./TrackDisplay";
 import DevModeBorder from "./components/DevModeBorder";
 import GeneralBtns from "./general-btns/GeneralBtns";
 import { Creepster } from "next/font/google";
@@ -37,7 +36,6 @@ export default function RootLayout({ children }) {
                   <GeneralBtns />
                   {children}
                   {/* <Footer /> */}
-                  <TrackDisplay />
                 </div>
               </RenderProvider>
             </DevModeBorder>

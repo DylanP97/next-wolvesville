@@ -24,6 +24,7 @@ const RolesGrid = () => {
       <h1 className="text-white text-3xl font-bold p-5 font-wolf">{t("roles.title")}</h1>
       <div className="flex flex-row gap-6 p-4 overflow-x-auto overflow-x-hidden flex-wrap">
         {availableRoles
+          .filter((role) => role.status === 1)
           .sort((a, b) => a.status - b.status)
           .map((role) => (
             <RoleCard key={role.name} role={role} />

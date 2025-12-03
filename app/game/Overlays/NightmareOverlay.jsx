@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { useGame } from "./GameProvider";
+import { useGame } from "../GameProvider";
 
 const NightmareOverlay = () => {
   const { clientPlayer, timeOfTheDay } = useGame();

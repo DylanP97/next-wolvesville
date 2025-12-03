@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import { Tooltip } from "@nextui-org/react";
-import voteAgainstIcon from "../../public/game/vote-time.png";
+import voteAgainstIcon from "../../../public/game/vote-time.png";
 import { useTranslation } from "react-i18next";
-import { divActionIcon, imgActionIcon } from "../lib/styles";
-import { useGame } from "./GameProvider";
+import { divActionIcon, imgActionIcon } from "../../lib/styles";
+import { useGame } from "../GameProvider";
 
 const CmdVote = ({ activateSelection, wolfVote }) => {
   const { t } = useTranslation();

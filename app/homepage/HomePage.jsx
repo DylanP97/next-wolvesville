@@ -4,8 +4,9 @@ import NavigationMenu from "./NavigationMenu";
 import AuthInfo from "./AuthInfo";
 import { useAuth } from "../providers/AuthProvider";
 import RolesCarousel from "./RolesCarousel";
-import MedievalVillageDaytimeBackground from "../game/MedievalVillageDaytimeBackground";
+import MedievalVillageDaytimeBackground from "../game/Backgrounds/MedievalVillageDaytimeBackground";
 import { useEffect } from "react";
+import TrackDisplay from "../TrackDisplay";
 
 const HomePage = ({ username, isPlaying, isInRoom, avatar }) => {
 
@@ -20,6 +21,7 @@ const HomePage = ({ username, isPlaying, isInRoom, avatar }) => {
       <AuthInfo username={username} isInRoom={isInRoom} isPlaying={isPlaying} avatar={avatar} />
       <RolesCarousel />
       <NavigationMenu />
+      <TrackDisplay />
     </div>
   );
 };

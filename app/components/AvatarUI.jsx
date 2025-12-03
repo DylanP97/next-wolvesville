@@ -4,12 +4,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@nextui-org/react";
 
-const AvatarUI = ({ avatar, heightAndWidth }) => {
+const AvatarUI = ({ avatar, heightAndWidth, inGameAv }) => {
   const [avatarState, setAvatarState] = useState();
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    
+
     // Dynamic import to avoid SSR issues
     Promise.all([
       import("@dicebear/core"),
@@ -44,7 +44,7 @@ const AvatarUI = ({ avatar, heightAndWidth }) => {
 
   return avatar && avatarState ? (
     <div
-      className={`bg-white rounded-full flex justify-center overflow-hidden border-2 border-white m-1 aspect-square`}
+      className={`${inGameAv ? "bg-opacity-0" : "rounded-full border-2 border-white m-1 aspect-square "} bg-white flex justify-center overflow-hidden `}
     >
       <Image
         src={avatarState}

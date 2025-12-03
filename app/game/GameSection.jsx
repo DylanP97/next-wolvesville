@@ -1,28 +1,28 @@
 "use client";
 
-import WinnerOverlay from "./WinnerOverlay";
-import ActionBar from "./ActionBar";
-import DeathFlash from "./DeathFlash";
-import NightmareOverlay from "./NightmareOverlay";
-import DeathOverlay from "./DeathOverlay";
-import PrisonOverlay from "./PrisonOverlay";
+import WinnerOverlay from "./WinnerOverlay/WinnerOverlay";
+import ActionBar from "./ActionBar/ActionBar";
+import DeathFlash from "./Overlays/DeathFlash";
+import NightmareOverlay from "./Overlays/NightmareOverlay";
+import DeathOverlay from "./Overlays/DeathOverlay";
+import PrisonOverlay from "./Overlays/PrisonOverlay";
 import GameHeader from "./GameHeader";
-import GameGrid from "./GameGrid";
-import ChatModal from "./ChatModal";
+import GameGrid from "./GameGrid/GameGrid";
+import ChatModal from "./ActionBar/ChatModal";
 import { useGame } from "./GameProvider";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
 import GameMenuExitOverlay from "./GameMenuExitOverlay";
 import { useToRender } from "../providers/RenderProvider";
-import MedievalVillageDaytimeBackground from "./MedievalVillageDaytimeBackground";
-import MedievalVillageNighttimeBackground from "./MedievalVillageNighttimeBackground";
-import MedievalVillageVotetimeBackground from "./MedievalVillageVotetimeBackground";
+import MedievalVillageDaytimeBackground from "./Backgrounds/MedievalVillageDaytimeBackground";
+import MedievalVillageNighttimeBackground from "./Backgrounds/MedievalVillageNighttimeBackground";
+import MedievalVillageVotetimeBackground from "./Backgrounds/MedievalVillageVotetimeBackground";
 
 const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const { winningTeam, timeOfTheDay } = useGame();
   const { width, height } = useWindowSize();
   const { exitMenuOpen, toggleExitMenu } = useToRender();
-  
+
 
   const getBackgroundComponent = () => {
     switch (timeOfTheDay) {
@@ -53,8 +53,14 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
 
       {/* Container principal avec padding pour header et action bar */}
       <div className="flex flex-grow flex-1 justify-center items-center relative">
-          <GameGrid />
-          <PrisonOverlay />
+        <GameGrid />
+        <PrisonOverlay />
+        {winningTeam !== null && (
+          <>
+            <Confetti width={width} height={height} style={{ zIndex: "999" }} />
+            <WinnerOverlay />
+          </>
+        )}
       </div>
 
       {/* Action Bar fixe en bas */}
@@ -65,12 +71,6 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
         />
       </div>
 
-      {winningTeam !== null && (
-        <>
-          <Confetti width={width} height={height} style={{ zIndex: "999" }} />
-          <WinnerOverlay />
-        </>
-      )}
       <GameMenuExitOverlay
         isOpen={exitMenuOpen}
         onClose={toggleExitMenu}

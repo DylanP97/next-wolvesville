@@ -7,7 +7,7 @@ const IsInRoomInfo = ({ isInRoom, isPlaying }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    console.log("IsInRoomInfo updated:", { isInRoom, isPlaying });
+    // console.log("IsInRoomInfo updated:", { isInRoom, isPlaying });
   }, [isInRoom, isPlaying]);
 
   if (isPlaying && isInRoom)

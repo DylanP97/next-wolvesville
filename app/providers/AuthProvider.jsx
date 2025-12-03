@@ -115,14 +115,14 @@ export const AuthProvider = ({ children }) => {
         );
         if (user) setIsInRoom(user.isInRoom);
 
-        console.log("isInRoom set ??", isInRoom)
+        // console.log("isInRoom set ??", isInRoom)
 
-        console.log("updatedUsers received: ",
-          updatedUsers.map((usr) => ({
-            username: usr.username,
-            isInRoom: usr.isInRoom,
-            isPlaying: usr.isPlaying
-          })))
+        // console.log("updatedUsers received: ",
+        //   updatedUsers.map((usr) => ({
+        //     username: usr.username,
+        //     isInRoom: usr.isInRoom,
+        //     isPlaying: usr.isPlaying
+        //   })))
 
         setConnectedUsers(updatedUsers.filter((usr) => !usr.isCPU));
       });

@@ -23,7 +23,7 @@ export const getPlyCardBackground = (
   }
 
   // if player is dead, return black with fade
-  if (!player.isAlive) return "bg-black text-yellow-500 border-yellow-600 opacity-20 grayscale cursor-not-allowed";
+  if (!player.isAlive) return "bg-black text-yellow-500 border-yellow-600 opacity-60 grayscale cursor-not-allowed";
 
   // Grave Robber can't loot dead players
   if (isGraveRobber && actionType === "loot" && player.isAlive) {
@@ -176,5 +176,5 @@ export const getPlyCardBackground = (
 };
 
 export const getPlyCardLayout = () => {
-  return "w-full h-28 flex flex-col gap-1 justify-center items-center relative p-3 rounded-lg border border-gray-700 transition-all duration-200 hover:shadow-lg";
+  return "w-full h-24 md:h-28 flex flex-col gap-1 items-center relative rounded-lg border border-gray-700 transition-all duration-200 hover:shadow-lg bg-white bg-opacity-10";
 };

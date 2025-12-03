@@ -17,7 +17,7 @@ const RoleCard = ({ role }) => {
   const { t } = useTranslation();
 
   return (
-    <Card className="min-w-80 h-60 md:max-w-80 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 hover:border-slate-600 shadow-lg hover:shadow-xl transition-all duration-200">
+    <Card className="min-w-80 h-72 md:max-w-80 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 hover:border-slate-600 shadow-lg hover:shadow-xl transition-all duration-200">
       <CardHeader className="flex gap-3">
         <Image
           alt={role.name}

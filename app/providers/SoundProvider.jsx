@@ -95,6 +95,7 @@ export const SoundProvider = ({ children }) => {
       case "softSuspense": file = "/audio/softSuspense.mp3"; break;
       case "riserVotetime": file = "/audio/riserVotetime.mp3"; break;
       case "mysteriousArea": file = "/audio/mysteriousArea.mp3"; break;
+      case "wheelSpin": file = "/audio/wheelSpin.mp3"; break;
       default: return;
     }
 

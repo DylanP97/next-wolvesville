@@ -2,14 +2,16 @@
 
 import Image from "next/image";
 import VoteCount from "./VoteCount";
+import VotingAgainst from "./VotingAgainst";
 import IconReveal from "./IconReveal";
 import PlayerAvatar from "./PlayerAvatar";
 import ActionSet from "./ActionSet"
-import { useGame } from "./GameProvider";
+import { useGame } from "../GameProvider";
 import { getPlyCardBackground, getPlyCardLayout } from "./getPlyCardStyles";
-import { useDevMode } from "../providers/DevModeProvider";
-import i18n from "../lib/i18n";
-import { useAuth } from "../providers/AuthProvider";
+import { useDevMode } from "../../providers/DevModeProvider";
+import i18n from "../../lib/i18n";
+import { useAuth } from "../../providers/AuthProvider";
+import prison from "../../../public/game/prison.png";
 
 const PlayerGridCard = ({
   player,
@@ -57,13 +59,23 @@ const PlayerGridCard = ({
         actionType
       )} ${getPlyCardLayout()} `}
     >
+
+      <p className="text-[8px] md:text-[10px] text-white">
+        {player.name}
+      </p>
+
       {timeOfTheDay == "votetime" && player.isAlive && <VoteCount voteNbr={player.voteAgainst} isWolfVote={false} />}
 
       {timeOfTheDay == "nighttime" && isWolf && !clientPlayer.isUnderArrest && !isAlsoWolf && player.isAlive && (
         <VoteCount voteNbr={player.wolfVoteAgainst} isWolfVote={true} />
       )}
+      {timeOfTheDay == "votetime" && player.isAlive && <VotingAgainst hasVotedFor={player.hasVotedFor} />}
 
-      {((clientPlayer.role.name == "Cupid" && player.isInLove) ||
+      {timeOfTheDay == "nighttime" && isWolf && !clientPlayer.isUnderArrest && isAlsoWolf && player.isAlive && (
+        <VotingAgainst hasVotedFor={player.hasWolfVotedFor} />
+      )}
+
+      {/* {((clientPlayer.role.name == "Cupid" && player.isInLove) ||
         (clientPlayer.isInLove && player.isInLove)) && (
           <div className="absolute bottom-0 left-0 m-2 h-4 aspect-square flex justify-center items-center animate-pulse">
             <Image
@@ -73,7 +85,7 @@ const PlayerGridCard = ({
               height={40}
             />
           </div>
-        )}
+        )} */}
 
       {/* Pyromaniac marked as pour with gasoline */}
       {(clientPlayer.role.name === "Pyromaniac" && player.isMarkedWithGasoline) && (
@@ -86,6 +98,20 @@ const PlayerGridCard = ({
           />
         </div>
       )}
+
+      {player.isUnderArrest && (
+        <Image
+          className="h-full w-full object-contain overflow-hidden z-30"
+          width={64}
+          height={64}
+          src={prison}
+          alt="prison"
+        />
+      )}
+
+      {
+        player.id === (selectedPlayer || selectedPlayer1) && <ActionSet />
+      }
 
       {(player.isRevealed ||
         player.id == clientPlayer.id ||
@@ -103,19 +129,20 @@ const PlayerGridCard = ({
           />
         )}
 
-      {
-        player.id === (selectedPlayer || selectedPlayer1) && <ActionSet />
-      }
 
-      <PlayerAvatar
-        isAlive={player.isAlive}
-        isUnderArrest={player.isUnderArrest}
-        avatar={player.avatar}
-      />
+      <div className="absolute w-full bottom-0">
 
-      <p className="text-xs text-white font-semibold">
-        {player.name}
-      </p>
+
+        <PlayerAvatar
+          isAlive={player.isAlive}
+          avatar={player.avatar}
+          inGameAv={true}
+        />
+      </div>
+
+
+
+
 
     </div>
   );

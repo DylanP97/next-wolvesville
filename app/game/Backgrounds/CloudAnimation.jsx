@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import { useGame } from "./GameProvider";
+import { useGame } from "../GameProvider";
 
 const CloudAnimation = ({ children }) => {
 

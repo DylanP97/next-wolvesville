@@ -1,6 +1,6 @@
 "use client";
 
-import { useGame } from "./GameProvider";
+import { useGame } from "../GameProvider";
 
 const DeathFlash = () => {
   const { showDeathFlash } = useGame();

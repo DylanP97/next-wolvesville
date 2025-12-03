@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useAuth } from "../providers/AuthProvider";
-import { useGame } from "./GameProvider";
-import { useDevMode } from "../providers/DevModeProvider";
+import { useAuth } from "../../providers/AuthProvider";
+import { useGame } from "../GameProvider";
+import { useDevMode } from "../../providers/DevModeProvider";
 import { Tooltip } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { divActionIcon, imgActionIcon } from "../lib/styles";
-import { prefixDevText } from "../lib/devUtils";
+import { divActionIcon, imgActionIcon } from "../../lib/styles";
+import { prefixDevText } from "../../lib/devUtils";
 
 const PauseToggle = () => {
   const { socket, isDev } = useAuth();
@@ -49,8 +49,8 @@ const PauseToggle = () => {
               : "https://res.cloudinary.com/dnhq4fcyp/image/upload/v1719309608/pause_v6iqbq.png"
           }
           alt={"Play/Pause Game"}
-          width={50}
-          height={50}
+          width={40}
+          height={40}
           style={{ height: "auto", width: "auto" }}
           className={`${imgActionIcon}`}
         />

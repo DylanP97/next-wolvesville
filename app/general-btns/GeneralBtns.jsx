@@ -2,6 +2,7 @@
 
 import VolumeToggle from "./components/VolumeToggle";
 import FullScreenToggle from "./components/FullScreenToggle";
+import LanguageToggle from "./components/LanguageToggle";
 import LogoutBtn from "./components/LogoutBtn";
 import DevModeToggle from "./components/DevModeToggle";
 import GameMenuExitBtn from "./components/GameMenuExitBtn";
@@ -14,7 +15,7 @@ const GeneralBtns = () => {
   const { activeComponent } = useToRender();
 
   if (!isPlaying) return (
-    <div className="absolute top-0 h-[70px] w-full p-4 z-30 flex flex-row justify-end items-center gap-2 z-50">
+    <div className="fixed top-0 h-[70px] w-full p-4 z-30 flex flex-row justify-end items-center gap-2 z-50">
       <VolumeToggle />
       <FullScreenToggle />
       {
@@ -23,6 +24,7 @@ const GeneralBtns = () => {
             {
               isDev && <DevModeToggle />
             }
+            <LanguageToggle />
             <LogoutBtn />
             {
               activeComponent?.type?.displayName !== "HomePage" &&

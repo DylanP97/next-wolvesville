@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { Tooltip } from "@nextui-org/react";
-import { useGame } from "./GameProvider";
-import { divActionIcon, imgActionIcon } from "../lib/styles";
-import i18n from "../lib/i18n";
+import { useGame } from "../GameProvider";
+import { divActionIcon, imgActionIcon } from "../../lib/styles";
+import i18n from "../../lib/i18n";
 
 const CmdPerform = ({
   canPerform,
@@ -72,8 +72,8 @@ const CmdPerform = ({
           <Image
             src={emoji}
             alt={type}
-            width={50}
-            height={50}
+            width={12}
+            height={12}
             style={{ height: "auto", width: "auto" }}
             className={`${imgActionIcon}`}
           />

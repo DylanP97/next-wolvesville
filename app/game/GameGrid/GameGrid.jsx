@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAuth } from "../providers/AuthProvider";
-import { useGame } from "./GameProvider";
+import { useAuth } from "../../providers/AuthProvider";
+import { useGame } from "../GameProvider";
 import PlayerGridCard from "./PlayerGridCard";
-import handlePlayerClick from "./handlePlayerClick";
-import { useSound } from "../providers/SoundProvider";
-import i18n from "../lib/i18n";
+import handlePlayerClick from "../handlePlayerClick";
+import { useSound } from "../../providers/SoundProvider";
+import i18n from "../../lib/i18n";
 import { useTranslation } from "react-i18next";
-import { useAnimation } from "../providers/AnimationProvider";
+import { useAnimation } from "../../providers/AnimationProvider";
 
 const GameGrid = () => {
   const { triggerSimpleMessage } = useAnimation();
@@ -70,7 +70,7 @@ const GameGrid = () => {
 
 
   return (
-    <div className="grid grid-cols-4 md:grid-cols-4 gap-2 place-items-start z-10 px-6 py-2 flex-1">
+    <div className="grid grid-cols-4 md:grid-cols-4 gap-1 place-items-start z-10 px-2 md:px-6 py-2 flex-1">
       {playersList.map((player) => {
         const isAlsoWolf =
           player &&

@@ -1,13 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useGame } from "./GameProvider";
+import { useGame } from "../GameProvider";
 import { Tooltip } from "@nextui-org/react";
+import { useDevMode } from "../../providers/DevModeProvider";
+import { useAuth } from "../../providers/AuthProvider";
 
 const ChatButton = ({ isChatOpen, setIsChatOpen }) => {
   const { general, wolves, jail, availableChats } = useGame();
-  const { divActionIcon } = require("../lib/styles");
+  const { isDevMode } = useDevMode();
+  const { isDev } = useAuth();
+  const { divActionIcon } = require("../../lib/styles");
   const { t } = useTranslation();
   
   const [lastSeenCounts, setLastSeenCounts] = useState({
@@ -16,9 +20,27 @@ const ChatButton = ({ isChatOpen, setIsChatOpen }) => {
     jail: 0,
   });
 
-  // Calculate total unread messages
+  // Filter function for non-DEV messages
+  const filterNonDevMessages = (messages) => {
+    if (isDevMode && isDev) {
+      return messages;
+    }
+    return messages.filter((msg) => {
+      const messageText = msg.msg || "";
+      return !messageText.includes("DEV --");
+    });
+  };
+
+  // Get filtered message counts
+  const filteredCounts = useMemo(() => ({
+    general: filterNonDevMessages(general.history).length,
+    wolves: filterNonDevMessages(wolves.history).length,
+    jail: filterNonDevMessages(jail.history).length,
+  }), [general.history, wolves.history, jail.history, isDevMode, isDev]);
+
+  // Calculate total unread messages (excluding DEV messages)
   const unreadCount = availableChats.reduce((total, chat) => {
-    const currentCount = chat.history.length;
+    const currentCount = filteredCounts[chat.type];
     const lastSeen = lastSeenCounts[chat.type] || 0;
     return total + Math.max(0, currentCount - lastSeen);
   }, 0);
@@ -27,12 +49,12 @@ const ChatButton = ({ isChatOpen, setIsChatOpen }) => {
   useEffect(() => {
     if (isChatOpen) {
       setLastSeenCounts({
-        general: general.history.length,
-        wolves: wolves.history.length,
-        jail: jail.history.length,
+        general: filteredCounts.general,
+        wolves: filteredCounts.wolves,
+        jail: filteredCounts.jail,
       });
     }
-  }, [isChatOpen, general.history.length, wolves.history.length, jail.history.length]);
+  }, [isChatOpen, filteredCounts]);
 
   return (
     <Tooltip content={t("game.tooltip.seeOrWriteMessage")} color="secondary" variant="flat">
@@ -45,7 +67,7 @@ const ChatButton = ({ isChatOpen, setIsChatOpen }) => {
         {/* Unread badge */}
         {unreadCount > 0 && !isChatOpen && (
           <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5 shadow-lg animate-pulse">
-            {unreadCount > 99 ? '99+' : unreadCount}
+            {unreadCount > 20 ? '20+' : unreadCount}
           </div>
         )}
       </button>

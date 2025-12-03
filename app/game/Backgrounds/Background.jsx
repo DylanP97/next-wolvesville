@@ -3,7 +3,7 @@
 import daytime from "../../public/game/day-time.png";
 import votetime from "../../public/game/vote-time.png";
 import nighttime from "../../public/game/night-time.png";
-import { useGame } from "./GameProvider";
+import { useGame } from "../GameProvider";
 import Image from "next/image";
 
 const Background = () => {

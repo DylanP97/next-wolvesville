@@ -17,8 +17,8 @@ const IconReveal = ({ playerId, clientPlayerId, roleIcon, isRevealed, isWolfTeam
   };
 
   return (
-    <div className={`absolute -top-2 -right-2 w-10 h-10 flex justify-center items-center ${getBackgroundColor()} rounded-full border-2 ${getBorderColor()} shadow-lg`}>
-      <Image src={roleIcon} width={32} height={32} alt="role" />
+    <div className={`absolute -top-2 -right-2 w-8 md:w-10 h-8 md:h-10 flex justify-center items-center ${getBackgroundColor()} rounded-full border-2 ${getBorderColor()} shadow-lg z-20`}>
+      <Image src={roleIcon} width={28} height={28} alt="role" />
     </div>
   );
 };

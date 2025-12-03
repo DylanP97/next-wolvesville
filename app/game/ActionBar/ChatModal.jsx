@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef, useMemo } from "react";
-import { useGame } from "./GameProvider";
+import { useGame } from "../GameProvider";
 import { useTranslation } from "react-i18next";
-import { replacePlaceholders } from "../lib/utils";
-import { useDevMode } from "../providers/DevModeProvider";
+import { replacePlaceholders } from "../../lib/utils";
+import { useDevMode } from "../../providers/DevModeProvider";
 import Chatbox from "./Chatbox";
-import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "../../providers/AuthProvider";
 
 const ChatModal = ({ isOpen, setIsOpen }) => {
   const {

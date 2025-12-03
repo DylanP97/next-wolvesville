@@ -2,9 +2,9 @@
 
 import CmdVote from "./CmdVote";
 import CmdPerform from "./CmdPerform";
-import { useGame } from "./GameProvider";
-import { useAuth } from "../providers/AuthProvider";
-import { useAnimation } from "../providers/AnimationProvider";
+import { useGame } from "../GameProvider";
+import { useAuth } from "../../providers/AuthProvider";
+import { useAnimation } from "../../providers/AnimationProvider";
 import { useTranslation } from "react-i18next";
 
 const PlayingCommands = () => {
