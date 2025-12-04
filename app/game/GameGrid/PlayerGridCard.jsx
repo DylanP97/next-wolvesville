@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import VoteCount from "./VoteCount";
 import VotingAgainst from "./VotingAgainst";
@@ -12,6 +13,7 @@ import { useDevMode } from "../../providers/DevModeProvider";
 import i18n from "../../lib/i18n";
 import { useAuth } from "../../providers/AuthProvider";
 import prison from "../../../public/game/prison.png";
+import BurnFlameOverlay from "../Overlays/BurnFlameOverlay";
 
 const PlayerGridCard = ({
   player,
@@ -29,6 +31,21 @@ const PlayerGridCard = ({
   } = useGame();
   const { isDevMode } = useDevMode();
   const { isDev } = useAuth();
+
+  const [showBurnFlame, setShowBurnFlame] = useState(false);
+
+  // Show flame for 3 seconds when a player has just been burned by the Arsonist
+  useEffect(() => {
+    if (timeOfTheDay === "nighttime" && player.wasBurnedByArsonist) {
+      setShowBurnFlame(true);
+      const timer = setTimeout(() => {
+        setShowBurnFlame(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    } else {
+      setShowBurnFlame(false);
+    }
+  }, [timeOfTheDay, player.wasBurnedByArsonist]);
 
   const onClickHandler = () => {
     handleClick(player);
@@ -88,8 +105,8 @@ const PlayerGridCard = ({
         )} */}
 
       {/* Arsonist marked as pour with gasoline */}
-      {(clientPlayer.role.name === "Arsonist" && player.isMarkedWithGasoline) && (
-        <div className="absolute bottom-0 left-0 m-2 h-6 aspect-square flex justify-center items-center">
+      {clientPlayer.role.name === "Arsonist" && player.isMarkedWithGasoline && (
+        <div className="absolute bottom-5 -left-1 m-2 h-6 aspect-square flex justify-center items-center">
           <Image
             src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706535328/spilled_tsishg.png"
             alt={"gas-marked-" + player.id}
@@ -98,6 +115,9 @@ const PlayerGridCard = ({
           />
         </div>
       )}
+
+      {/* Pure CSS flame for 3s when a player has just been burned by the Arsonist */}
+      {showBurnFlame && <BurnFlameOverlay />}
 
       {player.isUnderArrest && (
         <Image
@@ -131,12 +151,11 @@ const PlayerGridCard = ({
 
 
       <div className="absolute w-full bottom-0">
-
-
         <PlayerAvatar
           isAlive={player.isAlive}
           avatar={player.avatar}
           inGameAv={true}
+          showBurnFlame={showBurnFlame}
         />
       </div>
 

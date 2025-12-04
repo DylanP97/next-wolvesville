@@ -5,7 +5,7 @@ import AvatarUI from "../../components/AvatarUI";
 import { useAuth } from "../../providers/AuthProvider";
 import { useEffect } from "react";
 
-const PlayerAvatar = ({ isAlive, avatar, inGameAv }) => {
+const PlayerAvatar = ({ isAlive, avatar, inGameAv, showBurnFlame}) => {
 
   const { connectedUsers } = useAuth();
 
@@ -16,7 +16,7 @@ const PlayerAvatar = ({ isAlive, avatar, inGameAv }) => {
 
   return (
     <>
-      {!isAlive ? (
+      {!isAlive && !showBurnFlame ? (
         <Image
           width={64}
           height={64}

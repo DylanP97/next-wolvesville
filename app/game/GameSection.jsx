@@ -68,7 +68,9 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
       {getBackgroundComponent()}
       <DeathFlash />
       <NightmareOverlay />
-      <DeathOverlay />
+      {
+        winningTeam !== null && <DeathOverlay />
+      }
 
       {/* Header fixe en haut */}
       <div className="z-30">

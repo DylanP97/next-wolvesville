@@ -20,7 +20,7 @@ const AvatarAndRole = ({ ply, alive }) => {
           height={40}
           width={40}
           style={{ height: "auto", width: "auto" }}
-          className="p-2 absolute top-[-15%] left-[55%] z-40"
+          className="p-2 absolute top-[-15%] left-[55%] "
         />
         {ply.role.wasGraveRobber && (
           <Image
@@ -29,7 +29,7 @@ const AvatarAndRole = ({ ply, alive }) => {
             height={40}
             width={40}
             style={{ height: "auto", width: "auto" }}
-            className="p-2 absolute top-[-40%] left-[100%] z-30"
+            className="p-2 absolute top-[-40%] left-[100%]"
           />
         )}
         {ply.role.wasCursed && (
@@ -39,7 +39,7 @@ const AvatarAndRole = ({ ply, alive }) => {
             height={40}
             width={40}
             style={{ height: "auto", width: "auto" }}
-            className="p-2 absolute top-[-40%] left-[100%] z-30"
+            className="p-2 absolute top-[-40%] left-[100%] "
           />
         )}
         <div className="p-2 rounded-full">
