@@ -12,19 +12,19 @@ const IsInRoomInfo = ({ isInRoom, isPlaying }) => {
 
   if (isPlaying && isInRoom)
     return (
-      <p className="text-md text-white">
+      <p className="text-sm text-white">
         🟢🎮 {t("home.status.1")} {isInRoom}
       </p>
     );
   if (!isPlaying && isInRoom) {
     return (
-      <p className="text-md text-white">
+      <p className="text-sm text-white">
         🟡🎮 {t("home.status.1")} {isInRoom}
       </p>
     );
   }
   if (!isPlaying && !isInRoom) {
-    return <p className="text-md text-white">🔴🎮 {t("home.status.2")}</p>;
+    return <p className="text-sm text-white">🔴🎮 {t("home.status.2")}</p>;
   }
 };
 

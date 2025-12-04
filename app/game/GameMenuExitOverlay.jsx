@@ -1,10 +1,10 @@
 "use client";
 
 import QuitGameBtn from "../components/QuitGameBtn";
-import DevModeToggle from "../general-btns/components/DevModeToggle";
-import LogoutBtn from "../general-btns/components/LogoutBtn";
-import VolumeToggle from "../general-btns/components/VolumeToggle";
-import FullScreenToggle from "../general-btns/components/FullScreenToggle";
+import DevModeToggle from "../general-btns/DevModeToggle";
+import LogoutBtn from "../general-btns/LogoutBtn";
+import VolumeToggle from "../general-btns/VolumeToggle";
+import FullScreenToggle from "../general-btns/FullScreenToggle";
 import { useAuth } from "../providers/AuthProvider";
 
 const GameMenuExitOverlay = ({ isOpen, onClose }) => {

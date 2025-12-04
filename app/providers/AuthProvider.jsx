@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
     setIsInRoom(newIsInRoom);
     setIsPlaying(newIsPlaying);
     // setGame(newGame);
-    console.log("called??")
+    // console.log("called??")
     socket.emit(
       "updateUserGameState",
       authState.username,
@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }) => {
       });
       setSocket(newSocket);
     } else {
-      console.log("User is not authenticated");
+      // console.log("User is not authenticated");
     }
   }
 

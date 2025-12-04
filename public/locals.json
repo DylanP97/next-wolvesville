@@ -1,6 +1,11 @@
 {
   "en": {
     "translation": {
+      "tips": {
+        "1": "When a wolf dies, his identity is revealed to the other players",
+        "2": "The gunner, the witch, the jailer are the only way for the village to kill the fool",
+        "3": "If the icon of a role has a brown background, the player's role is publicly known"
+      },
       "game.title": "Werewolves game",
       "questionmark": "?",
       "exclamation": "!",
@@ -63,6 +68,8 @@
       "change.language": "Passer en français",
       "coded.by": "coded by dylanp97",
       "check.repo": "Check my repositories",
+      "profile.avatar": "Avatar Preview",
+      "profile.customize": "Customzie your avatar",
       "profile.head": "Head",
       "profile.clothes": "Clothes",
       "profile.body": "Body",
@@ -202,6 +209,11 @@
   },
   "fr": {
     "translation": {
+      "tips": {
+        "1": "Quand un loup meurt, son identité est révélée aux autres joueurs",
+        "2": "Le tireur, la sorcière, le géôlier sont les seuls moyens pour le village de tuer le fou",
+        "3": "Si l'icône d'un rôle a un fond marron, le rôle du joueur est publiquement connu"
+      },
       "game.title": "Jeu du Loup-garou",
       "questionmark": " ?",
       "exclamation": " !",
@@ -281,6 +293,8 @@
       "profile.mouth": "Bouche",
       "profile.skinColor": "Couleur de peau",
       "profile.eyebrows": "Sourcils",
+      "profile.avatar": "Aperçu de l'avatar",
+      "profile.customize": "Personnalisez votre avatar",
       "create.stepOne": "Définissez un nom pour votre salle",
       "create.stepTwo": "Choissisez les roles",
       "create.stepThree": "Définissez le nombre de joueurs utilisateurs",

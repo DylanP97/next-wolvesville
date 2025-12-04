@@ -6,7 +6,7 @@ import { useGame } from "../GameProvider";
 import PlayingCommands from "./PlayingCommands";
 import PauseToggle from "./PauseToggle";
 import ChatButton from "./ChatButton";
-import GameMenuExitBtn from "../../general-btns/components/GameMenuExitBtn";
+import GameMenuExitBtn from "../../general-btns/GameMenuExitBtn";
 
 const ActionBar = ({ summaryIsOpen, setSummaryIsOpen, isChatOpen, setIsChatOpen}) => {
   const { clientPlayer, actionType } = useGame();

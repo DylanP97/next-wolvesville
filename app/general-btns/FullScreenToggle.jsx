@@ -5,8 +5,8 @@ import MinimizeIcon from "./icons/MinimizeIcon";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { Button, Tooltip } from "@nextui-org/react";
-import { useKeys } from "../../providers/KeysProvider";
-import { getBtnClassNames } from "../../lib/styles";
+import { useKeys } from "../providers/KeysProvider";
+import { getBtnClassNames } from "../lib/styles";
 
 const FullScreenToggle = ({}) => {
   const { currentKey, setCurrentKey } = useKeys();

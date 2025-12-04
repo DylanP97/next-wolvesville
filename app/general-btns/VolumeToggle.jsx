@@ -1,10 +1,10 @@
 "use client";
 
 import { Button, Tooltip } from "@nextui-org/react";
-import { useSound } from "../../providers/SoundProvider";
+import { useSound } from "../providers/SoundProvider";
 import VolumeOnIcon from "./icons/VolumeOnIcon";
 import VolumeOffIcon from "./icons/VolumeOffIcon";
-import { getBtnClassNames } from "../../lib/styles";
+import { getBtnClassNames } from "../lib/styles";
 
 const VolumeToggle = () => {
   const { isMuted, setIsMuted } = useSound();

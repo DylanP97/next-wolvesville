@@ -161,21 +161,6 @@ body {
   width: 250px;
 }
 
-.track-display {
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.track-display.fade-in {
-  opacity: 1;
-  display: block;
-}
-
-.track-display.fade-out {
-  opacity: 0;
-  display: none;
-}
-
 /* Define keyframes for fade-in and fade-out animations */
 @keyframes fadeIn {
   from {

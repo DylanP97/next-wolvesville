@@ -3,8 +3,8 @@
 import { useTranslation } from "react-i18next";
 import { Button } from "@nextui-org/react";
 import { Tooltip } from "@nextui-org/react";
-import { useDevMode } from "../../providers/DevModeProvider";
-import { getBtnClassNames } from "../../lib/styles";
+import { useDevMode } from "../providers/DevModeProvider";
+import { getBtnClassNames } from "../lib/styles";
 
 const DevModeToggle = () => {
   const { t } = useTranslation();

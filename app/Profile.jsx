@@ -88,10 +88,9 @@ const Profile = () => {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Sparkles className="w-6 h-6 text-yellow-400" />
-            <h1 className="text-4xl font-bold text-white">{t("customizeAvatar") || "Customize Your Avatar"}</h1>
+            <h1 className="text-4xl font-bold text-white">{t("profile.customize")}</h1>
             <Sparkles className="w-6 h-6 text-yellow-400" />
           </div>
-          <p className="text-white/60">{t("createCharacter") || "Create your unique character"}</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 items-start">
@@ -107,7 +106,7 @@ const Profile = () => {
                 </div>
                 <div className="text-center">
                   <h3 className="text-xl font-semibold text-white mb-1">{username}</h3>
-                  <p className="text-sm text-white/60">{t("avatarPreview") || "Your avatar will look like this"}</p>
+                  <p className="text-sm text-white/60">{t("profile.avatar")}</p>
                 </div>
               </CardBody>
             </Card>

@@ -1,10 +1,10 @@
 "use client";
 
 import { Button, Tooltip } from "@nextui-org/react";
-import { useAuth } from "../../providers/AuthProvider";
+import { useAuth } from "../providers/AuthProvider";
 import { useTranslation } from "react-i18next";
-import { fetchLogout } from "../../lib/fetch";
-import { btnClassNames, getBtnClassNames } from "../../lib/styles";
+import { fetchLogout } from "../lib/fetch";
+import { btnClassNames, getBtnClassNames } from "../lib/styles";
 import LogoutIcon from "./icons/LogoutIcon";
 
 const LogoutBtn = () => {

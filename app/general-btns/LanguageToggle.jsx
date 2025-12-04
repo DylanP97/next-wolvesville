@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@nextui-org/react";
 import { Tooltip } from "@nextui-org/react";
-import { getBtnClassNames } from "../../lib/styles";
+import { getBtnClassNames } from "../lib/styles";
 
 function LanguageToggle() {
   const { i18n, t } = useTranslation();

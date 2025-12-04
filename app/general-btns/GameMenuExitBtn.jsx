@@ -2,8 +2,8 @@
 
 import { Tooltip } from "@nextui-org/react";
 import HamburgerIcon from "./icons/HamburgerIcon";
-import { useToRender } from "../../providers/RenderProvider";
-import { divActionIcon, getBtnClassNames } from "../../lib/styles";
+import { useToRender } from "../providers/RenderProvider";
+import { divActionIcon, getBtnClassNames } from "../lib/styles";
 
 const GameMenuExitBtn = () => {
   const { toggleExitMenu } = useToRender();
