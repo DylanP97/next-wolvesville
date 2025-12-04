@@ -38,9 +38,9 @@ export default function performVoteAction(playersList, cpu, socket, gameId) {
         return;
     }
 
-    const revealedPyromaniac = revealedPlayers.find(p => p.role.name === "Pyromaniac");
-    if (revealedPyromaniac && Math.random() < 0.9) {
-        voteTarget = revealedPyromaniac;
+    const revealedArsonist = revealedPlayers.find(p => p.role.name === "Arsonist");
+    if (revealedArsonist && Math.random() < 0.9) {
+        voteTarget = revealedArsonist;
         emitVote(socket, cpu, voteTarget, gameId);
         return;
     }
@@ -79,7 +79,7 @@ export default function performVoteAction(playersList, cpu, socket, gameId) {
                     // Revealed enemy - safe to bandwagon
                     if (votingState.leadingPlayer.role.team === "Werewolves" ||
                         votingState.leadingPlayer.role.name === "Serial Killer" ||
-                        votingState.leadingPlayer.role.name === "Pyromaniac") {
+                        votingState.leadingPlayer.role.name === "Arsonist") {
                         bandwagonChance = 0.75; // High - good target
                     } else {
                         // Revealed villager being voted - very suspicious
@@ -93,7 +93,7 @@ export default function performVoteAction(playersList, cpu, socket, gameId) {
                 // Fool avoids bandwagoning (wants to be suspicious)
                 bandwagonChance = 0.2;
             } else {
-                // Solo roles (Serial Killer, Pyromaniac) bandwagon to blend in
+                // Solo roles (Serial Killer, Arsonist) bandwagon to blend in
                 bandwagonChance = 0.6;
             }
 
@@ -142,9 +142,9 @@ export default function performVoteAction(playersList, cpu, socket, gameId) {
     // PRIORITY 5: Revealed villagers (only wolves might vote, very risky)
     // Revealed enemies of CPU's team (but not at Priority 2 already)
     const otherRevealedEnemies = revealedPlayers.filter(p => {
-        // Skip if already handled in Priority 2 (Serial Killer, Pyromaniac, Werewolves)
+        // Skip if already handled in Priority 2 (Serial Killer, Arsonist, Werewolves)
         if (p.role.name === "Serial Killer" ||
-            p.role.name === "Pyromaniac" ||
+            p.role.name === "Arsonist" ||
             p.role.team === "Werewolves") {
             return false;
         }
@@ -175,7 +175,7 @@ export default function performVoteAction(playersList, cpu, socket, gameId) {
     } else if (cpuTeam === "Village") {
         voteTarget = villageStrategy(votablePlayers, votingState, cpuRole);
     } else {
-        // Solo roles (Serial Killer, Pyromaniac, Fool)
+        // Solo roles (Serial Killer, Arsonist, Fool)
         voteTarget = soloStrategy(votablePlayers, votingState, cpuRole);
     }
 
@@ -272,7 +272,7 @@ function villageStrategy(votablePlayers, votingState, cpuRole) {
         p.isRevealed && (
             p.role.team === "Werewolves" ||
             p.role.name === "Serial Killer" ||
-            p.role.name === "Pyromaniac"
+            p.role.name === "Arsonist"
         )
     );
 
@@ -325,7 +325,7 @@ function soloStrategy(votablePlayers, votingState, cpuRole) {
         }
     }
 
-    // Serial Killer & Pyromaniac: Create chaos, vote strategically
+    // Serial Killer & Arsonist: Create chaos, vote strategically
     // 45% chance: Bandwagon (blend in)
     if (votingState.leadingVotes >= 2 && Math.random() < 0.45) {
         return votingState.leadingPlayer;

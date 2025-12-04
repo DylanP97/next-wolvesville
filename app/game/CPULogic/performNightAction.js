@@ -233,7 +233,7 @@ export default function performNightAction(playersList, cpu, socket, gameId, day
                 }
             }
             break;
-        case "Pyromaniac":
+        case "Arsonist":
             if (getNbrOfPlayersMarkedWithGasoline(playersList) >= 2 && Math.random() < 0.3) {
                 socket.emit("burnThemDown", {
                     type: "burn",

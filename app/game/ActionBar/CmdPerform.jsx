@@ -60,9 +60,16 @@ const CmdPerform = ({
       <Tooltip content={i18n.language === "fr" ? labelFR : label} color="secondary" variant="flat">
         <div
           onClick={() => {
-            if (needSelection) activateSelection(type, emoji);
-            else if (needDoubleSelection) activateDoubleSelection(type, emoji);
-            else noSelectionAction(type);
+            // Special case: Arsonist can target TWO players per night with gasoline
+            if (clientPlayer.role.name === "Arsonist" && type === "pour") {
+              activateDoubleSelection(type, emoji);
+            } else if (needSelection) {
+              activateSelection(type, emoji);
+            } else if (needDoubleSelection) {
+              activateDoubleSelection(type, emoji);
+            } else {
+              noSelectionAction(type);
+            }
           }}
           className={`${actionType === type
             ? "bg-green-600 hover:bg-green-500"

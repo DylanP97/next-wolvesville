@@ -42,7 +42,7 @@ const PlayingCommands = () => {
     if (clientPlayer.role.name === "Mayor" && actionType === "assertDuty") {
       socket.emit("assertDuty", clientPlayer.name, gameId);
     }
-    if (clientPlayer.role.name === "Pyromaniac" && actionType === "burn") {
+    if (clientPlayer.role.name === "Arsonist" && actionType === "burn") {
       if (clientPlayer.nbrOfPouredPlayers > 0) {
         socket.emit("burnThemDown", {
           type: "burn",
