@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../providers/AuthProvider";
 import CreateRoom from "../CreateRoom";
 import ConnectedUsers from "../ConnectedUsers";
-import JoinRoom from "../JoinRoom";
+import JoinRoom from "../join-room/JoinRoom";
 import RolesGrid from "../RolesGrid";
 import Profile from "../Profile";
 import { getBtnClassNames } from "../lib/styles";

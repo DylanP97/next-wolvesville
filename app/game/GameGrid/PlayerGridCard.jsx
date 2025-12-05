@@ -33,6 +33,7 @@ const PlayerGridCard = ({
   const { isDev } = useAuth();
 
   const [showBurnFlame, setShowBurnFlame] = useState(false);
+  const [showCardDeathFlash, setShowCardDeathFlash] = useState(false);
 
   // Show flame for 3 seconds when a player has just been burned by the Arsonist
   useEffect(() => {
@@ -46,6 +47,19 @@ const PlayerGridCard = ({
       setShowBurnFlame(false);
     }
   }, [timeOfTheDay, player.wasBurnedByArsonist]);
+
+  // Show card death flash for 3 seconds when a player has just been burned by the Arsonist
+  useEffect(() => {
+    if (!player.isAlive) {
+      setShowCardDeathFlash(true);
+      const timer = setTimeout(() => {
+        setShowCardDeathFlash(false);
+      }, 700);
+      return () => clearTimeout(timer);
+    } else {
+      setShowCardDeathFlash(false);
+    }
+  }, [player.isAlive]);
 
   const onClickHandler = () => {
     handleClick(player);
@@ -77,7 +91,7 @@ const PlayerGridCard = ({
       )} ${getPlyCardLayout()} `}
     >
 
-      <p className="text-[8px] md:text-[10px] text-white">
+      <p className={`${timeOfTheDay === "daytime" ? "text-black" : "text-white"}  text-[8px] md:text-[10px]`}>
         {player.name}
       </p>
 
@@ -119,25 +133,51 @@ const PlayerGridCard = ({
       {/* Pure CSS flame for 3s when a player has just been burned by the Arsonist */}
       {showBurnFlame && <BurnFlameOverlay />}
 
-      {player.isUnderArrest && (
-        <Image
-          className="h-full w-full object-contain overflow-hidden z-30"
-          width={64}
-          height={64}
-          src={prison}
-          alt="prison"
-        />
+      {showCardDeathFlash && (
+        <div className="absolute inset-0 z-[999] pointer-events-none death-flash-card-overlay">
+          <style jsx>{`
+      @keyframes deathFlashCard {
+        0% {
+          background-color: rgba(0, 0, 0, 0.7);
+        }
+        50% {
+          background-color: rgba(220, 38, 38, 0.9);
+        }
+        100% {
+          background-color: rgba(0, 0, 0, 0);
+        }
+      }
+
+      .death-flash-card-overlay {
+        animation: deathFlashCard 700ms ease-out;
+      }
+    `}</style>
+        </div>
       )}
+
+
+      {
+        player.isUnderArrest && (
+          <Image
+            className="h-full w-full object-contain overflow-hidden z-30"
+            width={64}
+            height={64}
+            src={prison}
+            alt="prison"
+          />
+        )
+      }
 
       {
         player.id === (selectedPlayer || selectedPlayer1) && <ActionSet />
       }
 
-      {(player.isRevealed ||
-        player.id == clientPlayer.id ||
-        (isAlsoWolf && isWolf) ||
-        (player.isRevealedByWolfSeer && isWolf) ||
-        isDevMode && isDev) && (
+      {
+        (player.isRevealed ||
+          player.id == clientPlayer.id ||
+          (isAlsoWolf && isWolf) ||
+          (player.isRevealedByWolfSeer && isWolf) ||
+          isDevMode && isDev) && (
           <IconReveal
             playerId={player.id}
             clientPlayerId={clientPlayer.id}
@@ -147,7 +187,8 @@ const PlayerGridCard = ({
             isDevMode={isDevMode}
             isDev={isDev}
           />
-        )}
+        )
+      }
 
 
       <div className="absolute w-full bottom-0">
@@ -163,7 +204,7 @@ const PlayerGridCard = ({
 
 
 
-    </div>
+    </div >
   );
 };
 

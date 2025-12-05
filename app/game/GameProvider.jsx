@@ -277,11 +277,14 @@ export const GameProvider = ({ children }) => {
   }
 
 
-  if (!winningTeam) {
-    socket.emit("checkForWinner", game.id);
-  } else {
-    !game.hasEnded && socket.emit("endGame", game.id);
-  }
+
+  useEffect(() => {
+    if (!winningTeam) {
+      socket.emit("checkForWinner", game.id);
+    } else {
+      !game.hasEnded && socket.emit("endGame", game.id);
+    }
+  }, [timeCounter]);
 
 
   return (

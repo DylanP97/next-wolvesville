@@ -57,7 +57,7 @@ const GameGrid = () => {
   useEffect(() => {
     setSelectedPlayer(null);
     setSelectedPlayer1(null);
-    console.log(playersList)
+    // console.log(playersList)
   }, [timeOfTheDay]);
 
   useEffect(() => {

@@ -69,7 +69,7 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
       <DeathFlash />
       <NightmareOverlay />
       {
-        winningTeam !== null && <DeathOverlay />
+        winningTeam === null && <DeathOverlay />
       }
 
       {/* Header fixe en haut */}

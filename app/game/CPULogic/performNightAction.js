@@ -1,46 +1,20 @@
 
 
 import { getRandomAlivePlayer, getPlayerWithId, getRandomDeadPlayer, getNbrOfPlayersMarkedWithGasoline } from "./cpuMoveUtils";
+import performWolfNightVote from "./performWolfNightVote";
 
 export default function performNightAction(playersList, cpu, socket, gameId, dayCount) {
     // Check if CPU has nightmares - they can't use their ability
     if (cpu.willHaveNightmares) {
-        console.log(cpu.name, "can't do action because of nightmare")
+        // console.log(cpu.name, "can't do action because of nightmare")
         return; // Action blocked
     }
 
     switch (cpu.role.name) {
         case "Classic Werewolf":
-            let target = getRandomAlivePlayer(playersList, true, false, cpu.id);
-            if (target) {
-                socket.emit(
-                    "addWolfVote",
-                    {
-                        playerId: cpu.id,
-                        playerName: cpu.name,
-                        selectedPlayerId: target.id,
-                        selectedPlayerName: target.name,
-                        nbr: 1,
-                    },
-                    gameId
-                );
-            }
-            break;
         case "Alpha Werewolf":
-            let alphaTarget = getRandomAlivePlayer(playersList, true, false, cpu.id);
-            if (alphaTarget) {
-                socket.emit(
-                    "addWolfVote",
-                    {
-                        playerId: cpu.id,
-                        playerName: cpu.name,
-                        selectedPlayerId: alphaTarget.id,
-                        selectedPlayerName: alphaTarget.name,
-                        nbr: 2,
-                    },
-                    gameId
-                );
-            }
+        case "Nightmare Werewolf":
+            performWolfNightVote(playersList, cpu, socket, gameId);
             break;
         case "Junior Werewolf":
             let juniorWolftarget = getRandomAlivePlayer(playersList, true, false, cpu.id);
@@ -54,6 +28,7 @@ export default function performNightAction(playersList, cpu, socket, gameId, day
                     gameId
                 );
             }
+            performWolfNightVote(playersList, cpu, socket, gameId);
             break;
         case "Wolf Seer":
             if (cpu.role.canPerform1.nbrLeftToPerform > 0 && Math.random() < 0.8) {
@@ -78,36 +53,7 @@ export default function performNightAction(playersList, cpu, socket, gameId, day
                     );
                 }
             }
-            let wolfSeerVoteTarget = getRandomAlivePlayer(playersList, true, false, cpu.id);
-            if (wolfSeerVoteTarget) {
-                socket.emit(
-                    "addWolfVote",
-                    {
-                        playerId: cpu.id,
-                        playerName: cpu.name,
-                        selectedPlayerId: wolfSeerVoteTarget.id,
-                        selectedPlayerName: wolfSeerVoteTarget.name,
-                        nbr: 1,
-                    },
-                    gameId
-                );
-            }
-            break;
-        case "Nightmare Werewolf":
-            let nightmareWolfVoteTarget = getRandomAlivePlayer(playersList, true, false, cpu.id);
-            if (nightmareWolfVoteTarget) {
-                socket.emit(
-                    "addWolfVote",
-                    {
-                        playerId: cpu.id,
-                        playerName: cpu.name,
-                        selectedPlayerId: nightmareWolfVoteTarget.id,
-                        selectedPlayerName: nightmareWolfVoteTarget.name,
-                        nbr: 1,
-                    },
-                    gameId
-                );
-            }
+            performWolfNightVote(playersList, cpu, socket, gameId);
             break;
         case "Witch":
             let witchTarget = getRandomAlivePlayer(playersList, false, false, cpu.id);
