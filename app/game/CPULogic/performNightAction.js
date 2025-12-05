@@ -1,7 +1,7 @@
 
 
 import { getPlayerWithId, getRandomDeadPlayer, getNbrOfPlayersMarkedWithGasoline, getRandomAlivePlayer } from "./cpuMoveUtils";
-import { performWolfNightVote } from "./performWolfNightVote";
+import performWolfNightVote from "./performWolfNightVote";
 
 export default function performNightAction(playersList, cpu, socket, gameId, dayCount) {
     // Check if CPU has nightmares - they can't use their ability
