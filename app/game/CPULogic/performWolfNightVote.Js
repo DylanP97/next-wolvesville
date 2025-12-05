@@ -1,4 +1,3 @@
-// performWolfNightVote.js
 // Separate logic for werewolf night voting (choosing who to kill)
 
 
@@ -212,4 +211,4 @@ function emitWolfVote(socket, cpu, target, voteWeight, gameId) {
     );
 }
 
-export { performWolfNightVote };
+export default performWolfNightVote;
