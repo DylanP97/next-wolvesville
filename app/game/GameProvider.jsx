@@ -270,14 +270,6 @@ export const GameProvider = ({ children }) => {
   }, [timeCounter, timeOfTheDay]);
 
 
-
-  // Safety check: don't initialize if showing role reveal
-  if (!game || game.showingRoleReveal) {
-    return null;
-  }
-
-
-
   useEffect(() => {
     if (!winningTeam) {
       socket.emit("checkForWinner", game.id);
@@ -285,6 +277,11 @@ export const GameProvider = ({ children }) => {
       !game.hasEnded && socket.emit("endGame", game.id);
     }
   }, [timeCounter]);
+
+  // Safety check: don't initialize if showing role reveal
+  if (!game || game.showingRoleReveal) {
+    return null;
+  }
 
 
   return (
