@@ -1,7 +1,8 @@
 
 
 import { getPlayerWithId, getRandomDeadPlayer, getNbrOfPlayersMarkedWithGasoline, getRandomAlivePlayer } from "./cpuMoveUtils";
-import performWolfNightVote from "./performWolfNightVote";
+// import performWolfNightVote from "./performWolfNightVote";
+import performWolfVote from "./performWolfVote";
 
 export default function performNightAction(playersList, cpu, socket, gameId, dayCount) {
     // Check if CPU has nightmares - they can't use their ability
@@ -14,7 +15,7 @@ export default function performNightAction(playersList, cpu, socket, gameId, day
         case "Classic Werewolf":
         case "Alpha Werewolf":
         case "Nightmare Werewolf":
-            performWolfNightVote(playersList, cpu, socket, gameId);
+            performWolfVote(playersList, cpu, socket, gameId);
             break;
         case "Junior Werewolf":
             let juniorWolftarget = getRandomAlivePlayer(playersList, true, false, cpu.id);
@@ -28,7 +29,7 @@ export default function performNightAction(playersList, cpu, socket, gameId, day
                     gameId
                 );
             }
-            performWolfNightVote(playersList, cpu, socket, gameId);
+            performWolfVote(playersList, cpu, socket, gameId);
             break;
         case "Wolf Seer":
             if (cpu.role.canPerform1.nbrLeftToPerform > 0 && Math.random() < 0.8) {
@@ -53,7 +54,7 @@ export default function performNightAction(playersList, cpu, socket, gameId, day
                     );
                 }
             }
-            performWolfNightVote(playersList, cpu, socket, gameId);
+            performWolfVote(playersList, cpu, socket, gameId);
             break;
         case "Witch":
             let witchTarget = getRandomAlivePlayer(playersList, false, false, cpu.id);
