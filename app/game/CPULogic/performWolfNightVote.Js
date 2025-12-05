@@ -2,7 +2,7 @@
 // Separate logic for werewolf night voting (choosing who to kill)
 
 
-export default function performWolfNightVote(playersList, cpu, socket, gameId) {
+function performWolfNightVote(playersList, cpu, socket, gameId) {
     // ========== KNOWLEDGE EXTRACTION ==========
     const cpuRole = cpu.role.name;
     const cpuId = cpu.id;
@@ -211,3 +211,5 @@ function emitWolfVote(socket, cpu, target, voteWeight, gameId) {
         gameId
     );
 }
+
+export { performWolfNightVote };
