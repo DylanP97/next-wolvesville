@@ -106,8 +106,11 @@ const PlayerGridCard = ({
         <VotingAgainst hasVotedFor={player.hasWolfVotedFor} />
       )}
 
-      {/* {((clientPlayer.role.name == "Cupid" && player.isInLove) ||
-        (clientPlayer.isInLove && player.isInLove)) && (
+      {/* Show lover icon if:
+          - Client is in love and this is their partner, OR
+          - Client is Cupid and this player is in love */}
+      {((clientPlayer.isInLove && clientPlayer.loverPartnerId === player.id) ||
+        (clientPlayer.role.name === "Cupid" && player.isInLove)) && (
           <div className="absolute bottom-0 left-0 m-2 h-4 aspect-square flex justify-center items-center animate-pulse">
             <Image
               src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706531451/selection/resuscitation_tqyfkl.png"
@@ -116,7 +119,7 @@ const PlayerGridCard = ({
               height={40}
             />
           </div>
-        )} */}
+        )}
 
       {/* Arsonist marked as pour with gasoline */}
       {clientPlayer.role.name === "Arsonist" && player.isMarkedWithGasoline && (

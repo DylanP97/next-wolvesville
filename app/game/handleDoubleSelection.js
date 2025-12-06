@@ -16,6 +16,11 @@ const handleDoubleSelection = (
   // Second selection – perform the action depending on type
   if (actionType === "link") {
     // Cupid: link two lovers
+    // Prevent selecting the same player twice
+    if (selectedPlayers[0].id === player.id) {
+      return; // Don't allow linking a player to themselves
+    }
+    
     socket.emit(
       "registerAction",
       {
@@ -30,6 +35,11 @@ const handleDoubleSelection = (
 
   if (actionType === "pour") {
     // Arsonist: pour gasoline on TWO players in one go
+    // Prevent selecting the same player twice
+    if (selectedPlayers[0].id === player.id) {
+      return; // Don't allow pouring gasoline on the same player twice
+    }
+    
     const firstTarget = selectedPlayers[0];
     const secondTarget = player;
 

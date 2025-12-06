@@ -110,7 +110,8 @@ export default function performNightAction(playersList, cpu, socket, gameId, day
             }
             break;
         case "Cupid":
-            if (dayCount === 0) {
+            // Cupid can only link lovers on the first night (dayCount === 0)
+            if (dayCount === 0 && cpu.role.canPerform1.nbrLeftToPerform > 0) {
                 let lover1 = getRandomAlivePlayer(playersList, false, false, cpu.id);
                 let lover2 = getRandomAlivePlayer(playersList, false, false, cpu.id);
                 if (lover1 && lover2 && lover1.id !== lover2.id) {

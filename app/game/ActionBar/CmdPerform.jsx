@@ -37,6 +37,10 @@ const CmdPerform = ({
   // Check if player has nightmares - they can't use night abilities
   const hasNightmares = clientPlayer?.willHaveNightmares && actionTime === "night";
 
+  // Special case: Cupid can only link on first night (dayCount === 0)
+  const isCupidLinkAction = type === "link" && clientPlayer.role.name === "Cupid";
+  const canPerformCupidLink = isCupidLinkAction ? dayCount === 0 : true;
+
   if (
     canPerform &&
     !isUnderArrest &&
@@ -47,7 +51,8 @@ const CmdPerform = ({
       (timeOfTheDay === "nighttime" &&
         dayCount === 0 &&
         actionTime === "1stnight")) &&
-    (isJailer && type === "execute" ? Boolean(hasHandcuffed) : true)
+    (isJailer && type === "execute" ? Boolean(hasHandcuffed) : true) &&
+    canPerformCupidLink
   ) {
 
     const actionType = selectionState.actionType; // <-- GET FROM STATE
