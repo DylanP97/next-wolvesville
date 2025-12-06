@@ -6,7 +6,7 @@ import CreateRoom from "../CreateRoom";
 import ConnectedUsers from "../ConnectedUsers";
 import JoinRoom from "../join-room/JoinRoom";
 import RolesGrid from "../RolesGrid";
-import Profile from "../Profile";
+import Profile from "../profile/Profile";
 import { getBtnClassNames } from "../lib/styles";
 import { useToRender } from "../providers/RenderProvider";
 import { Button } from "@nextui-org/react";

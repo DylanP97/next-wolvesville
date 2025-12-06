@@ -1,43 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "./providers/AuthProvider";
+import { useAuth } from "../providers/AuthProvider";
 import { useTranslation } from "react-i18next";
 import { Button, Tab, Tabs, Select, SelectItem, Card, CardBody } from "@nextui-org/react";
 import { Check, Sparkles } from "lucide-react";
-import { tabs } from "./lib/tabsDefinitions";
-import AvatarUI from "./components/AvatarUI";
+import { tabs } from "../lib/tabsDefinitions";
+import AvatarUI from "../components/AvatarUI";
+import ProfileSelect from "./ProfileSelect";
 
-const ProfileSelect = ({ path, label, options, currentValue, setAvState }) => {
-  const updateState = (keys) => {
-    const option = keys.values().next().value;
-    setAvState((prevAvatar) => ({
-      ...prevAvatar,
-      [path]: option,
-    }));
-  };
-
-  return (
-    <Select
-      label={label}
-      selectedKeys={new Set([currentValue])}
-      onSelectionChange={updateState}
-      variant="bordered"
-      className="w-full text-white/70"
-      classNames={{
-        trigger: "bg-white/10 border-white/20 hover:bg-white/20 data-[hover=true]:bg-white/20",
-        value: "text-white",
-        label: "!text-white"
-      }}
-    >
-      {options.map((option) => (
-        <SelectItem key={option} value={option} className="text-black">
-          {option}
-        </SelectItem>
-      ))}
-    </Select>
-  );
-};
 
 const Profile = () => {
   const [response, setResponse] = useState("");

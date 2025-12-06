@@ -271,9 +271,7 @@ export const GameProvider = ({ children }) => {
 
 
   useEffect(() => {
-    console.log("triggered")
     if (!winningTeam) {
-      console.log(game.id)
       socket.emit("checkForWinner", game.id);
     } else {
       !game.hasEnded && socket.emit("endGame", game.id);
