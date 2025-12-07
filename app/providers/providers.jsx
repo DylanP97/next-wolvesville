@@ -1,3 +1,4 @@
+// app/providers/providers.js  (your current file, just add one line)
 "use client";
 
 import { I18nextProvider } from "react-i18next";
@@ -7,12 +8,9 @@ import { SoundProvider } from "./SoundProvider";
 import { AnimationProvider } from "./AnimationProvider";
 import { AuthProvider } from "./AuthProvider";
 import { DevModeProvider } from "./DevModeProvider";
+import { PreventBackProvider } from "./PreventBackProvider";   // ← NEW
 import i18n from "../lib/i18n";
 
-/**
- * Providers component that wraps all context providers.
- * Fully client-side to avoid `document is not defined` errors during SSR.
- */
 export function Providers({ children }) {
   return (
     <I18nextProvider i18n={i18n}>
@@ -21,7 +19,11 @@ export function Providers({ children }) {
           <KeysProvider>
             <SoundProvider>
               <AnimationProvider>
-                <AuthProvider>{children}</AuthProvider>
+                <AuthProvider>
+                  <PreventBackProvider>     {/* ← Wrap here */}
+                    {children}
+                  </PreventBackProvider>
+                </AuthProvider>
               </AnimationProvider>
             </SoundProvider>
           </KeysProvider>
