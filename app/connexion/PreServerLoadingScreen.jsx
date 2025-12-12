@@ -9,7 +9,7 @@ const PreServerLoadingScreen = ({ countdown }) => {
     return (
         <div className="z-20 w-full h-full text-center text-white flex flex-col justify-center items-center m-2">
             <Spinner />
-            <p>{t("intro.loading")}</p>
+            <p>{t("intro.loading.main")}</p>
             <span className="text-center text-xs text-white">
                 {t("intro.loading.info")}
             </span>
