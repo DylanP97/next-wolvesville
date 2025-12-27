@@ -14,6 +14,7 @@ import i18n from "../../lib/i18n";
 import { useAuth } from "../../providers/AuthProvider";
 import prison from "../../../public/game/prison.png";
 import BurnFlameOverlay from "../Overlays/BurnFlameOverlay";
+import RevealOverlay from "../Overlays/RevealOverlay";
 
 const PlayerGridCard = ({
   player,
@@ -33,6 +34,7 @@ const PlayerGridCard = ({
   const { isDev } = useAuth();
 
   const [showBurnFlame, setShowBurnFlame] = useState(false);
+  const [showRevealAnimation, setShowRevealAnimation] = useState(false);
   const [showCardDeathFlash, setShowCardDeathFlash] = useState(false);
 
   // Show flame for 3 seconds when a player has just been burned by the Arsonist
@@ -46,7 +48,19 @@ const PlayerGridCard = ({
     } else {
       setShowBurnFlame(false);
     }
-  }, [timeOfTheDay, player.wasBurnedByArsonist]);
+  }, [player.wasBurnedByArsonist]);
+
+  useEffect(() => {
+    if (player.isRevealed) {
+      setShowRevealAnimation(true);
+      const timer = setTimeout(() => {
+        setShowRevealAnimation(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    } else {
+      setShowRevealAnimation(false);
+    }
+  }, [player.isRevealed]);
 
   // Show card death flash for 3 seconds when a player has just been burned by the Arsonist
   useEffect(() => {
@@ -71,6 +85,8 @@ const PlayerGridCard = ({
   const isDoubleSelection = mode === 'double';
   const isBlocked = mode === 'completed';
 
+  // console.log(selectedPlayer, selectedPlayer1);
+
   return (
     <div
       key={"plycard-" + player.id}
@@ -87,7 +103,8 @@ const PlayerGridCard = ({
         isDoubleSelection,
         isBlocked,
         weather,
-        actionType
+        actionType,
+        showBurnFlame  
       )} ${getPlyCardLayout()} `}
     >
 
@@ -107,10 +124,14 @@ const PlayerGridCard = ({
       )}
 
       {/* Show lover icon if:
+          - Client is in love, OR
           - Client is in love and this is their partner, OR
-          - Client is Cupid and this player is in love */}
-      {((clientPlayer.isInLove && clientPlayer.loverPartnerId === player.id) ||
-        (clientPlayer.role.name === "Cupid" && player.isInLove)) && (
+          - Client is Cupid and this player is in love, OR
+          - This player is dead and was in love */}
+      {((player.isInLove && player.id === clientPlayer.id) ||
+        (clientPlayer.isInLove && clientPlayer.loverPartnerId === player.id) ||
+        (clientPlayer.role.name === "Cupid" && player.isInLove) ||
+        (!player.isAlive && player.isInLove)) && (
           <div className="absolute bottom-0 left-0 m-2 h-4 aspect-square flex justify-center items-center animate-pulse">
             <Image
               src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1706531451/selection/resuscitation_tqyfkl.png"
@@ -135,6 +156,9 @@ const PlayerGridCard = ({
 
       {/* Pure CSS flame for 3s when a player has just been burned by the Arsonist */}
       {showBurnFlame && <BurnFlameOverlay />}
+
+      {/* Pure CSS for 3s when a player has just been reveal by the seer */}
+      {showRevealAnimation && <RevealOverlay />}
 
       {showCardDeathFlash && (
         <div className="absolute inset-0 z-[999] pointer-events-none death-flash-card-overlay">
@@ -172,7 +196,11 @@ const PlayerGridCard = ({
       }
 
       {
-        player.id === (selectedPlayer || selectedPlayer1) && <ActionSet />
+        player.id === selectedPlayer && <ActionSet />
+      }
+
+      {
+        player.id === selectedPlayer1 && <ActionSet />
       }
 
       {

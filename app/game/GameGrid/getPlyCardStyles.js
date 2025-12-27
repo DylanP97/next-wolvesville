@@ -12,7 +12,8 @@ export const getPlyCardBackground = (
   isDoubleSelection,
   isBlocked,
   weather,
-  actionType
+  actionType,
+  showBurnFlame  
 ) => {
 
   const isGraveRobber = clientPlayer.role.name === "Grave Robber";
@@ -23,7 +24,7 @@ export const getPlyCardBackground = (
   }
 
   // if player is dead, return black with fade
-  if (!player.isAlive) return "bg-black text-yellow-500 border-yellow-600 opacity-60 grayscale cursor-not-allowed";
+  if (!player.isAlive && !showBurnFlame) return "bg-black text-yellow-500 border-yellow-600 opacity-60 grayscale cursor-not-allowed";
 
   // Grave Robber can't loot dead players
   if (isGraveRobber && actionType === "loot" && player.isAlive) {

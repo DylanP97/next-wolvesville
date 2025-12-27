@@ -2,7 +2,7 @@ import React from 'react';
 
 const BurnFlameOverlay = () => {
   return (
-    <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden rounded-lg">
+    <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden rounded-lg" style={{ filter: 'grayscale(0) blur(0px)' }}>
       {/* Multiple flame layers for depth */}
       <div className="flame flame-1"></div>
       <div className="flame flame-2"></div>

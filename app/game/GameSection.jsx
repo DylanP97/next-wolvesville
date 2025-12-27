@@ -27,7 +27,6 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   const containerRef = useRef(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
 
-  // Measure the container size
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -40,10 +39,7 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
       }
     };
 
-    // Initial measurement
     updateSize();
-
-    // Update on window resize
     window.addEventListener('resize', updateSize);
     return () => window.removeEventListener('resize', updateSize);
   }, []);
@@ -64,40 +60,50 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col ">
+    <div className="relative w-full h-full flex flex-col">
       {getBackgroundComponent()}
       <DeathFlash />
       <NightmareOverlay />
-      {
-        winningTeam === null && <DeathOverlay />
-      }
+      {winningTeam === null && <DeathOverlay />}
 
-      {/* Header fixe en haut */}
+      {/* Header */}
       <div className="z-30">
         <GameHeader />
       </div>
 
-      {/* Container principal avec padding pour header et action bar */}
-      <div ref={containerRef} className="flex flex-grow flex-1 justify-center items-center relative">
-        {winningTeam !== null ? (
-          <>
-            <Confetti
-              width={containerSize.width}
-              height={containerSize.height}
-              style={{ zIndex: "999" }}
-            />
-            <WinnerOverlay />
-          </>
-        ) : (
-          <>
-            <GameGrid />
-            <PrisonOverlay />
-          </>
-        )}
-        <ChatModal isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+      {/* Main content area with sidebar on desktop */}
+      <div className="flex flex-grow flex-1 relative min-h-0 overflow-hidden">
+        {/* Game content */}
+        <div ref={containerRef} className="flex flex-grow flex-1 justify-center items-center relative">
+          {winningTeam !== null ? (
+            <div className="w-full h-full overflow-hidden flex flex-col">
+              <Confetti
+                width={containerSize.width}
+                height={containerSize.height}
+                style={{ zIndex: "999" }}
+              />
+              <WinnerOverlay />
+            </div>
+          ) : (
+            <>
+              <GameGrid />
+              <PrisonOverlay />
+            </>
+          )}
+
+          {/* Chat modal for mobile */}
+          <div className="md:hidden">
+            <ChatModal isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+          </div>
+        </div>
+
+        {/* Chat sidebar for desktop */}
+        <div className="hidden md:flex w-80 lg:w-[500px] h-full z-30 flex-col min-h-0">
+          <ChatModal isSidebar={true} />
+        </div>
       </div>
 
-      {/* Action Bar fixe en bas */}
+      {/* Action Bar */}
       <div className="bottom-0 left-0 right-0 z-30">
         <ActionBar
           summaryIsOpen={summaryIsOpen}

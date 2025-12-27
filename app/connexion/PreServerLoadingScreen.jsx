@@ -2,6 +2,7 @@
 
 const { useTranslation } = require("react-i18next");
 import { Spinner } from "@nextui-org/react";
+import TipsRotator from "../homepage/TipsRotator";
 
 const PreServerLoadingScreen = ({ countdown }) => {
     const { t } = useTranslation();
@@ -16,6 +17,7 @@ const PreServerLoadingScreen = ({ countdown }) => {
             <div className="text-center text-white text-xl mt-4">
                 {countdown}
             </div>
+            <TipsRotator />
         </div>
     )
 };

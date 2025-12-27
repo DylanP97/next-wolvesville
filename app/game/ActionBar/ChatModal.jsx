@@ -8,7 +8,7 @@ import { useDevMode } from "../../providers/DevModeProvider";
 import Chatbox from "./Chatbox";
 import { useAuth } from "../../providers/AuthProvider";
 
-const ChatModal = ({ isOpen, setIsOpen }) => {
+const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
   const {
     general,
     wolves,
@@ -27,31 +27,27 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
   const containerRef = useRef(null);
   const isAtBottom = useRef(true);
 
-  // Check if user is at the bottom
   const checkIfAtBottom = () => {
     if (!containerRef.current) return true;
     const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-    const threshold = 50; // pixels from bottom
+    const threshold = 50;
     return scrollHeight - scrollTop - clientHeight < threshold;
   };
 
-  // Handle user scroll
   const handleScroll = () => {
     if (containerRef.current) {
       isAtBottom.current = checkIfAtBottom();
     }
   };
 
-  // Auto-scroll to bottom ONLY if user is already at the bottom
   useEffect(() => {
     if (containerRef.current && isAtBottom.current) {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
   }, [messages]);
 
-  // Scroll to bottom when modal opens
   useEffect(() => {
-    if (isOpen && containerRef.current) {
+    if ((isOpen || isSidebar) && containerRef.current) {
       setTimeout(() => {
         if (containerRef.current) {
           containerRef.current.scrollTop = containerRef.current.scrollHeight;
@@ -59,7 +55,7 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
         }
       }, 0);
     }
-  }, [isOpen]);
+  }, [isOpen, isSidebar]);
 
   useEffect(() => {
     switch (usedChat.type) {
@@ -85,7 +81,6 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
     });
   }, [messages, isDevMode, isDev]);
 
-  // Reverse so oldest is at top, newest at bottom
   const displayMessages = useMemo(() => {
     return [...filteredMessages].reverse();
   }, [filteredMessages]);
@@ -107,6 +102,110 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
     }
   };
 
+  // Sidebar mode (desktop)
+  if (isSidebar) {
+    return (
+      <div className="w-full h-full bg-slate-900 border-l-2 border-slate-700 shadow-2xl flex flex-col">
+        {/* Chat tabs */}
+        <div className="min-h-14 max-h-14 flex justify-center border-b border-slate-700 bg-slate-800">
+          {availableChats.map((chat, index) => {
+            return (
+              <div
+                className={`${chat.type === usedChat.type ? "bg-blue-600 border-b-2 border-blue-400" : "bg-transparent hover:bg-slate-700"} cursor-pointer px-4 flex items-center transition-all`}
+                key={"chattab-" + index}
+                onClick={() => selectChat(chat.type)}
+              >
+                <h2 className={`${chat.type === usedChat.type ? "text-white font-bold" : "text-slate-300"} text-xs`}>
+                  {chat.emoji} {chat.label}
+                </h2>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Messages */}
+        <div
+          ref={containerRef}
+          onScroll={handleScroll}
+          className="flex-grow overflow-y-auto p-2 bg-slate-900/50 space-y-2"
+        >
+          {displayMessages.length === 0 ? (
+            <div className="text-sm italic text-slate-500 text-center mt-8">
+              {usedChat.type === "general" && t("game.emptyGeneralChat")}
+              {usedChat.type === "wolves" && t("game.emptyWolvesChat")}
+              {usedChat.type === "jail" && t("game.emptyJailChat")}
+            </div>
+          ) : (
+            displayMessages.map((msg, index) => {
+              const isNewest = index === displayMessages.length - 1;
+
+              if (msg.author) {
+                const isOwnMessage = msg.author === clientPlayer.name;
+
+                return (
+                  <div
+                    key={index + "msg"}
+                    className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'} animate-fade-in`}
+                  >
+                    <div className={`max-w-[80%] ${isOwnMessage ? 'order-2' : 'order-1'}`}>
+                      {!isOwnMessage && (
+                        <div className="text-xs text-slate-400 mb-1 ml-2 font-semibold">
+                          {msg.author}
+                        </div>
+                      )}
+
+                      <div className={`
+                        rounded-2xl px-4 py-2 shadow-md
+                        ${isOwnMessage
+                          ? 'bg-blue-600 text-white rounded-tr-sm'
+                          : 'bg-slate-700 text-slate-100 rounded-tl-sm'
+                        }
+                        ${isNewest && 'ring-2 ring-blue-400/50'}
+                      `}>
+                        <p className="text-sm break-words">
+                          {replacePlaceholders(msg.msg)}
+                        </p>
+                      </div>
+
+                      <div className={`text-xs text-slate-500 mt-1 ${isOwnMessage ? 'text-right mr-2' : 'ml-2'}`}>
+                        {msg.time}
+                      </div>
+                    </div>
+                  </div>
+                );
+              } else {
+                const containsSkull = replacePlaceholders(msg.msg)?.includes("💀");
+                const containsEye = replacePlaceholders(msg.msg)?.includes("👁️");
+
+                return (
+                  <div key={index + "msg"} className={`flex justify-left animate-fade-in ${isNewest && 'opacity-100'}`}>
+                    <div className={`max-w-[85%] rounded-lg px-4 py-2 border ${containsSkull ? 'bg-red-700 border-red-500/50' : containsEye ? 'bg-green-700 border-green-500/50' : 'bg-slate-800/70 border-slate-700/50'} ${isNewest && 'ring-2 ring-blue-400/30 shadow-lg shadow-blue-500/20'}`}>
+                      <div className="flex items-center gap-2">
+                        <span className="text-slate-300 text-xs">{msg.time}</span>
+                        <span className="text-slate-300 text-xs">
+                          {replacePlaceholders(msg.msg)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+            })
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Chat input */}
+        {clientPlayer.isAlive && (
+          <div className="h-28 border-t border-slate-700 bg-slate-800 p-3">
+            <Chatbox />
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Modal mode (mobile)
   return (
     <>
       {isOpen && (
@@ -117,7 +216,6 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
 
       {isOpen && (
         <div className="absolute inset-2 md:inset-auto md:bottom-4 md:right-4 md:w-[500px] md:h-[600px] z-50 bg-slate-900 border-2 border-slate-700 rounded-lg shadow-2xl flex flex-col">
-          {/* Close button */}
           <button
             onClick={() => setIsOpen(false)}
             className="absolute top-3 right-3 text-slate-400 hover:text-white text-xl z-10"
@@ -125,7 +223,6 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
             ✕
           </button>
 
-          {/* Chat tabs */}
           <div className="min-h-14 max-h-14 flex justify-center border-b border-slate-700 bg-slate-800 rounded-t-lg">
             {availableChats.map((chat, index) => {
               return (
@@ -142,7 +239,6 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
             })}
           </div>
 
-          {/* Messages */}
           <div
             ref={containerRef}
             onScroll={handleScroll}
@@ -156,11 +252,9 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
               </div>
             ) : (
               displayMessages.map((msg, index) => {
-                // Last message (newest at bottom) should be highlighted
                 const isNewest = index === displayMessages.length - 1;
 
                 if (msg.author) {
-                  // User message - chat bubble style
                   const isOwnMessage = msg.author === clientPlayer.name;
 
                   return (
@@ -169,14 +263,12 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
                       className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'} animate-fade-in`}
                     >
                       <div className={`max-w-[80%] ${isOwnMessage ? 'order-2' : 'order-1'}`}>
-                        {/* Author name */}
                         {!isOwnMessage && (
                           <div className="text-xs text-slate-400 mb-1 ml-2 font-semibold">
                             {msg.author}
                           </div>
                         )}
 
-                        {/* Message bubble */}
                         <div className={`
                           rounded-2xl px-4 py-2 shadow-md
                           ${isOwnMessage
@@ -190,7 +282,6 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
                           </p>
                         </div>
 
-                        {/* Timestamp */}
                         <div className={`text-xs text-slate-500 mt-1 ${isOwnMessage ? 'text-right mr-2' : 'ml-2'}`}>
                           {msg.time}
                         </div>
@@ -201,7 +292,6 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
                   const containsSkull = replacePlaceholders(msg.msg)?.includes("💀");
                   const containsEye = replacePlaceholders(msg.msg)?.includes("👁️");
 
-                  // System message - left style
                   return (
                     <div key={index + "msg"} className={`flex justify-left animate-fade-in ${isNewest && 'opacity-100'}`}>
                       <div className={`max-w-[85%] rounded-lg px-4 py-2 border ${containsSkull ? 'bg-red-700 border-red-500/50' : containsEye ? 'bg-green-700 border-green-500/50' : 'bg-slate-800/70 border-slate-700/50'} ${isNewest && 'ring-2 ring-blue-400/30 shadow-lg shadow-blue-500/20'}`}>
@@ -220,7 +310,6 @@ const ChatModal = ({ isOpen, setIsOpen }) => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Chat input */}
           {clientPlayer.isAlive && (
             <div className="h-28 border-t border-slate-700 bg-slate-800 rounded-b-lg p-3">
               <Chatbox />
