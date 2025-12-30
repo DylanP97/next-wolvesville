@@ -4,7 +4,10 @@
       "tips": {
         "1": "When a wolf dies, his identity is revealed to the other players",
         "2": "The gunner, the witch, the jailer are the only way for the village to kill the fool",
-        "3": "If the icon of a role has a brown background, the player's role is publicly known"
+        "3": "If the icon of a role has a brown background, the player's role is publicly known",
+        "4": "The serial killer can kill wolves and villagers alike, making them a dangerous neutral role",
+        "5": "Wolves can communicate with each other during the night phase to strategize their attacks",
+        "6": "The game usually resolves in 6 nights for a 16 players game"
       },
       "game": {
         "title": "Werewolves game",
@@ -216,7 +219,7 @@
             "executePrisoner": "💀👮‍♂️ The jailer executed its prisoner named ",
             "shootBullet": "💀🔫 The gunner shot ",
             "dieWithLover": " is dead because of its loving relation with ",
-            "wasProtected": "👩‍⚕️ Someone wounds were healed by the witch potion last night!",
+            "wasProtected": "👩🧹 Someone wounds were healed by the witch potion last night!",
             "wasHealed": "👩‍⚕️ Someone wounds were healed by the doctor last night!",
             "killedBySK": " was murdered last night by the serial killer...",
             "numberOfSKKills": "Number of kills by serial killer: ",
@@ -273,9 +276,12 @@
   "fr": {
     "translation": {
       "tips": {
-        "1": "Quand un loup meurt, son identité est révélée aux autres joueurs",
+        "1": "Quand un loup-garou meurt, son identité est révélée aux autres joueurs",
         "2": "Le tireur, la sorcière, le géôlier sont les seuls moyens pour le village de tuer le fou",
-        "3": "Si l'icône d'un rôle a un fond marron, le rôle du joueur est publiquement connu"
+        "3": "Si l'icône d'un rôle a un fond marron, le rôle du joueur est publiquement connu",
+        "4": "Le tueur en série peut tuer aussi bien les loups que les villageois, ce qui en fait un rôle neutre dangereux",
+        "5": "Les loups peuvent communiquer entre eux pendant la phase de nuit pour élaborer des stratégies d'attaque",
+        "6": "La partie se termine généralement en 6 nuits pour une partie de 16 joueurs"
       },
       "game": {
         "title": "Jeu du Loup-garou",
@@ -487,7 +493,7 @@
             "executePrisoner": "💀👮‍♂️ Le géôlier à exécuter son prisonnier ",
             "shootBullet": "💀🔫 Le tireur a tiré sur ",
             "dieWithLover": " est mort à cause de sa relation avec son amant ",
-            "wasProtected": "👩‍⚕️ Les blessures d'un joueur ont été guerris par la potion de la sorcière la nuit passée !",
+            "wasProtected": "👩🧹 Les blessures d'un joueur ont été guerris par la potion de la sorcière la nuit passée !",
             "wasHealed": "👩‍⚕️ Les blessures d'un joueur ont été guerris par le docteur la nuit passée !",
             "killedBySK": " a été assasiné la nuit dernière par le tueur en série...",
             "numberOfSKKills": "Nombre de victimes du tueur en série : ",

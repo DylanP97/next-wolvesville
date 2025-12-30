@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import io from "socket.io-client";
 import { useSound } from "./SoundProvider";
+import { useAnimation } from "./AnimationProvider";
 
 const AuthContext = createContext();
 
@@ -29,6 +30,7 @@ export const AuthProvider = ({ children }) => {
     stopMusic,
   } = useSound();
 
+  const { triggerAnimation } = useAnimation();
 
   const updateUserGameState = (newIsInRoom, newIsPlaying) => {
     setIsInRoom(newIsInRoom);
@@ -148,6 +150,10 @@ export const AuthProvider = ({ children }) => {
 
       socket.on("triggerSoundForAll", (sound) => {
         generateNoise(sound);
+      });
+
+      socket.on("triggerAnimationForAll", (animation) => {
+        triggerAnimation(animation);
       });
 
       return () => {

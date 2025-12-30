@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from "react";
 import animationsData from "../lib/animations";
 
 const AnimationContext = createContext();
@@ -12,6 +12,7 @@ export const AnimationProvider = ({ children }) => {
   const [fadeOut, setFadeOut] = useState(false);
   const [simpleMessage, setSimpleMessage] = useState(null);
   const [Lottie, setLottie] = useState(null);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     // Dynamically import Lottie only on client side
@@ -36,9 +37,12 @@ export const AnimationProvider = ({ children }) => {
 
   const triggerAnimation = async (animationName) => {
     const animation = animationsData.find((a) => a.title === animationName);
-    if (animation) {
-      setCurrentAnimation(animation);
+    if (!animation) return;
 
+    setCurrentAnimation(animation);
+
+    // Handle Lottie JSON animations
+    if (animation.type === "lottie") {
       try {
         const response = await fetch(animation.path);
         if (!response.ok) throw new Error(`Failed to load animation`);
@@ -59,6 +63,33 @@ export const AnimationProvider = ({ children }) => {
       } catch (error) {
         console.error("Failed to load animation:", error);
       }
+    }
+    // Handle MP4 video animations
+    else if (animation.type === "video") {
+      setShowAnimation(true);
+      setFadeOut(false);
+
+      // Wait for video to load and play
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.play().catch((error) => {
+            console.error("Failed to play video:", error);
+          });
+        }
+      }, 100);
+
+      // Hide after duration
+      setTimeout(() => {
+        setFadeOut(true);
+        setTimeout(() => {
+          setShowAnimation(false);
+          setCurrentAnimation(null);
+          if (videoRef.current) {
+            videoRef.current.pause();
+            videoRef.current.currentTime = 0;
+          }
+        }, 500);
+      }, animation.ms);
     }
   };
 
@@ -84,11 +115,10 @@ export const AnimationProvider = ({ children }) => {
               backgroundColor: "rgba(0, 0, 0, 0.5)",
               opacity: fadeOut ? 0 : 1,
               transition: "opacity 1.5s ease-out",
-              // pointerEvents: "none", // Permet de cliquer à travers l'animation
-
             }}
           >
-            {currentAnimation && animationData && Lottie && (
+            {/* Lottie Animation */}
+            {currentAnimation?.type === "lottie" && animationData && Lottie && (
               <Lottie
                 options={{
                   loop: false,
@@ -100,6 +130,24 @@ export const AnimationProvider = ({ children }) => {
                 width={400}
               />
             )}
+
+            {/* Video Animation */}
+            {currentAnimation?.type === "video" && (
+              <video
+                ref={videoRef}
+                src={currentAnimation.path}
+                style={{
+                  maxWidth: "80vw",
+                  maxHeight: "80vh",
+                  objectFit: "contain",
+                }}
+                muted
+                playsInline
+                preload="auto"
+              />
+            )}
+
+            {/* Simple Message */}
             {simpleMessage && (
               <p className="text-3xl font-bold italic text-white bg-yellow-500 z-50 p-4 m-4 rounded-lg">
                 {simpleMessage}
