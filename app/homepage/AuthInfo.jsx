@@ -22,7 +22,7 @@ const AuthInfo = ({ username, isInRoom, isPlaying, avatar }) => {
 
 
   return (
-    <header className="pt-[70px] m-2 p-4 flex justify-center items-center">
+    <header className="pt-[70px] m-2 p-4 flex justify-center items-center z-30">
       <div className="m-2">
         <AvatarUI avatar={avatar} heightAndWidth={80} />
       </div>

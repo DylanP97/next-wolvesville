@@ -7,6 +7,7 @@ import RolesCarousel from "./RolesCarousel";
 import MedievalVillageDaytimeBackground from "../game/Backgrounds/MedievalVillageDaytimeBackground";
 import { useEffect } from "react";
 import TrackDisplay from "../general-btns/TrackDisplay";
+import WerewolfBackground from "../WerewolfBackground";
 // import graveRobberVid from "../../public/
 
 const HomePage = ({ username, isPlaying, isInRoom, avatar }) => {
@@ -28,6 +29,7 @@ const HomePage = ({ username, isPlaying, isInRoom, avatar }) => {
       <AuthInfo username={username} isInRoom={isInRoom} isPlaying={isPlaying} avatar={avatar} />
       <RolesCarousel />
       <NavigationMenu />
+      <WerewolfBackground />
       {/* Background video */}
     </div>
   );

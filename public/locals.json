@@ -344,7 +344,7 @@
         "si": "Inscription",
         "loading": {
           "main": "En attente de connexion au serveur...",
-          "info": "Cela prend environ 50 secondes lors de la première connexion. Rafraîchissez la page si rien ne change."
+          "info": "Cela prend environ 50 secondes lors de la première connexion. Rafraîchissez la page si rien ne change. C'est normal, je suis en instance gratuite sur Render.com, je n'ai pas l'argent pour prendre un forfait premium."
         },
         "nry": "Vous n'avez pas de compte ? ",
         "ar": "Déjà un compte ? ",
@@ -514,7 +514,7 @@
         "villageVote": {
           "outcome": {
             "basic": "💀✉️ Après vote, le village a décidé de tuer ",
-            "foolWins": "🤡 Le fou a gagné ! 🤡",
+            "foolWins": "🤡 Le fou a gagné ! Il vous remercie d'avoir voter contre lui ! 🤡",
             "null": "🤔 Le village n'a pas su décider qui éliminé !"
           }
         },

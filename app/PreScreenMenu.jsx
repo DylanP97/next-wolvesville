@@ -98,9 +98,19 @@ const PreScreenMenu = () => {
 
   if (isLoading) {
     return (
-      <PreServerLoadingScreen
-        countdown={countdown}
-      />
+      <>
+        <PreServerLoadingScreen
+          countdown={countdown}
+        />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 m-auto h-full max-h-[400px] object-cover z-10"
+          src="/animations/animatedVillage.mp4"
+        />
+      </>
     );
   }
 
@@ -114,14 +124,6 @@ const PreScreenMenu = () => {
     return (
       <div className="relative flex flex-col flex-grow justify-center items-center">
         <WerewolfBackground />
-        {/* <Image
-          priority
-          className="absolute top-0 left-0 object-cover h-full w-full"
-          alt=""
-          src={background3}
-          layout="fill" // Makes the image take up the entire parent
-          objectFit="cover" // Ensures the image covers the parent while maintaining aspect ratio
-        /> */}
         <Title />
         <nav className="top-1/3 flex flex-col items-center py-4 w-full z-20">
           <Button

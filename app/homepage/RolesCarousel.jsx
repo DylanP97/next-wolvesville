@@ -17,7 +17,7 @@ const RolesCarousel = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center z-30">
       <div className="slider">
         <div className="slide-track">
           {roles

@@ -8,7 +8,7 @@ const PreServerLoadingScreen = ({ countdown }) => {
     const { t } = useTranslation();
 
     return (
-        <div className="z-20 w-full h-full text-center text-white flex flex-col justify-center items-center">
+        <div className="z-20 w-full text-center text-white flex flex-col justify-center items-center">
             <Spinner />
             <p>{t("intro.loading.main")}</p>
             <span className="text-center text-xs text-white">
@@ -18,14 +18,6 @@ const PreServerLoadingScreen = ({ countdown }) => {
                 {countdown}
             </div>
             <TipsRotator />
-            <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="absolute -z-10 object-cover h-[100vh]"
-                src="/animations/animatedVillage.mp4"
-            />
         </div>
     )
 };
