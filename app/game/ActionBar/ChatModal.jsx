@@ -13,6 +13,7 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
     general,
     wolves,
     jail,
+    medium,
     usedChat,
     setUsedChat,
     availableChats,
@@ -68,8 +69,11 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
       case "jail":
         setMessages(jail.history);
         break;
+      case "medium":
+        setMessages(medium.history);
+        break;
     }
-  }, [general, wolves, jail, usedChat.type]);
+  }, [general, wolves, jail, medium, usedChat.type]);
 
   const filteredMessages = useMemo(() => {
     if (isDevMode && isDev) {
@@ -95,6 +99,9 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
         break;
       case "jail":
         setUsedChat(jail);
+        break;
+      case "medium":
+        setUsedChat(medium);
         break;
       default:
         setUsedChat(general);
@@ -134,6 +141,7 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
               {usedChat.type === "general" && t("game.emptyGeneralChat")}
               {usedChat.type === "wolves" && t("game.emptyWolvesChat")}
               {usedChat.type === "jail" && t("game.emptyJailChat")}
+              {usedChat.type === "medium" && t("game.emptyMediumChat")}
             </div>
           ) : (
             displayMessages.map((msg, index) => {
@@ -196,7 +204,7 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
         </div>
 
         {/* Chat input */}
-        {clientPlayer.isAlive && (
+        {(clientPlayer.isAlive || (usedChat.type === "medium" && !clientPlayer.isAlive)) && (
           <div className="h-28 border-t border-slate-700 bg-slate-800 p-3">
             <Chatbox />
           </div>

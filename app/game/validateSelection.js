@@ -2,6 +2,7 @@
 const validateSelection = (player, clientPlayer, actionType, timeOfTheDay) => {
   const isJailer = clientPlayer.role.name === "Jailer";
   const isGraveRobber = clientPlayer.role.name === "Grave Robber";
+  const isMedium = clientPlayer.role.name === "Medium";
 
   // Can't select yourself
   if (player.id === clientPlayer.id) {
@@ -13,7 +14,15 @@ const validateSelection = (player, clientPlayer, actionType, timeOfTheDay) => {
     if (isGraveRobber && actionType === "loot") {
       return { valid: true }; // Grave Robber can loot dead ✅
     }
+    if (isMedium && actionType === "revive") {
+      return { valid: true }; // Medium can revive dead ✅
+    }
     return { valid: false, errorCode: "errorMessage.0002", animation: "loomingGrave" };
+  }
+  
+  // Medium can't revive alive players
+  if (isMedium && actionType === "revive" && player.isAlive) {
+    return { valid: false, errorCode: "errorMessage.0002" }; // Can't revive alive players
   }
 
   // Grave Robber can't loot alive players

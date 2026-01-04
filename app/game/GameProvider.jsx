@@ -43,8 +43,9 @@ export const GameProvider = ({ children }) => {
   const dayCount = game.dayCount;
   const timeCounter = game.timeCounter;
   const winningTeam = game.winningTeam;
-  const jailChat = game.jailNightMessages;
-  const wolvesChat = game.wolvesMessagesHistory;
+  const jailChat = game.jailNightMessages || [];
+  const wolvesChat = game.wolvesMessagesHistory || [];
+  const mediumChat = game.mediumMessagesHistory || [];
   const generalChat = game.messagesHistory;
 
   class Chat {
@@ -59,9 +60,11 @@ export const GameProvider = ({ children }) => {
   const general = new Chat("general", t("game.generalChat"), generalChat, "🏘️");
   const wolves = new Chat("wolves", t("game.wolvesChat"), wolvesChat, "🐺");
   const jail = new Chat("jail", t("game.jailChat"), jailChat, "👮‍♂️");
+  const medium = new Chat("medium", t("game.mediumChat"), mediumChat, "🔮");
 
   const isWolf = clientPlayer.role.team === "Werewolves";
   const isJailer = clientPlayer.role.name === "Jailer";
+  const isMedium = clientPlayer.role.name === "Medium";
   const isAlive = clientPlayer.isAlive;
   const isUnderArrest = clientPlayer.isUnderArrest;
   const hasHandcuffed = clientPlayer.hasHandcuffed;
@@ -216,6 +219,10 @@ export const GameProvider = ({ children }) => {
     } else if (timeOfTheDay === "nighttime" && isWolf) {
       setAvailableChats([general, wolves]);
       setUsedChat(wolves);
+    } else if (timeOfTheDay === "nighttime" && ((isMedium && isAlive) || !isAlive)) {
+      // Medium chat available to: alive Medium OR any dead player
+      setAvailableChats([general, medium]);
+      setUsedChat(medium);
     } else {
       setAvailableChats([general]);
       setUsedChat(general);
@@ -298,13 +305,16 @@ export const GameProvider = ({ children }) => {
         aliveList,
         isWolf,
         isJailer,
+        isMedium,
         isUnderArrest,
         hasHandcuffed,
         jailChat,
         wolvesChat,
+        mediumChat,
         generalChat,
         jail,
         wolves,
+        medium,
         general,
         selectionState,
         setSelectionState,

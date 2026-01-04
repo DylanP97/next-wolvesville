@@ -8,7 +8,7 @@ import { useDevMode } from "../../providers/DevModeProvider";
 import { useAuth } from "../../providers/AuthProvider";
 
 const ChatButton = ({ isChatOpen, setIsChatOpen }) => {
-  const { general, wolves, jail, availableChats } = useGame();
+  const { general, wolves, jail, medium, availableChats } = useGame();
   const { isDevMode } = useDevMode();
   const { isDev } = useAuth();
   const { divActionIcon } = require("../../lib/styles");
@@ -18,6 +18,7 @@ const ChatButton = ({ isChatOpen, setIsChatOpen }) => {
     general: 0,
     wolves: 0,
     jail: 0,
+    medium: 0,
   });
 
   // Filter function for non-DEV messages
@@ -36,7 +37,8 @@ const ChatButton = ({ isChatOpen, setIsChatOpen }) => {
     general: filterNonDevMessages(general.history).length,
     wolves: filterNonDevMessages(wolves.history).length,
     jail: filterNonDevMessages(jail.history).length,
-  }), [general.history, wolves.history, jail.history, isDevMode, isDev]);
+    medium: filterNonDevMessages(medium.history).length,
+  }), [general.history, wolves.history, jail.history, medium.history, isDevMode, isDev]);
 
   // Calculate total unread messages (excluding DEV messages)
   const unreadCount = availableChats.reduce((total, chat) => {
@@ -52,6 +54,7 @@ const ChatButton = ({ isChatOpen, setIsChatOpen }) => {
         general: filteredCounts.general,
         wolves: filteredCounts.wolves,
         jail: filteredCounts.jail,
+        medium: filteredCounts.medium,
       });
     }
   }, [isChatOpen, filteredCounts]);

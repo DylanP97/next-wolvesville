@@ -181,6 +181,35 @@ export default function performNightAction(playersList, cpu, socket, gameId, day
                 }
             }
             break;
+        case "Medium":
+            if (cpu.role.canPerform1.nbrLeftToPerform > 0 && Math.random() < 0.5) {
+                let deadPlayers = playersList.filter((player) => !player.isAlive);
+                if (deadPlayers.length > 0) {
+                    // Prioritize known village players (revealed as village team)
+                    let knownVillageDead = deadPlayers.filter(
+                        (player) => player.isRevealed && player.role.team === "Village"
+                    );
+                    
+                    let targetPlayer = null;
+                    if (knownVillageDead.length > 0 && Math.random() < 0.7) {
+                        // 70% chance to revive a known village player
+                        targetPlayer = knownVillageDead[Math.floor(Math.random() * knownVillageDead.length)];
+                    } else {
+                        // 30% chance (or if no known village players) to revive any dead player
+                        targetPlayer = deadPlayers[Math.floor(Math.random() * deadPlayers.length)];
+                    }
+                    
+                    if (targetPlayer) {
+                        socket.emit("revive", {
+                            type: "revive",
+                            playerId: cpu.id,
+                            selectedPlayerId: targetPlayer.id,
+                            selectedPlayerName: targetPlayer.name,
+                        }, gameId);
+                    }
+                }
+            }
+            break;
         case "Arsonist":
             if (getNbrOfPlayersMarkedWithGasoline(playersList) >= 2 && Math.random() < 0.3) {
                 socket.emit("burnThemDown", {

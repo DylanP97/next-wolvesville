@@ -4,12 +4,14 @@ import { Tooltip } from "@nextui-org/react";
 import HamburgerIcon from "./icons/HamburgerIcon";
 import { useToRender } from "../providers/RenderProvider";
 import { divActionIcon, getBtnClassNames } from "../lib/styles";
+import { useTranslation } from "react-i18next";
 
 const GameMenuExitBtn = () => {
   const { toggleExitMenu } = useToRender();
+  const { t } = useTranslation();
 
   return (
-    <Tooltip content={("Settings or Quit Game")} color="secondary" variant="flat">
+    <Tooltip content={t("settings")} color="secondary" variant="flat">
 
       <div
         onClick={toggleExitMenu}

@@ -23,9 +23,11 @@
         "generalChat": "General Chat",
         "wolvesChat": "Wolves Chat",
         "jailChat": "Jail Chat",
+        "mediumChat": "Medium Chat",
         "emptyGeneralChat": "Here's the discussion of the village",
         "emptyWolvesChat": "Here's the discussion of the wolves",
         "emptyJailChat": "Here's the discussion of the jail",
+        "emptyMediumChat": "Here's the discussion with the dead",
         "writeMessage": "Write a message",
         "sendMessage": "Send message",
         "youDied": "You have died!",
@@ -101,6 +103,7 @@
       "goback": "Go Back",
       "gobackmenu": "Go Back to Main Menu",
       "quitgame": "Quit Game",
+      "settings": "Settings",
       "submit": "Submit",
       "join": {
         "players": "users",
@@ -219,6 +222,8 @@
             "executePrisoner": "💀👮‍♂️ The jailer executed its prisoner named ",
             "shootBullet": "💀🔫 The gunner shot ",
             "dieWithLover": " is dead because of its loving relation with ",
+            "werewolfReveal": "The autopsy revealed ",
+            "wasWerewolf": " was a werewolf",
             "wasProtected": "👩🧹 Someone wounds were healed by the witch potion last night!",
             "wasHealed": "👩‍⚕️ Someone wounds were healed by the doctor last night!",
             "killedBySK": " was murdered last night by the serial killer...",
@@ -227,7 +232,9 @@
             "heal": "If something happens, the doctor prepares his bandages for ",
             "pourGasoline": "The pyro poured gasoline onto ",
             "burnThemDown": "🔥 The Arsonist lights up his fire!",
-            "burnByFire": "💀🔥 The fire burned "
+            "burnByFire": "💀🔥 The fire burned ",
+            "revive": "✨ The Medium has revived ",
+            "revivedAtDayStart": " has been revived by the Medium!"
           }
         },
         "wolfVote": {
@@ -297,9 +304,11 @@
         "generalChat": "Discussion du village",
         "wolvesChat": "Discussion de nuit entre loups",
         "jailChat": "Discussion de nuit gêolier/prisonnier",
+        "mediumChat": "Discussion avec les morts",
         "emptyGeneralChat": "Voici la discussion du village",
         "emptyWolvesChat": "Voici la discussion des loups",
         "emptyJailChat": "Voici la discussion de la prison",
+        "emptyMediumChat": "Voici la discussion avec les morts",
         "writeMessage": "Écrire un message",
         "sendMessage": "Envoyer message",
         "youDied": "Tu es mort !",
@@ -375,6 +384,7 @@
       "goback": "Revenir à la page précédente",
       "gobackmenu": "← Menu principal",
       "quitgame": "Quitter la Partie",
+      "settings": "Paramètres",
       "submit": "Enregistrer",
       "join": {
         "noroom": "Il n'y a aucune salle à rejoindre actuellement",
@@ -493,6 +503,8 @@
             "executePrisoner": "💀👮‍♂️ Le géôlier à exécuter son prisonnier ",
             "shootBullet": "💀🔫 Le tireur a tiré sur ",
             "dieWithLover": " est mort à cause de sa relation avec son amant ",
+            "werewolfReveal": "L'autopsie a révélé que ",
+            "wasWerewolf": " était un loup-garou",
             "wasProtected": "👩🧹 Les blessures d'un joueur ont été guerris par la potion de la sorcière la nuit passée !",
             "wasHealed": "👩‍⚕️ Les blessures d'un joueur ont été guerris par le docteur la nuit passée !",
             "killedBySK": " a été assasiné la nuit dernière par le tueur en série...",
@@ -501,7 +513,9 @@
             "heal": "Si quelque chose devait se passer ce soir, le docteur a préparer ses pansements pour ",
             "pourGasoline": "Le pyro a déverser de l'essence sur ",
             "burnThemDown": "🔥 Le pyromane a mis le feu !!!",
-            "burnByFire": "💀🔥 L'incendie a brûlé "
+            "burnByFire": "💀🔥 L'incendie a brûlé ",
+            "revive": "✨ Le Médium a ressuscité ",
+            "revivedAtDayStart": " a été ressuscité par le Médium !"
           }
         },
         "wolfVote": {

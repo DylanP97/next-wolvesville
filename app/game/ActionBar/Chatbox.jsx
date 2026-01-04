@@ -11,13 +11,16 @@ import { useAnimation } from "../../providers/AnimationProvider";
 
 const Chatbox = () => {
   const { socket, username } = useAuth();
-  const { timeOfTheDay, gameId, clientPlayer, isWolf, isJailer, usedChat } = useGame();
+  const { timeOfTheDay, gameId, clientPlayer, isWolf, isJailer, isMedium, usedChat } = useGame();
   const { triggerSimpleMessage } = useAnimation();
   const [message, setMessage] = useState("");
   const { t } = useTranslation();
 
   const sendMessage = (messageToSend) => {
-    if (clientPlayer.isAlive) {
+    // Allow sending messages if alive OR if dead but using medium chat
+    const canSendMessage = clientPlayer.isAlive || (usedChat.type === "medium" && !clientPlayer.isAlive);
+    
+    if (canSendMessage) {
       if (messageToSend && messageToSend.trim()) {
         socket.emit(
           "sendMessage",
@@ -26,6 +29,7 @@ const Chatbox = () => {
           username,
           usedChat.type === "wolves",
           usedChat.type === "jail",
+          usedChat.type === "medium",
           isJailer,
           i18n.language === "fr" ? "fr" : "en"
         );
