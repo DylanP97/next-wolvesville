@@ -56,25 +56,27 @@ const Chatbox = () => {
     setMessage("");
   }, [timeOfTheDay]);
 
+  // Show "go back to sleep" only for general chat at night
+  // Medium chat, wolves chat, and jail chat should work at night
   if (usedChat.type === "general" && timeOfTheDay === "nighttime") {
     return (
       <div className="flex justify-center text-sm text-slate-300 italic"><p>{t("game.goBackToSleep")}</p></div>
     );
-  } else {
-    return (
-      <div className="flex flex-row gap-2 w-full items-stretch">
-        <textarea
-          placeholder={t("game.writeMessage")}
-          value={message}
-          className="outline-none border-none p-3 flex-grow text-sm text-black rounded-lg resize-none"
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={handleKeyDown}
-          rows={1}
-        />
-        <CmdSend sendMessage={sendMessage} message={message} />
-      </div>
-    );
   }
+  
+  return (
+    <div className="flex flex-row gap-2 w-full items-stretch">
+      <textarea
+        placeholder={t("game.writeMessage")}
+        value={message}
+        className="outline-none border-none p-3 flex-grow text-sm text-black rounded-lg resize-none"
+        onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={handleKeyDown}
+        rows={1}
+      />
+      <CmdSend sendMessage={sendMessage} message={message} />
+    </div>
+  );
 };
 
 export default Chatbox;

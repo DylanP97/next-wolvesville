@@ -505,8 +505,8 @@
             "dieWithLover": " est mort à cause de sa relation avec son amant ",
             "werewolfReveal": "L'autopsie a révélé que ",
             "wasWerewolf": " était un loup-garou",
-            "wasProtected": "👩🧹 Les blessures d'un joueur ont été guerris par la potion de la sorcière la nuit passée !",
-            "wasHealed": "👩‍⚕️ Les blessures d'un joueur ont été guerris par le docteur la nuit passée !",
+            "wasProtected": "👩🧹 Les blessures d'un joueur ont été guerris par la potion de la sorcière cette nuit !",
+            "wasHealed": "👩‍⚕️ Les blessures d'un joueur ont été gueris par le docteur cette nuit !",
             "killedBySK": " a été assasiné la nuit dernière par le tueur en série...",
             "numberOfSKKills": "Nombre de victimes du tueur en série : ",
             "graveRobber": "🪦 Le pilleur de tombe a déterrer cette nuit la tombe de ... ",
@@ -520,7 +520,7 @@
         },
         "wolfVote": {
           "outcome": {
-            "null": "❌ Les loups n'ont tués personne la nuit passée...",
+            "null": "❌ Les loups n'ont tués personne cette nuit...",
             "unableToKillSK": "❌ Les loups n'ont pas pu tué leur cible (tueur en série) !",
             "healedByDoctor": "❌ Les loups n'ont pas pu tué leur cible (soigné par le docteur) !"
           }

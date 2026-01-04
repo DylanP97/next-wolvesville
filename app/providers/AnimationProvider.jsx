@@ -13,6 +13,8 @@ export const AnimationProvider = ({ children }) => {
   const [simpleMessage, setSimpleMessage] = useState(null);
   const [Lottie, setLottie] = useState(null);
   const videoRef = useRef(null);
+  const animationQueueRef = useRef([]);
+  const isPlayingRef = useRef(false);
 
   useEffect(() => {
     // Dynamically import Lottie only on client side
@@ -35,33 +37,65 @@ export const AnimationProvider = ({ children }) => {
     }, 2000);
   };
 
-  const triggerAnimation = async (animationName) => {
+  const processNextAnimation = () => {
+    // If already playing, don't process next one
+    if (isPlayingRef.current) return;
+
+    // If queue is empty, we're done
+    if (animationQueueRef.current.length === 0) {
+      isPlayingRef.current = false;
+      return;
+    }
+
+    // Get next animation from queue
+    const animationName = animationQueueRef.current.shift();
+    isPlayingRef.current = true;
+
     const animation = animationsData.find((a) => a.title === animationName);
-    if (!animation) return;
+    if (!animation) {
+      // If animation not found, process next one
+      isPlayingRef.current = false;
+      processNextAnimation();
+      return;
+    }
 
     setCurrentAnimation(animation);
 
     // Handle Lottie JSON animations
     if (animation.type === "lottie") {
       try {
-        const response = await fetch(animation.path);
-        if (!response.ok) throw new Error(`Failed to load animation`);
+        fetch(animation.path)
+          .then((response) => {
+            if (!response.ok) throw new Error(`Failed to load animation`);
+            return response.json();
+          })
+          .then((animationJSON) => {
+            setAnimationData(animationJSON);
+            setShowAnimation(true);
+            setFadeOut(false);
 
-        const animationJSON = await response.json();
-        setAnimationData(animationJSON);
-        setShowAnimation(true);
-        setFadeOut(false);
-
-        setTimeout(() => {
-          setFadeOut(true);
-          setTimeout(() => {
-            setShowAnimation(false);
-            setCurrentAnimation(null);
-            setAnimationData(null);
-          }, 500);
-        }, animation.ms);
+            setTimeout(() => {
+              setFadeOut(true);
+              setTimeout(() => {
+                setShowAnimation(false);
+                setCurrentAnimation(null);
+                setAnimationData(null);
+                // Animation finished, process next one
+                isPlayingRef.current = false;
+                processNextAnimation();
+              }, 500);
+            }, animation.ms);
+          })
+          .catch((error) => {
+            console.error("Failed to load animation:", error);
+            // On error, process next one
+            isPlayingRef.current = false;
+            processNextAnimation();
+          });
       } catch (error) {
         console.error("Failed to load animation:", error);
+        isPlayingRef.current = false;
+        processNextAnimation();
       }
     }
     // Handle MP4 video animations
@@ -74,6 +108,8 @@ export const AnimationProvider = ({ children }) => {
         if (videoRef.current) {
           videoRef.current.play().catch((error) => {
             console.error("Failed to play video:", error);
+            isPlayingRef.current = false;
+            processNextAnimation();
           });
         }
       }, 100);
@@ -88,8 +124,21 @@ export const AnimationProvider = ({ children }) => {
             videoRef.current.pause();
             videoRef.current.currentTime = 0;
           }
+          // Animation finished, process next one
+          isPlayingRef.current = false;
+          processNextAnimation();
         }, 500);
       }, animation.ms);
+    }
+  };
+
+  const triggerAnimation = (animationName) => {
+    // Add to queue
+    animationQueueRef.current.push(animationName);
+    
+    // Start processing if not already playing
+    if (!isPlayingRef.current) {
+      processNextAnimation();
     }
   };
 
@@ -112,7 +161,7 @@ export const AnimationProvider = ({ children }) => {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              backgroundColor: "rgba(0, 0, 0, 0.12)",
               opacity: fadeOut ? 0 : 1,
               transition: "opacity 1.5s ease-out",
             }}

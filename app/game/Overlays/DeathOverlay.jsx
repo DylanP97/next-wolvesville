@@ -11,7 +11,7 @@ const DeathOverlay = () => {
 
   // Memoize animation values so they don't recalculate on every render
   const ghostAnimations = useMemo(() =>
-    [...Array(5)].map((_, i) => ({
+    [...Array(2)].map((_, i) => ({
       left: `${15 + i * 18}%`,
       animationDelay: `${i * 1.5}s`,
       animationDuration: `${10 + Math.random() * 4}s`,

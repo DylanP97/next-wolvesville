@@ -233,7 +233,6 @@ function soloStrategy(votablePlayers, votingState, cpuRole) {
 // =============================================================================
 
 function emitVote(socket, cpu, voteTarget, gameId) {
-    console.log(cpu)
     const nbr = cpu.role.name === "Mayor" && cpu.isRevealed ? 3 : 1;
     socket.emit(
         "addVote",

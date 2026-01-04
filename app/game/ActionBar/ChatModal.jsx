@@ -257,6 +257,7 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
                 {usedChat.type === "general" && t("game.emptyGeneralChat")}
                 {usedChat.type === "wolves" && t("game.emptyWolvesChat")}
                 {usedChat.type === "jail" && t("game.emptyJailChat")}
+                {usedChat.type === "medium" && t("game.emptyMediumChat")}
               </div>
             ) : (
               displayMessages.map((msg, index) => {
@@ -318,7 +319,7 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
             <div ref={messagesEndRef} />
           </div>
 
-          {clientPlayer.isAlive && (
+          {(clientPlayer.isAlive || (usedChat.type === "medium" && !clientPlayer.isAlive)) && (
             <div className="h-28 border-t border-slate-700 bg-slate-800 rounded-b-lg p-3">
               <Chatbox />
             </div>
