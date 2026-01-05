@@ -144,7 +144,14 @@ export const AuthProvider = ({ children }) => {
     };
 
     const handleTriggerAnimation = (animation) => {
-      triggerAnimation(animation);
+      // Handle both old format (string) and new format (object with name and text)
+      if (typeof animation === 'string') {
+        triggerAnimation(animation);
+      } else if (animation && animation.name) {
+        triggerAnimation(animation.name, animation.text);
+      } else {
+        console.warn("Invalid animation format:", animation);
+      }
     };
 
     const handleTriggerCardAnimation = (cardAnimation) => {

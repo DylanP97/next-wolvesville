@@ -218,6 +218,7 @@
             "wolfSeer": "🐺🔍 The wolf seer has revealed to the wolves the role of ",
             "wolvesMurdered": "💀🐺 The wolves murdered ",
             "mayorReveal": "👔 The village now know its Mayor ",
+            "mayorTripleVote": " and its vote is tripled!",
             "arrestPlayer": " was arrested by the jailer",
             "executePrisoner": "💀👮‍♂️ The jailer executed its prisoner named ",
             "shootBullet": "💀🔫 The gunner shot ",
@@ -228,13 +229,14 @@
             "wasHealed": "👩‍⚕️ Someone wounds were healed by the doctor last night!",
             "killedBySK": " was murdered last night by the serial killer...",
             "numberOfSKKills": "Number of kills by serial killer: ",
-            "graveRobber": "🪦 The grave robber loot tonight the grave of... ",
+            "graveRobber": "🪦 A grave was looted... ",
             "heal": "If something happens, the doctor prepares his bandages for ",
             "pourGasoline": "The pyro poured gasoline onto ",
             "burnThemDown": "🔥 The Arsonist lights up his fire!",
             "burnByFire": "💀🔥 The fire burned ",
             "revive": "✨ The Medium has revived ",
-            "revivedAtDayStart": " has been revived by the Medium!"
+            "revivedAtDayStart": " has been revived by the Medium!",
+            "mediumAboutToRevive": "✨ The Medium is about to revive someone..."
           }
         },
         "wolfVote": {
@@ -306,9 +308,9 @@
         "jailChat": "Discussion de nuit gêolier/prisonnier",
         "mediumChat": "Discussion avec les morts",
         "emptyGeneralChat": "Voici la discussion du village",
-        "emptyWolvesChat": "Voici la discussion des loups",
-        "emptyJailChat": "Voici la discussion de la prison",
-        "emptyMediumChat": "Voici la discussion avec les morts",
+        "emptyWolvesChat": "Voici la discussion des loups. Les loups peuvent communiquer entre eux pendant la phase de nuit pour élaborer des stratégies.",
+        "emptyJailChat": "Voici la discussion de la prison. Le géôlier peut interagir avec son prisonnier, afin de voir si ce dernier est innocent ou coupable.",
+        "emptyMediumChat": "Voici la discussion de l'au-delà. La Medium peut communiquer avec les morts pour récolter des informations et ressusciter un joueur mort.",
         "writeMessage": "Écrire un message",
         "sendMessage": "Envoyer message",
         "youDied": "Tu es mort !",
@@ -499,6 +501,7 @@
             "wolfSeer": "🐺🔍 Le loup-voyant a révélé aux loups le rôle de ",
             "wolvesMurdered": "💀🐺 Les loups ont dévorés ",
             "mayorReveal": "👔 Le village connaît désormais son maire ",
+            "mayorTripleVote": " son vote compte 3 !",
             "arrestPlayer": " a été arrêté par le géôlier",
             "executePrisoner": "💀👮‍♂️ Le géôlier à exécuter son prisonnier ",
             "shootBullet": "💀🔫 Le tireur a tiré sur ",
@@ -509,13 +512,14 @@
             "wasHealed": "👩‍⚕️ Les blessures d'un joueur ont été gueris par le docteur cette nuit !",
             "killedBySK": " a été assasiné la nuit dernière par le tueur en série...",
             "numberOfSKKills": "Nombre de victimes du tueur en série : ",
-            "graveRobber": "🪦 Le pilleur de tombe a déterrer cette nuit la tombe de ... ",
+            "graveRobber": "🪦 Une tombe vient d'être déterrée ! ",
             "heal": "Si quelque chose devait se passer ce soir, le docteur a préparer ses pansements pour ",
             "pourGasoline": "Le pyro a déverser de l'essence sur ",
             "burnThemDown": "🔥 Le pyromane a mis le feu !!!",
             "burnByFire": "💀🔥 L'incendie a brûlé ",
             "revive": "✨ Le Médium a ressuscité ",
-            "revivedAtDayStart": " a été ressuscité par le Médium !"
+            "revivedAtDayStart": " a été ressuscité par le Médium !",
+            "mediumAboutToRevive": "✨ Le Médium s'apprête à ressusciter quelqu'un..."
           }
         },
         "wolfVote": {

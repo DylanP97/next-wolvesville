@@ -27,6 +27,7 @@ const animations = [
   new Animation("witchPoison", 6000, "/animations/witch_poison.mp4", "video"),
   new Animation("wolvesAte", 3000, "/animations/wolves_ate.mp4", "video"),
   new Animation("mediumRevive", 3000, "/animations/medium_revive.mp4", "video"),
+  new Animation("loverSuicide", 4000, "/animations/lover_suicide.mp4", "video"),
 ];
 
 export default animations;

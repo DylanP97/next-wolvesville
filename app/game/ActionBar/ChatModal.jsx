@@ -18,6 +18,7 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
     setUsedChat,
     availableChats,
     clientPlayer,
+    playersList,
   } = useGame();
   const { isDevMode } = useDevMode();
   const { isDev } = useAuth();
@@ -149,6 +150,19 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
 
               if (msg.author) {
                 const isOwnMessage = msg.author === clientPlayer.name;
+                
+                // Find the author player to check their role
+                const authorPlayer = playersList?.find(p => p.name === msg.author);
+                const isAuthorJailer = authorPlayer?.role?.name === "Jailer";
+                const isAuthorMedium = authorPlayer?.role?.name === "Medium";
+                
+                // Hide author name if:
+                // - In jail chat and author is the jailer
+                // - In medium chat and author is the medium
+                // - Wolves chat: show all names (no hiding)
+                const shouldHideAuthor = 
+                  (usedChat.type === "jail" && isAuthorJailer) ||
+                  (usedChat.type === "medium" && isAuthorMedium);
 
                 return (
                   <div
@@ -156,8 +170,8 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
                     className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'} animate-fade-in`}
                   >
                     <div className={`max-w-[80%] ${isOwnMessage ? 'order-2' : 'order-1'}`}>
-                      {!isOwnMessage && (
-                        <div className="text-xs text-slate-400 mb-1 ml-2 font-semibold">
+                      {!shouldHideAuthor && (
+                        <div className={`text-xs text-slate-400 mb-1 font-semibold ${isOwnMessage ? 'text-right mr-2' : 'ml-2'}`}>
                           {msg.author}
                         </div>
                       )}
@@ -265,6 +279,19 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
 
                 if (msg.author) {
                   const isOwnMessage = msg.author === clientPlayer.name;
+                  
+                  // Find the author player to check their role
+                  const authorPlayer = playersList?.find(p => p.name === msg.author);
+                  const isAuthorJailer = authorPlayer?.role?.name === "Jailer";
+                  const isAuthorMedium = authorPlayer?.role?.name === "Medium";
+                  
+                  // Hide author name if:
+                  // - In jail chat and author is the jailer
+                  // - In medium chat and author is the medium
+                  // - Wolves chat: show all names (no hiding)
+                  const shouldHideAuthor = 
+                    (usedChat.type === "jail" && isAuthorJailer) ||
+                    (usedChat.type === "medium" && isAuthorMedium);
 
                   return (
                     <div
@@ -272,8 +299,8 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
                       className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'} animate-fade-in`}
                     >
                       <div className={`max-w-[80%] ${isOwnMessage ? 'order-2' : 'order-1'}`}>
-                        {!isOwnMessage && (
-                          <div className="text-xs text-slate-400 mb-1 ml-2 font-semibold">
+                        {!shouldHideAuthor && (
+                          <div className={`text-xs text-slate-400 mb-1 font-semibold ${isOwnMessage ? 'text-right mr-2' : 'ml-2'}`}>
                             {msg.author}
                           </div>
                         )}

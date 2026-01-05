@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import animationsData from "../lib/animations";
+import { replacePlaceholders } from "../lib/utils";
 
 const AnimationContext = createContext();
 
@@ -11,6 +12,7 @@ export const AnimationProvider = ({ children }) => {
   const [animationData, setAnimationData] = useState(null);
   const [fadeOut, setFadeOut] = useState(false);
   const [simpleMessage, setSimpleMessage] = useState(null);
+  const [animationText, setAnimationText] = useState(null);
   const [Lottie, setLottie] = useState(null);
   const videoRef = useRef(null);
   const animationQueueRef = useRef([]);
@@ -47,8 +49,10 @@ export const AnimationProvider = ({ children }) => {
       return;
     }
 
-    // Get next animation from queue
-    const animationName = animationQueueRef.current.shift();
+    // Get next animation from queue (can be string or object with name and text)
+    const queueItem = animationQueueRef.current.shift();
+    const animationName = typeof queueItem === 'string' ? queueItem : queueItem.name;
+    const animationText = typeof queueItem === 'object' ? queueItem.text : null;
     isPlayingRef.current = true;
 
     const animation = animationsData.find((a) => a.title === animationName);
@@ -60,6 +64,7 @@ export const AnimationProvider = ({ children }) => {
     }
 
     setCurrentAnimation(animation);
+    setAnimationText(animationText);
 
     // Handle Lottie JSON animations
     if (animation.type === "lottie") {
@@ -80,6 +85,7 @@ export const AnimationProvider = ({ children }) => {
                 setShowAnimation(false);
                 setCurrentAnimation(null);
                 setAnimationData(null);
+                setAnimationText(null);
                 // Animation finished, process next one
                 isPlayingRef.current = false;
                 processNextAnimation();
@@ -120,6 +126,7 @@ export const AnimationProvider = ({ children }) => {
         setTimeout(() => {
           setShowAnimation(false);
           setCurrentAnimation(null);
+          setAnimationText(null);
           if (videoRef.current) {
             videoRef.current.pause();
             videoRef.current.currentTime = 0;
@@ -132,9 +139,13 @@ export const AnimationProvider = ({ children }) => {
     }
   };
 
-  const triggerAnimation = (animationName) => {
-    // Add to queue
-    animationQueueRef.current.push(animationName);
+  const triggerAnimation = (animationName, text = null) => {
+    // Add to queue (with text if provided)
+    if (text) {
+      animationQueueRef.current.push({ name: animationName, text });
+    } else {
+      animationQueueRef.current.push(animationName);
+    }
     
     // Start processing if not already playing
     if (!isPlayingRef.current) {
@@ -166,41 +177,108 @@ export const AnimationProvider = ({ children }) => {
               transition: "opacity 1.5s ease-out",
             }}
           >
-            {/* Lottie Animation */}
-            {currentAnimation?.type === "lottie" && animationData && Lottie && (
-              <Lottie
-                options={{
-                  loop: false,
-                  autoplay: true,
-                  animationData: animationData,
-                  rendererSettings: { preserveAspectRatio: "xMidYMid slice" },
-                }}
-                height={400}
-                width={400}
-              />
-            )}
+            {/* Animation Container */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "2rem",
+                position: "relative",
+              }}
+            >
+              {/* Lottie Animation */}
+              {currentAnimation?.type === "lottie" && animationData && Lottie && (
+                <Lottie
+                  options={{
+                    loop: false,
+                    autoplay: true,
+                    animationData: animationData,
+                    rendererSettings: { preserveAspectRatio: "xMidYMid slice" },
+                  }}
+                  height={400}
+                  width={400}
+                />
+              )}
 
-            {/* Video Animation */}
-            {currentAnimation?.type === "video" && (
-              <video
-                ref={videoRef}
-                src={currentAnimation.path}
+              {/* Video Animation */}
+              {currentAnimation?.type === "video" && (
+                <video
+                  ref={videoRef}
+                  src={currentAnimation.path}
+                  style={{
+                    maxWidth: "80vw",
+                    maxHeight: "60vh",
+                    objectFit: "contain",
+                    borderRadius: "12px",
+                    boxShadow: "0 20px 60px rgba(0, 0, 0, 0.5)",
+                  }}
+                  muted
+                  playsInline
+                  preload="auto"
+                />
+              )}
+
+              {/* Animation Text */}
+              {animationText && (
+                <div
+                  className="animation-text-container"
+                  style={{
+                    textAlign: "center",
+                    padding: "1rem 2rem",
+                    borderRadius: "12px",
+                    background: "linear-gradient(135deg, rgba(95, 51, 161, 0.18) 0%, rgba(178, 6, 217, 0.95) 100%)",
+                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(234, 179, 8, 0.3)",
+                    border: "2px solid rgba(255, 255, 255, 0.3)",
+                    backdropFilter: "blur(10px)",
+                    maxWidth: "90vw",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontSize: "1.2rem",
+                      fontWeight: "bold",
+                      color: "white",
+                      textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+                      margin: 0,
+                      lineHeight: "1.4",
+                    }}
+                  >
+                    {replacePlaceholders(animationText)}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Simple Message (standalone, no animation) */}
+            {simpleMessage && !currentAnimation && (
+              <div
+                className="simple-message-container"
                 style={{
-                  maxWidth: "80vw",
-                  maxHeight: "80vh",
-                  objectFit: "contain",
+                  textAlign: "center",
+                  padding: "1.5rem 2.5rem",
+                  borderRadius: "12px",
+                  background: "linear-gradient(135deg, rgb(242, 237, 221) 0%, rgba(45, 11, 237, 0.95) 100%)",
+                  boxShadow: "0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(234, 179, 8, 0.3)",
+                  border: "2px solid rgba(255, 255, 255, 0.3)",
+                  backdropFilter: "blur(10px)",
+                  maxWidth: "90vw",
                 }}
-                muted
-                playsInline
-                preload="auto"
-              />
-            )}
-
-            {/* Simple Message */}
-            {simpleMessage && (
-              <p className="text-3xl font-bold italic text-white bg-yellow-500 z-50 p-4 m-4 rounded-lg">
-                {simpleMessage}
-              </p>
+              >
+                <p
+                  style={{
+                    fontSize: "2rem",
+                    fontWeight: "bold",
+                    fontStyle: "italic",
+                    color: "white",
+                    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+                    margin: 0,
+                    lineHeight: "1.4",
+                  }}
+                >
+                  {simpleMessage}
+                </p>
+              </div>
             )}
           </div>
         )}
