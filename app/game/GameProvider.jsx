@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useEffect, useRef, useState, useMemo } from "react";
 import { useAuth } from "../providers/AuthProvider";
-import cpuNextMove from "./CPULogic/cpuNextMove";
 import { useSound } from "../providers/SoundProvider";
 import { useAnimation } from "../providers/AnimationProvider";
 import { useTranslation } from "react-i18next";
