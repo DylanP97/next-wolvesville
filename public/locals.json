@@ -535,7 +535,7 @@
           "outcome": {
             "basic": "💀✉️ Après vote, le village a décidé de tuer ",
             "foolWins": "🤡 Le fou a gagné ! Il vous remercie d'avoir voter contre lui ! 🤡",
-            "null": "🤔 Le village n'a pas su décider qui éliminé !"
+            "null": "🤔 Le village n'a pas su décider qui éliminé..."
           }
         },
         "game": {

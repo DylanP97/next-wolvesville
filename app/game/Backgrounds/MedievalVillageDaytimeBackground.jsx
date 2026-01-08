@@ -37,7 +37,7 @@ export default function MedievalVillageDaytimeBackground() {
 
             {/* Medieval Village Houses - strategically placed on the 'ground' */}
             {/* House 1 - Smaller, further back */}
-            <div className="absolute bottom-36 left-1/4 -translate-x-1/2 z-10">
+            <div className="absolute bottom-36 left-1/4 -translate-x-1/2">
                 <svg width="80" height="90" viewBox="0 0 80 90">
                     <rect x="15" y="50" width="50" height="40" fill="#9f6f52" /> {/* Body */}
                     <path d="M 10 50 L 40 25 L 70 50 Z" fill="#6f4f3e" /> {/* Roof */}
@@ -48,7 +48,7 @@ export default function MedievalVillageDaytimeBackground() {
             </div>
 
             {/* House 2 - Medium size */}
-            <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-20">
+            <div className="absolute bottom-32 left-1/2 -translate-x-1/2">
                 <svg width="110" height="120" viewBox="0 0 110 120">
                     <rect x="20" y="60" width="70" height="60" fill="#ae7f5c" /> {/* Body */}
                     <path d="M 10 60 L 55 25 L 100 60 Z" fill="#7a5540" /> {/* Roof */}
@@ -59,7 +59,7 @@ export default function MedievalVillageDaytimeBackground() {
             </div>
 
             {/* House 3 - Slightly larger, foreground */}
-            <div className="absolute bottom-28 right-1/4 translate-x-1/2 z-30">
+            <div className="absolute bottom-36 right-1/4 translate-x-1/2">
                 <svg width="100" height="110" viewBox="0 0 100 110">
                     <rect x="15" y="55" width="70" height="55" fill="#c49466" /> {/* Body */}
                     <path d="M 5 55 L 50 25 L 95 55 Z" fill="#8f674d" /> {/* Roof */}
@@ -78,13 +78,13 @@ export default function MedievalVillageDaytimeBackground() {
             </svg>
 
             {/* Trees (more integrated, in front and behind some houses) */}
-            <div className="absolute bottom-24 left-8 z-20">
+            <div className="absolute bottom-24 left-8">
                 <svg width="60" height="100" viewBox="0 0 60 100">
                     <rect x="25" y="60" width="10" height="40" fill="#654321" />
                     <circle cx="30" cy="45" r="20" fill="#3d6b1f" />
                 </svg>
             </div>
-            <div className="absolute bottom-20 right-8 z-30">
+            <div className="absolute bottom-20 right-8">
                 <svg width="70" height="110" viewBox="0 0 70 110">
                     <rect x="30" y="65" width="10" height="45" fill="#654321" />
                     <circle cx="35" cy="50" r="25" fill="#2d5016" />

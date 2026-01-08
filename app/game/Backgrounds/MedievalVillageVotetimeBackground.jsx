@@ -62,7 +62,7 @@ export default function MedievalVillageVotetimeBackground() {
             </div>
 
             {/* House 3 */}
-            <div className="absolute bottom-28 right-1/4 translate-x-1/2">
+            <div className="absolute bottom-36 right-1/4 translate-x-1/2">
                 <svg width="100" height="110" viewBox="0 0 100 110">
                     <rect x="15" y="55" width="70" height="55" fill="#8e6650" />
                     <path d="M 5 55 L 50 25 L 95 55 Z" fill="#6b4f3d" />
