@@ -2,8 +2,6 @@
 
 import { useTranslation } from "react-i18next";
 import { useGame } from "./GameProvider";
-import i18n from "../lib/i18n";
-import Image from "next/image";
 
 const GameHeader = () => {
   const { timeOfTheDay, dayCount, timeCounter, clientPlayer } = useGame();
@@ -21,7 +19,7 @@ const GameHeader = () => {
   };
 
   return (
-    <div className="px-6 py-4 z-20 w-full bg-gradient-to-t from-slate-700 to-slate-800 border-b border-slate-600 shadow-2xl flex-shrink-0 opacity-70 overflow-hidden relative">
+    <div className="px-4 py-2 z-20 w-full bg-gradient-to-t from-slate-700 to-slate-800 border-b border-slate-600 shadow-2xl flex-shrink-0 opacity-70 overflow-hidden relative">
       <p className="text-xs text-white my-2">
         {timeOfTheDay === "daytime" ? (
           <>
@@ -51,21 +49,6 @@ const GameHeader = () => {
         ) : null}
       </p>
 
-      <p className="text-xs italic">
-        {t("game.youAre")}{" "}
-        {i18n.language === "fr" ? clientPlayer.role.nameFR : clientPlayer.role.name}{" "}
-        -{" "}
-        {i18n.language === "fr"
-          ? clientPlayer.role.descriptionFR
-          : clientPlayer.role.description}
-      </p>
-      <Image
-        src={clientPlayer.role.image}
-        alt={clientPlayer.role.name}
-        width={200}
-        height={200}
-        className="opacity-30 absolute -top-6 right-14 object-contain "
-      />
     </div>
   );
 };

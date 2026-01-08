@@ -318,7 +318,7 @@
         "goBackToSleep": "C'est la nuit, retourne te coucher...",
         "tooltip": {
           "voteAgainst": "Le Village doit choisir : Voter contre un joueur",
-          "wolfVoteAgainst": "Les loups doivent choisir qui dévorer",
+          "wolfVoteAgainst": "Les loups peuvent choisir qui dévorer",
           "seeOrWriteMessage": "Voir ou écrire un message"
         },
         "sideSummary": {
@@ -540,7 +540,7 @@
         },
         "game": {
           "daytime": "☀️ La journée commence et les villageois discutent des derniers événements.",
-          "votetime": "✉️ Le crépuscule tombe sur le village, les villageois doivent voter.",
+          "votetime": "✉️ Le crépuscule tombe sur le village, les villageois peuvent voter.",
           "votetimeAftermath": "✉️ Résultat du vote du village n°",
           "commencementnight": "🌑 Une rumeur inquiétante se répand dans le village : des loups-garoux rôderaient. La nuit initiale commence...",
           "thankYouForPlaying": "🙏 Merci d'être là et de jouer ! La partie démarre maintenant... ",

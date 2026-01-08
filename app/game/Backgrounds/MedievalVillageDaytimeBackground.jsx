@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function MedievalVillageDaytimeBackground() {
     return (
-        <div className="fixed w-full h-screen bg-gradient-to-b from-sky-300 via-sky-200 to-amber-100 overflow-hidden pointer-events-none ">
+        <div className="fixed w-full h-full bg-gradient-to-b from-sky-300 via-sky-200 to-amber-100 overflow-hidden pointer-events-none ">
             {/* Sun */}
             <div className="absolute top-16 right-20 w-24 h-24 bg-yellow-300 rounded-full shadow-2xl shadow-yellow-400/60 animate-pulse-slow">
                 <div className="absolute inset-2 bg-yellow-200 rounded-full opacity-70"></div>

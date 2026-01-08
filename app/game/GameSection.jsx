@@ -18,14 +18,18 @@ import MedievalVillageDaytimeBackground from "./Backgrounds/MedievalVillageDayti
 import MedievalVillageNighttimeBackground from "./Backgrounds/MedievalVillageNighttimeBackground";
 import MedievalVillageVotetimeBackground from "./Backgrounds/MedievalVillageVotetimeBackground";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import i18n from "../lib/i18n";
+import Image from "next/image";
 
 const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
-  const { winningTeam, timeOfTheDay } = useGame();
+  const { winningTeam, timeOfTheDay, clientPlayer } = useGame();
   const { width, height } = useWindowSize();
   const { exitMenuOpen, toggleExitMenu } = useToRender();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const containerRef = useRef(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -61,7 +65,6 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
 
   return (
     <div className="relative w-full h-full flex flex-col">
-      {getBackgroundComponent()}
       <DeathFlash />
       <NightmareOverlay />
       {winningTeam === null && <DeathOverlay />}
@@ -75,6 +78,7 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
       <div className="flex flex-grow flex-1 relative min-h-0 overflow-hidden">
         {/* Game content */}
         <div ref={containerRef} className="flex flex-grow flex-1 justify-center items-center relative">
+          {getBackgroundComponent()}
           {winningTeam !== null ? (
             <div className="w-full h-full overflow-hidden flex flex-col">
               <Confetti
@@ -103,13 +107,33 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
         </div>
       </div>
 
-      {/* Action Bar */}
-      <div className="bottom-0 left-0 right-0 z-30">
+      <div className="bg-slate-800 border-b border-slate-600 shadow-2xl bottom-0 left-0 right-0 relative overflow-hidden z-30">
+
+        {/* Action Bar */}
         <ActionBar
           summaryIsOpen={summaryIsOpen}
           setSummaryIsOpen={setSummaryIsOpen}
           isChatOpen={isChatOpen}
           setIsChatOpen={setIsChatOpen}
+        />
+
+        {/* Role Description */}
+        <div className="p-4 mb-4">
+          <p className="text-xs md:text-sm italic text-center">
+            {t("game.youAre")}{" "}
+            {i18n.language === "fr" ? clientPlayer.role.nameFR : clientPlayer.role.name}{" "}
+            -{" "}
+            {i18n.language === "fr"
+              ? clientPlayer.role.descriptionFR
+              : clientPlayer.role.description}
+          </p>
+        </div>
+        <Image
+          src={clientPlayer.role.image}
+          alt={clientPlayer.role.name}
+          width={250}
+          height={250}
+          className="opacity-10 absolute -bottom-12 -right-6 object-contain z-20 pointer-events-none select-none"
         />
       </div>
 
