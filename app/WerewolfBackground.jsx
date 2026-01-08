@@ -65,4 +65,6 @@ const WerewolfBackground = memo(() => {
     );
 });
 
+WerewolfBackground.displayName = 'WerewolfBackground';
+
 export default WerewolfBackground;

@@ -5,7 +5,7 @@ import i18n from "../lib/i18n";
 const RoleChoice = ({ role, handleRoleChange }) => {
   const isSolo = !["Village", "Werewolves"].includes(role.team);
   const allowMultiple = ["Villager", "Classic Werewolf"].includes(role.name);
-  const maxCount = allowMultiple ? 10 : 1;
+  const maxCount = allowMultiple ? 2 : 1;
 
   // Determine colors based on team
   const getTeamColors = () => {

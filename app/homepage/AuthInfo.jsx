@@ -22,13 +22,15 @@ const AuthInfo = ({ username, isInRoom, isPlaying, avatar }) => {
 
 
   return (
-    <header className="pt-[70px] m-2 p-4 flex justify-center items-center z-30">
-      <div className="m-2">
-        <AvatarUI avatar={avatar} heightAndWidth={80} />
-      </div>
-      <div className="h-full flex flex-col justify-center">
-        <p className="text-sm text-white">{welcomeMsg}</p>
-        <IsInRoomInfo isInRoom={isInRoom} isPlaying={isPlaying} />
+    <header className="mt-[70px] m-2 p-4 flex justify-center items-center z-30 ">
+      <div className="bg-black/20 backdrop-blur-md flex flex-row items-center rounded-3xl p-2 shadow-lg border border-white/20">
+        <div className="m-2">
+          <AvatarUI avatar={avatar} heightAndWidth={80} />
+        </div>
+        <div className="h-full flex flex-col justify-center">
+          <p className="text-sm text-white">{welcomeMsg}</p>
+          <IsInRoomInfo isInRoom={isInRoom} isPlaying={isPlaying} />
+        </div>
       </div>
     </header>
   );

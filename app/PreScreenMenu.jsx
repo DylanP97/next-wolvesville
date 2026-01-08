@@ -97,14 +97,6 @@ const PreScreenMenu = () => {
         <PreServerLoadingScreen
           countdown={countdown}
         />
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 m-auto h-full max-h-[400px] object-cover z-10"
-          src="/animations/animatedVillage.mp4"
-        />
       </>
     );
   }
@@ -146,6 +138,16 @@ const PreScreenMenu = () => {
             {t("prescreen.register")}
           </Button>
         </nav>
+
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          className="italic text-white flex justify-center text-xs
+                   hover:underline hover:text-primary transition-colors z-20"
+          href="https://www.wolvesville.com"
+        >
+          {t("intro.ref")}
+        </a>
         <p className="italic pt-4 px-8 text-center text-white text-xs max-w-[500px] z-20">{t("intro.additionalInfo")}</p>
         {
           !isFullscreen && (<p className="absolute top-16 right-6 italic text-center text-white text-xs z-20 animate-pulse">{t("intro.betterExperience")}</p>)

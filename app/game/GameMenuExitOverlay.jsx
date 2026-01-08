@@ -6,6 +6,7 @@ import LogoutBtn from "../general-btns/LogoutBtn";
 import VolumeToggle from "../general-btns/VolumeToggle";
 import FullScreenToggle from "../general-btns/FullScreenToggle";
 import { useAuth } from "../providers/AuthProvider";
+import LanguageToggle from "../general-btns/LanguageToggle";
 
 const GameMenuExitOverlay = ({ isOpen, onClose }) => {
     const { isDev } = useAuth();
@@ -22,6 +23,7 @@ const GameMenuExitOverlay = ({ isOpen, onClose }) => {
                     <LogoutBtn />
                     <VolumeToggle />
                     <FullScreenToggle />
+                    <LanguageToggle />
                 </div>
                 {
                     isDev && <DevModeToggle />

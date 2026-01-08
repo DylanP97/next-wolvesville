@@ -11,6 +11,7 @@ import { fetchLogin, fetchSignUp } from "../lib/fetch";
 import { getBtnClassNames } from "../lib/styles";
 import PreServerLoadingScreen from "./PreServerLoadingScreen";
 import { useEffect } from "react";
+import WerewolfBackground from "../WerewolfBackground";
 
 const Connexion = ({ logOption, onBack }) => {
   const { t } = useTranslation();
@@ -113,7 +114,8 @@ const Connexion = ({ logOption, onBack }) => {
 
   return (
     <div className="flex flex-col flex-grow justify-center items-center">
-      <h1 className="text-white text-center text-4xl mb-2 font-wolf">
+
+      <h1 className="text-white text-center text-4xl mb-2 font-wolf z-20">
         {isLogin ? t("intro.lo") : t("intro.si")}
       </h1>
 
@@ -134,18 +136,20 @@ const Connexion = ({ logOption, onBack }) => {
         setPassword={setPassword}
       />
 
-      <span
+      <Button
+        className={getBtnClassNames("w-60 mt-6") + " font-wolf"}
+        color="secondary"
+        variant="shadow"
         onClick={handleSwitch}
-        className="z-20 text-white text-sm hover:underline hover:cursor-pointer hover:text-primary mt-2"
       >
         {isLogin
           ? `${t("intro.nry")} ${t("intro.si")}`
           : `${t("intro.ar")} ${t("intro.lo")}`}
-      </span>
+      </Button>
 
       {onBack && (
         <Button
-          className={getBtnClassNames("w-60 mt-4") + " font-wolf"}
+          className={getBtnClassNames("w-60") + " font-wolf"}
           color="secondary"
           variant="shadow"
           onClick={onBack}
@@ -155,6 +159,7 @@ const Connexion = ({ logOption, onBack }) => {
       )}
 
       {isLoading && <PreServerLoadingScreen countdown={countdown} />}
+      <WerewolfBackground />
     </div>
   );
 };
