@@ -19,20 +19,16 @@ const WinnerOverlay = () => {
 
   const handleExitGame = () => {
     updateUserGameState(null, false);
-    // document.location.assign("/");
-    // socket.emit("deleteRoom", gameId);
   };
 
   useEffect(() => {
     const fetchAndSetTeamData = async () => {
       try {
         const teamsData = await fetchTeams();
-        // console.log("teamsData", teamsData)
         if (winningTeam) {
           setWTeamData(
             teamsData.find((team) => team.name === winningTeam.name)
           );
-          // console.log("wTeamData", wTeamData)
         }
       } catch (error) {
         console.error("Failed to fetch teams data", error);
@@ -44,7 +40,6 @@ const WinnerOverlay = () => {
 
   if (winningTeam && wTeamData) {
     return (
-      // <div className="winner-overlay fixed inset-0 bg-black/60 overflow-y-auto flex justify-center p-4">
       <div
         id="winner-message"
         className="winner-message p-4 m-2 bg-gray-800 rounded-lg overflow-y-auto">

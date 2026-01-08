@@ -12,11 +12,6 @@ import { fetchGuestLogin } from "./lib/fetch";
 import { Button, Spinner } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
 import { btnClassNames, getBtnClassNames } from "./lib/styles";
-import { useAnimation } from "./providers/AnimationProvider";
-import Image from "next/image";
-// import background1 from "../public/game/background1.jpeg";
-// import background2 from "../public/game/background2.jpeg";
-// import background3 from "../public/game/background3.jpeg";
 import WerewolfBackground from "./WerewolfBackground";
 
 const PreScreenMenu = () => {

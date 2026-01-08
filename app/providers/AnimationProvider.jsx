@@ -24,6 +24,7 @@ export const AnimationProvider = ({ children }) => {
       setLottie(() => module.default);
     });
   }, []);
+  
 
   const triggerSimpleMessage = (text) => {
     setSimpleMessage(text);

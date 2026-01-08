@@ -12,13 +12,7 @@ const GoBackBtn = () => {
   const { t } = useTranslation();
   const { setActiveComponent } = useToRender();
   const { username, isInRoom, avatar, updateUserGameState } = useAuth();
-
-  // console.log("GoBackBtn rendered with isInRoom:", isInRoom);
-  // be sure to have the latest isInRoom value
-  // useEffect(() => {
-  //   console.log("GoBackBtn rendered with isInRoom:", isInRoom);
-  // }, [isInRoom]);
-
+  
   return (
     <Button
       className={getBtnClassNames('w-40')}

@@ -47,6 +47,7 @@ export async function generateMetadata() {
 }
 
 export default function RootLayout({ children }) {
+
   return (
     <html lang="fr" className={creepster.variable}>
       <body>

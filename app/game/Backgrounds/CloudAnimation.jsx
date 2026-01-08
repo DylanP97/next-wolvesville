@@ -48,9 +48,6 @@ const CloudAnimation = ({ children }) => {
         canvas.width = size.width;
         canvas.height = size.height;
 
-
-        console.log("size.width", size.width);
-
         const background = new Image();
         background.src = "clouds/c1/1.png";
 

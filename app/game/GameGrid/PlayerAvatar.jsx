@@ -10,7 +10,6 @@ const PlayerAvatar = ({ isAlive, avatar, inGameAv, showBurnFlame}) => {
   const { connectedUsers } = useAuth();
 
   useEffect(() => {
-    // console.log("PlayerAvatar - connectedUsers changed:", connectedUsers);
   }, [connectedUsers]);
 
 

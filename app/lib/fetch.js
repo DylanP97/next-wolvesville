@@ -89,8 +89,6 @@ export const fetchLogin = async (email, password) => {
       // Handle specific error messages from backend
       if (data.error) {
 
-        console.log(data.error)
-
         // Map backend errors to user-friendly messages
         if (data.error === "incorrect email" || data.error === "no user found") {
           return { error: "No account found with this email" };

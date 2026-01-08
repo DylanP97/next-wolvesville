@@ -32,16 +32,11 @@ const PlayerGridCard = ({
   } = useGame();
   const { isDevMode } = useDevMode();
   const { isDev } = useAuth();
-  const { cardAnimationQueue } = useAuth();
 
   const [showBurnFlame, setShowBurnFlame] = useState(false);
   const [showRevealAnimation, setShowRevealAnimation] = useState(false);
   const [showCardDeathFlash, setShowCardDeathFlash] = useState(false);
 
-  // Find if this player has an active card animation
-  const activeCardAnimation = cardAnimationQueue.find(item =>
-    item.cardsPlyIds.includes(player.id)
-  );
 
   // Show flame for 3 seconds when a player has just been burned by the Arsonist
   useEffect(() => {
@@ -91,7 +86,6 @@ const PlayerGridCard = ({
   const isDoubleSelection = mode === 'double';
   const isBlocked = mode === 'completed';
 
-  // console.log(selectedPlayer, selectedPlayer1);
 
   return (
     <div
@@ -158,14 +152,6 @@ const PlayerGridCard = ({
             height={60}
           />
         </div>
-      )}
-
-      {/* Render CardAnimationOverlay only for this specific player */}
-      {activeCardAnimation && (
-        <CardAnimationOverlay
-          path={activeCardAnimation.path}
-          key={activeCardAnimation.id} // forces remount + restart
-        />
       )}
 
       {/* Pure CSS flame for 3s when a player has just been burned by the Arsonist */}

@@ -58,8 +58,6 @@ const PlayingCommands = () => {
     activateSelection(newActionType, emoji, true);
   };
 
-  // console.log(clientPlayer)
-
   return (
     <>
       {timeOfTheDay === "votetime" && canVote && !isVoteBlocked && (

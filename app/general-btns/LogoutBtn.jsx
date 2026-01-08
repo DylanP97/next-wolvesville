@@ -13,7 +13,6 @@ const LogoutBtn = () => {
 
   const logout = async () => {
     const response = await fetchLogout(username, isGuest);
-    console.log(response)
     if (response.ok) {
       setAuthInfo(null, null, false, null);
       setIsDev(false);

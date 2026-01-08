@@ -4,7 +4,6 @@ import { createContext, useContext, useState, useEffect } from "react";
 import io from "socket.io-client";
 import { useSound } from "./SoundProvider";
 import { useAnimation } from "./AnimationProvider";
-import animationsData from "../lib/animations";
 
 const AuthContext = createContext();
 
@@ -24,7 +23,6 @@ export const AuthProvider = ({ children }) => {
   const [isGuest, setIsGuest] = useState(false);
   const [game, setGame] = useState(null);
   const [isDev, setIsDev] = useState(false);
-  const [cardAnimationQueue, setCardAnimationQueue] = useState([]);
 
   const {
     generateNoise,
@@ -37,8 +35,6 @@ export const AuthProvider = ({ children }) => {
   const updateUserGameState = (newIsInRoom, newIsPlaying) => {
     setIsInRoom(newIsInRoom);
     setIsPlaying(newIsPlaying);
-    // setGame(newGame);
-    // console.log("called??")
     socket.emit(
       "updateUserGameState",
       authState.username,
@@ -80,12 +76,10 @@ export const AuthProvider = ({ children }) => {
       });
       setSocket(newSocket);
     } else {
-      // console.log("User is not authenticated");
     }
   }
 
   /** execution */
-
 
 
   useEffect(() => {
@@ -114,7 +108,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (!socket) return;
 
-    // Define all handlers first (for clarity and to enable off())
     const handleUpdateUsers = (updatedUsers) => {
       const user = updatedUsers.find(u => u.username === authState.username);
       if (user) setIsInRoom(user.isInRoom);
@@ -154,31 +147,6 @@ export const AuthProvider = ({ children }) => {
       }
     };
 
-    const handleTriggerCardAnimation = (cardAnimation) => {
-      const animation = animationsData.find((a) => a.title === cardAnimation.title);
-      if (!animation) {
-        console.warn("Card animation title not found:", cardAnimation.title);
-        return;
-      }
-
-      const duration = animation.ms || 3000;
-
-      const newQueueItem = {
-        id: Date.now() + Math.random(),
-        path: animation.path,
-        cardsPlyIds: cardAnimation.cardsPlyIds || [],
-      };
-
-      // Add to queue
-      setCardAnimationQueue(prev => [...prev, newQueueItem]);
-
-      // Auto-remove this exact item after its duration
-      setTimeout(() => {
-        setCardAnimationQueue(prev =>
-          prev.filter(item => item.id !== newQueueItem.id)
-        );
-      }, duration + 100); // small buffer for safety
-    };
 
     // Attach listeners
     socket.on("updateUsers", handleUpdateUsers);
@@ -187,17 +155,9 @@ export const AuthProvider = ({ children }) => {
     socket.on("updateGame", handleUpdateGame);
     socket.on("triggerSoundForAll", handleTriggerSound);
     socket.on("triggerAnimationForAll", handleTriggerAnimation);
-    socket.on("triggerCardAnimationForAll", handleTriggerCardAnimation);
 
-    // Cleanup: remove ALL listeners when socket changes or unmounts
     return () => {
-      socket.off("updateUsers", handleUpdateUsers);
-      socket.off("updateRooms", handleUpdateRooms);
-      socket.off("launchRoom", handleLaunchRoom);
-      socket.off("updateGame", handleUpdateGame);
-      socket.off("triggerSoundForAll", handleTriggerSound);
-      socket.off("triggerAnimationForAll", handleTriggerAnimation);
-      socket.off("triggerCardAnimationForAll", handleTriggerCardAnimation);
+      socket.disconnect();
     };
   }, [socket]); // Only re-run if socket instance changes
 
@@ -220,7 +180,6 @@ export const AuthProvider = ({ children }) => {
         setIsGuest,
         isDev,
         setIsDev,
-        cardAnimationQueue,
       }}
     >
       {children}

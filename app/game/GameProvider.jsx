@@ -76,7 +76,7 @@ export const GameProvider = ({ children }) => {
   const [availableChats, setAvailableChats] = useState([general]);
 
   const processedSecondRef = useRef(null);
-
+  const hasPlayedIntroRef = useRef(false)
 
   // SELECTION HELPERS:
   const selectionHelpers = useMemo(() => ({
@@ -194,7 +194,8 @@ export const GameProvider = ({ children }) => {
   useEffect(() => {
     selectionHelpers.reset(); // Instead of setting individual states
     setWeather(weatherColors[timeOfTheDay]);
-    if (timeOfTheDay === "nighttime" && !winningTeam) {
+    if (timeOfTheDay === "nighttime" && !winningTeam && !hasPlayedIntroRef.current) {
+      hasPlayedIntroRef.current = true; // ← Set flag
       generateNoise("wolfHowl");
       triggerAnimation("moon");
     }
@@ -241,28 +242,6 @@ export const GameProvider = ({ children }) => {
       }, 300); // Flash lasts 300ms
     }
   }, [isAlive]);
-
-  useEffect(() => {
-    if (processedSecondRef.current === timeCounter) return; // Skip if already processed
-    processedSecondRef.current = timeCounter; // Mark this second as processed
-    if (game.createdBy === clientPlayer.name) {
-      playersList.map((player) => {
-        if (player.isCPU && player.isAlive && !player.isUnderArrest) {
-          // console.log("cpu move before time", player.name, player.randomSecond);
-          if (timeCounter === player.randomSecond) {
-            cpuNextMove(
-              player,
-              dayCount,
-              timeOfTheDay,
-              playersList,
-              socket,
-              gameId
-            );
-          }
-        }
-      });
-    }
-  }, [timeCounter]);
 
   useEffect(() => {
     if (timeOfTheDay === "votetime" && timeCounter === 25000) {

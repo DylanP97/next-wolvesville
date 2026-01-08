@@ -1,6 +1,7 @@
 import React from 'react';
+import { memo } from 'react';
 
-const WerewolfBackground = () => {
+const WerewolfBackground = memo(() => {
     return (
         <div className="absolute top-0 w-full h-screen bg-gradient-to-b from-indigo-950 via-purple-900 to-indigo-950 overflow-hidden">
             {/* Stars */}
@@ -62,6 +63,6 @@ const WerewolfBackground = () => {
       `}</style>
         </div>
     );
-}
+});
 
 export default WerewolfBackground;
