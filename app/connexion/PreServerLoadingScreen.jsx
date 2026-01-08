@@ -70,7 +70,7 @@ const PreServerLoadingScreen = ({ countdown }) => {
 
                         <div className="mt-4 text-xs text-slate-400 z-30">
                             <p>
-                                Le serveur se réveille après une période d'inactivité...
+                                Le serveur se réveille après une période d&apos;inactivité...
                             </p>
                             <p>{t("intro.loading.main")}</p>
                             {/* <span className="text-center text-xs italic text-white-400">
