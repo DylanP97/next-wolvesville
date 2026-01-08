@@ -80,7 +80,7 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
         <div ref={containerRef} className="flex flex-grow flex-1 justify-center items-center relative">
           {getBackgroundComponent()}
           {winningTeam !== null ? (
-            <div className="w-full h-full overflow-hidden flex flex-col">
+            <div className="w-full h-full overflow-hidden relative">
               <Confetti
                 width={containerSize.width}
                 height={containerSize.height}

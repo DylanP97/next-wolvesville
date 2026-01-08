@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function MedievalVillageNighttimeBackground() {
     return (
-        <div className="fixed w-full h-full bg-gradient-to-b from-slate-900 via-indigo-950 to-blue-950 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-slate-900 via-indigo-950 to-blue-950 overflow-hidden pointer-events-none">
             {/* Moon */}
             <div className="absolute top-16 right-20 w-24 h-24 bg-slate-200 rounded-full shadow-2xl shadow-blue-300/40">
                 <div className="absolute inset-2 bg-slate-100 rounded-full opacity-70"></div>
