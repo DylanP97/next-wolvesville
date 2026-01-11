@@ -228,21 +228,17 @@ export const AnimationProvider = ({ children }) => {
                     textAlign: "center",
                     padding: "1rem 2rem",
                     borderRadius: "12px",
-                    background: "linear-gradient(135deg, rgba(95, 51, 161, 0.18) 0%, rgba(178, 6, 217, 0.95) 100%)",
-                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(234, 179, 8, 0.3)",
-                    border: "2px solid rgba(255, 255, 255, 0.3)",
+                    background: "rgba(91, 41, 137, 1)",
                     backdropFilter: "blur(10px)",
                     maxWidth: "90vw",
                   }}
                 >
                   <p
                     style={{
-                      fontSize: "1.2rem",
+                      fontSize: "12px",
                       fontWeight: "bold",
                       color: "white",
-                      textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
                       margin: 0,
-                      lineHeight: "1.4",
                     }}
                   >
                     {replacePlaceholders(animationText)}
@@ -256,25 +252,20 @@ export const AnimationProvider = ({ children }) => {
               <div
                 className="simple-message-container"
                 style={{
-                  textAlign: "center",
-                  padding: "1.5rem 2.5rem",
-                  borderRadius: "12px",
-                  background: "linear-gradient(135deg, rgb(242, 237, 221) 0%, rgba(45, 11, 237, 0.95) 100%)",
-                  boxShadow: "0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(234, 179, 8, 0.3)",
-                  border: "2px solid rgba(255, 255, 255, 0.3)",
-                  backdropFilter: "blur(10px)",
-                  maxWidth: "90vw",
+                    textAlign: "center",
+                    padding: "1rem 2rem",
+                    borderRadius: "12px",
+                    background: "rgba(91, 41, 137, 1)",
+                    backdropFilter: "blur(10px)",
+                    maxWidth: "90vw",
                 }}
               >
                 <p
                   style={{
-                    fontSize: "2rem",
-                    fontWeight: "bold",
-                    fontStyle: "italic",
-                    color: "white",
-                    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-                    margin: 0,
-                    lineHeight: "1.4",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      color: "white",
+                      margin: 0,
                   }}
                 >
                   {simpleMessage}

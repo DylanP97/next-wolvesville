@@ -59,7 +59,9 @@
       "prescreen": {
         "guest": "Play as Guest",
         "logIn": "Log in with your account",
-        "register": "Register a new account"
+        "register": "Register a new account",
+        "loading": "Loading...",
+        "serverLoading": "Server is starting... please wait a moment"
       },
       "intro": {
         "title": "Welcome to the game of",
@@ -343,7 +345,9 @@
       "prescreen": {
         "guest": "Joué comme invité",
         "logIn": "Se connecter avec mon compte",
-        "register": "Créer un compte"
+        "register": "Créer un compte",
+        "loading": "Chargement...",
+        "serverLoading": "Le serveur se réveille après une période d'inactivité... "
       },
       "intro": {
         "title": "Bienvenue dans le jeu du",

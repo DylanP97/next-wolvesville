@@ -17,7 +17,7 @@ const ConnexionForm = ({
   const { t } = useTranslation();
 
   return (
-    <form className="w-60 z-20" onSubmit={handleSubmit}>
+    <form className="w-80 z-20" onSubmit={handleSubmit}>
       {!isLogin && (
         <div className="my-2">
           <Input
@@ -57,7 +57,7 @@ const ConnexionForm = ({
 
       <div>
         <Button
-          className={getBtnClassNames("w-60") + " font-wolf"}
+          className={getBtnClassNames("w-80 h-12") + " font-wolf"}
           color="primary"
           variant="shadow"
           // className="my-2 hover:bg-primary hover:text-primary-foreground animate-pulse"

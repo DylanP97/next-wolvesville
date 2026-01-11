@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useGame } from "./GameProvider";
 
 const GameHeader = () => {
-  const { timeOfTheDay, dayCount, timeCounter, clientPlayer } = useGame();
+  const { timeOfTheDay, dayCount, timeCounter } = useGame();
   const { t } = useTranslation();
 
   const secondsLeft = timeCounter / 1000;

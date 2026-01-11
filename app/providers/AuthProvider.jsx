@@ -54,8 +54,10 @@ export const AuthProvider = ({ children }) => {
   async function checkAuth() {
     if (typeof window === 'undefined') return;
 
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + "/api/user/checkAuth",
+      API_URL + "/api/user/checkAuth",
       {
         method: "GET",
         credentials: "include",
@@ -71,7 +73,7 @@ export const AuthProvider = ({ children }) => {
       setIsInRoom(data.isInRoom);
       setGame(data.game);
       setIsDev(data.isDev);
-      const newSocket = io(process.env.NEXT_PUBLIC_API_URL, {
+      const newSocket = io(API_URL, {
         query: { token: data.token },
       });
       setSocket(newSocket);

@@ -24,7 +24,7 @@ const TipsRotator = () => {
     }, [tips.length]);
 
     return (
-        <div className="animate-pulse w-full italic text-center py-6 px-2 text-md">
+        <div className="animate-pulse w-full italic text-white text-center py-6 px-2 text-md md:text-lg">
             {tips[index]}{" ..."}
         </div>
     );

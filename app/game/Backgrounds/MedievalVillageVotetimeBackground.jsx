@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function MedievalVillageVotetimeBackground() {
     return (
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-orange-400 via-amber-300 to-orange-200 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 w-full bg-gradient-to-b from-orange-400 via-amber-300 to-orange-200 overflow-hidden pointer-events-none">
             {/* Setting Sun */}
             <div className="absolute top-32 right-16 w-28 h-28 bg-orange-500 rounded-full shadow-2xl shadow-orange-600/60 animate-pulse-slow">
                 <div className="absolute inset-2 bg-orange-400 rounded-full opacity-70"></div>

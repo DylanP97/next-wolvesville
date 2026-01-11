@@ -13,6 +13,7 @@ import { Button, Spinner } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
 import { btnClassNames, getBtnClassNames } from "./lib/styles";
 import WerewolfBackground from "./WerewolfBackground";
+import GeneralBtns from "./general-btns/GeneralBtns";
 
 const PreScreenMenu = () => {
   const { t } = useTranslation();

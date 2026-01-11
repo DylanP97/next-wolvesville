@@ -137,7 +137,7 @@ const Connexion = ({ logOption, onBack }) => {
       />
 
       <Button
-        className={getBtnClassNames("w-60 mt-6") + " font-wolf"}
+        className={getBtnClassNames("w-80 mt-6") + " font-wolf"}
         color="secondary"
         variant="shadow"
         onClick={handleSwitch}
@@ -149,7 +149,7 @@ const Connexion = ({ logOption, onBack }) => {
 
       {onBack && (
         <Button
-          className={getBtnClassNames("w-60") + " font-wolf"}
+          className={getBtnClassNames("w-80") + " font-wolf"}
           color="secondary"
           variant="shadow"
           onClick={onBack}

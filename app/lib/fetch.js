@@ -1,7 +1,10 @@
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
 export const fetchUsers = async () => {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + "/api/user/getAllUsers"
+      API_URL + "/api/user/getAllUsers"
     );
     if (response.ok) {
       return response.json();
@@ -14,7 +17,7 @@ export const fetchUsers = async () => {
 export const fetchRoles = async () => {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + "/api/roles"
+      API_URL + "/api/roles"
     );
     if (response.ok) {
       return response.json();
@@ -27,7 +30,7 @@ export const fetchRoles = async () => {
 export const fetchTeams = async () => {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + "/api/teams"
+      API_URL + "/api/teams"
     );
     if (response.ok) {
       return response.json();
@@ -42,7 +45,7 @@ export const fetchTeams = async () => {
 export const fetchTeamByName = async (name) => {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + `/api/teams/${name}`
+      API_URL + `/api/teams/${name}`
     );
     if (response.ok) {
       return response.json();
@@ -56,7 +59,7 @@ export const fetchTeamByName = async (name) => {
 
 export const fetchLogout = async (username, isGuest) => {
   try {
-    return await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/user/logout", {
+    return await fetch(API_URL + "/api/user/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json", // Add this header
@@ -72,7 +75,7 @@ export const fetchLogout = async (username, isGuest) => {
 export const fetchLogin = async (email, password) => {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + "/api/user/login",
+      API_URL + "/api/user/login",
       {
         method: "POST",
         headers: {
@@ -117,7 +120,7 @@ export const fetchLogin = async (email, password) => {
 export const fetchGuestLogin = async () => {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + "/api/user/guestLogin",
+      API_URL + "/api/user/guestLogin",
       {
         method: "POST",
         headers: {
@@ -137,7 +140,7 @@ export const fetchGuestLogin = async () => {
 export const fetchSignUp = async (username, email, password, defaultAvatar) => {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + "/api/user/signup",
+      API_URL + "/api/user/signup",
       {
         method: "POST",
         headers: {

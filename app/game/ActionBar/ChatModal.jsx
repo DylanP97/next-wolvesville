@@ -234,7 +234,7 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
   // Modal mode (mobile) - avec gestion du clavier
   const modalStyle = keyboardHeight > 0 && isInputFocused
     ? {
-      height: `calc(100vh - ${keyboardHeight}px)`,
+      height: `calc(100vh + ${keyboardHeight}px)`,
       bottom: 0,
       top: 'auto',
       transition: 'height 0.3s ease-out'
