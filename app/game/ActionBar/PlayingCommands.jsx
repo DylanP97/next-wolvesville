@@ -39,7 +39,7 @@ const PlayingCommands = () => {
   };
 
   const noSelectionAction = (actionType) => {
-    if (clientPlayer.role.name === "Mayor" && actionType === "assertDuty") {
+    if (clientPlayer.role.name === "Captain" && actionType === "assertDuty") {
       socket.emit("assertDuty", clientPlayer.name, gameId);
     }
     if (clientPlayer.role.name === "Arsonist" && actionType === "burn") {

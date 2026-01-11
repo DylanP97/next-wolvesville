@@ -21,7 +21,7 @@ const animations = [
   new Animation("graveRobber", 6000, "/animations/grave_robber.mp4", "video"),
   new Animation("seerForesee", 3000, "/animations/seer_foresee.mp4", "video"),
   new Animation("serialKilling", 4000, "/animations/serial_killing.mp4", "video"),
-  new Animation("theMayor", 6000, "/animations/the_mayor.mp4", "video"),
+  new Animation("theCaptain", 6000, "/animations/the_captain.mp4", "video"),
   new Animation("angryShooter", 6000, "/animations/angry_shooter.mp4", "video"),
   new Animation("arsonistPlay", 6000, "/animations/arsonist_play.mp4", "video"),
   new Animation("witchPoison", 6000, "/animations/witch_poison.mp4", "video"),

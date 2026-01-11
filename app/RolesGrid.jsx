@@ -4,9 +4,10 @@ import RoleCard from "./RoleCard";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { fetchRoles } from "./lib/fetch";
-import { ScrollShadow } from "@nextui-org/react";
+import { Button, ScrollShadow } from "@nextui-org/react";
+import { getBtnClassNames } from "./lib/styles";
 
-const RolesGrid = () => {
+const RolesGrid = ({ onBack }) => {
   const [availableRoles, setAvailableRoles] = useState([]);
   const { t } = useTranslation();
 
@@ -30,6 +31,16 @@ const RolesGrid = () => {
             <RoleCard key={role.name} role={role} />
           ))}
       </div>
+      {onBack && (
+        <Button
+          className={getBtnClassNames("w-80") + " font-wolf"}
+          color="secondary"
+          variant="shadow"
+          onClick={onBack}
+        >
+          {t("goback")}
+        </Button>
+      )}
     </section>
   );
 };

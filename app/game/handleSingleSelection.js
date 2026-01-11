@@ -5,7 +5,7 @@ const handleSingleSelection = (player, clientPlayer, gameId, socket, actionType,
     selectionHelpers) => {
     const voteActions = {
         vote: () => {
-            const nbr = clientPlayer.role.name === "Mayor" && clientPlayer.isRevealed ? 3 : 1;
+            const nbr = clientPlayer.role.name === "Captain" && clientPlayer.isRevealed ? 3 : 1;
             socket.emit("addVote", {
                 type: "addVote",
                 playerId: clientPlayer.id,

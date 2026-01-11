@@ -23,10 +23,10 @@ const Title = () => {
           /* Gradient shimmer uniquement visible dans le texte */
           background: linear-gradient(
             90deg,
-            white,
-            #5b09c7ff,
-            #0a0407ff,
-            white
+            rgba(199, 9, 9, 0.4),
+            rgba(228, 27, 27, 0.36),
+            rgba(255, 195, 30, 0.47),
+            rgba(94, 8, 8, 0.37)
           );
           background-size: 200% 100%;
           background-clip: text;

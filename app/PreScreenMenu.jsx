@@ -14,6 +14,8 @@ import io from "socket.io-client"; // Add this import
 import { btnClassNames, getBtnClassNames } from "./lib/styles";
 import WerewolfBackground from "./WerewolfBackground";
 import GeneralBtns from "./general-btns/GeneralBtns";
+import { useToRender } from "./providers/RenderProvider";
+import RolesGrid from "./RolesGrid";
 
 const PreScreenMenu = () => {
   const { t } = useTranslation();
@@ -22,7 +24,7 @@ const PreScreenMenu = () => {
   const [countdown, setCountdown] = useState(50); // Timer state
   const [isFullscreen, setIsFullscreen] = useState(false); // Add this state
   const { setAuthInfo, setSocket, setToken, username, setIsGuest } = useAuth();
-
+  const { setActiveComponent, activeComponent } = useToRender();
 
   const handleGuestLogin = async () => {
     const data = await fetchGuestLogin();
@@ -137,6 +139,14 @@ const PreScreenMenu = () => {
             variant="shadow"
           >
             {t("prescreen.register")}
+          </Button>
+          <Button
+            className={getBtnClassNames("w-80 ") + " text-md font-medium h-12 font-wolf"}
+            color="primary"
+            onClick={() => setActiveComponent(<RolesGrid onBack={() => {setActiveComponent(<PreScreenMenu />)}} />)}
+            variant="ghost"
+          >
+            {t("menu.4")}
           </Button>
         </nav>
 
