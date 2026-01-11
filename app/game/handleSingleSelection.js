@@ -48,7 +48,7 @@ const handleSingleSelection = (player, clientPlayer, gameId, socket, actionType,
             seerId: clientPlayer.id,
             selectedPlayerId: player.id,
             selectedPlayerName: player.name,
-            selectedPlayerRole: i18n.language === "fr" ? player.role.nameFR : player.role.name,
+            selectedPlayerRole: i18n.language === "fr" ? player.role.nameFR : player.role.nameFR,
         }, gameId),
 
         shoot: () => socket.emit("shootBullet", {

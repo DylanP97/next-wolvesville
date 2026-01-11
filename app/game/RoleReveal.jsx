@@ -43,7 +43,7 @@ const RoleReveal = ({ role, onComplete }) => {
                         {[0, 1, 2, 3, 4].map((index) => (
                             <div
                                 key={index}
-                                className="absolute inset-0 bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl shadow-2xl border-4 border-yellow-400"
+                                className="absolute inset-0 bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl shadow-2xl border-4 border-yellow-400 overflow-hidden"
                                 style={{
                                     animation: `cardShuffle 1s ease-in-out infinite`,
                                     animationDelay: `${index * 0.1}s`,
@@ -63,7 +63,17 @@ const RoleReveal = ({ role, onComplete }) => {
                 {stage === 'reveal' && (
                     <div className="animate-scaleIn flex flex-col items-center gap-6">
                         {/* Role card */}
-                        <div className="relative bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl shadow-2xl border-4 border-yellow-400 p-8 w-80">
+                        <div className="relative bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl shadow-2xl border-4 border-yellow-400 p-8 w-80 overflow-hidden">
+                            {/* Image de fond avec transparence pour la carte révélée */}
+                            {role?.image2 && (
+                                <div 
+                                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 pointer-events-none"
+                                    style={{
+                                        backgroundImage: `url(${role.image2})`,
+                                    }}
+                                />
+                            )}
+                            
                             <div className="absolute inset-4 border-2 border-yellow-300/50 rounded-xl" />
 
                             <div className="relative z-10 flex flex-col items-center gap-4">
