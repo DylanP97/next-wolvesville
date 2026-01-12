@@ -41,7 +41,7 @@ const RoleCard = ({ role }) => {
           />
           <div className="flex flex-col">
             <p className="text-md font-semibold text-white">
-              {i18n.language === "fr" ? role.nameFR : role.name}
+              {i18n.language === "fr" ? role.nameFR : role.name}{" "}{role.roleEmoji}
             </p>
             <p className="text-xs text-slate-400">
               {t("roles.team")}

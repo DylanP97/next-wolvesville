@@ -50,7 +50,8 @@ const GameGrid = () => {
       triggerAnimation,
       setErrorMessage,
       selectionState,
-      selectionHelpers
+      selectionHelpers,
+      t
     );
   };
 
@@ -69,7 +70,7 @@ const GameGrid = () => {
 
 
   return (
-    <div className="grid grid-cols-4 md:grid-cols-4 gap-1 place-items-start z-10 px-2 md:px-6 py-2 flex-1">
+    <div className="grid grid-cols-4 md:grid-cols-4 gap-1 place-items-start z-10 px-2 md:px-6 flex-1">
       {playersList.map((player) => {
         const isAlsoWolf =
           player &&

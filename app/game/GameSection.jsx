@@ -9,6 +9,7 @@ import PrisonOverlay from "./Overlays/PrisonOverlay";
 import GameHeader from "./GameHeader";
 import GameGrid from "./GameGrid/GameGrid";
 import ChatModal from "./ActionBar/ChatModal";
+import PersistentMobileChat from "./ActionBar/PersistentMobileChat";
 import { useGame } from "./GameProvider";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
@@ -80,13 +81,15 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
         <div ref={containerRef} className="flex flex-grow flex-1 justify-center items-center relative">
           {getBackgroundComponent()}
           {winningTeam !== null ? (
-            <div className="w-full h-full overflow-hidden relative">
+            <div className="absolute inset-0 z-20 overflow-hidden pointer-events-none">
               <Confetti
                 width={containerSize.width}
                 height={containerSize.height}
                 style={{ zIndex: "999" }}
               />
-              <WinnerOverlay />
+              <div className="absolute inset-0 p-3 md:p-6 overflow-y-auto pointer-events-auto">
+                <WinnerOverlay />
+              </div>
             </div>
           ) : (
             <>
@@ -95,10 +98,10 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
             </>
           )}
 
-          {/* Chat modal for mobile */}
-          <div className="md:hidden">
+          {/* Remove this block completely */}
+          {/* <div className="md:hidden">
             <ChatModal isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
-          </div>
+          </div> */}
         </div>
 
         {/* Chat sidebar for desktop */}
@@ -108,17 +111,22 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
       </div>
 
       <div className="bg-slate-800 border-b border-slate-600 shadow-2xl bottom-0 left-0 right-0 relative overflow-hidden z-30">
+        {/* Persistent mobile chat - always visible */}
+        <div className="md:hidden bg-slate-900 border-t border-slate-700">
+          <PersistentMobileChat />
+        </div>
 
         {/* Action Bar */}
         <ActionBar
           summaryIsOpen={summaryIsOpen}
           setSummaryIsOpen={setSummaryIsOpen}
-          isChatOpen={isChatOpen}
-          setIsChatOpen={setIsChatOpen}
+        // isChatOpen={isChatOpen}
+        // setIsChatOpen={setIsChatOpen}
         />
 
+
         {/* Role Description */}
-        <div className="p-4 mb-4">
+        <div className="p-2 mb-4">
           <p className="text-xs md:text-sm italic text-center">
             {t("game.youAre")}{" "}
             {i18n.language === "fr" ? clientPlayer.role.nameFR : clientPlayer.role.name}{" "}

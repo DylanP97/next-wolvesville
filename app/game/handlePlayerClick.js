@@ -11,32 +11,34 @@ const handlePlayerClick = (
   triggerAnimation,
   setErrorMessage,
   selectionState,     // <-- ADD
-  selectionHelpers    // <-- ADD
+  selectionHelpers,
+  t
 ) => {
   const { mode, actionType, selectedPlayers } = selectionState;
 
   // Guard: Player must be alive to take actions
   if (!clientPlayer.isAlive) {
-    setErrorMessage("errorMessage.0011");
-    triggerAnimation("deadStuck");
+    setErrorMessage(t("errorMessage.0011"));
+    triggerAnimation(t("deadStuck"));
     return;
   }
 
   if (clientPlayer?.willHaveNightmares && timeOfTheDay === "nighttime") {
-    setErrorMessage("errorMessage.0014");
+    setErrorMessage(t("errorMessage.0014"));
     return;
   }
 
   // Guard: Must be in selection mode
   if (mode === 'idle' || mode === 'completed') {
-    setErrorMessage("errorMessage.0009");
+    setErrorMessage(t("errorMessage.0009"));
     return;
   }
 
   // Validation based on action type
   const validation = validateSelection(player, clientPlayer, actionType, timeOfTheDay);
   if (!validation.valid) {
-    setErrorMessage(validation.errorCode);
+    console.log("Selection invalid:", validation);
+    setErrorMessage(t(`${validation.errorCode}`));
     if (validation.animation) triggerAnimation(validation.animation);
     return;
   }

@@ -186,7 +186,7 @@ const PlayerGridCard = ({
       {
         player.isUnderArrest && (
           <Image
-            className="h-full w-full object-contain overflow-hidden z-30"
+            className="object-contain max-h-full overflow-hidden z-30"
             width={64}
             height={64}
             src={prison}
@@ -213,6 +213,7 @@ const PlayerGridCard = ({
             playerId={player.id}
             clientPlayerId={clientPlayer.id}
             roleIcon={player.role && player.role.image}
+            roleEmoji={player.role && player.role.roleEmoji}
             isRevealed={player.isRevealed}
             isWolfTeammate={(isAlsoWolf && isWolf) || (player.isRevealedByWolfSeer && isWolf)}
             isDevMode={isDevMode}

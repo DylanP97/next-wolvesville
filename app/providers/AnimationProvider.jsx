@@ -223,7 +223,7 @@ export const AnimationProvider = ({ children }) => {
               {/* Animation Text */}
               {animationText && (
                 <div
-                  className="animation-text-container"
+                  className="animation-text-container z-30"
                   style={{
                     textAlign: "center",
                     padding: "1rem 2rem",

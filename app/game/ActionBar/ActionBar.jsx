@@ -12,12 +12,12 @@ const ActionBar = ({ summaryIsOpen, setSummaryIsOpen, isChatOpen, setIsChatOpen 
   const { clientPlayer } = useGame();
 
   return (
-    <div className="w-full py-4 container mx-auto flex flex-row gap-4 justify-center overflow-x-auto scrollbar-hide py-2 px-8 z-30">
+    <div className="w-full py-2 container mx-auto flex flex-row gap-4 justify-center overflow-x-auto scrollbar-hide py-2 px-8 z-30">
       {clientPlayer.isAlive && <PlayingCommands />}
       {/* Only show chat button on mobile */}
-      <div className="md:hidden">
+      {/* <div className="md:hidden">
         <ChatButton isChatOpen={isChatOpen} setIsChatOpen={setIsChatOpen} />
-      </div>
+      </div> */}
       <GameMenuExitBtn />
       <PauseToggle />
     </div>

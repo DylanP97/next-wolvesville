@@ -2,7 +2,6 @@
 import "./globals.css";
 import { Providers } from "./providers/providers";
 import { RenderProvider } from "./providers/RenderProvider";
-import DevModeBorder from "./components/DevModeBorder";
 import GeneralBtns from "./general-btns/GeneralBtns";
 import { Creepster } from "next/font/google";
 import ClientOnly from "./components/ClientOnly";
@@ -53,14 +52,12 @@ export default function RootLayout({ children }) {
       <body>
         <ClientOnly>
           <Providers>
-            <DevModeBorder>
               <RenderProvider>
                 <div className="flex flex-col justify-between w-full h-[100vh]">
                   <GeneralBtns />
                   {children}
                 </div>
               </RenderProvider>
-            </DevModeBorder>
           </Providers>
         </ClientOnly>
       </body>

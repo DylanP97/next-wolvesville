@@ -19,7 +19,7 @@ const Chatbox = () => {
   const sendMessage = (messageToSend) => {
     // Allow sending messages if alive OR if dead but using medium chat
     const canSendMessage = clientPlayer.isAlive || (usedChat.type === "medium" && !clientPlayer.isAlive);
-    
+
     if (canSendMessage) {
       if (messageToSend && messageToSend.trim()) {
         socket.emit(
@@ -38,7 +38,7 @@ const Chatbox = () => {
         triggerSimpleMessage("Vous ne pouvez pas envoyer un message vide...");
       }
     } else {
-      triggerSimpleMessage("Vous ne pouvez pas parler... vous êtes mort... rappelez-vous?");
+      triggerSimpleMessage("Vous ne pouvez pas parler... vous êtes mort...");
     }
   };
 
@@ -50,26 +50,23 @@ const Chatbox = () => {
     }
   };
 
-  // SUPPRIMÉ le useEffect avec currentKey qui causait le double envoi
-
-  useEffect(() => {
-    setMessage("");
-  }, [timeOfTheDay]);
 
   // Show "go back to sleep" only for general chat at night
   // Medium chat, wolves chat, and jail chat should work at night
   if (usedChat.type === "general" && timeOfTheDay === "nighttime") {
     return (
-      <div className="flex justify-center text-sm text-slate-300 italic"><p>{t("game.goBackToSleep")}</p></div>
+      <div className="flex justify-center items-center text-sm text-slate-300 italic h-8 sm:h-10">
+        <p>{t("game.goBackToSleep")}</p>
+      </div>
     );
   }
-  
+
   return (
     <div className="flex flex-row gap-2 w-full items-stretch">
       <textarea
         placeholder={t("game.writeMessage")}
         value={message}
-        className="outline-none border-none p-3 flex-grow text-sm text-black rounded-lg resize-none"
+        className="h-8 sm:h-10 outline-none border-none p-2 flex-grow text-sm text-black rounded-lg resize-none"
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={handleKeyDown}
         rows={1}

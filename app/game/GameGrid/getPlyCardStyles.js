@@ -36,7 +36,7 @@ export const getPlyCardBackground = (
     return "bg-gradient-to-br from-blue-500 to-slate-600 border-red-500 border-2 text-white shadow-md";
 
   if (selectedPlayer) {
-    if (player.id === selectedPlayer) return "bg-gradient-to-br from-red-600 to-red-700 shadow-lg shadow-red-500/50";
+    if (player.id === selectedPlayer) return "bg-gradient-to-br from-green-600 to-green-700 shadow-lg shadow-green-500/50";
   }
 
   if (selectedPlayer1) {
@@ -177,5 +177,5 @@ export const getPlyCardBackground = (
 };
 
 export const getPlyCardLayout = () => {
-  return "w-full h-24 md:h-28 flex flex-col gap-1 items-center relative rounded-lg border border-gray-700 transition-all duration-200 hover:shadow-lg bg-white bg-opacity-10";
+  return "w-full h-20 xs:max-h-24 sm:max-h-24 md:min-h-28 flex flex-col gap-1 items-center relative rounded-lg border border-gray-700 transition-all duration-200 hover:shadow-lg bg-white bg-opacity-10";
 };

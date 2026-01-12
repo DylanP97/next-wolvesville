@@ -120,7 +120,7 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
   const renderMessages = () => (
     <>
       {displayMessages.length === 0 ? (
-        <div className="text-sm italic text-slate-500 text-center mt-8">
+        <div className="text-sm italic text-slate-500 text-center mt-8 h-12">
           {usedChat.type === "general" && t("game.emptyGeneralChat")}
           {usedChat.type === "wolves" && t("game.emptyWolvesChat")}
           {usedChat.type === "jail" && t("game.emptyJailChat")}
@@ -223,7 +223,7 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
 
         {/* Chat input */}
         {(clientPlayer.isAlive || (usedChat.type === "medium" && !clientPlayer.isAlive)) && (
-          <div className="h-20 border-t border-slate-700 bg-slate-800 p-3">
+          <div className="h-16 border-t border-slate-700 bg-slate-800 p-3">
             <Chatbox />
           </div>
         )}
@@ -231,70 +231,76 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
     );
   }
 
+  ////////////////////-------------------////////////////////
+  ////////////////////-------------------////////////////////
+  ////////////////////-------------------////////////////////
+  ////////////////////-------------------////////////////////
+  ////////////////////-------------------////////////////////
+
   // Modal mode (mobile) - avec gestion du clavier
-  const modalStyle = keyboardHeight > 0 && isInputFocused
-    ? {
-      height: `calc(100vh + ${keyboardHeight}px)`,
-      bottom: 0,
-      top: 'auto',
-      transition: 'height 0.3s ease-out'
-    }
-    : {};
+  // const modalStyle = keyboardHeight > 0 && isInputFocused
+  //   ? {
+  //     height: `calc(100vh + ${keyboardHeight}px)`,
+  //     bottom: 0,
+  //     top: 'auto',
+  //     transition: 'height 0.3s ease-out'
+  //   }
+  //   : {};
 
-  return (
-    <>
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
+  // return (
+  //   <>
+  //     {isOpen && (
+  //       <div
+  //         className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
+  //         onClick={() => setIsOpen(false)}
+  //       />
+  //     )}
 
-      {isOpen && (
-        <div
-          className="fixed inset-2 md:inset-auto md:bottom-4 md:right-4 md:w-[500px] md:h-[600px] z-50 bg-slate-900 border-2 border-slate-700 rounded-lg shadow-2xl flex flex-col"
-          style={modalStyle}
-        >
-          <button
-            onClick={() => setIsOpen(false)}
-            className="absolute top-3 right-3 text-slate-400 hover:text-white text-xl z-10"
-          >
-            ✕
-          </button>
+  //     {isOpen && (
+  //       <div
+  //         className="fixed inset-2 md:inset-auto md:bottom-4 md:right-4 md:w-[500px] md:h-[600px] z-50 bg-slate-900 border-2 border-slate-700 rounded-lg shadow-2xl flex flex-col"
+  //         style={modalStyle}
+  //       >
+  //         <button
+  //           onClick={() => setIsOpen(false)}
+  //           className="absolute top-3 right-3 text-slate-400 hover:text-white text-xl z-10"
+  //         >
+  //           ✕
+  //         </button>
 
-          <div className="min-h-14 max-h-14 flex justify-center border-b border-slate-700 bg-slate-800 rounded-t-lg flex-shrink-0">
-            {availableChats.map((chat, index) => (
-              <div
-                className={`${chat.type === usedChat.type ? "bg-blue-600 border-b-2 border-blue-400" : "bg-transparent hover:bg-slate-700"} cursor-pointer px-4 flex items-center transition-all`}
-                key={"chattab-" + index}
-                onClick={() => selectChat(chat.type)}
-              >
-                <h2 className={`${chat.type === usedChat.type ? "text-white font-bold" : "text-slate-300"} text-xs`}>
-                  {chat.emoji} {chat.label}
-                </h2>
-              </div>
-            ))}
-          </div>
+  //         <div className="min-h-14 max-h-14 flex justify-center border-b border-slate-700 bg-slate-800 rounded-t-lg flex-shrink-0">
+  //           {availableChats.map((chat, index) => (
+  //             <div
+  //               className={`${chat.type === usedChat.type ? "bg-blue-600 border-b-2 border-blue-400" : "bg-transparent hover:bg-slate-700"} cursor-pointer px-4 flex items-center transition-all`}
+  //               key={"chattab-" + index}
+  //               onClick={() => selectChat(chat.type)}
+  //             >
+  //               <h2 className={`${chat.type === usedChat.type ? "text-white font-bold" : "text-slate-300"} text-xs`}>
+  //                 {chat.emoji} {chat.label}
+  //               </h2>
+  //             </div>
+  //           ))}
+  //         </div>
 
-          <div
-            ref={containerRef}
-            onScroll={handleScroll}
-            className="flex-grow overflow-y-auto p-2 bg-slate-900/50 space-y-2 min-h-0"
-          >
-            {renderMessages()}
-          </div>
+  //         <div
+  //           ref={containerRef}
+  //           onScroll={handleScroll}
+  //           className="flex-grow overflow-y-auto p-2 bg-slate-900/50 space-y-2 min-h-0"
+  //         >
+  //           {renderMessages()}
+  //         </div>
 
-          {(clientPlayer.isAlive || (usedChat.type === "medium" && !clientPlayer.isAlive)) && (
-            <div className="h-20 border-t border-slate-700 bg-slate-800 rounded-b-lg p-3 flex-shrink-0">
-              <div onFocus={handleFocus} onBlur={handleBlur}>
-                <Chatbox />
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-    </>
-  );
+  //         {(clientPlayer.isAlive || (usedChat.type === "medium" && !clientPlayer.isAlive)) && (
+  //           <div className="h-16 border-t border-slate-700 bg-slate-800 rounded-b-lg p-3 flex-shrink-0">
+  //             <div onFocus={handleFocus} onBlur={handleBlur}>
+  //               <Chatbox />
+  //             </div>
+  //           </div>
+  //         )}
+  //       </div>
+  //     )}
+  //   </>
+  // );
 };
 
 export default ChatModal;

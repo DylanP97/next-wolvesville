@@ -548,7 +548,7 @@
           "votetimeAftermath": "✉️ Résultat du vote du village n°",
           "commencementnight": "🌑 Une rumeur inquiétante se répand dans le village : des loups-garoux rôderaient. La nuit initiale commence...",
           "thankYouForPlaying": "🙏 Merci d'être là et de jouer ! La partie démarre maintenant... ",
-          "nighttime": "🌒 Attention, des esprits malfaisants rôdent : c'est la nuit !",
+          "nighttime": "🌒 Attention, des esprits malfaisants rôdent : c'est la nuit...",
           "nighttimeAftermath": "🌒 C'est la fin de la nuit n°"
         }
       },

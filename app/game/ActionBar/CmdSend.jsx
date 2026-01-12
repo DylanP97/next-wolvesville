@@ -13,15 +13,15 @@ const CmdSend = ({ sendMessage, message }) => {
     <Tooltip content={t("game.sendMessage")} color="secondary" variant="flat">
       <div
         onClick={() => sendMessage(message)}
-        className={`bg-blue-900 hover:bg-blue-700 ${divActionIcon}`}
+        className={`h-8 sm:h-10 w-8 sm:w-10 p-1 bg-blue-900 hover:bg-blue-700 ${divActionIcon}`}
       >
         <Image
           src={send}
           alt="send"
-          width={50}
-          height={50}
+          width={32}
+          height={32}
           style={{ height: "auto", width: "auto" }}
-          className={`${imgActionIcon}`}
+          className={`object-contain`}
         />
       </div>
     </Tooltip>
