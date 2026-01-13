@@ -7,6 +7,7 @@ import ConnectedUsers from "../ConnectedUsers";
 import JoinRoom from "../join-room/JoinRoom";
 import RolesGrid from "../RolesGrid";
 import Profile from "../profile/Profile";
+import Matchmaking from "../Matchmaking";
 import { getBtnClassNames } from "../lib/styles";
 import { useToRender } from "../providers/RenderProvider";
 import { Button } from "@nextui-org/react";
@@ -22,10 +23,16 @@ const NavigationMenu = () => {
 
   const components = [
     {
+      label: t("menu.matchmaking") || "Matchmaking",
+      componentToReturn: <Matchmaking />,
+      allowedForGuest: true,
+      hideWhenInRoom: true,
+    },
+    {
       label: t("menu.2"),
       componentToReturn: <CreateRoom />,
       allowedForGuest: true,
-      hideWhenInRoom: true,   // 👈 added flag
+      hideWhenInRoom: true,
     },
     {
       label: t("menu.1"),
@@ -55,15 +62,15 @@ const NavigationMenu = () => {
 
   return (
       <nav className="flex flex-col flex-1 py-4 items-center w-full z-40">
-        {!isInRoom && (   // 👈 hide Quick Game when in room
+        {!isInRoom && (   // 👈 hide Solo Quick Game when in room
           <Button
             className={getBtnClassNames("w-80") + " text-md font-medium h-12 font-wolf"}
-            color="primary"
+            color="secondary"
             variant="shadow"
             onClick={launchQuickGame}
-            key={"quickGame-navComponent"}
+            key={"soloQuickGame-navComponent"}
           >
-            {t("menu.0")}
+            {t("menu.soloQuickGame") || "🎮 Solo Quick Game"}
           </Button>
         )}
 

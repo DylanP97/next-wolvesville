@@ -21,12 +21,17 @@ export default function Page() {
 
   useEffect(() => {
     if (!mounted) return;
-    
+
+    console.log(`🎯 Routing decision: isConnected=${isConnected}, isInRoom=${isInRoom}, isPlaying=${isPlaying}`);
+
     if (!isConnected) {
+      console.log(`→ Showing PreScreenMenu (not connected)`);
       setActiveComponent(<PreScreenMenu />);
     } else if (isInRoom && isPlaying) {
+      console.log(`→ Showing Game (isInRoom=${isInRoom} AND isPlaying=${isPlaying})`);
       setActiveComponent(<Game />);
     } else {
+      console.log(`→ Showing HomePage (isInRoom=${isInRoom} OR isPlaying=${isPlaying} is false)`);
       setActiveComponent(
         <HomePage username={username} isPlaying={isPlaying} isInRoom={isInRoom} avatar={avatar} />
       );

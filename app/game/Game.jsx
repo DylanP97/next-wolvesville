@@ -6,6 +6,7 @@ import RoleReveal from "./RoleReveal";
 import { useAuth } from "../providers/AuthProvider";
 import { GameProvider } from "./GameProvider";
 import { InGameKeysProvider } from "./InGameKeysProvider";
+import GameErrorBoundary from "./GameErrorBoundary";
 import { useState } from "react";
 
 export default function Game() {
@@ -23,17 +24,19 @@ export default function Game() {
             // Show role reveal screen
             <RoleReveal role={clientPlayer.role} onComplete={() => {}} />
           ) : (
-            // Show normal game
-            <GameProvider>
-              <InGameKeysProvider>
-                <div className="flex flex-col h-full">
-                  <GameSection
-                    summaryIsOpen={summaryIsOpen}
-                    setSummaryIsOpen={setSummaryIsOpen}
-                  />
-                </div>
-              </InGameKeysProvider>
-            </GameProvider>
+            // Show normal game - wrapped in error boundary
+            <GameErrorBoundary>
+              <GameProvider>
+                <InGameKeysProvider>
+                  <div className="flex flex-col h-full">
+                    <GameSection
+                      summaryIsOpen={summaryIsOpen}
+                      setSummaryIsOpen={setSummaryIsOpen}
+                    />
+                  </div>
+                </InGameKeysProvider>
+              </GameProvider>
+            </GameErrorBoundary>
           )}
         </>
       ) : (

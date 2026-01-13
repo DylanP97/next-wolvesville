@@ -39,6 +39,38 @@ export const GameProvider = ({ children }) => {
   const aliveList = game.playersList.filter((p) => p.isAlive);
   const clientPlayer = game.playersList.find((p) => p.name == username);
 
+  // Guard clause: Ensure player exists in game
+  if (!clientPlayer) {
+    console.error("Player not found in game:", username);
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        gap: '1rem'
+      }}>
+        <h2>You are not in this game</h2>
+        <p>Player "{username}" not found in the game.</p>
+        <button
+          onClick={() => window.location.href = '/'}
+          style={{
+            padding: '0.5rem 1rem',
+            fontSize: '1rem',
+            cursor: 'pointer',
+            borderRadius: '4px',
+            border: 'none',
+            backgroundColor: '#e50403',
+            color: 'white'
+          }}
+        >
+          Return to Homepage
+        </button>
+      </div>
+    );
+  }
+
   const dayCount = game.dayCount;
   const timeCounter = game.timeCounter;
   const winningTeam = game.winningTeam;

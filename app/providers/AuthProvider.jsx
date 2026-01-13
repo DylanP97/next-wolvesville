@@ -112,15 +112,22 @@ export const AuthProvider = ({ children }) => {
 
     const handleUpdateUsers = (updatedUsers) => {
       const user = updatedUsers.find(u => u.username === authState.username);
-      if (user) setIsInRoom(user.isInRoom);
+      if (user) {
+        console.log(`📥 updateUsers: Setting isInRoom=${user.isInRoom} for ${authState.username}`);
+        setIsInRoom(user.isInRoom);
+      } else {
+        console.log(`⚠️ updateUsers: User ${authState.username} not found in updated users`);
+      }
       setConnectedUsers(updatedUsers.filter(usr => !usr.isCPU));
     };
 
     const handleUpdateRooms = (updatedRooms) => {
+      console.log(`📥 updateRooms: Received ${updatedRooms.length} rooms`);
       setRooms(updatedRooms);
     };
 
     const handleLaunchRoom = (game) => {
+      console.log(`📥 launchRoom: Game ${game.id} starting, setting isPlaying=true`);
       game.playersList.forEach((player) => {
         if (player.isCPU) {
           socket.emit("sendNewConnectedUser", player);
@@ -159,6 +166,13 @@ export const AuthProvider = ({ children }) => {
     socket.on("triggerAnimationForAll", handleTriggerAnimation);
 
     return () => {
+      // Remove all listeners before disconnecting
+      socket.off("updateUsers", handleUpdateUsers);
+      socket.off("updateRooms", handleUpdateRooms);
+      socket.off("launchRoom", handleLaunchRoom);
+      socket.off("updateGame", handleUpdateGame);
+      socket.off("triggerSoundForAll", handleTriggerSound);
+      socket.off("triggerAnimationForAll", handleTriggerAnimation);
       socket.disconnect();
     };
   }, [socket]); // Only re-run if socket instance changes

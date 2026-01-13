@@ -92,12 +92,26 @@
       "logout": "Logout",
       "menu": {
         "title": "Main Menu",
+        "matchmaking": "Matchmaking",
+        "soloQuickGame": "Solo Quick Game",
         "0": "Quick Game (solo no matchmaking)",
         "1": "Join Room / Lobby",
         "2": "Create Room",
         "3": "Connected Players",
         "4": "View Roles",
         "5": "Edit Profile"
+      },
+      "matchmaking": {
+        "title": "Matchmaking",
+        "searching": "Searching for Match",
+        "description": "Find other players and start a game together!",
+        "join": "Find Match",
+        "info": "Minimum 2 players • Maximum 16 players",
+        "playersWaiting": "Players in Queue",
+        "startingIn": "Game starting in...",
+        "playersList": "Players in Queue:",
+        "cancel": "Cancel Search",
+        "waiting": "Waiting for more players to join..."
       },
       "connected": {
         "title": "Connected Players List",
@@ -378,12 +392,26 @@
       "logout": "Déconnexion",
       "menu": {
         "title": "Menu principal",
+        "matchmaking": "Matchmaking",
+        "soloQuickGame": "Partie Rapide Solo",
         "0": "Partie Rapide (solo & rôle aléatoire)",
         "1": "Rejoindre une salle / Lobby",
         "2": "Création de salle",
         "3": "Joueurs connectés",
         "4": "Liste des roles",
         "5": "Modifier mon profil"
+      },
+      "matchmaking": {
+        "title": "Matchmaking",
+        "searching": "Recherche de partie",
+        "description": "Trouvez d'autres joueurs et lancez une partie ensemble !",
+        "join": "Trouver une partie",
+        "info": "Minimum 2 joueurs • Maximum 16 joueurs",
+        "playersWaiting": "Joueurs en attente",
+        "startingIn": "La partie commence dans...",
+        "playersList": "Joueurs en file d'attente :",
+        "cancel": "Annuler la recherche",
+        "waiting": "En attente d'autres joueurs..."
       },
       "connected": {
         "title": "Liste des joueurs connectés",

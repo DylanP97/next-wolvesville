@@ -2,6 +2,7 @@
 import "./globals.css";
 import { Providers } from "./providers/providers";
 import { RenderProvider } from "./providers/RenderProvider";
+import ProviderErrorBoundary from "./providers/ProviderErrorBoundary";
 import GeneralBtns from "./general-btns/GeneralBtns";
 import { Creepster } from "next/font/google";
 import ClientOnly from "./components/ClientOnly";
@@ -51,14 +52,16 @@ export default function RootLayout({ children }) {
     <html lang="fr" className={creepster.variable}>
       <body>
         <ClientOnly>
-          <Providers>
-              <RenderProvider>
-                <div className="flex flex-col justify-between w-full h-[100vh]">
-                  <GeneralBtns />
-                  {children}
-                </div>
-              </RenderProvider>
-          </Providers>
+          <ProviderErrorBoundary>
+            <Providers>
+                <RenderProvider>
+                  <div className="flex flex-col justify-between w-full h-[100vh]">
+                    <GeneralBtns />
+                    {children}
+                  </div>
+                </RenderProvider>
+            </Providers>
+          </ProviderErrorBoundary>
         </ClientOnly>
       </body>
     </html>
