@@ -23,6 +23,7 @@ export const GameProvider = ({ children }) => {
     nighttimeAftermath: "bg-blue-900",
   };
 
+  // ALL HOOKS MUST BE DECLARED BEFORE ANY EARLY RETURNS
   const [selectionState, setSelectionState] = useState({
     mode: 'idle', // 'idle' | 'single' | 'double' | 'completed'
     actionType: null,
@@ -32,82 +33,67 @@ export const GameProvider = ({ children }) => {
   });
 
   const [showDeathFlash, setShowDeathFlash] = useState(false);
-
-  const gameId = game.id;
-  const isPaused = game.isPaused;
-  const playersList = game.playersList;
-  const aliveList = game.playersList.filter((p) => p.isAlive);
-  const clientPlayer = game.playersList.find((p) => p.name == username);
-
-  // Guard clause: Ensure player exists in game
-  if (!clientPlayer) {
-    console.error("Player not found in game:", username);
-    return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100vh',
-        gap: '1rem'
-      }}>
-        <h2>You are not in this game</h2>
-        <p>Player "{username}" not found in the game.</p>
-        <button
-          onClick={() => window.location.href = '/'}
-          style={{
-            padding: '0.5rem 1rem',
-            fontSize: '1rem',
-            cursor: 'pointer',
-            borderRadius: '4px',
-            border: 'none',
-            backgroundColor: '#e50403',
-            color: 'white'
-          }}
-        >
-          Return to Homepage
-        </button>
-      </div>
-    );
-  }
-
-  const dayCount = game.dayCount;
-  const timeCounter = game.timeCounter;
-  const winningTeam = game.winningTeam;
-  const jailChat = game.jailNightMessages || [];
-  const wolvesChat = game.wolvesMessagesHistory || [];
-  const mediumChat = game.mediumMessagesHistory || [];
-  const generalChat = game.messagesHistory;
-
-  class Chat {
-    constructor(type, label, history, emoji) {
-      (this.type = type),
-        (this.label = label),
-        (this.history = history),
-        (this.emoji = emoji);
-    }
-  }
-
-  const general = new Chat("general", t("game.generalChat"), generalChat, "🏘️");
-  const wolves = new Chat("wolves", t("game.wolvesChat"), wolvesChat, "🐺");
-  const jail = new Chat("jail", t("game.jailChat"), jailChat, "👮‍♂️");
-  const medium = new Chat("medium", t("game.mediumChat"), mediumChat, "🔮");
-
-  const isWolf = clientPlayer.role.team === "Werewolves";
-  const isJailer = clientPlayer.role.name === "Jailer";
-  const isMedium = clientPlayer.role.name === "Medium";
-  const isAlive = clientPlayer.isAlive;
-  const isUnderArrest = clientPlayer.isUnderArrest;
-  const hasHandcuffed = clientPlayer.hasHandcuffed;
-
-  const timeOfTheDay = game.timeOfTheDay;
-
-  const [weather, setWeather] = useState(weatherColors[timeOfTheDay]);
-  const [usedChat, setUsedChat] = useState(general);
-  const [availableChats, setAvailableChats] = useState([general]);
+  const [weather, setWeather] = useState(weatherColors[game?.timeOfTheDay] || weatherColors.daytime);
+  const [usedChat, setUsedChat] = useState(null);
+  const [availableChats, setAvailableChats] = useState([]);
 
   const processedSecondRef = useRef(null);
-  const hasPlayedIntroRef = useRef(false)
+  const hasPlayedIntroRef = useRef(false);
+
+  // Derive values from game state
+  const gameId = game?.id;
+  const isPaused = game?.isPaused;
+  const playersList = game?.playersList || [];
+  const aliveList = playersList.filter((p) => p.isAlive);
+  const clientPlayer = playersList.find((p) => p.name == username);
+
+  const dayCount = game?.dayCount;
+  const timeCounter = game?.timeCounter;
+  const winningTeam = game?.winningTeam;
+  const timeOfTheDay = game?.timeOfTheDay;
+
+  // Use stable references for chat histories
+  const jailChat = game?.jailNightMessages;
+  const wolvesChat = game?.wolvesMessagesHistory;
+  const mediumChat = game?.mediumMessagesHistory;
+  const generalChat = game?.messagesHistory;
+
+  // Create Chat objects with stable references
+  const general = useMemo(() => ({
+    type: "general",
+    label: t("game.generalChat"),
+    history: generalChat || [],
+    emoji: "🏘️"
+  }), [t, generalChat]);
+
+  const wolves = useMemo(() => ({
+    type: "wolves",
+    label: t("game.wolvesChat"),
+    history: wolvesChat || [],
+    emoji: "🐺"
+  }), [t, wolvesChat]);
+
+  const jail = useMemo(() => ({
+    type: "jail",
+    label: t("game.jailChat"),
+    history: jailChat || [],
+    emoji: "👮‍♂️"
+  }), [t, jailChat]);
+
+  const medium = useMemo(() => ({
+    type: "medium",
+    label: t("game.mediumChat"),
+    history: mediumChat || [],
+    emoji: "🔮"
+  }), [t, mediumChat]);
+
+  // Derive player-specific values (safe even if clientPlayer is null)
+  const isWolf = clientPlayer?.role?.team === "Werewolves";
+  const isJailer = clientPlayer?.role?.name === "Jailer";
+  const isMedium = clientPlayer?.role?.name === "Medium";
+  const isAlive = clientPlayer?.isAlive ?? false;
+  const isUnderArrest = clientPlayer?.isUnderArrest;
+  const hasHandcuffed = clientPlayer?.hasHandcuffed;
 
   // SELECTION HELPERS:
   const selectionHelpers = useMemo(() => ({
@@ -221,12 +207,32 @@ export const GameProvider = ({ children }) => {
     },
   }), [selectionState]);
 
+  // Initialize usedChat with general on first render (run only once)
+  const hasInitializedChat = useRef(false);
+  useEffect(() => {
+    if (!hasInitializedChat.current && general && generalChat) {
+      hasInitializedChat.current = true;
+      setUsedChat(general);
+      setAvailableChats([general]);
+    }
+  }, [general, generalChat]);
 
   useEffect(() => {
-    selectionHelpers.reset(); // Instead of setting individual states
+    // Skip effect if game/clientPlayer not ready
+    if (!game || !clientPlayer || !timeOfTheDay) return;
+
+    // Reset selection state on phase change
+    setSelectionState({
+      mode: 'idle',
+      actionType: null,
+      actionEmoji: null,
+      blockedActions: new Set(),
+      selectedPlayers: [],
+    });
+
     setWeather(weatherColors[timeOfTheDay]);
     if (timeOfTheDay === "nighttime" && !winningTeam && !hasPlayedIntroRef.current) {
-      hasPlayedIntroRef.current = true; // ← Set flag
+      hasPlayedIntroRef.current = true; // Set flag
       generateNoise("wolfHowl");
       triggerAnimation("moon");
     }
@@ -259,22 +265,41 @@ export const GameProvider = ({ children }) => {
       setAvailableChats([general]);
       setUsedChat(general);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeOfTheDay]);
 
-  useEffect(() => {
-    if (!isAlive) {
-      generateNoise("maleScreamFear");
-      triggerSimpleMessage(t("game.youDied"));
+  // Track if death effect has been triggered to prevent flickering
+  const hasTriggeredDeathEffect = useRef(false);
 
-      // Trigger death flash effect
-      setShowDeathFlash(true);
-      setTimeout(() => {
-        setShowDeathFlash(false);
-      }, 300); // Flash lasts 300ms
+  useEffect(() => {
+    // Skip if clientPlayer not ready or player is alive
+    if (!clientPlayer || isAlive) {
+      // Reset the flag when player becomes alive again (e.g., revived)
+      if (isAlive) {
+        hasTriggeredDeathEffect.current = false;
+      }
+      return;
     }
-  }, [isAlive]);
+
+    // Skip if already triggered
+    if (hasTriggeredDeathEffect.current) return;
+    hasTriggeredDeathEffect.current = true;
+
+    generateNoise("maleScreamFear");
+    triggerSimpleMessage(t("game.youDied"));
+
+    // Trigger death flash effect
+    setShowDeathFlash(true);
+    const timer = setTimeout(() => {
+      setShowDeathFlash(false);
+    }, 300); // Flash lasts 300ms
+
+    return () => clearTimeout(timer);
+  }, [isAlive, clientPlayer, generateNoise, triggerSimpleMessage, t]);
 
   useEffect(() => {
+    if (!timeOfTheDay) return;
+
     if (timeOfTheDay === "votetime" && timeCounter === 25000) {
       generateNoise("softSuspense");
     }
@@ -284,20 +309,56 @@ export const GameProvider = ({ children }) => {
     if (timeOfTheDay === "nighttime" && timeCounter === 20000) {
       generateNoise("mysteriousArea");
     }
-  }, [timeCounter, timeOfTheDay]);
+  }, [timeCounter, timeOfTheDay, generateNoise]);
 
 
   useEffect(() => {
+    // Skip if game or socket not ready
+    if (!game || !socket) return;
+
     if (!winningTeam) {
       socket.emit("checkForWinner", game.id);
     } else {
       !game.hasEnded && socket.emit("endGame", game.id);
     }
-  }, [timeCounter]);
+  }, [timeCounter, game, socket, winningTeam]);
 
+  // EARLY RETURNS - All hooks are declared above, so this is safe
   // Safety check: don't initialize if showing role reveal
   if (!game || game.showingRoleReveal) {
     return null;
+  }
+
+  // Guard clause: Ensure player exists in game
+  if (!clientPlayer) {
+    console.error("Player not found in game:", username);
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        gap: '1rem'
+      }}>
+        <h2>You are not in this game</h2>
+        <p>Player &quot;{username}&quot; not found in the game.</p>
+        <button
+          onClick={() => window.location.href = '/'}
+          style={{
+            padding: '0.5rem 1rem',
+            fontSize: '1rem',
+            cursor: 'pointer',
+            borderRadius: '4px',
+            border: 'none',
+            backgroundColor: '#e50403',
+            color: 'white'
+          }}
+        >
+          Return to Homepage
+        </button>
+      </div>
+    );
   }
 
 

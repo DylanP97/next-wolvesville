@@ -25,7 +25,7 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
   const { isDev } = useAuth();
 
   const { t } = useTranslation();
-  const [messages, setMessages] = useState(usedChat.history);
+  const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null);
   const containerRef = useRef(null);
   const isAtBottom = useRef(true);
@@ -33,6 +33,13 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
   // Gestion du clavier mobile
   const keyboardHeight = useKeyboardHeight();
   const { isInputFocused, handleFocus, handleBlur } = useInputFocus();
+
+  // Initialize messages when usedChat becomes available
+  useEffect(() => {
+    if (usedChat?.history) {
+      setMessages(usedChat.history);
+    }
+  }, [usedChat]);
 
   const checkIfAtBottom = () => {
     if (!containerRef.current) return true;
@@ -65,6 +72,7 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
   }, [isOpen, isSidebar]);
 
   useEffect(() => {
+    if (!usedChat) return;
     switch (usedChat.type) {
       case "general":
         setMessages(general.history);
@@ -79,7 +87,7 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
         setMessages(medium.history);
         break;
     }
-  }, [general, wolves, jail, medium, usedChat.type]);
+  }, [general, wolves, jail, medium, usedChat]);
 
   const filteredMessages = useMemo(() => {
     if (isDevMode && isDev) {
@@ -115,6 +123,10 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
     }
   };
 
+  // Guard: wait for usedChat to be initialized (after all hooks)
+  if (!usedChat) {
+    return null;
+  }
 
   // Rendu des messages (même logique pour les deux modes)
   const renderMessages = () => (

@@ -113,8 +113,17 @@ const handleSingleSelection = (player, clientPlayer, gameId, socket, actionType,
 
         chooseJuniorWolfDeathRevenge: () => {
             socket.emit("chooseJuniorWolfDeathRevenge", {
-                juniorWolfId: player.id,
+                babyWolfId: clientPlayer.id,
                 selectedPlayerId: player.id,
+                selectedPlayerName: player.name,
+            }, gameId)
+        },
+
+        ghostVisit: () => {
+            socket.emit("ghostVisit", {
+                ghostLadyId: clientPlayer.id,
+                selectedPlayerId: player.id,
+                selectedPlayerName: player.name,
             }, gameId)
         },
 

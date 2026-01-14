@@ -113,7 +113,7 @@ export const AuthProvider = ({ children }) => {
     const handleUpdateUsers = (updatedUsers) => {
       const user = updatedUsers.find(u => u.username === authState.username);
       if (user) {
-        console.log(`📥 updateUsers: Setting isInRoom=${user.isInRoom} for ${authState.username}`);
+        // console.log(`📥 updateUsers: Setting isInRoom=${user.isInRoom} for ${authState.username}`);
         setIsInRoom(user.isInRoom);
       } else {
         console.log(`⚠️ updateUsers: User ${authState.username} not found in updated users`);
@@ -122,12 +122,12 @@ export const AuthProvider = ({ children }) => {
     };
 
     const handleUpdateRooms = (updatedRooms) => {
-      console.log(`📥 updateRooms: Received ${updatedRooms.length} rooms`);
+      // console.log(`📥 updateRooms: Received ${updatedRooms.length} rooms`);
       setRooms(updatedRooms);
     };
 
     const handleLaunchRoom = (game) => {
-      console.log(`📥 launchRoom: Game ${game.id} starting, setting isPlaying=true`);
+      // console.log(`📥 launchRoom: Game ${game.id} starting, setting isPlaying=true`);
       game.playersList.forEach((player) => {
         if (player.isCPU) {
           socket.emit("sendNewConnectedUser", player);

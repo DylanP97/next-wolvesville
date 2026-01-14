@@ -25,11 +25,18 @@ export default function PersistentMobileChat() {
 
     const { t } = useTranslation();
 
-    const [messages, setMessages] = useState(usedChat.history);
+    const [messages, setMessages] = useState([]);
     const containerRef = useRef(null);
     const isAtBottom = useRef(true);
     const prevMessageCount = useRef(0);
     const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+    // Initialize messages when usedChat becomes available
+    useEffect(() => {
+        if (usedChat?.history) {
+            setMessages(usedChat.history);
+        }
+    }, [usedChat]);
 
     const checkIfAtBottom = () => {
         if (!containerRef.current) return true;
@@ -45,6 +52,7 @@ export default function PersistentMobileChat() {
     };
 
     useEffect(() => {
+        if (!usedChat) return;
         switch (usedChat.type) {
             case "general":
                 setMessages(general.history);
@@ -59,7 +67,7 @@ export default function PersistentMobileChat() {
                 setMessages(medium.history);
                 break;
         }
-    }, [general, wolves, jail, medium, usedChat.type]);
+    }, [general, wolves, jail, medium, usedChat]);
 
     const filteredMessages = useMemo(() => {
         if (isDevMode && isDev) return messages;
@@ -86,12 +94,12 @@ export default function PersistentMobileChat() {
     }, [displayMessages]);
 
     useEffect(() => {
-        if (containerRef.current) {
+        if (containerRef.current && usedChat) {
             containerRef.current.scrollTop = containerRef.current.scrollHeight;
             isAtBottom.current = true;
             prevMessageCount.current = displayMessages.length;
         }
-    }, [usedChat.type]);
+    }, [usedChat?.type, displayMessages.length]);
 
     const selectChat = (type) => {
         switch (type) {
@@ -149,6 +157,11 @@ export default function PersistentMobileChat() {
             window.removeEventListener('resize', handleViewportChange);
         };
     }, []);
+
+    // Guard: wait for usedChat to be initialized (after all hooks)
+    if (!usedChat) {
+        return null;
+    }
 
     const renderMessages = () => (
         <>

@@ -17,6 +17,8 @@ const Chatbox = () => {
   const { t } = useTranslation();
 
   const sendMessage = (messageToSend) => {
+    if (!usedChat) return;
+
     // Allow sending messages if alive OR if dead but using medium chat
     const canSendMessage = clientPlayer.isAlive || (usedChat.type === "medium" && !clientPlayer.isAlive);
 
@@ -50,6 +52,11 @@ const Chatbox = () => {
     }
   };
 
+
+  // Guard: wait for usedChat to be initialized
+  if (!usedChat) {
+    return null;
+  }
 
   // Show "go back to sleep" only for general chat at night
   // Medium chat, wolves chat, and jail chat should work at night

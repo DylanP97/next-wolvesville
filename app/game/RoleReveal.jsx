@@ -67,7 +67,7 @@ const RoleReveal = ({ role, onComplete }) => {
                             {/* Image de fond avec transparence pour la carte révélée */}
                             {role?.image2 && (
                                 <div 
-                                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 pointer-events-none"
+                                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60 pointer-events-none"
                                     style={{
                                         backgroundImage: `url(${role.image2})`,
                                     }}
@@ -78,7 +78,7 @@ const RoleReveal = ({ role, onComplete }) => {
 
                             <div className="relative z-10 flex flex-col items-center gap-4">
                                 {/* Role image */}
-                                <div className="w-40 h-40 rounded-full bg-white/10 border-4 border-yellow-400 flex items-center justify-center overflow-hidden">
+                                <div className="w-28 h-28 rounded-full bg-white/10 border-4 border-yellow-400 flex items-center justify-center overflow-hidden">
                                     {role?.image ? (
                                         <Image
                                             src={role.image}

@@ -22,7 +22,7 @@ const RoleCard = ({ role }) => {
     >
       {/* Image de fond avec transparence */}
       <div 
-        className="absolute inset-0 bg-cover bg-no-repeat opacity-40 pointer-events-none shadow-[inset_0_0_50px_20px_rgba(0,0,0,0.7)]"
+        className="absolute inset-0 bg-cover bg-no-repeat opacity-40 pointer-events-none shadow-[inset_0_0_50px_20px_rgba(0,0,0,0.3)]"
         style={{
           backgroundImage: `url(${role.image2})`,
         }}

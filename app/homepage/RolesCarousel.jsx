@@ -22,6 +22,7 @@ const RolesCarousel = () => {
         <div className="slide-track">
           {roles
             .sort(() => Math.random() - 0.5)
+            .filter(role => role.status === 1)
             .map((role) => {
               return (
                 <div

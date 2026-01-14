@@ -253,7 +253,11 @@
             "burnByFire": "💀🔥 The fire burned ",
             "revive": "✨ The Medium has revived ",
             "revivedAtDayStart": " has been revived by the Medium!",
-            "mediumAboutToRevive": "✨ The Medium is about to revive someone..."
+            "mediumAboutToRevive": "✨ The Medium is about to revive someone...",
+            "babyWolfTargetChosen": "The Baby Werewolf has chosen a revenge target!",
+            "babyWolfTargetChanged": "The Baby Werewolf has changed their revenge target!",
+            "babyWolfRevenge": "was killed by the Baby Werewolf's revenge!",
+            "paranormalAccident": "A paranormal accident caused the death of"
           }
         },
         "wolfVote": {
@@ -396,7 +400,7 @@
         "soloQuickGame": "Partie Rapide Solo",
         "0": "Partie Rapide (solo & rôle aléatoire)",
         "1": "Rejoindre une salle / Lobby",
-        "2": "Création de salle",
+        "2": "Création de salle ",
         "3": "Joueurs connectés",
         "4": "Liste des roles",
         "5": "Modifier mon profil"
@@ -553,7 +557,11 @@
             "burnByFire": "💀🔥 L'incendie a brûlé ",
             "revive": "✨ Le Médium a ressuscité ",
             "revivedAtDayStart": " a été ressuscité par le Médium !",
-            "mediumAboutToRevive": "✨ Le Médium s'apprête à ressusciter quelqu'un..."
+            "mediumAboutToRevive": "✨ Le Médium s'apprête à ressusciter quelqu'un...",
+            "babyWolfTargetChosen": "Le Bébé Loup a choisi une cible de vengeance !",
+            "babyWolfTargetChanged": "Le Bébé Loup a changé sa cible de vengeance !",
+            "babyWolfRevenge": "a été tué par la vengeance du Bébé Loup !",
+            "paranormalAccident": "Un accident paranormal a causé la mort de"
           }
         },
         "wolfVote": {

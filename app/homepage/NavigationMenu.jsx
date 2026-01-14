@@ -65,12 +65,12 @@ const NavigationMenu = () => {
         {!isInRoom && (   // 👈 hide Solo Quick Game when in room
           <Button
             className={getBtnClassNames("w-80") + " text-md font-medium h-12 font-wolf"}
-            color="secondary"
+            color="primary"
             variant="shadow"
             onClick={launchQuickGame}
             key={"soloQuickGame-navComponent"}
           >
-            {t("menu.soloQuickGame") || "🎮 Solo Quick Game"}
+            {t("menu.soloQuickGame") || "Solo Quick Game ☝️"}
           </Button>
         )}
 
