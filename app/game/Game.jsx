@@ -3,6 +3,7 @@
 import Connexion from "../connexion/Connexion";
 import GameSection from "./GameSection";
 import RoleReveal from "./RoleReveal";
+import RolesOverview from "./RolesOverview";
 import { useAuth } from "../providers/AuthProvider";
 import { GameProvider } from "./GameProvider";
 import { InGameKeysProvider } from "./InGameKeysProvider";
@@ -15,6 +16,7 @@ export default function Game() {
 
   const clientPlayer = game?.playersList?.find((p) => p.name === username);
   const showRoleReveal = game?.showingRoleReveal && clientPlayer;
+  const showRolesOverview = game?.showingRolesOverview && clientPlayer;
 
   return (
     <div className="flex flex-col flex-grow h-screen">
@@ -23,6 +25,12 @@ export default function Game() {
           {showRoleReveal ? (
             // Show role reveal screen
             <RoleReveal role={clientPlayer.role} onComplete={() => {}} />
+          ) : showRolesOverview ? (
+            // Show roles overview screen (after role reveal, before game)
+            <RolesOverview
+              rolesInGame={game.rolesInGame}
+              usersInTheRoom={game.usersInTheRoom}
+            />
           ) : (
             // Show normal game - wrapped in error boundary
             <GameErrorBoundary>

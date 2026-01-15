@@ -9,6 +9,11 @@
         "5": "Wolves can communicate with each other during the night phase to strategize their attacks",
         "6": "The game usually resolves in 6 nights for a 16 players game"
       },
+      "teams": {
+        "village": "Village",
+        "werewolves": "Werewolves",
+        "solo": "Solo"
+      },
       "game": {
         "title": "Werewolves game",
         "resume": "Resume (for testdev purposes)",
@@ -32,6 +37,12 @@
         "sendMessage": "Send message",
         "youDied": "You have died!",
         "goBackToSleep": "It's night, go back to sleep...",
+        "rolesInGame": "Roles in this Game",
+        "reviewRoles": "Review the roles before the game starts",
+        "playersReady": "Players Ready",
+        "autoStart": "Game starting in",
+        "ready": "Ready!",
+        "clickReady": "I'm Ready!",
         "tooltip": {
           "voteAgainst": "Villagers needs to choose : Vote against a player",
           "wolfVoteAgainst": "Wolves need to choose who to eat",
@@ -222,7 +233,9 @@
         "as": "as",
         "wasA": "was a",
         "wasGraveRobber": "but also the Grave Robber",
-        "wasCursed": "but also the Cursed Villager"
+        "wasCursed": "but also the Cursed Villager",
+        "stalemate": "Stalemate!",
+        "stalemateDesc": "The game ended without a clear winner after too many rounds."
       },
       "serverContent": {
         "action": {
@@ -313,6 +326,11 @@
         "5": "Les loups peuvent communiquer entre eux pendant la phase de nuit pour élaborer des stratégies d'attaque",
         "6": "La partie se termine généralement en 6 nuits pour une partie de 16 joueurs"
       },
+      "teams": {
+        "village": "Village",
+        "werewolves": "Loups-garous",
+        "solo": "Solo"
+      },
       "game": {
         "title": "Jeu du Loup-garou",
         "resume": "Continuer le jeu (pour dev)",
@@ -336,6 +354,12 @@
         "sendMessage": "Envoyer message",
         "youDied": "Tu es mort !",
         "goBackToSleep": "C'est la nuit, retourne te coucher...",
+        "rolesInGame": "Rôles dans cette partie",
+        "reviewRoles": "Consultez les rôles avant le début de la partie",
+        "playersReady": "Joueurs prêts",
+        "autoStart": "Début de la partie (même si les joueurs ne sont pas prêts) dans...",
+        "ready": "Prêt !",
+        "clickReady": "Je suis prêt !",
         "tooltip": {
           "voteAgainst": "Le Village doit choisir : Voter contre un joueur",
           "wolfVoteAgainst": "Les loups peuvent choisir qui dévorer",
@@ -526,7 +550,9 @@
         "as": "comme",
         "wasA": "était un",
         "wasGraveRobber": "mais aussi le Pilleur de Tombe",
-        "wasCursed": "mais aussi le Villageois Maudit"
+        "wasCursed": "mais aussi le Villageois Maudit",
+        "stalemate": "Match nul !",
+        "stalemateDesc": "La partie s'est terminée sans vainqueur après trop de tours."
       },
       "serverContent": {
         "action": {

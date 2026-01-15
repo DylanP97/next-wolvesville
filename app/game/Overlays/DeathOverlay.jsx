@@ -82,7 +82,7 @@ const DeathOverlay = () => {
         }
 
         .death-filter {
-          background: rgba(15, 25, 45, 0.5);
+          background: rgba(15, 25, 45, 0.36);
           backdrop-filter: blur(3px) grayscale(0.9) brightness(0.5) contrast(0.8);
           mix-blend-mode: multiply;
         }
@@ -91,8 +91,8 @@ const DeathOverlay = () => {
           background: radial-gradient(
             ellipse at center,
             transparent 20%,
-            rgba(0, 10, 25, 0.7) 70%,
-            rgba(0, 5, 15, 0.9) 100%
+            rgba(0, 10, 25, 0.04) 70%,
+            rgba(0, 5, 15, 0.36) 100%
           );
         }
 
