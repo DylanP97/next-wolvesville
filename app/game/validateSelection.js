@@ -15,6 +15,10 @@ const validateSelection = (player, clientPlayer, actionType, timeOfTheDay) => {
       return { valid: true }; // Grave Robber can loot dead ✅
     }
     if (isMedium && actionType === "revive") {
+      // Can't revive looted graves
+      if (player.graveLooted) {
+        return { valid: false, errorCode: "errorMessage.0015" };
+      }
       return { valid: true }; // Medium can revive dead ✅
     }
     return { valid: false, errorCode: "errorMessage.0002", animation: "loomingGrave" };

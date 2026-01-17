@@ -37,6 +37,8 @@
         "sendMessage": "Send message",
         "youDied": "You have died!",
         "goBackToSleep": "It's night, go back to sleep...",
+        "getReady": "Get Ready!",
+        "getReadyDesc": "The game is about to start. Review the roles and click ready when you're prepared.",
         "rolesInGame": "Roles in this Game",
         "reviewRoles": "Review the roles before the game starts",
         "playersReady": "Players Ready",
@@ -84,6 +86,9 @@
         "pw": "Password",
         "lo": "Login",
         "si": "SignUp",
+        "or": "or",
+        "googleLogin": "Continue with Google",
+        "oauthError": "Google login failed. Please try again.",
         "loading": {
           "main": "Connecting to server... please wait",
           "info": "It may take about 50 seconds when you first connect. Refresh the page if nothing changes."
@@ -266,6 +271,7 @@
             "burnByFire": "💀🔥 The fire burned ",
             "revive": "✨ The Medium has revived ",
             "revivedAtDayStart": " has been revived by the Medium!",
+            "reviveFailedGraveLooted": "The Medium tried to revive someone, but the grave was looted...",
             "mediumAboutToRevive": "✨ The Medium is about to revive someone...",
             "babyWolfTargetChosen": "The Baby Werewolf has chosen a revenge target!",
             "babyWolfTargetChanged": "The Baby Werewolf has changed their revenge target!",
@@ -312,7 +318,8 @@
         "0011": "You are dead. You can't do anything.",
         "0012": "This action has already been used.",
         "0013": "There's no one to burn, pour the gasoline first",
-        "0014": "You are doing nightmares..."
+        "0014": "You are doing nightmares...",
+        "0015": "This grave has been looted and cannot be revived."
       }
     }
   },
@@ -354,6 +361,8 @@
         "sendMessage": "Envoyer message",
         "youDied": "Tu es mort !",
         "goBackToSleep": "C'est la nuit, retourne te coucher...",
+        "getReady": "Préparez-vous !",
+        "getReadyDesc": "La partie va bientôt commencer. Consultez les rôles et cliquez sur prêt.",
         "rolesInGame": "Rôles dans cette partie",
         "reviewRoles": "Consultez les rôles avant le début de la partie",
         "playersReady": "Joueurs prêts",
@@ -401,6 +410,9 @@
         "pw": "Mot de passe",
         "lo": "Connexion",
         "si": "Inscription",
+        "or": "ou",
+        "googleLogin": "Continuer avec Google",
+        "oauthError": "Connexion Google a echoue. Veuillez reessayer.",
         "loading": {
           "main": "En attente de connexion au serveur...",
           "info": "Cela prend environ 50 secondes lors de la première connexion. Rafraîchissez la page si rien ne change. C'est normal, je suis en instance gratuite sur Render.com, je n'ai pas l'argent pour prendre un forfait premium."
@@ -583,6 +595,7 @@
             "burnByFire": "💀🔥 L'incendie a brûlé ",
             "revive": "✨ Le Médium a ressuscité ",
             "revivedAtDayStart": " a été ressuscité par le Médium !",
+            "reviveFailedGraveLooted": "Le Médium a tenté de ressusciter quelqu'un, mais la tombe a été pillée...",
             "mediumAboutToRevive": "✨ Le Médium s'apprête à ressusciter quelqu'un...",
             "babyWolfTargetChosen": "Le Bébé Loup a choisi une cible de vengeance !",
             "babyWolfTargetChanged": "Le Bébé Loup a changé sa cible de vengeance !",
@@ -629,7 +642,8 @@
         "0011": "Tu es mort ! Tu ne peux rien faire.",
         "0012": "Vous avez déjà utilisé cette action.",
         "0013": "Il n'y a personne à brûler, déverser de l'essence d'abord",
-        "0014": "Vous faîtes des cauchemards..."
+        "0014": "Vous faîtes des cauchemards...",
+        "0015": "Cette tombe a été pillée et ne peut pas être ressuscitée."
       }
     }
   }

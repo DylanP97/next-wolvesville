@@ -60,7 +60,7 @@ const RolesOverview = ({ rolesInGame, usersInTheRoom, onReady }) => {
     };
 
     const RoleCard = ({ role }) => (
-        <div className="relative bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 hover:border-yellow-400/50 transition-all hover:scale-105 overflow-hidden min-h-[200px]">
+        <div className="relative bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 hover:border-yellow-400/50 transition-all hover:scale-105 overflow-hidden min-h-[350px]">
             {/* Background image2 */}
             {role?.image2 && (
                 <div
@@ -92,7 +92,7 @@ const RolesOverview = ({ rolesInGame, usersInTheRoom, onReady }) => {
                     <h3 className="text-white font-bold text-sm">
                         {i18n.language === "fr" ? role?.nameFR : role?.name}
                     </h3>
-                    <p className="text-gray-300 text-xs mt-2 line-clamp-5">
+                    <p className="text-gray-300 text-xs mt-2">
                         {i18n.language === "fr" ? role?.descriptionFR : role?.description}
                     </p>
                 </div>
@@ -116,18 +116,76 @@ const RolesOverview = ({ rolesInGame, usersInTheRoom, onReady }) => {
 
     return (
         <div className="fixed inset-0 z-[100] flex flex-col bg-gradient-to-br from-gray-900 via-purple-900/50 to-gray-900 overflow-hidden">
-            {/* Header */}
-            <div className="text-center py-6 px-4">
-                <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 font-wolf">
-                    {t("game.rolesInGame") || "Roles in this Game"}
-                </h1>
-                <p className="text-yellow-200 text-lg">
-                    {t("game.reviewRoles") || "Review the roles before the game starts"}
-                </p>
-            </div>
 
             {/* Scrollable roles content */}
             <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-4">
+
+                {/* Header */}
+                <div className="text-center py-6 px-4">
+                    <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 font-wolf">
+                        {t("game.getReady") || "Get Ready!"}
+                    </h1>
+                    <p className="text-yellow-200 text-lg">
+                        {t("game.getReadyDesc") || "The game is about to start. Review the roles and click ready when you're prepared."}
+                    </p>
+                </div>
+
+                {/* Bottom bar - Ready status and button */}
+                <div className="bg-black/50 backdrop-blur-md border-t border-white/10 p-4">
+                    <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+                        {/* Ready players list */}
+                        <div className="flex-1">
+                            <p className="text-white text-sm mb-2">
+                                {t("game.playersReady") || "Players Ready"}: {readyPlayers.length}/{usersInTheRoom?.length || 0}
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                                {usersInTheRoom?.map((user) => (
+                                    <div
+                                        key={user.username}
+                                        className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${readyPlayers.includes(user.username)
+                                            ? 'bg-green-500 text-white'
+                                            : 'bg-gray-600/50 text-gray-300'
+                                            }`}
+                                    >
+                                        {user.username}
+                                        {readyPlayers.includes(user.username) && ' ✓'}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Countdown and Ready button */}
+                        <div className="flex flex-col items-center gap-2">
+                            {/* Countdown timer */}
+                            <p className={`text-sm ${countdown <= 10 ? 'text-red-400 animate-pulse' : 'text-yellow-200'}`}>
+                                {t("game.autoStart") || "Game starting in"}: {countdown}s
+                            </p>
+
+                            {/* Ready button */}
+                            <button
+                                onClick={handleReadyClick}
+                                disabled={isReady}
+                                className={`px-8 py-3 rounded-xl font-bold text-lg transition-all transform ${isReady
+                                    ? 'bg-green-600 text-white cursor-default'
+                                    : 'bg-yellow-500 hover:bg-yellow-400 text-black hover:scale-105 active:scale-95'
+                                    }`}
+                            >
+                                {isReady ? (t("game.ready") || "Ready!") + " ✓" : (t("game.clickReady") || "I'm Ready!")}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Header */}
+                <div className="text-center py-6 px-4">
+                    <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 font-wolf">
+                        {t("game.rolesInGame") || "Roles in this Game"}
+                    </h1>
+                    <p className="text-yellow-200 text-lg">
+                        {t("game.reviewRoles") || "Review the roles before the game starts"}
+                    </p>
+                </div>
+
                 {/* Village roles */}
                 {groupedRoles.village.length > 0 && (
                     <TeamSection
@@ -159,53 +217,7 @@ const RolesOverview = ({ rolesInGame, usersInTheRoom, onReady }) => {
                 )}
             </div>
 
-            {/* Bottom bar - Ready status and button */}
-            <div className="bg-black/50 backdrop-blur-md border-t border-white/10 p-4">
-                <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-                    {/* Ready players list */}
-                    <div className="flex-1">
-                        <p className="text-white text-sm mb-2">
-                            {t("game.playersReady") || "Players Ready"}: {readyPlayers.length}/{usersInTheRoom?.length || 0}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                            {usersInTheRoom?.map((user) => (
-                                <div
-                                    key={user.username}
-                                    className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
-                                        readyPlayers.includes(user.username)
-                                            ? 'bg-green-500 text-white'
-                                            : 'bg-gray-600/50 text-gray-300'
-                                    }`}
-                                >
-                                    {user.username}
-                                    {readyPlayers.includes(user.username) && ' ✓'}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
 
-                    {/* Countdown and Ready button */}
-                    <div className="flex flex-col items-center gap-2">
-                        {/* Countdown timer */}
-                        <p className={`text-sm ${countdown <= 10 ? 'text-red-400 animate-pulse' : 'text-yellow-200'}`}>
-                            {t("game.autoStart") || "Game starting in"}: {countdown}s
-                        </p>
-
-                        {/* Ready button */}
-                        <button
-                            onClick={handleReadyClick}
-                            disabled={isReady}
-                            className={`px-8 py-3 rounded-xl font-bold text-lg transition-all transform ${
-                                isReady
-                                    ? 'bg-green-600 text-white cursor-default'
-                                    : 'bg-yellow-500 hover:bg-yellow-400 text-black hover:scale-105 active:scale-95'
-                            }`}
-                        >
-                            {isReady ? (t("game.ready") || "Ready!") + " ✓" : (t("game.clickReady") || "I'm Ready!")}
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
     );
 };
