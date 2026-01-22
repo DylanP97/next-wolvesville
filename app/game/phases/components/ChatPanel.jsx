@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { useGame } from "../../GameProvider";
 import Chatbox from "../../ActionBar/Chatbox";
 import { replacePlaceholders } from "../../../lib/utils";
@@ -9,17 +9,29 @@ import { replacePlaceholders } from "../../../lib/utils";
  * ChatPanel - Chat panel for different chat types (general, wolves, jail, medium)
  */
 const ChatPanel = ({ chatConfig }) => {
-  const { clientPlayer, messagesHistory } = useGame();
+  const { clientPlayer, generalChat } = useGame();
   const containerRef = useRef(null);
+  const isAtBottomRef = useRef(true);
 
-  // Get messages based on chat type
-  const messages = chatConfig.type === "general"
-    ? messagesHistory
-    : (chatConfig.data?.history || []);
+  // Get messages based on chat type - memoized to prevent unnecessary re-renders
+  const messages = useMemo(() => {
+    return chatConfig.type === "general"
+      ? generalChat
+      : (chatConfig.data?.history || []);
+  }, [chatConfig.type, chatConfig.data?.history, generalChat]);
 
-  // Scroll to bottom when messages update
-  useEffect(() => {
+  // Track if user is at bottom of chat
+  const handleScroll = () => {
     if (containerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+      // Consider "at bottom" if within 50px of the bottom
+      isAtBottomRef.current = scrollHeight - scrollTop - clientHeight < 50;
+    }
+  };
+
+  // Only auto-scroll when user is already at bottom
+  useEffect(() => {
+    if (containerRef.current && isAtBottomRef.current) {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
   }, [messages]);
@@ -27,21 +39,32 @@ const ChatPanel = ({ chatConfig }) => {
   // Reverse messages to show newest at bottom (if not already)
   const displayMessages = [...(messages || [])].reverse();
 
+  // Get emoji for chat type
+  const chatEmoji = {
+    general: "💬",
+    wolves: "🐺",
+    jail: "👮",
+    medium: "🔮",
+  }[chatConfig.type] || "💬";
+
   return (
-    <div className="flex flex-col h-full bg-slate-800">
+    <div className="flex flex-col h-full bg-slate-900/80">
       {/* Chat header */}
-      <div className="flex-shrink-0 px-3 py-2 bg-slate-700 border-b border-slate-600">
+      <div className="flex-shrink-0 px-4 py-2.5 bg-slate-800 border-b border-slate-700 flex items-center gap-2">
+        <span className="text-lg">{chatEmoji}</span>
         <span className="text-white text-sm font-medium">{chatConfig.label}</span>
       </div>
 
-      {/* Messages */}
+      {/* Messages - takes all available space */}
       <div
         ref={containerRef}
-        className="flex-1 overflow-y-auto p-2 space-y-2"
+        onScroll={handleScroll}
+        className="flex-1 overflow-y-auto p-3 space-y-2 min-h-0"
       >
         {displayMessages.length === 0 ? (
-          <div className="text-center text-slate-500 italic text-sm mt-4">
-            No messages yet...
+          <div className="flex flex-col items-center justify-center h-full text-slate-500">
+            <span className="text-3xl mb-2">{chatEmoji}</span>
+            <p className="text-sm italic">No messages yet...</p>
           </div>
         ) : (
           displayMessages.map((msg, index) => (
@@ -54,9 +77,9 @@ const ChatPanel = ({ chatConfig }) => {
         )}
       </div>
 
-      {/* Input */}
-      {clientPlayer?.isAlive && (
-        <div className="flex-shrink-0 border-t border-slate-600 p-2">
+      {/* Input - fixed at bottom (hidden if read-only, shown for alive or medium chat) */}
+      {!chatConfig.readOnly && (clientPlayer?.isAlive || chatConfig.type === "medium") && (
+        <div className="flex-shrink-0 border-t border-slate-700 p-2 bg-slate-800">
           <Chatbox />
         </div>
       )}

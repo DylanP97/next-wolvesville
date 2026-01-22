@@ -1,16 +1,18 @@
 "use client";
 
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { createAvatar } from "@dicebear/core";
 import { avataaars } from "@dicebear/collection";
 import i18n from "../../../lib/i18n";
 import Image from "next/image";
 
 /**
- * SelectablePlayerCard - Large, touch-friendly player card for target selection
+ * SelectablePlayerCard - Compact, touch-friendly player card for target selection
  *
  * Used in SelectionScreen to display valid targets.
  * Shows avatar, name, role (if revealed), and status indicators.
+ * Compact on mobile to fit more players without scrolling.
  */
 const SelectablePlayerCard = ({
   player,
@@ -19,13 +21,15 @@ const SelectablePlayerCard = ({
   isSelected = false,
   showRole = false,
 }) => {
+  const { t } = useTranslation();
+
   // Generate avatar
   const avatarSvg = useMemo(() => {
     if (!player?.avatar) return null;
     try {
       const avatar = createAvatar(avataaars, {
         ...player.avatar,
-        size: 80,
+        size: 48,
       });
       return avatar.toDataUriSync();
     } catch {
@@ -49,23 +53,23 @@ const SelectablePlayerCard = ({
     <button
       onClick={handleClick}
       className={`
-        relative flex flex-col items-center p-4 rounded-2xl
-        transition-all duration-200 ease-out
+        relative flex flex-col items-center p-2 sm:p-3 rounded-xl
+        transition-all duration-150 ease-out
         ${isSelected
-          ? 'bg-green-600 ring-4 ring-green-400 scale-105'
+          ? 'bg-green-600 ring-2 ring-green-400 scale-[1.02]'
           : 'bg-slate-700/80 hover:bg-slate-600 active:scale-95'
         }
         ${!player.isAlive ? 'opacity-60' : ''}
       `}
     >
-      {/* Avatar or Role Icon */}
-      <div className="relative w-16 h-16 rounded-full overflow-hidden bg-slate-600 mb-2">
+      {/* Avatar or Role Icon - smaller on mobile */}
+      <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-slate-600 mb-1">
         {roleImage ? (
           <Image
             src={roleImage}
             alt={roleName || "Role"}
-            width={64}
-            height={64}
+            width={48}
+            height={48}
             className="w-full h-full object-cover"
           />
         ) : avatarSvg ? (
@@ -77,50 +81,32 @@ const SelectablePlayerCard = ({
         {/* Death indicator */}
         {!player.isAlive && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-            <span className="text-2xl">💀</span>
+            <span className="text-lg">💀</span>
           </div>
         )}
       </div>
 
-      {/* Player name */}
-      <p className="text-white font-medium text-sm truncate max-w-full">
+      {/* Player name - smaller text */}
+      <p className="text-white font-medium text-xs sm:text-sm truncate max-w-full leading-tight">
         {player.name}
       </p>
 
       {/* Role name (if revealed) */}
       {roleName && (
-        <p className="text-yellow-400 text-xs truncate max-w-full mt-0.5">
+        <p className="text-yellow-400 text-[10px] sm:text-xs truncate max-w-full">
           {roleName}
         </p>
       )}
 
       {/* Status indicators */}
-      <div className="flex gap-1 mt-1">
-        {player.isUnderArrest && (
-          <span className="text-sm" title="Under arrest">👮</span>
-        )}
-        {player.willHaveNightmares && (
-          <span className="text-sm" title="Having nightmares">😱</span>
-        )}
-        {player.isMarkedWithGasoline && (
-          <span className="text-sm" title="Marked with gasoline">⛽</span>
-        )}
-        {player.isProtected && (
-          <span className="text-sm" title="Protected">🛡️</span>
-        )}
-      </div>
-
-      {/* Action indicator on hover */}
-      {actionEmoji && (
-        <div className="absolute top-2 right-2 bg-black/40 rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-          <span className="text-lg">{actionEmoji}</span>
-        </div>
+      {player.isUnderArrest && (
+        <span className="text-xs absolute top-1 left-1" title={t("game.tooltip.underArrest") || "Under arrest"}>👮</span>
       )}
 
       {/* Selection checkmark */}
       {isSelected && (
-        <div className="absolute top-2 right-2 bg-green-500 rounded-full w-6 h-6 flex items-center justify-center">
-          <span className="text-white text-sm">✓</span>
+        <div className="absolute top-1 right-1 bg-green-500 rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center">
+          <span className="text-white text-[10px] sm:text-xs">✓</span>
         </div>
       )}
     </button>

@@ -1,13 +1,14 @@
 "use client";
 
-import GameLayout from "./GameLayout";
+import ActionGameLayout from "./ActionGameLayout";
 
 /**
- * PhaseRouter - Now uses unified GameLayout for all phases
- * The GameLayout handles role-specific views internally
+ * PhaseRouter - Uses ActionGameLayout for action-based interface
+ * The new layout shows action buttons and selection screens
+ * instead of the grid-based player view
  */
 const PhaseRouter = () => {
-  return <GameLayout />;
+  return <ActionGameLayout />;
 };
 
 export default PhaseRouter;

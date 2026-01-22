@@ -51,6 +51,7 @@ export const GameProvider = ({ children }) => {
   const timeCounter = game?.timeCounter;
   const winningTeam = game?.winningTeam;
   const timeOfTheDay = game?.timeOfTheDay;
+  const rolesInGame = game?.rolesInGame;
 
   // Use stable references for chat histories
   const jailChat = game?.jailNightMessages;
@@ -374,6 +375,7 @@ export const GameProvider = ({ children }) => {
         winningTeam,
         playersList,
         aliveList,
+        rolesInGame,
         isWolf,
         isJailer,
         isMedium,

@@ -4,8 +4,11 @@ import { useState } from "react";
 import { useGame } from "../../GameProvider";
 import { useAuth } from "../../../providers/AuthProvider";
 import { useSound } from "../../../providers/SoundProvider";
+import { useToRender } from "../../../providers/RenderProvider";
 import { useTranslation } from "react-i18next";
+import { fetchLogout } from "../../../lib/fetch";
 import Image from "next/image";
+import HomePage from "../../../homepage/HomePage";
 
 /**
  * TimerBar - Shows phase, timer, role info, and menu button
@@ -13,8 +16,9 @@ import Image from "next/image";
 const TimerBar = ({ phase, dayCount, roleName, roleImage }) => {
   const { t } = useTranslation();
   const { timeCounter, aliveList, playersList, gameId } = useGame();
-  const { socket } = useAuth();
+  const { socket, username, isInRoom, avatar, isGuest, updateUserGameState, setAuthInfo, setSocket, setIsDev } = useAuth();
   const { isMuted, setIsMuted } = useSound();
+  const { setActiveComponent } = useToRender();
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -23,10 +27,27 @@ const TimerBar = ({ phase, dayCount, roleName, roleImage }) => {
   const aliveCount = aliveList?.length || 0;
   const totalCount = playersList?.length || 0;
 
+  // Leave game but stay logged in - go back to homepage
   const handleLeaveGame = () => {
     if (confirm(t("game.confirmLeave") || "Are you sure you want to leave the game?")) {
-      socket?.emit("leaveGame", gameId);
-      window.location.href = "/";
+      updateUserGameState(null, false);
+      setActiveComponent(
+        <HomePage username={username} isInRoom={isInRoom} avatar={avatar} />
+      );
+    }
+  };
+
+  // Logout from the app completely
+  const handleLogout = async () => {
+    if (confirm(t("game.confirmLogout") || "Are you sure you want to logout?")) {
+      const response = await fetchLogout(username, isGuest);
+      if (response.ok) {
+        setAuthInfo(null, null, false, null);
+        setIsDev(false);
+        socket?.emit("logout");
+        setSocket(null);
+        document.location.assign("/");
+      }
     }
   };
 
@@ -105,13 +126,22 @@ const TimerBar = ({ phase, dayCount, roleName, roleImage }) => {
             {/* Divider */}
             <div className="border-t border-slate-700" />
 
-            {/* Leave game */}
+            {/* Leave game - go back to homepage but stay logged in */}
             <button
               onClick={handleLeaveGame}
+              className="w-full px-4 py-3 flex items-center gap-3 hover:bg-slate-700 transition-colors text-left"
+            >
+              <span className="text-xl">🏠</span>
+              <span className="text-white text-sm">{t("quitgame") || "Leave Game"}</span>
+            </button>
+
+            {/* Logout - disconnect from app */}
+            <button
+              onClick={handleLogout}
               className="w-full px-4 py-3 flex items-center gap-3 hover:bg-red-900/50 transition-colors text-left"
             >
               <span className="text-xl">🚪</span>
-              <span className="text-red-400 text-sm">{t("game.leave") || "Leave Game"}</span>
+              <span className="text-red-400 text-sm">{t("logout") || "Logout"}</span>
             </button>
           </div>
         </>

@@ -133,21 +133,22 @@ const Connexion = ({ logOption, onBack }) => {
     }
   };
 
-  // Timer countdown logic
+  // Timer countdown logic - only depends on isLoading to avoid re-creating interval every second
   useEffect(() => {
-    let timer;
-    if (isLoading && countdown > 0) {
-      timer = setInterval(() => {
-        setCountdown((prevCountdown) => prevCountdown - 1);
-      }, 1000);
-    }
+    if (!isLoading) return;
 
-    if (countdown === 0) {
-      clearInterval(timer);
-    }
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
 
     return () => clearInterval(timer);
-  }, [isLoading, countdown]);
+  }, [isLoading]);
 
   // Handle Google OAuth login
   const handleGoogleLogin = () => {

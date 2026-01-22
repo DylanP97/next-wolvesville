@@ -55,7 +55,288 @@
         },
         "actionBar": {
           "title": "Action Bar"
-        }
+        },
+        "players": "Players",
+        "roles": "Roles",
+        "alive": "Alive",
+        "dead": "Dead",
+        "village": "Village",
+        "wolves": "Werewolves",
+        "solo": "Solo",
+        "death": {
+          "lynch": "Voted out",
+          "wolves": "Eaten by wolves",
+          "gunshot": "Shot",
+          "poison": "Poisoned",
+          "execution": "Executed",
+          "fire": "Burned",
+          "murder": "Murdered",
+          "lover": "Died of heartbreak",
+          "ghost": "Paranormal accident",
+          "revenge": "Baby wolf revenge"
+        },
+        "aftermath": {
+          "nightTitle": "Dawn breaks...",
+          "nightSubtitle": "Here's what happened during the night",
+          "voteTitle": "The village has spoken...",
+          "voteSubtitle": "The verdict is in",
+          "wolvesKilled": "The wolves killed",
+          "skKilled": "The Serial Killer murdered",
+          "poisoned": "Poisoned",
+          "ghostKilled": "Killed by a ghost",
+          "burned": "Burned alive",
+          "otherDeaths": "Also died",
+          "peacefulNight": "A peaceful night... no one died",
+          "villageVoted": "The village voted to eliminate",
+          "noConsensus": "No consensus was reached... no one was eliminated"
+        },
+        "wolfPack": "Wolf Pack",
+        "wolfTarget": "Target",
+        "wolfVotes": "Pack Votes",
+        "revealedToWolves": "Revealed Roles",
+        "notVotedYet": "Thinking...",
+        "roleUnknown": "Unknown",
+        "noChatAvailable": "No chat available",
+        "you": "You",
+        "idle": {
+          "dead": {
+            "title": "You are dead",
+            "desc": "Watch the game unfold from beyond the grave.",
+            "tip1": "Your role has been revealed to all players",
+            "tip2": "You can no longer vote or use abilities",
+            "tipMedium": "As Medium, you can still communicate with the living"
+          },
+          "jail": {
+            "title": "You are in jail",
+            "desc": "The Jailer has arrested you for the night.",
+            "tip1": "You cannot use your abilities tonight",
+            "tip2": "Convince the Jailer of your innocence",
+            "tip3": "If they doubt you, they may execute you"
+          },
+          "dawnApproaching": "Dawn approaches",
+          "nightResults": "The night's events will soon be revealed.",
+          "voteResults": "Counting votes",
+          "verdictSoon": "The village's verdict will be announced.",
+          "canReveal": "Can reveal a player",
+          "alreadyRevealed": "Already revealed today",
+          "bulletsLeft": "bullets left",
+          "canUncover": "Can uncover a role",
+          "villager": {
+            "nightTitle": "The village sleeps",
+            "nightDesc": "Stay safe through the night. You have no special abilities.",
+            "dayTitle": "Discuss with the village",
+            "dayDesc": "Share your suspicions and listen to others.",
+            "tip1": "Pay attention to who dies tonight",
+            "tip2": "Think about who might be lying",
+            "dayTip1": "Observe player behavior carefully",
+            "dayTip2": "Share information but be careful with accusations"
+          },
+          "seer": {
+            "nightTitle": "Use your vision",
+            "nightDesc": "Choose a player to reveal their true identity.",
+            "dayTitle": "Guide the village",
+            "dayDesc": "Use the information you've gathered wisely.",
+            "tip1": "Reveal suspicious players to find wolves",
+            "tip2": "Be careful not to reveal yourself too early",
+            "dayTip1": "Share revelations strategically",
+            "dayTip2": "Wolves will target you if discovered"
+          },
+          "doctor": {
+            "nightTitle": "Choose who to protect",
+            "nightDesc": "Select a player to heal from wolf attacks tonight.",
+            "dayTitle": "Keep your identity hidden",
+            "dayDesc": "Stay hidden - you're vital for the village's survival.",
+            "tip1": "Try to predict who wolves will target",
+            "tip2": "You cannot heal yourself",
+            "dayTip1": "Don't reveal yourself to the village",
+            "dayTip2": "Watch for patterns in wolf attacks"
+          },
+          "gunner": {
+            "dayTitle": "Use your bullets wisely",
+            "dayDesc": "You can shoot a player during the day if you're certain.",
+            "nightTitle": "Rest for the night",
+            "nightDesc": "Your gun only works during daylight.",
+            "tip1": "Only shoot when you're sure of a wolf",
+            "tip2": "Missing reveals your role to everyone",
+            "nightTip1": "Think about who to target tomorrow"
+          },
+          "jailer": {
+            "nightTitleWithPrisoner": "Interrogate your prisoner",
+            "nightTitle": "The jail is empty",
+            "nightDescWithPrisoner": "Talk to your prisoner and decide their fate.",
+            "nightDesc": "You didn't arrest anyone today.",
+            "dayTitle": "Choose who to arrest",
+            "dayDesc": "Arrest a suspicious player to interrogate them tonight.",
+            "tip1": "Question your prisoner carefully",
+            "tip2": "You can execute them if you believe they're evil",
+            "tip3": "Executing an innocent loses your execution power",
+            "dayTip1": "Arrested players can't use abilities at night",
+            "dayTip2": "Use this to protect potential targets"
+          },
+          "witch": {
+            "nightTitle": "Choose your potions",
+            "nightDesc": "Use your protection or poison potion wisely.",
+            "dayTitle": "Keep your potions secret",
+            "dayDesc": "Your potions are powerful but limited.",
+            "tip1": "Protection potion: Save a player from death",
+            "tip1Used": "Protection potion already used",
+            "tip2": "Poison potion: Kill any player",
+            "tip2Used": "Poison potion already used",
+            "dayTip1": "Don't reveal which potions you have left"
+          },
+          "medium": {
+            "nightTitle": "Speak with the dead",
+            "nightDesc": "Communicate with dead players and gather information.",
+            "dayTitle": "Share wisdom from beyond",
+            "dayDesc": "Use the secrets the dead have shared with you.",
+            "tip1": "Dead players know their killer's identity",
+            "tip2": "You can revive one dead player",
+            "tip2Used": "Revive ability already used",
+            "dayTip1": "Be careful sharing information from the dead"
+          },
+          "cupid": {
+            "nightTitle": "Link two lovers",
+            "nightDesc": "Choose two players to become lovers. If one dies, the other dies too.",
+            "dayTitle": "Protect your lovers",
+            "dayDesc": "Keep your lovers alive - their fate is linked.",
+            "tip1": "Lovers share their fate",
+            "tip2": "If a wolf and villager are linked, they become a third faction",
+            "dayTip1": "Watch over your lovers carefully"
+          },
+          "graveRobber": {
+            "nightTitle": "Visit the graveyard",
+            "nightDesc": "Loot a grave to steal the dead player's role.",
+            "dayTitle": "Act like a villager",
+            "dayDesc": "Keep your grave robbing activities secret.",
+            "tip1": "You become whatever role you steal",
+            "tip2": "Choose valuable roles like Seer or Doctor",
+            "dayTip1": "Don't reveal your new identity too soon"
+          },
+          "captain": {
+            "dayTitleAsserted": "Lead the village",
+            "dayTitle": "Assert your duty",
+            "dayDescAsserted": "Your vote counts triple. Lead wisely.",
+            "dayDesc": "Reveal yourself to gain triple vote power.",
+            "nightTitle": "Rest, Captain",
+            "nightDesc": "Your leadership is needed during the day.",
+            "tip1": "Assert duty to make your vote count 3x",
+            "tip2": "This reveals you to everyone"
+          },
+          "cursed": {
+            "title": "Living under a curse",
+            "desc": "You appear as a villager, but if wolves attack you, you become one of them.",
+            "tip1": "Seers will see you as a villager",
+            "tip2": "Survive wolf attacks to join their pack"
+          },
+          "wolf": {
+            "nightTitle": "Hunt with your pack",
+            "nightDesc": "Vote with your pack to choose tonight's victim.",
+            "dayTitle": "Blend in with villagers",
+            "dayDesc": "Act innocent and cast suspicion on others.",
+            "tip1": "Coordinate with other wolves",
+            "tip2": "Avoid targeting protected players",
+            "dayTip1": "Accuse villagers subtly",
+            "dayTip2": "Don't defend other wolves too obviously"
+          },
+          "wolfSeer": {
+            "nightTitle": "Hunt and uncover",
+            "nightDesc": "Vote to kill AND reveal a player's role to wolves.",
+            "dayTitle": "Use your knowledge",
+            "dayDesc": "Share role information with your pack.",
+            "tip1": "Reveal dangerous roles like Seer or Gunner",
+            "tip2": "Help your pack target the right players",
+            "dayTip1": "Use your knowledge to frame villagers"
+          },
+          "alpha": {
+            "nightTitle": "Lead the hunt",
+            "nightDesc": "Your vote counts double when choosing victims.",
+            "dayTitle": "Command from the shadows",
+            "dayDesc": "Lead your pack to victory.",
+            "tip1": "Your vote weighs more in the pack",
+            "tip2": "Guide younger wolves",
+            "dayTip1": "Coordinate defense strategies"
+          },
+          "nightmare": {
+            "nightTitle": "Spread terror",
+            "nightDesc": "Your attacks leave survivors with nightmares.",
+            "dayTitle": "Hide in plain sight",
+            "dayDesc": "Your presence haunts the village.",
+            "tip1": "Survivors of your attacks are disabled",
+            "tip2": "Use this to neutralize threats"
+          },
+          "babyWolf": {
+            "nightTitle": "Hunt with protection",
+            "nightDesc": "Choose your revenge target in case you're killed.",
+            "dayTitle": "Stay safe, little wolf",
+            "dayDesc": "If killed, you take someone with you.",
+            "tip1": "Choose who dies if you're killed",
+            "tip2": "This discourages attacks on you"
+          },
+          "fool": {
+            "voteTitle": "Get yourself lynched!",
+            "title": "Play the long con",
+            "desc": "You win by getting the village to vote you out.",
+            "tip1": "Act suspicious enough to be lynched",
+            "tip2": "But not so obvious they suspect you're the Fool",
+            "tip3": "You can only win by village vote, not wolf kills"
+          },
+          "sk": {
+            "nightTitle": "Choose your victim",
+            "nightDesc": "Kill one player each night until only you remain.",
+            "dayTitle": "Maintain your cover",
+            "dayDesc": "Blend in while eliminating everyone.",
+            "tip1": "You're immune to wolf attacks",
+            "tip2": "Kill strategically to avoid suspicion",
+            "dayTip1": "Frame wolves for your kills",
+            "dayTip2": "Be the last one standing"
+          },
+          "arsonist": {
+            "nightTitle": "Spread the flames",
+            "nightDesc": "Pour gasoline on players, then ignite when ready.",
+            "dayTitle": "Plan your inferno",
+            "dayDesc": "Bide your time until the fire spreads.",
+            "tip1": "players marked with gasoline",
+            "tip2": "You can ignite them all!",
+            "tip3": "Mark at least 2 to ignite",
+            "dayTip1": "No one knows who you've marked"
+          },
+          "ghost": {
+            "nightTitle": "Choose who to visit",
+            "nightDesc": "Visit a player each night to stay alive.",
+            "dayTitle": "Watch from the shadows",
+            "dayDesc": "You must visit someone each night to survive.",
+            "tip1": "Visit someone to stay safe tonight",
+            "tip2": "You must visit a player each night to survive"
+          }
+        },
+        "voteTracker": {
+          "title": "Vote Tracker",
+          "leading": "Leading",
+          "tied": "Tied",
+          "noVotes": "No votes yet",
+          "waiting": "Waiting for votes...",
+          "voted": "voted",
+          "votes": "votes"
+        },
+        "confirmLeave": "Are you sure you want to leave the game?",
+        "confirmLogout": "Are you sure you want to logout?",
+        "homepage": "Homepage",
+        "leave": "Leave Game",
+        "mute": "Mute",
+        "unmute": "Unmute",
+        "selectTarget": "Select a target",
+        "cancel": "Cancel",
+        "close": "Close",
+        "dontVote": "Don't want to vote",
+        "noPlayers": "No players",
+        "noRoles": "No roles information",
+        "tooltip": {
+          "underArrest": "Under arrest",
+          "discuss": "Discuss with the village",
+          "voteResult": "Waiting for vote results",
+          "voteAgainst": "Vote against a player"
+        },
+        "actionCompleted": "Action completed"
       },
       "questionmark": "?",
       "exclamation": "!",
@@ -370,15 +651,283 @@
         "ready": "Prêt !",
         "clickReady": "Je suis prêt !",
         "tooltip": {
+          "underArrest": "En prison",
+          "discuss": "Discutez avec le village",
+          "voteResult": "En attente des résultats du vote",
           "voteAgainst": "Le Village doit choisir : Voter contre un joueur",
           "wolfVoteAgainst": "Les loups peuvent choisir qui dévorer",
           "seeOrWriteMessage": "Voir ou écrire un message"
         },
+        "close": "Fermer",
+        "noPlayers": "Aucun joueur",
+        "noRoles": "Aucune information sur les rôles",
         "sideSummary": {
           "title": "Résumé de la partie"
         },
         "actionBar": {
           "title": "Barre d'actions"
+        },
+        "players": "Joueurs",
+        "roles": "Rôles",
+        "alive": "En vie",
+        "dead": "Morts",
+        "village": "Village",
+        "wolves": "Loups-garous",
+        "solo": "Solo",
+        "death": {
+          "lynch": "Éliminé par vote",
+          "wolves": "Dévoré par les loups",
+          "gunshot": "Abattu",
+          "poison": "Empoisonné",
+          "execution": "Exécuté",
+          "fire": "Brûlé vif",
+          "murder": "Assassiné",
+          "lover": "Mort de chagrin",
+          "ghost": "Accident paranormal",
+          "revenge": "Vengeance du Bébé Loup"
+        },
+        "aftermath": {
+          "nightTitle": "L'aube se lève...",
+          "nightSubtitle": "Voici ce qui s'est passé pendant la nuit",
+          "voteTitle": "Le village a parlé...",
+          "voteSubtitle": "Le verdict est tombé",
+          "wolvesKilled": "Les loups ont tué",
+          "skKilled": "Le Tueur en Série a assassiné",
+          "poisoned": "Empoisonné",
+          "ghostKilled": "Tué par un fantôme",
+          "burned": "Brûlé vif",
+          "otherDeaths": "Également mort",
+          "peacefulNight": "Une nuit paisible... personne n'est mort",
+          "villageVoted": "Le village a voté pour éliminer",
+          "noConsensus": "Pas de consensus... personne n'a été éliminé"
+        },
+        "wolfPack": "Meute de Loups",
+        "wolfTarget": "Cible",
+        "wolfVotes": "Votes de la Meute",
+        "revealedToWolves": "Rôles Révélés",
+        "notVotedYet": "Réfléchit...",
+        "roleUnknown": "Inconnu",
+        "noChatAvailable": "Pas de chat disponible",
+        "you": "Toi",
+        "idle": {
+          "dead": {
+            "title": "Tu es mort",
+            "desc": "Observe la partie depuis l'au-delà.",
+            "tip1": "Ton rôle a été révélé à tous les joueurs",
+            "tip2": "Tu ne peux plus voter ni utiliser tes pouvoirs",
+            "tipMedium": "En tant que Médium, tu peux encore communiquer avec les vivants"
+          },
+          "jail": {
+            "title": "Tu es en prison",
+            "desc": "Le Geôlier t'a arrêté pour la nuit.",
+            "tip1": "Tu ne peux pas utiliser tes pouvoirs cette nuit",
+            "tip2": "Convaincs le Geôlier de ton innocence",
+            "tip3": "S'il doute de toi, il peut t'exécuter"
+          },
+          "dawnApproaching": "L'aube approche",
+          "nightResults": "Les événements de la nuit vont bientôt être révélés.",
+          "voteResults": "Décompte des votes",
+          "verdictSoon": "Le verdict du village va être annoncé.",
+          "canReveal": "Peut révéler un joueur",
+          "alreadyRevealed": "Déjà révélé aujourd'hui",
+          "bulletsLeft": "balles restantes",
+          "canUncover": "Peut découvrir un rôle",
+          "villager": {
+            "nightTitle": "Le village dort",
+            "nightDesc": "Reste en sécurité cette nuit. Tu n'as pas de pouvoir spécial.",
+            "dayTitle": "Discute avec le village",
+            "dayDesc": "Partage tes soupçons et écoute les autres.",
+            "tip1": "Fais attention à qui meurt cette nuit",
+            "tip2": "Réfléchis à qui pourrait mentir",
+            "dayTip1": "Observe attentivement le comportement des joueurs",
+            "dayTip2": "Partage des informations mais sois prudent avec les accusations"
+          },
+          "seer": {
+            "nightTitle": "Utilise ta vision",
+            "nightDesc": "Choisis un joueur pour révéler sa véritable identité.",
+            "dayTitle": "Guide le village",
+            "dayDesc": "Utilise les informations que tu as recueillies avec sagesse.",
+            "tip1": "Révèle les joueurs suspects pour trouver les loups",
+            "tip2": "Fais attention à ne pas te révéler trop tôt",
+            "dayTip1": "Partage tes révélations stratégiquement",
+            "dayTip2": "Les loups te cibleront s'ils te découvrent"
+          },
+          "doctor": {
+            "nightTitle": "Choisis qui protéger",
+            "nightDesc": "Sélectionne un joueur à soigner des attaques de loups cette nuit.",
+            "dayTitle": "Cache ton identité",
+            "dayDesc": "Reste caché - tu es vital pour la survie du village.",
+            "tip1": "Essaie de prédire qui les loups vont cibler",
+            "tip2": "Tu ne peux pas te soigner toi-même",
+            "dayTip1": "Ne te révèle pas au village",
+            "dayTip2": "Observe les schémas d'attaque des loups"
+          },
+          "gunner": {
+            "dayTitle": "Utilise tes balles sagement",
+            "dayDesc": "Tu peux tirer sur un joueur pendant la journée si tu es certain.",
+            "nightTitle": "Repose-toi cette nuit",
+            "nightDesc": "Ton arme ne fonctionne qu'en plein jour.",
+            "tip1": "Ne tire que quand tu es sûr d'un loup",
+            "tip2": "Rater révèle ton rôle à tout le monde",
+            "nightTip1": "Réfléchis à qui cibler demain"
+          },
+          "jailer": {
+            "nightTitleWithPrisoner": "Interroge ton prisonnier",
+            "nightTitle": "La prison est vide",
+            "nightDescWithPrisoner": "Parle à ton prisonnier et décide de son sort.",
+            "nightDesc": "Tu n'as arrêté personne aujourd'hui.",
+            "dayTitle": "Choisis qui arrêter",
+            "dayDesc": "Arrête un joueur suspect pour l'interroger cette nuit.",
+            "tip1": "Questionne ton prisonnier avec soin",
+            "tip2": "Tu peux l'exécuter si tu crois qu'il est maléfique",
+            "tip3": "Exécuter un innocent te fait perdre ton pouvoir d'exécution",
+            "dayTip1": "Les joueurs arrêtés ne peuvent pas utiliser leurs pouvoirs la nuit",
+            "dayTip2": "Utilise cela pour protéger des cibles potentielles"
+          },
+          "witch": {
+            "nightTitle": "Choisis tes potions",
+            "nightDesc": "Utilise ta potion de protection ou de poison avec sagesse.",
+            "dayTitle": "Garde tes potions secrètes",
+            "dayDesc": "Tes potions sont puissantes mais limitées.",
+            "tip1": "Potion de protection : Sauve un joueur de la mort",
+            "tip1Used": "Potion de protection déjà utilisée",
+            "tip2": "Potion de poison : Tue n'importe quel joueur",
+            "tip2Used": "Potion de poison déjà utilisée",
+            "dayTip1": "Ne révèle pas quelles potions il te reste"
+          },
+          "medium": {
+            "nightTitle": "Parle avec les morts",
+            "nightDesc": "Communique avec les joueurs morts et recueille des informations.",
+            "dayTitle": "Partage la sagesse de l'au-delà",
+            "dayDesc": "Utilise les secrets que les morts ont partagés avec toi.",
+            "tip1": "Les joueurs morts connaissent l'identité de leur tueur",
+            "tip2": "Tu peux ressusciter un joueur mort",
+            "tip2Used": "Pouvoir de résurrection déjà utilisé",
+            "dayTip1": "Sois prudent en partageant les informations des morts"
+          },
+          "cupid": {
+            "nightTitle": "Lie deux amoureux",
+            "nightDesc": "Choisis deux joueurs qui deviendront amoureux. Si l'un meurt, l'autre meurt aussi.",
+            "dayTitle": "Protège tes amoureux",
+            "dayDesc": "Garde tes amoureux en vie - leur destin est lié.",
+            "tip1": "Les amoureux partagent leur destin",
+            "tip2": "Si un loup et un villageois sont liés, ils deviennent une troisième faction",
+            "dayTip1": "Veille sur tes amoureux attentivement"
+          },
+          "graveRobber": {
+            "nightTitle": "Visite le cimetière",
+            "nightDesc": "Pille une tombe pour voler le rôle du joueur mort.",
+            "dayTitle": "Agis comme un villageois",
+            "dayDesc": "Garde tes activités de pillage secrètes.",
+            "tip1": "Tu deviens le rôle que tu voles",
+            "tip2": "Choisis des rôles précieux comme Voyante ou Docteur",
+            "dayTip1": "Ne révèle pas ta nouvelle identité trop tôt"
+          },
+          "captain": {
+            "dayTitleAsserted": "Dirige le village",
+            "dayTitle": "Affirme ton autorité",
+            "dayDescAsserted": "Ton vote compte triple. Dirige avec sagesse.",
+            "dayDesc": "Révèle-toi pour obtenir un vote triple.",
+            "nightTitle": "Repose-toi, Capitaine",
+            "nightDesc": "Ton leadership est nécessaire pendant la journée.",
+            "tip1": "Affirme ton autorité pour que ton vote compte 3x",
+            "tip2": "Cela te révèle à tout le monde"
+          },
+          "cursed": {
+            "title": "Vivre sous une malédiction",
+            "desc": "Tu apparais comme un villageois, mais si les loups t'attaquent, tu deviens l'un d'eux.",
+            "tip1": "Les Voyantes te verront comme un villageois",
+            "tip2": "Survit aux attaques de loups pour rejoindre leur meute"
+          },
+          "wolf": {
+            "nightTitle": "Chasse avec ta meute",
+            "nightDesc": "Vote avec ta meute pour choisir la victime de cette nuit.",
+            "dayTitle": "Fonds-toi parmi les villageois",
+            "dayDesc": "Agis innocemment et jette la suspicion sur les autres.",
+            "tip1": "Coordonne-toi avec les autres loups",
+            "tip2": "Évite de cibler les joueurs protégés",
+            "dayTip1": "Accuse les villageois subtilement",
+            "dayTip2": "Ne défends pas les autres loups trop ouvertement"
+          },
+          "wolfSeer": {
+            "nightTitle": "Chasse et découvre",
+            "nightDesc": "Vote pour tuer ET révèle le rôle d'un joueur aux loups.",
+            "dayTitle": "Utilise tes connaissances",
+            "dayDesc": "Partage les informations sur les rôles avec ta meute.",
+            "tip1": "Révèle les rôles dangereux comme Voyante ou Tireur",
+            "tip2": "Aide ta meute à cibler les bons joueurs",
+            "dayTip1": "Utilise tes connaissances pour incriminer les villageois"
+          },
+          "alpha": {
+            "nightTitle": "Mène la chasse",
+            "nightDesc": "Ton vote compte double lors du choix des victimes.",
+            "dayTitle": "Commande depuis l'ombre",
+            "dayDesc": "Mène ta meute vers la victoire.",
+            "tip1": "Ton vote pèse plus dans la meute",
+            "tip2": "Guide les jeunes loups",
+            "dayTip1": "Coordonne les stratégies de défense"
+          },
+          "nightmare": {
+            "nightTitle": "Répands la terreur",
+            "nightDesc": "Tes attaques laissent des cauchemars aux survivants.",
+            "dayTitle": "Cache-toi en pleine vue",
+            "dayDesc": "Ta présence hante le village.",
+            "tip1": "Les survivants de tes attaques sont neutralisés",
+            "tip2": "Utilise cela pour neutraliser les menaces"
+          },
+          "babyWolf": {
+            "nightTitle": "Chasse avec protection",
+            "nightDesc": "Choisis ta cible de vengeance au cas où tu serais tué.",
+            "dayTitle": "Reste en sécurité, petit loup",
+            "dayDesc": "Si tu es tué, tu emportes quelqu'un avec toi.",
+            "tip1": "Choisis qui meurt si tu es tué",
+            "tip2": "Cela décourage les attaques contre toi"
+          },
+          "fool": {
+            "voteTitle": "Fais-toi lyncher !",
+            "title": "Joue le long terme",
+            "desc": "Tu gagnes en te faisant voter par le village.",
+            "tip1": "Agis assez suspicieux pour être lynché",
+            "tip2": "Mais pas trop évident qu'ils soupçonnent le Fou",
+            "tip3": "Tu ne peux gagner que par vote du village, pas par les loups"
+          },
+          "sk": {
+            "nightTitle": "Choisis ta victime",
+            "nightDesc": "Tue un joueur chaque nuit jusqu'à être le dernier.",
+            "dayTitle": "Maintiens ta couverture",
+            "dayDesc": "Fonds-toi tout en éliminant tout le monde.",
+            "tip1": "Tu es immunisé contre les attaques de loups",
+            "tip2": "Tue stratégiquement pour éviter les soupçons",
+            "dayTip1": "Fais accuser les loups pour tes meurtres",
+            "dayTip2": "Sois le dernier debout"
+          },
+          "arsonist": {
+            "nightTitle": "Répands les flammes",
+            "nightDesc": "Verse de l'essence sur les joueurs, puis enflamme quand tu es prêt.",
+            "dayTitle": "Planifie ton incendie",
+            "dayDesc": "Attends que le feu se propage.",
+            "tip1": "joueurs marqués avec de l'essence",
+            "tip2": "Tu peux tous les enflammer !",
+            "tip3": "Marque au moins 2 joueurs pour enflammer",
+            "dayTip1": "Personne ne sait qui tu as marqué"
+          },
+          "ghost": {
+            "nightTitle": "Choisis qui visiter",
+            "nightDesc": "Visite un joueur chaque nuit pour rester en vie.",
+            "dayTitle": "Observe depuis les ombres",
+            "dayDesc": "Tu dois visiter quelqu'un chaque nuit pour survivre.",
+            "tip1": "Visite quelqu'un pour être en sécurité cette nuit",
+            "tip2": "Tu dois visiter un joueur chaque nuit pour survivre"
+          }
+        },
+        "voteTracker": {
+          "title": "Suivi des votes",
+          "leading": "En tête",
+          "tied": "Égalité",
+          "noVotes": "Pas encore de votes",
+          "waiting": "En attente des votes...",
+          "voted": "ont voté",
+          "votes": "votes"
         }
       },
       "questionmark": " ?",
