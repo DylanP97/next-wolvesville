@@ -16,7 +16,7 @@
     "@nextui-org/react": "^2.1.13",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
-    "geist": "^1.0.0",
+    "geist": "^1.5.1",
     "i18next": "^23.11.3",
     "i18next-browser-languagedetector": "^7.2.1",
     "lucide-react": "^0.555.0",
