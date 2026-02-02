@@ -1,10 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: [
-            "res.cloudinary.com",
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'res.cloudinary.com',
+                pathname: '/dnhq4fcyp/**',
+            },
         ],
-        unoptimized: true,
     },
     experimental: {
         optimizePackageImports: ['@dicebear/core', '@dicebear/collection'],

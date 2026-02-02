@@ -14,6 +14,7 @@ import {
   User,
 } from "@nextui-org/react";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import i18n from "../lib/i18n";
 
@@ -139,7 +140,7 @@ const RoleSelectionModal = ({
                     value={role.name}
                     className="text-slate-800"
                     startContent={
-                      <img src={role.image} alt={role.name} className="w-6 h-6 rounded" />
+                      <Image src={role.image} alt={role.name} width={24} height={24} className="w-6 h-6 rounded" />
                     }
                   >
                     {i18n.language === "fr" ? role.nameFR : role.name}

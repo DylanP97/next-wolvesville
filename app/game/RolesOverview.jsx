@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
+
+const BLUR_PLACEHOLDER =
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAL0lEQVQYlWN89+7dfwYGBgYmBjIBEwMDAyMjIyMDMTYwMjIyEGUDAwMDAxMDmQAAiYwHAWB+PVQAAAAASUVORK5CYII=";
 import i18n from '../lib/i18n';
 import { useAuth } from '../providers/AuthProvider';
 
@@ -81,6 +84,8 @@ const RolesOverview = ({ rolesInGame, usersInTheRoom, onReady }) => {
                             width={64}
                             height={64}
                             className="object-cover w-full h-full"
+                            placeholder="blur"
+                            blurDataURL={BLUR_PLACEHOLDER}
                         />
                     ) : (
                         <div className="w-full h-full bg-gradient-to-br from-purple-400 to-blue-400" />
