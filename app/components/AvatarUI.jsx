@@ -4,11 +4,21 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@nextui-org/react";
 
+const avatarCache = new Map();
+
 const AvatarUI = ({ avatar, heightAndWidth, inGameAv }) => {
-  const [avatarState, setAvatarState] = useState();
+  const cacheKey = avatar ? JSON.stringify(avatar) : null;
+  const [avatarState, setAvatarState] = useState(() => {
+    if (cacheKey && avatarCache.has(cacheKey)) return avatarCache.get(cacheKey);
+    return undefined;
+  });
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || !avatar) return;
+    if (cacheKey && avatarCache.has(cacheKey)) {
+      setAvatarState(avatarCache.get(cacheKey));
+      return;
+    }
 
     // Dynamic import to avoid SSR issues
     Promise.all([
@@ -38,9 +48,10 @@ const AvatarUI = ({ avatar, heightAndWidth, inGameAv }) => {
         size: 64,
       }).toDataUriSync();
 
+      avatarCache.set(cacheKey, a);
       setAvatarState(a);
     });
-  }, [avatar]);
+  }, [avatar, cacheKey]);
 
   return avatar && avatarState ? (
     <div

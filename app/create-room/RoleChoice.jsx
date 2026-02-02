@@ -55,9 +55,11 @@ const RoleChoice = ({ role, handleRoleChange }) => {
       <CardBody className="p-4 relative">
         <div className="flex items-center gap-3 mb-3">
           <div className="">
-            <img
+            <Image
               src={role.image}
               alt={displayName}
+              width={56}
+              height={56}
               className="w-14 h-14 rounded-lg object-cover"
             />
           </div>
