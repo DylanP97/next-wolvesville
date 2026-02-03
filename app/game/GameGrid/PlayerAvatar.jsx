@@ -5,6 +5,9 @@ import AvatarUI from "../../components/AvatarUI";
 import { useAuth } from "../../providers/AuthProvider";
 import { useEffect } from "react";
 
+const BLUR_PLACEHOLDER =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAL0lEQVQYlWN89+7dfwYGBgYmBjIBEwMDAyMjIyMDMTYwMjIyEGUDAwMDAxMDmQAAiYwHAWB+PVQAAAAASUVORK5CYII=";
+
 const PlayerAvatar = ({ isAlive, avatar, inGameAv, showBurnFlame}) => {
 
   const { connectedUsers } = useAuth();
@@ -22,6 +25,8 @@ const PlayerAvatar = ({ isAlive, avatar, inGameAv, showBurnFlame}) => {
           className="max-h-[64px] object-contain w-full"
           src="https://res.cloudinary.com/dnhq4fcyp/image/upload/v1717509814/grave_nmqqmp.png"
           alt="tombstone"
+          placeholder="blur"
+          blurDataURL={BLUR_PLACEHOLDER}
         />
       ) : avatar ? (
         <AvatarUI heightAndWidth={64} avatar={avatar} inGameAv={inGameAv} />
@@ -31,6 +36,8 @@ const PlayerAvatar = ({ isAlive, avatar, inGameAv, showBurnFlame}) => {
           height={64}
           width={64}
           alt="cpu-player-avatar"
+          placeholder="blur"
+          blurDataURL={BLUR_PLACEHOLDER}
         />
       )}
     </>

@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { btnClassNames } from "../lib/styles";
 import RoleSelectionModal from "./RoleSelectionModal";
 import { fetchRoles } from "../lib/fetch";
+import { preloadImages } from "../lib/preloadImages";
 
 // Icons
 import { Users, Bot, Clock, Trash2 } from "lucide-react";
@@ -31,6 +32,12 @@ const JoinRoom = () => {
       try {
         const rolesData = await fetchRoles();
         setAvailableRoles(rolesData || []);
+
+        // Preload role images into browser cache
+        if (rolesData) {
+          const imageUrls = rolesData.flatMap((r) => [r.image, r.image2]);
+          preloadImages(imageUrls);
+        }
       } catch (error) {
         console.error("Error fetching roles:", error);
       }

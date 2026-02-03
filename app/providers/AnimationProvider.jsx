@@ -6,6 +6,9 @@ import { replacePlaceholders } from "../lib/utils";
 
 const AnimationContext = createContext();
 
+// Module-level cache for Lottie JSON data
+const lottieCache = new Map();
+
 export const AnimationProvider = ({ children }) => {
   const [showAnimation, setShowAnimation] = useState(false);
   const [currentAnimation, setCurrentAnimation] = useState(null);
@@ -23,6 +26,18 @@ export const AnimationProvider = ({ children }) => {
     import("react-lottie").then((module) => {
       setLottie(() => module.default);
     });
+
+    // Pre-cache all Lottie animation JSON files in the background
+    animationsData
+      .filter((a) => a.type === "lottie")
+      .forEach((a) => {
+        if (!lottieCache.has(a.path)) {
+          fetch(a.path)
+            .then((res) => res.json())
+            .then((json) => lottieCache.set(a.path, json))
+            .catch(() => {});
+        }
+      });
   }, []);
   
 
@@ -69,40 +84,42 @@ export const AnimationProvider = ({ children }) => {
 
     // Handle Lottie JSON animations
     if (animation.type === "lottie") {
-      try {
+      const playLottie = (animationJSON) => {
+        setAnimationData(animationJSON);
+        setShowAnimation(true);
+        setFadeOut(false);
+
+        setTimeout(() => {
+          setFadeOut(true);
+          setTimeout(() => {
+            setShowAnimation(false);
+            setCurrentAnimation(null);
+            setAnimationData(null);
+            setAnimationText(null);
+            isPlayingRef.current = false;
+            processNextAnimation();
+          }, 500);
+        }, animation.ms);
+      };
+
+      // Use cached data if available, otherwise fetch
+      if (lottieCache.has(animation.path)) {
+        playLottie(lottieCache.get(animation.path));
+      } else {
         fetch(animation.path)
           .then((response) => {
             if (!response.ok) throw new Error(`Failed to load animation`);
             return response.json();
           })
           .then((animationJSON) => {
-            setAnimationData(animationJSON);
-            setShowAnimation(true);
-            setFadeOut(false);
-
-            setTimeout(() => {
-              setFadeOut(true);
-              setTimeout(() => {
-                setShowAnimation(false);
-                setCurrentAnimation(null);
-                setAnimationData(null);
-                setAnimationText(null);
-                // Animation finished, process next one
-                isPlayingRef.current = false;
-                processNextAnimation();
-              }, 500);
-            }, animation.ms);
+            lottieCache.set(animation.path, animationJSON);
+            playLottie(animationJSON);
           })
           .catch((error) => {
             console.error("Failed to load animation:", error);
-            // On error, process next one
             isPlayingRef.current = false;
             processNextAnimation();
           });
-      } catch (error) {
-        console.error("Failed to load animation:", error);
-        isPlayingRef.current = false;
-        processNextAnimation();
       }
     }
     // Handle MP4 video animations

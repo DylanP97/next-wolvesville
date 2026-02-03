@@ -9,6 +9,7 @@ import CreateRoomStep3 from "./create-room/CreateRoomStep3";
 import CreateRoomStep4 from "./create-room/CreateRoomStep4";
 import { useTranslation } from "react-i18next";
 import { fetchRoles, fetchTeams } from "./lib/fetch";
+import { preloadImages } from "./lib/preloadImages";
 import { btnClassNames } from "./lib/styles";
 
 const CreateRoom = () => {
@@ -42,6 +43,10 @@ const CreateRoom = () => {
         const rolesData = await fetchRoles();
         const filteredRoles = rolesData.filter((r) => r.status == 1);
         setAvailableRoles(filteredRoles.map((r) => ({ ...r, count: 0 })));
+
+        // Preload role images into browser cache
+        const imageUrls = filteredRoles.flatMap((r) => [r.image, r.image2]);
+        preloadImages(imageUrls);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
