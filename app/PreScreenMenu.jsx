@@ -115,51 +115,51 @@ const PreScreenMenu = () => {
       <div className="relative flex flex-col flex-grow justify-center items-center">
         <WerewolfBackground />
         <Title />
-        <nav className="top-1/3 flex flex-col items-center py-4 w-full z-20">
+        <nav className="flex flex-col items-center py-4 w-full z-20 gap-3">
           <Button
-            className={getBtnClassNames("w-80") + " text-md font-medium h-12 font-wolf"}
-            color="primary"
+            className="w-72 sm:w-80 h-14 text-lg font-bold shadow-lg shadow-amber-500/30 border-2 border-yellow-300/60"
+            color="warning"
             variant="shadow"
             onClick={() => setLogOption("guestPlay")}
           >
             {t("prescreen.guest")}
           </Button>
-          <Button
-            className={getBtnClassNames("w-80") + " text-md font-medium h-12 font-wolf"}
-            color="primary"
-            onClick={() => setLogOption("login")}
-            variant="shadow"
-          >
-            {t("prescreen.logIn")}
-          </Button>
-          <Button
-            className={getBtnClassNames("w-80") + " text-md font-medium h-12 font-wolf"}
-            color="primary"
-            onClick={() => setLogOption("register")}
-            variant="shadow"
-          >
-            {t("prescreen.register")}
-          </Button>
-          <Button
-            className={getBtnClassNames("w-80 ") + " text-md font-medium h-12 font-wolf"}
-            color="primary"
+          <div className="flex flex-row gap-3">
+            <Button
+              className="w-36 sm:w-[9.5rem] h-11 text-sm font-medium"
+              color="primary"
+              variant="flat"
+              onClick={() => setLogOption("login")}
+            >
+              {t("prescreen.logIn")}
+            </Button>
+            <Button
+              className="w-36 sm:w-[9.5rem] h-11 text-sm font-medium"
+              color="primary"
+              variant="flat"
+              onClick={() => setLogOption("register")}
+            >
+              {t("prescreen.register")}
+            </Button>
+          </div>
+          <button
+            className="text-sm text-slate-300 hover:text-white underline underline-offset-4 transition-colors"
             onClick={() => setActiveComponent(<RolesGrid onBack={() => {setActiveComponent(<PreScreenMenu />)}} />)}
-            variant="ghost"
           >
             {t("menu.4")}
-          </Button>
+          </button>
         </nav>
 
+        <p className="italic px-8 text-center text-white/70 text-sm max-w-[500px] z-20">{t("intro.additionalInfo")}</p>
         <a
           target="_blank"
           rel="noopener noreferrer"
-          className="italic text-white flex justify-center text-xs
+          className="italic pt-2 text-white/50 flex justify-center text-xs
                    hover:underline hover:text-primary transition-colors z-20"
           href="https://www.wolvesville.com"
         >
           {t("intro.ref")}
         </a>
-        <p className="italic pt-4 px-8 text-center text-white text-xs max-w-[500px] z-20">{t("intro.additionalInfo")}</p>
         {
           !isFullscreen && (<p className="absolute top-16 right-6 italic text-center text-white text-xs z-20 animate-pulse">{t("intro.betterExperience")}</p>)
         }

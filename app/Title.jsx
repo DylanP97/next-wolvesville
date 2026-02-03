@@ -7,11 +7,11 @@ const Title = () => {
 
   return (
     <div className="mx-4 z-10">
-      <h1 className="animate-pulse text-center font-wolf relative overflow-hidden flex flex-col animated-text">
-        <span className="text-[20px] md:text-[40px]">
+      <h1 className="text-center font-wolf relative overflow-hidden flex flex-col animated-text">
+        <span className="text-[16px] md:text-[28px]">
           {t("intro.title")}
         </span>
-        <span className="text-[70px] md:text-[120px]">
+        <span className="text-[50px] md:text-[80px] leading-tight">
           {t("intro.title2")}
         </span>
       </h1>

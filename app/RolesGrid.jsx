@@ -33,7 +33,7 @@ const RolesGrid = ({ onBack }) => {
       </div>
       {onBack && (
         <Button
-          className={getBtnClassNames("w-80") + " font-wolf"}
+          className={getBtnClassNames("w-80")}
           color="secondary"
           variant="shadow"
           onClick={onBack}

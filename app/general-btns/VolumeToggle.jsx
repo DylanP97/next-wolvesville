@@ -15,17 +15,19 @@ const VolumeToggle = () => {
 
   return (
     <Tooltip content="Toggle volume" color="secondary" variant="faded">
-      <Button
-        isIconOnly
-        size="sm"
-        color={!isMuted ? "success" : "danger"}
-        variant="solid"
-        aria-label="volumeToggle"
-        onPress={toggleVolume}
-        className={getBtnClassNames("w-10")}
-      >
-        {!isMuted ? <VolumeOnIcon /> : <VolumeOffIcon />}
-      </Button>
+      <span>
+        <Button
+          isIconOnly
+          size="sm"
+          color={!isMuted ? "success" : "danger"}
+          variant="solid"
+          aria-label="volumeToggle"
+          onPress={toggleVolume}
+          className={getBtnClassNames("w-10")}
+        >
+          {!isMuted ? <VolumeOnIcon /> : <VolumeOffIcon />}
+        </Button>
+      </span>
     </Tooltip>
   );
 };

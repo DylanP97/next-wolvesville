@@ -25,7 +25,7 @@ const PlayerCard = memo(({ player, isCurrentUser }) => {
 PlayerCard.displayName = "PlayerCard";
 
 const Matchmaking = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { socket, username, socketId, avatar } = useAuth();
 
   const [matchmakingStatus, setMatchmakingStatus] = useState({
@@ -58,7 +58,7 @@ const Matchmaking = () => {
 
     // THEN auto-join queue - use socket.id instead of socketId from auth
     console.log("Auto-joining matchmaking queue with socket.id:", socket.id);
-    socket.emit("joinMatchmaking", username, socket.id, avatar);
+    socket.emit("joinMatchmaking", username, socket.id, avatar, i18n.language || 'fr');
 
     return () => {
       // Only leave queue if match wasn't found (user manually left)

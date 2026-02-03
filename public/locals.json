@@ -71,8 +71,8 @@
       },
       "prescreen": {
         "guest": "Play as Guest",
-        "logIn": "Log in with your account",
-        "register": "Register a new account",
+        "logIn": "Log In",
+        "register": "Register",
         "loading": "Loading...",
         "serverLoading": "Server is starting... please wait a moment"
       },
@@ -80,7 +80,7 @@
         "title": "Welcome to the game of",
         "title2": " Werewolves",
         "ref": "Check the original game here",
-        "additionalInfo": "The game is played in real time with a chat room, specific roles, and a voting system. The game can be played by multiple users or computers in real time thanks to server-side WebSockets.",
+        "additionalInfo": "Unmask the wolves. Protect the village. Who will you trust?",
         "un": "Username",
         "em": "Email",
         "pw": "Password",
@@ -109,13 +109,15 @@
       "menu": {
         "title": "Main Menu",
         "matchmaking": "Matchmaking",
-        "soloQuickGame": "Solo Quick Game",
+        "soloQuickGame": "Quick Solo",
         "0": "Quick Game (solo no matchmaking)",
-        "1": "Join Room / Lobby",
+        "1": "Join Room",
         "2": "Create Room",
         "3": "Connected Players",
         "4": "View Roles",
-        "5": "Edit Profile"
+        "5": "Edit Profile",
+        "playSection": "Play",
+        "exploreSection": "Explore"
       },
       "matchmaking": {
         "title": "Matchmaking",
@@ -290,7 +292,8 @@
           "outcome": {
             "basic": "💀✉️ Has a result of the village vote, the town decided to kill ",
             "foolWins": "🤡 The fool wins! 🤡",
-            "null": "🤔 The town couldn't decide who to kill!"
+            "null": "🤔 The town couldn't decide who to kill!",
+            "tiebreaker": "⚖️💀 The vote was tied! After days of conflict, fate has decided to eliminate"
           }
         },
         "game": {
@@ -394,9 +397,9 @@
         }
       },
       "prescreen": {
-        "guest": "Joué comme invité",
-        "logIn": "Se connecter avec mon compte",
-        "register": "Créer un compte",
+        "guest": "Jouer en invité",
+        "logIn": "Connexion",
+        "register": "Inscription",
         "loading": "Chargement...",
         "serverLoading": "Le serveur se réveille après une période d'inactivité... "
       },
@@ -404,7 +407,7 @@
         "title": "Bienvenue dans le jeu du",
         "title2": " Loup-garou",
         "ref": "Cliquez ici pour voir le jeu officiel Wolvesville",
-        "additionalInfo": "Le jeu se joue en temps réel avec un espace de discussion, des rôles spécifiques et un système de vote. Le jeu peut être joué avec plusieurs utilisateurs ou ordinateurs, en temps réel grâce aux websockets côté serveur.",
+        "additionalInfo": "Démasquez les loups. Protégez le village. En qui aurez-vous confiance ?",
         "un": "Pseudo",
         "em": "Adresse email",
         "pw": "Mot de passe",
@@ -433,13 +436,15 @@
       "menu": {
         "title": "Menu principal",
         "matchmaking": "Matchmaking",
-        "soloQuickGame": "Partie Rapide Solo",
+        "soloQuickGame": "Partie Solo",
         "0": "Partie Rapide (solo & rôle aléatoire)",
-        "1": "Rejoindre une salle / Lobby",
-        "2": "Création de salle ",
+        "1": "Rejoindre",
+        "2": "Créer une salle",
         "3": "Joueurs connectés",
         "4": "Liste des roles",
-        "5": "Modifier mon profil"
+        "5": "Modifier mon profil",
+        "playSection": "Jouer",
+        "exploreSection": "Explorer"
       },
       "matchmaking": {
         "title": "Matchmaking",
@@ -457,7 +462,7 @@
         "title": "Liste des joueurs connectés",
         "nousers": "Il n'y a pas de joueurs connectés"
       },
-      "goback": "Revenir à la page précédente",
+      "goback": "Retour",
       "gobackmenu": "← Menu principal",
       "quitgame": "Quitter la Partie",
       "settings": "Paramètres",
@@ -614,7 +619,8 @@
           "outcome": {
             "basic": "💀✉️ Après vote, le village a décidé de tuer ",
             "foolWins": "🤡 Le fou a gagné ! Il vous remercie d'avoir voter contre lui ! 🤡",
-            "null": "🤔 Le village n'a pas su décider qui éliminé..."
+            "null": "🤔 Le village n'a pas su décider qui éliminé...",
+            "tiebreaker": "⚖️💀 Égalité au vote ! Après des jours de conflit, le destin a décidé d'éliminer"
           }
         },
         "game": {

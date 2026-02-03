@@ -12,7 +12,7 @@ import { fetchRoles, fetchTeams } from "./lib/fetch";
 import { btnClassNames } from "./lib/styles";
 
 const CreateRoom = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { username, socket, addRoom, socketId, avatar } = useAuth();
   const [availableRoles, setAvailableRoles] = useState([]);
   const [availableTeams, setAvailableTeams] = useState([]);
@@ -129,6 +129,7 @@ const CreateRoom = () => {
       usersInTheRoom: [{ username, socketId, avatar, preferredRole }],
       isLaunched: false,
       allowRoleSelection: true, // Flag to enable role selection for joiners
+      language: i18n.language || 'fr', // Language for CPU chat messages
     };
 
     socket.emit("createRoom", newRoom);

@@ -18,17 +18,19 @@ function LanguageToggle() {
 
   return (
     <Tooltip content={t("change.language")} color="secondary" variant="faded">
-      <Button
-        size="sm"
-        isIconOnly
-        color="secondary"
-        variant="solid"
-        aria-label={currentLanguage}
-        onPress={toggleLanguage}
-        className={getBtnClassNames("w-10")}
-      >
-        {currentLanguage === "en" ? "🇬🇧" : "🇫🇷"}
-      </Button>
+      <span>
+        <Button
+          size="sm"
+          isIconOnly
+          color="secondary"
+          variant="solid"
+          aria-label={currentLanguage}
+          onPress={toggleLanguage}
+          className={getBtnClassNames("w-10")}
+        >
+          {currentLanguage === "en" ? "🇬🇧" : "🇫🇷"}
+        </Button>
+      </span>
     </Tooltip>
   );
 }

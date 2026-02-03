@@ -34,6 +34,10 @@ module.exports = {
               DEFAULT: "#52525B",
             },
             background: "#101010",
+            warning: {
+              foreground: "#1a1a00",
+              DEFAULT: "#f5a623",
+            },
           },
         },
       },

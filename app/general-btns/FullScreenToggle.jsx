@@ -48,18 +48,20 @@ const FullScreenToggle = ({}) => {
       color="secondary"
       variant="flat"
     >
-      <Button
-        isIconOnly
-        size="sm"
-        color={fullScreen ? "success" : "danger"}
-        variant="solid"
-        className={getBtnClassNames("w-10")}
-        // className="icon-container"
-        // aria-label={fullScreen ? t("toggle.quit") : t("toggle.go")}
-        onPress={() => (fullScreen ? exitFullscreen() : enterFullscreen())}
-      >
-        {fullScreen ? <MinimizeIcon /> : <MaximizeIcon />}
-      </Button>
+      <span>
+        <Button
+          isIconOnly
+          size="sm"
+          color={fullScreen ? "success" : "danger"}
+          variant="solid"
+          className={getBtnClassNames("w-10")}
+          // className="icon-container"
+          // aria-label={fullScreen ? t("toggle.quit") : t("toggle.go")}
+          onPress={() => (fullScreen ? exitFullscreen() : enterFullscreen())}
+        >
+          {fullScreen ? <MinimizeIcon /> : <MaximizeIcon />}
+        </Button>
+      </span>
     </Tooltip>
   );
 };

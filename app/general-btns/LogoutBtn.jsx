@@ -28,17 +28,19 @@ const LogoutBtn = () => {
       color="secondary"
       variant="flat"
     >
-      <Button
-        isIconOnly
-        size="sm"
-        color="secondary"
-        className={getBtnClassNames("w-10")}
-        variant="solid"
-        aria-label={t("logout")}
-        onPress={() => logout()}
-      >
-        <LogoutIcon />
-      </Button>
+      <span>
+        <Button
+          isIconOnly
+          size="sm"
+          color="secondary"
+          className={getBtnClassNames("w-10")}
+          variant="solid"
+          aria-label={t("logout")}
+          onPress={() => logout()}
+        >
+          <LogoutIcon />
+        </Button>
+      </span>
     </Tooltip>
   )
 };

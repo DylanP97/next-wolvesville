@@ -143,46 +143,22 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
           const isNewest = index === displayMessages.length - 1;
 
           if (msg.author) {
-            const isOwnMessage = msg.author === clientPlayer.name;
-            const authorPlayer = playersList?.find(p => p.name === msg.author);
-            const isAuthorJailer = authorPlayer?.role?.name === "Jailer";
-            const isAuthorMedium = authorPlayer?.role?.name === "Medium";
-            const shouldHideAuthor =
-              (usedChat.type === "jail" && isAuthorJailer) ||
-              (usedChat.type === "medium" && isAuthorMedium);
-
+            // User message - styled like system messages but with author name
             return (
-              <div
-                key={index + "msg"}
-                className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'} animate-fade-in`}
-              >
-                <div className={`max-w-[80%] ${isOwnMessage ? 'order-2' : 'order-1'}`}>
-                  {!shouldHideAuthor && (
-                    <div className={`text-xs text-slate-400 mb-1 font-semibold ${isOwnMessage ? 'text-right mr-2' : 'ml-2'}`}>
-                      {msg.author}
-                    </div>
-                  )}
-
-                  <div className={`
-                    rounded-2xl px-4 py-2 shadow-md
-                    ${isOwnMessage
-                      ? 'bg-blue-600 text-white rounded-tr-sm'
-                      : 'bg-slate-700 text-slate-100 rounded-tl-sm'
-                    }
-                    ${isNewest && 'ring-2 ring-blue-400/50'}
-                  `}>
-                    <p className="text-sm break-words">
+              <div key={index + "msg"} className={`flex justify-left animate-fade-in ${isNewest && 'opacity-100'}`}>
+                <div className={`max-w-[85%] rounded-lg px-4 py-2 border bg-slate-800/70 border-slate-700/50 ${isNewest && 'ring-2 ring-blue-400/30 shadow-lg shadow-blue-500/20'}`}>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-slate-500 text-xs">{msg.time}</span>
+                    <span className="text-blue-400 text-xs font-semibold">{msg.author}:</span>
+                    <span className="text-slate-200 text-xs">
                       {replacePlaceholders(msg.msg)}
-                    </p>
-                  </div>
-
-                  <div className={`text-xs text-slate-500 mt-1 ${isOwnMessage ? 'text-right mr-2' : 'ml-2'}`}>
-                    {msg.time}
+                    </span>
                   </div>
                 </div>
               </div>
             );
           } else {
+            // System message (no author)
             const containsSkull = replacePlaceholders(msg.msg)?.includes("💀");
             const containsEye = replacePlaceholders(msg.msg)?.includes("👁️");
 
