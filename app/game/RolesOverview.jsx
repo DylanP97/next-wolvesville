@@ -9,6 +9,43 @@ const BLUR_PLACEHOLDER =
 import i18n from '../lib/i18n';
 import { useAuth } from '../providers/AuthProvider';
 
+// Team-based styling for role cards
+const getCardStyles = (team) => {
+    switch (team) {
+        case 'Werewolves':
+            return {
+                bg: 'bg-gradient-to-br from-red-950/80 to-black/80',
+                border: 'border-red-500/40',
+                hoverBorder: 'hover:border-red-400',
+                imageBorder: 'border-red-500/60',
+                nameColor: 'text-red-100',
+                descColor: 'text-red-200/80',
+                glow: 'hover:shadow-red-500/20',
+            };
+        case 'Village':
+        case 'Villagers':
+            return {
+                bg: 'bg-gradient-to-br from-emerald-950/80 to-black/80',
+                border: 'border-emerald-500/40',
+                hoverBorder: 'hover:border-emerald-400',
+                imageBorder: 'border-emerald-500/60',
+                nameColor: 'text-emerald-100',
+                descColor: 'text-emerald-200/80',
+                glow: 'hover:shadow-emerald-500/20',
+            };
+        default: // Solo roles
+            return {
+                bg: 'bg-gradient-to-br from-violet-950/80 to-black/80',
+                border: 'border-violet-500/40',
+                hoverBorder: 'hover:border-violet-400',
+                imageBorder: 'border-violet-500/60',
+                nameColor: 'text-violet-100',
+                descColor: 'text-violet-200/80',
+                glow: 'hover:shadow-violet-500/20',
+            };
+    }
+};
+
 const RolesOverview = ({ rolesInGame, usersInTheRoom, onReady }) => {
     const { t } = useTranslation();
     const { socket, game, username } = useAuth();
@@ -62,62 +99,93 @@ const RolesOverview = ({ rolesInGame, usersInTheRoom, onReady }) => {
         }
     };
 
-    const RoleCard = ({ role }) => (
-        <div className="relative bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 hover:border-yellow-400/50 transition-all hover:scale-105 overflow-hidden min-h-[350px]">
-            {/* Background image2 */}
-            {role?.image2 && (
-                <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 pointer-events-none"
-                    style={{
-                        backgroundImage: `url(${role.image2})`,
-                    }}
-                />
-            )}
+    const RoleCard = ({ role }) => {
+        const styles = getCardStyles(role?.team);
 
-            <div className="relative z-10 flex flex-col items-center text-center gap-3">
-                {/* Role image */}
-                <div className="w-16 h-16 rounded-full bg-white/10 border-2 border-yellow-400/50 flex-shrink-0 overflow-hidden">
-                    {role?.image ? (
-                        <Image
-                            src={role.image}
-                            alt={role.name}
-                            width={64}
-                            height={64}
-                            className="object-cover w-full h-full"
-                            placeholder="blur"
-                            blurDataURL={BLUR_PLACEHOLDER}
-                        />
-                    ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-purple-400 to-blue-400" />
-                    )}
+        return (
+            <div className={`group relative rounded-2xl border ${styles.border} ${styles.hoverBorder} transition-all duration-300 hover:scale-[1.02] overflow-hidden min-h-[280px]`}>
+                {/* Background image - high visibility */}
+                {role?.image2 ? (
+                    <div
+                        className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
+                        style={{ backgroundImage: `url(${role.image2})` }}
+                    />
+                ) : (
+                    <div className={`absolute inset-0 ${styles.bg}`} />
+                )}
+
+                {/* Bottom gradient for text readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
+
+                {/* Role icon - top left */}
+                <div className="absolute top-3 left-3">
+                    <div className={`w-12 h-12 rounded-full border-2 ${styles.imageBorder} overflow-hidden bg-black/50 shadow-lg`}>
+                        {role?.image ? (
+                            <Image
+                                src={role.image}
+                                alt={role.name}
+                                width={48}
+                                height={48}
+                                className="object-cover w-full h-full"
+                                placeholder="blur"
+                                blurDataURL={BLUR_PLACEHOLDER}
+                            />
+                        ) : (
+                            <div className="w-full h-full bg-gray-700" />
+                        )}
+                    </div>
                 </div>
 
-                {/* Role info */}
-                <div className="flex-1">
-                    <h3 className="text-white font-bold text-sm">
+                {/* Text content - bottom */}
+                <div className="absolute bottom-0 left-0 right-0 p-3">
+                    <h3 className="text-white font-bold text-sm mb-1">
                         {i18n.language === "fr" ? role?.nameFR : role?.name}
                     </h3>
-                    <p className="text-gray-300 text-xs mt-2">
+                    <p className="text-gray-300 text-xs leading-relaxed line-clamp-3">
                         {i18n.language === "fr" ? role?.descriptionFR : role?.description}
                     </p>
                 </div>
             </div>
-        </div>
-    );
+        );
+    };
 
-    const TeamSection = ({ title, roles, bgColor, borderColor }) => (
-        <div className={`rounded-2xl p-4 ${bgColor} border ${borderColor}`}>
-            <h2 className="text-white text-xl font-bold mb-3 flex items-center gap-2">
-                {title}
-                <span className="text-sm font-normal opacity-70">({roles.length})</span>
-            </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
-                {roles.map((role, index) => (
-                    <RoleCard key={`${role.name}-${index}`} role={role} />
-                ))}
+    const TeamSection = ({ title, roles, teamType }) => {
+        const sectionStyles = {
+            village: {
+                bg: 'bg-emerald-950/30',
+                border: 'border-emerald-500/30',
+                titleColor: 'text-emerald-300',
+                icon: '🏠'
+            },
+            werewolves: {
+                bg: 'bg-red-950/30',
+                border: 'border-red-500/30',
+                titleColor: 'text-red-300',
+                icon: '🐺'
+            },
+            solo: {
+                bg: 'bg-violet-950/30',
+                border: 'border-violet-500/30',
+                titleColor: 'text-violet-300',
+                icon: '🎭'
+            }
+        }[teamType];
+
+        return (
+            <div className={`rounded-2xl p-5 ${sectionStyles.bg} border ${sectionStyles.border} backdrop-blur-sm`}>
+                <h2 className={`${sectionStyles.titleColor} text-xl font-bold mb-4 flex items-center gap-3 font-wolf tracking-wide`}>
+                    <span className="text-2xl">{sectionStyles.icon}</span>
+                    {title}
+                    <span className="text-sm font-normal opacity-60 font-sans">({roles.length})</span>
+                </h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                    {roles.map((role, index) => (
+                        <RoleCard key={`${role.name}-${index}`} role={role} />
+                    ))}
+                </div>
             </div>
-        </div>
-    );
+        );
+    };
 
     return (
         <div className="fixed inset-0 z-[100] flex flex-col bg-gradient-to-br from-gray-900 via-purple-900/50 to-gray-900 overflow-hidden">
@@ -196,8 +264,7 @@ const RolesOverview = ({ rolesInGame, usersInTheRoom, onReady }) => {
                     <TeamSection
                         title={t("teams.village") || "Village"}
                         roles={groupedRoles.village}
-                        bgColor="bg-green-900/30"
-                        borderColor="border-green-500/30"
+                        teamType="village"
                     />
                 )}
 
@@ -206,8 +273,7 @@ const RolesOverview = ({ rolesInGame, usersInTheRoom, onReady }) => {
                     <TeamSection
                         title={t("teams.werewolves") || "Werewolves"}
                         roles={groupedRoles.werewolves}
-                        bgColor="bg-red-900/30"
-                        borderColor="border-red-500/30"
+                        teamType="werewolves"
                     />
                 )}
 
@@ -216,8 +282,7 @@ const RolesOverview = ({ rolesInGame, usersInTheRoom, onReady }) => {
                     <TeamSection
                         title={t("teams.solo") || "Solo"}
                         roles={groupedRoles.solo}
-                        bgColor="bg-purple-900/30"
-                        borderColor="border-purple-500/30"
+                        teamType="solo"
                     />
                 )}
             </div>

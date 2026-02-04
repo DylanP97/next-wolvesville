@@ -47,6 +47,7 @@ const PreScreenMenu = () => {
     }
     setGuestError("");
     setShowGuestForm(false);
+    setIsLoading(true);
     setLogOption("guestPlay");
   };
 
@@ -103,7 +104,6 @@ const PreScreenMenu = () => {
 
   useEffect(() => {
     if (logOption === "guestPlay") {
-      setIsLoading(true);
       handleGuestLogin();
     }
   }, [logOption]);
@@ -214,16 +214,14 @@ const PreScreenMenu = () => {
           </Button>
           <div className="flex flex-row gap-3">
             <Button
-              className="w-36 sm:w-[9.5rem] h-11 text-sm font-medium"
-              color="primary"
+              className="w-36 sm:w-[9.5rem] h-11 text-sm font-medium bg-white/10 text-white hover:bg-white/20"
               variant="flat"
               onClick={() => setLogOption("login")}
             >
               {t("prescreen.logIn")}
             </Button>
             <Button
-              className="w-36 sm:w-[9.5rem] h-11 text-sm font-medium"
-              color="primary"
+              className="w-36 sm:w-[9.5rem] h-11 text-sm font-medium bg-white/10 text-white hover:bg-white/20"
               variant="flat"
               onClick={() => setLogOption("register")}
             >

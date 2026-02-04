@@ -18,20 +18,20 @@ const Title = () => {
 
       <style jsx>{`
         .animated-text {
-          /* texte blanc de base */
-          color: white;
-          /* Gradient shimmer uniquement visible dans le texte */
+          /* Bright gradient for visibility against dark background */
           background: linear-gradient(
             90deg,
-            rgba(199, 9, 9, 0.4),
-            rgba(228, 27, 27, 0.36),
-            rgba(255, 195, 30, 0.47),
-            rgba(94, 8, 8, 0.37)
+            rgba(255, 80, 80, 1),
+            rgba(255, 120, 50, 1),
+            rgba(255, 200, 60, 1),
+            rgba(255, 100, 70, 1)
           );
           background-size: 200% 100%;
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
+          /* Glow effect for extra visibility */
+          filter: drop-shadow(0 0 8px rgba(255, 100, 50, 0.6));
           /* Animation douce */
           animation: shimmer-text 4s ease-in-out infinite;
         }

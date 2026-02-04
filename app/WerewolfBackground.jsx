@@ -3,7 +3,7 @@ import { memo } from 'react';
 
 const WerewolfBackground = memo(() => {
     return (
-        <div className="absolute top-0 w-full h-screen bg-gradient-to-b from-indigo-950 via-purple-900 to-indigo-950 overflow-hidden">
+        <div className="absolute top-0 w-full h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
             {/* Stars */}
             <div className="absolute inset-0">
                 {[...Array(50)].map((_, i) => (
