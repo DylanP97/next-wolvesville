@@ -117,7 +117,7 @@ export const fetchLogin = async (email, password) => {
   }
 };
 
-export const fetchGuestLogin = async () => {
+export const fetchGuestLogin = async (username) => {
   try {
     const response = await fetch(
       API_URL + "/api/user/guestLogin",
@@ -126,14 +126,18 @@ export const fetchGuestLogin = async () => {
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({ username }),
         credentials: "include",
       }
     );
-    if (response.ok) {
-      return response.json();
+    const data = await response.json();
+    if (!response.ok) {
+      return { error: data.error || "Guest login failed" };
     }
+    return data;
   } catch (error) {
     console.error("Login error:", error);
+    return { error: "Unable to connect to server" };
   }
 };
 

@@ -111,7 +111,7 @@ const NavigationMenu = () => {
                   variant="shadow"
                   onPress={() => handleClick(item)}
                 >
-                  <span>{item.label}</span>
+                  {item.label}
                 </Button>
               ))}
             </div>
@@ -127,7 +127,7 @@ const NavigationMenu = () => {
                   variant="flat"
                   onPress={() => handleClick(item)}
                 >
-                  <span>{item.label}</span>
+                  {item.label}
                 </Button>
               ))}
             </div>
@@ -149,7 +149,7 @@ const NavigationMenu = () => {
                 variant="flat"
                 onPress={() => handleClick(item)}
               >
-                <span>{item.label}</span>
+                {item.label}
               </Button>
             ))}
           </div>

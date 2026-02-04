@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@nextui-org/react";
-import { Tooltip } from "@nextui-org/react";
 import { getBtnClassNames } from "../lib/styles";
 
 function LanguageToggle() {
@@ -17,21 +16,18 @@ function LanguageToggle() {
   };
 
   return (
-    <Tooltip content={t("change.language")} color="secondary" variant="faded">
-      <span>
-        <Button
-          size="sm"
-          isIconOnly
-          color="secondary"
-          variant="solid"
-          aria-label={currentLanguage}
-          onPress={toggleLanguage}
-          className={getBtnClassNames("w-10")}
-        >
-          {currentLanguage === "en" ? "🇬🇧" : "🇫🇷"}
-        </Button>
-      </span>
-    </Tooltip>
+    <Button
+      size="sm"
+      isIconOnly
+      color="secondary"
+      variant="solid"
+      aria-label={t("change.language")}
+      title={t("change.language")}
+      onPress={toggleLanguage}
+      className={getBtnClassNames("w-10")}
+    >
+      {currentLanguage === "en" ? "🇬🇧" : "🇫🇷"}
+    </Button>
   );
 }
 

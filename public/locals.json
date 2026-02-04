@@ -74,7 +74,16 @@
         "logIn": "Log In",
         "register": "Register",
         "loading": "Loading...",
-        "serverLoading": "Server is starting... please wait a moment"
+        "serverLoading": "Server is starting... please wait a moment",
+        "chooseUsername": "Choose your username",
+        "usernameInfo": "Your username must be between 4 and 18 characters",
+        "usernamePlaceholder": "Enter a username",
+        "play": "Play",
+        "guestError": {
+          "tooShort": "Username must be at least 4 characters",
+          "tooLong": "Username must be at most 18 characters",
+          "taken": "This username is already taken"
+        }
       },
       "intro": {
         "title": "Welcome to the game of",
@@ -401,7 +410,16 @@
         "logIn": "Connexion",
         "register": "Inscription",
         "loading": "Chargement...",
-        "serverLoading": "Le serveur se réveille après une période d'inactivité... "
+        "serverLoading": "Le serveur se réveille après une période d'inactivité... ",
+        "chooseUsername": "Choisissez votre pseudo",
+        "usernameInfo": "Votre pseudo doit contenir entre 4 et 18 caractères",
+        "usernamePlaceholder": "Entrez un pseudo",
+        "play": "Jouer",
+        "guestError": {
+          "tooShort": "Le pseudo doit contenir au moins 4 caractères",
+          "tooLong": "Le pseudo doit contenir au maximum 18 caractères",
+          "taken": "Ce pseudo est déjà pris"
+        }
       },
       "intro": {
         "title": "Bienvenue dans le jeu du",

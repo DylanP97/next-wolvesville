@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { defaultAvatar } from "./lib/utils";
 import { useAuth } from "./providers/AuthProvider";
 import { fetchGuestLogin } from "./lib/fetch";
-import { Button, Spinner } from "@nextui-org/react";
+import { Button, Input, Spinner } from "@nextui-org/react";
 import io from "socket.io-client"; // Add this import
 import { btnClassNames, getBtnClassNames } from "./lib/styles";
 import WerewolfBackground from "./WerewolfBackground";
@@ -23,13 +23,44 @@ const PreScreenMenu = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(50); // Timer state
   const [isFullscreen, setIsFullscreen] = useState(false); // Add this state
+  const [showGuestForm, setShowGuestForm] = useState(false);
+  const [guestUsername, setGuestUsername] = useState("");
+  const [guestError, setGuestError] = useState("");
   const { setAuthInfo, setSocket, setToken, username, setIsGuest } = useAuth();
   const { setActiveComponent, activeComponent } = useToRender();
 
+  const validateGuestUsername = (name) => {
+    if (name.length < 4) {
+      return t("prescreen.guestError.tooShort");
+    }
+    if (name.length > 18) {
+      return t("prescreen.guestError.tooLong");
+    }
+    return "";
+  };
+
+  const handleGuestFormSubmit = () => {
+    const error = validateGuestUsername(guestUsername);
+    if (error) {
+      setGuestError(error);
+      return;
+    }
+    setGuestError("");
+    setShowGuestForm(false);
+    setLogOption("guestPlay");
+  };
+
   const handleGuestLogin = async () => {
-    const data = await fetchGuestLogin();
+    const data = await fetchGuestLogin(guestUsername);
 
     if (data) {
+      if (data.error) {
+        setGuestError(data.error);
+        setIsLoading(false);
+        setShowGuestForm(true);
+        setLogOption("");
+        return;
+      }
       setToken(data.token);
       setIsGuest(true);
 
@@ -80,19 +111,21 @@ const PreScreenMenu = () => {
   // Timer countdown logic
   useEffect(() => {
     let timer;
-    if (isLoading && countdown > 0) {
+    if (isLoading) {
       timer = setInterval(() => {
-        setCountdown((prevCountdown) => prevCountdown - 1);
+        setCountdown((prevCountdown) => {
+          if (prevCountdown <= 1) {
+            return 0;
+          }
+          return prevCountdown - 1;
+        });
       }, 1000);
     }
 
-    if (countdown === 0) {
-      clearInterval(timer);
-      // Handle what happens when countdown reaches zero, if needed
-    }
-
-    return () => clearInterval(timer); // Cleanup the interval on component unmount
-  }, [isLoading, countdown]);
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [isLoading]);
 
   if (isLoading) {
     return (
@@ -110,6 +143,61 @@ const PreScreenMenu = () => {
     );
   } else if (logOption === "login" || logOption === "register") {
     return <Connexion logOption={logOption} onBack={() => setLogOption("")} />;
+  } else if (showGuestForm) {
+    return (
+      <div className="relative flex flex-col flex-grow justify-center items-center">
+        <WerewolfBackground />
+        <Title />
+        <div className="flex flex-col items-center py-4 w-full z-20 gap-4 px-4">
+          <h2 className="text-white text-xl font-bold">{t("prescreen.chooseUsername")}</h2>
+          <p className="text-white/70 text-sm text-center max-w-xs">{t("prescreen.usernameInfo")}</p>
+          <Input
+            type="text"
+            placeholder={t("prescreen.usernamePlaceholder")}
+            value={guestUsername}
+            onChange={(e) => {
+              setGuestUsername(e.target.value);
+              setGuestError("");
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleGuestFormSubmit();
+              }
+            }}
+            maxLength={18}
+            className="w-72 sm:w-80"
+            classNames={{
+              input: "text-white",
+              inputWrapper: "bg-slate-800/80 border-slate-600",
+            }}
+            isInvalid={!!guestError}
+            errorMessage={guestError}
+          />
+          <div className="flex gap-3">
+            <Button
+              className="w-32"
+              color="default"
+              variant="flat"
+              onClick={() => {
+                setShowGuestForm(false);
+                setGuestUsername("");
+                setGuestError("");
+              }}
+            >
+              {t("goback")}
+            </Button>
+            <Button
+              className="w-32"
+              color="warning"
+              variant="shadow"
+              onClick={handleGuestFormSubmit}
+            >
+              {t("prescreen.play")}
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
   } else {
     return (
       <div className="relative flex flex-col flex-grow justify-center items-center">
@@ -120,7 +208,7 @@ const PreScreenMenu = () => {
             className="w-72 sm:w-80 h-14 text-lg font-bold shadow-lg shadow-amber-500/30 border-2 border-yellow-300/60"
             color="warning"
             variant="shadow"
-            onClick={() => setLogOption("guestPlay")}
+            onClick={() => setShowGuestForm(true)}
           >
             {t("prescreen.guest")}
           </Button>
