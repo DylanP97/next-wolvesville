@@ -104,62 +104,21 @@ body {
 
 /******************* CSS for Roles Carousel *******************/
 
-@keyframes scroll {
-  0% {
-    transform: translateX(90vw);
-  }
-
-  100% {
-    transform: translateX(calc(-250px * 24));
-  }
-}
-
-.slider {
-  /* box-shadow: 0 10px 20px -5px rgba(var(--background), 0.125); */
-  height: 120px;
+.carousel-container {
+  position: absolute;
+  inset: 82% 0%;
+  transform: translateY(-50%);
+  width: 90vw;
+  height: 240px;
   margin: auto;
   overflow: hidden;
-  position: absolute;
-  inset: 50% 0%;
-  width: 90vw;
-  /* opacity: 0.4; */
+  perspective: 1000px;
 }
 
-.slider::before,
-.slider::after {
-  /* background: linear-gradient(
-    to right,
-    var(--background) 0%,
-    rgba(255, 255, 255, 0) 100%
-  ); */
-  content: "";
-  height: 120px;
-  position: absolute;
-  width: 200px;
-  z-index: 2;
-}
-
-.slider::after {
-  right: 0;
-  top: 0;
-  transform: rotateZ(180deg);
-}
-
-.slider::before {
-  left: 0;
-  top: 0;
-}
-
-.slide-track {
-  /* background-color: var(--background); */
-  animation: scroll 20s linear infinite;
-  display: flex;
-  width: calc(250px * 40);
-}
-
-.slide {
-  height: 120px;
-  width: 250px;
+.carousel-card {
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
 /* Define keyframes for fade-in and fade-out animations */
