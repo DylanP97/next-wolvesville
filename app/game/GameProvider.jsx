@@ -254,6 +254,10 @@ export const GameProvider = ({ children }) => {
     ) {
       setAvailableChats([general, jail]);
       setUsedChat(jail);
+    } else if (timeOfTheDay === "nighttime" && isWolf && !isAlive) {
+      // Dead wolves see all 3: general, wolves, and medium
+      setAvailableChats([general, wolves, medium]);
+      setUsedChat(wolves);
     } else if (timeOfTheDay === "nighttime" && isWolf) {
       setAvailableChats([general, wolves]);
       setUsedChat(wolves);

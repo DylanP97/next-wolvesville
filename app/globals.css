@@ -107,9 +107,9 @@ body {
 .carousel-container {
   position: absolute;
   inset: 82% 0%;
-  transform: translateY(-50%);
+  transform: translateY(-25%);
   width: 90vw;
-  height: 240px;
+  height: 300px;
   margin: auto;
   overflow: hidden;
   perspective: 1000px;

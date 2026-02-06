@@ -12,6 +12,7 @@ import { useState } from "react";
 
 export default function Game() {
   const [summaryIsOpen, setSummaryIsOpen] = useState(false);
+  const [rolesChecklistOpen, setRolesChecklistOpen] = useState(false);
   const { isConnected, game, username } = useAuth();
 
   const clientPlayer = game?.playersList?.find((p) => p.name === username);
@@ -40,6 +41,8 @@ export default function Game() {
                     <GameSection
                       summaryIsOpen={summaryIsOpen}
                       setSummaryIsOpen={setSummaryIsOpen}
+                      rolesChecklistOpen={rolesChecklistOpen}
+                      setRolesChecklistOpen={setRolesChecklistOpen}
                     />
                   </div>
                 </InGameKeysProvider>

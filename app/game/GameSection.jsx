@@ -22,8 +22,9 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "../lib/i18n";
 import Image from "next/image";
+import RolesChecklist from "./RolesChecklist";
 
-const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
+const GameSection = ({ summaryIsOpen, setSummaryIsOpen, rolesChecklistOpen, setRolesChecklistOpen }) => {
   const { winningTeam, timeOfTheDay, clientPlayer } = useGame();
   const { width, height } = useWindowSize();
   const { exitMenuOpen, toggleExitMenu } = useToRender();
@@ -102,6 +103,7 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
           {/* <div className="md:hidden">
             <ChatModal isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
           </div> */}
+
         </div>
 
         {/* Chat sidebar for desktop */}
@@ -109,6 +111,14 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
           <ChatModal isSidebar={true} />
         </div>
       </div>
+
+      {/* Roles Checklist Panel */}
+      {rolesChecklistOpen && (
+        <RolesChecklist
+          rolesChecklistOpen={rolesChecklistOpen}
+          setRolesChecklistOpen={setRolesChecklistOpen}
+        />
+      )}
 
       <div className="bg-slate-800 border-b border-slate-600 shadow-2xl bottom-0 left-0 right-0 relative overflow-hidden z-30">
         {/* Persistent mobile chat - always visible */}
@@ -120,6 +130,8 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen }) => {
         <ActionBar
           summaryIsOpen={summaryIsOpen}
           setSummaryIsOpen={setSummaryIsOpen}
+          rolesChecklistOpen={rolesChecklistOpen}
+          setRolesChecklistOpen={setRolesChecklistOpen}
         // isChatOpen={isChatOpen}
         // setIsChatOpen={setIsChatOpen}
         />

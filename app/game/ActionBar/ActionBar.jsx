@@ -7,8 +7,9 @@ import PlayingCommands from "./PlayingCommands";
 import PauseToggle from "./PauseToggle";
 import ChatButton from "./ChatButton";
 import GameMenuExitBtn from "../../general-btns/GameMenuExitBtn";
+import RolesChecklistToggle from "../RolesChecklistToggle";
 
-const ActionBar = ({ summaryIsOpen, setSummaryIsOpen, isChatOpen, setIsChatOpen }) => {
+const ActionBar = ({ summaryIsOpen, setSummaryIsOpen, rolesChecklistOpen, setRolesChecklistOpen, isChatOpen, setIsChatOpen }) => {
   const { clientPlayer } = useGame();
 
   return (
@@ -18,6 +19,10 @@ const ActionBar = ({ summaryIsOpen, setSummaryIsOpen, isChatOpen, setIsChatOpen 
       {/* <div className="md:hidden">
         <ChatButton isChatOpen={isChatOpen} setIsChatOpen={setIsChatOpen} />
       </div> */}
+      <RolesChecklistToggle
+        rolesChecklistOpen={rolesChecklistOpen}
+        setRolesChecklistOpen={setRolesChecklistOpen}
+      />
       <GameMenuExitBtn />
       <PauseToggle />
     </div>

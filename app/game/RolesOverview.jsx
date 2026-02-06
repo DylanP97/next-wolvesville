@@ -249,16 +249,6 @@ const RolesOverview = ({ rolesInGame, usersInTheRoom, onReady }) => {
                     </div>
                 </div>
 
-                {/* Header */}
-                <div className="text-center py-6 px-4">
-                    <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 font-wolf">
-                        {t("game.rolesInGame") || "Roles in this Game"}
-                    </h1>
-                    <p className="text-yellow-200 text-lg">
-                        {t("game.reviewRoles") || "Review the roles before the game starts"}
-                    </p>
-                </div>
-
                 {/* Village roles */}
                 {groupedRoles.village.length > 0 && (
                     <TeamSection

@@ -55,7 +55,8 @@
         },
         "actionBar": {
           "title": "Action Bar"
-        }
+        },
+        "rolesChecklist": "Roles Checklist"
       },
       "questionmark": "?",
       "exclamation": "!",
@@ -391,7 +392,8 @@
         },
         "actionBar": {
           "title": "Barre d'actions"
-        }
+        },
+        "rolesChecklist": "Liste des rôles"
       },
       "questionmark": " ?",
       "exclamation": " !",
