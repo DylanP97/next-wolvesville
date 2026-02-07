@@ -13,8 +13,15 @@ const ConnexionForm = ({
   setEmail,
   password,
   setPassword,
+  fieldErrors = {},
+  onFieldChange,
 }) => {
   const { t } = useTranslation();
+
+  const handleChange = (field, setter) => (e) => {
+    setter(e.target.value);
+    if (onFieldChange) onFieldChange(field);
+  };
 
   return (
     <form className="w-80 z-20" onSubmit={handleSubmit}>
@@ -27,7 +34,9 @@ const ConnexionForm = ({
             label={t("intro.un")}
             value={username}
             className="max-w-xs bg-white rounded-2xl"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleChange("username", setUsername)}
+            isInvalid={!!fieldErrors.username}
+            errorMessage={fieldErrors.username}
           />
         </div>
       )}
@@ -39,7 +48,9 @@ const ConnexionForm = ({
           label={t("intro.em")}
           value={email}
           className="max-w-xs bg-white rounded-2xl"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleChange("email", setEmail)}
+          isInvalid={!!fieldErrors.email}
+          errorMessage={fieldErrors.email}
         />
       </div>
       <div className="my-2">
@@ -49,9 +60,11 @@ const ConnexionForm = ({
           type="password"
           label={t("intro.pw")}
           value={password}
-          autocomplete="current-password"
+          autoComplete="current-password"
           className="max-w-xs bg-white rounded-2xl"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handleChange("password", setPassword)}
+          isInvalid={!!fieldErrors.password}
+          errorMessage={fieldErrors.password}
         />
       </div>
 
@@ -60,7 +73,6 @@ const ConnexionForm = ({
           className={getBtnClassNames("w-80 h-12")}
           color="primary"
           variant="shadow"
-          // className="my-2 hover:bg-primary hover:text-primary-foreground animate-pulse"
           type="submit"
         >
           {isLogin ? t("intro.lo") : t("intro.si")}

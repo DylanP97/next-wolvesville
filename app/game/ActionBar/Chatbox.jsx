@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import i18n from "../../lib/i18n";
 import { useAnimation } from "../../providers/AnimationProvider";
 
+
 const Chatbox = ({ onFocus, onBlur, autoFocus }) => {
   const { socket, username } = useAuth();
   const { timeOfTheDay, gameId, clientPlayer, isWolf, isJailer, isMedium, usedChat, isPrisoner } = useGame();
@@ -78,19 +79,21 @@ const Chatbox = ({ onFocus, onBlur, autoFocus }) => {
   }
 
   return (
-    <div className="flex flex-row gap-2 w-full items-stretch">
-      <textarea
-        ref={textareaRef}
-        placeholder={t("game.writeMessage")}
-        value={message}
-        className="h-8 sm:h-10 outline-none border-none p-2 flex-grow text-sm text-black rounded-lg resize-none"
-        onChange={(e) => setMessage(e.target.value)}
-        onKeyDown={handleKeyDown}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        rows={1}
-      />
-      <CmdSend sendMessage={sendMessage} message={message} />
+    <div className="flex flex-col gap-1 w-full">
+      <div className="flex flex-row gap-2 w-full items-stretch">
+        <textarea
+          ref={textareaRef}
+          placeholder={t("game.writeMessage")}
+          value={message}
+          className="h-8 sm:h-10 outline-none border-none p-2 flex-grow text-sm text-black rounded-lg resize-none"
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          rows={1}
+        />
+        <CmdSend sendMessage={sendMessage} message={message} />
+      </div>
     </div>
   );
 };

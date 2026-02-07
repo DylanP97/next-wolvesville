@@ -186,7 +186,7 @@ const ChatModal = ({ isOpen, setIsOpen, isSidebar = false }) => {
     return (
       <div className="w-full h-full bg-slate-900 border-l-2 border-slate-700 shadow-2xl flex flex-col">
         {/* Chat tabs */}
-        <div className="min-h-14 max-h-14 flex justify-center border-b border-slate-700 bg-slate-800">
+        <div className="min-h-12 max-h-12 flex justify-center border-b border-slate-700 bg-slate-800">
           {availableChats.map((chat, index) => (
             <div
               className={`${chat.type === usedChat.type ? "bg-blue-600 border-b-2 border-blue-400" : "bg-transparent hover:bg-slate-700"} cursor-pointer px-4 flex items-center transition-all`}

@@ -103,45 +103,44 @@ const RolesOverview = ({ rolesInGame, usersInTheRoom, onReady }) => {
         const styles = getCardStyles(role?.team);
 
         return (
-            <div className={`group relative rounded-2xl border ${styles.border} ${styles.hoverBorder} transition-all duration-300 hover:scale-[1.02] overflow-hidden min-h-[280px]`}>
-                {/* Background image - high visibility */}
+            <div className={`group relative rounded-2xl border ${styles.border} ${styles.hoverBorder} transition-all duration-300 hover:scale-[1.02] overflow-hidden flex flex-col`}>
+                {/* Background image */}
                 {role?.image2 ? (
                     <div
-                        className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
+                        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 group-hover:opacity-30 transition-opacity pointer-events-none"
                         style={{ backgroundImage: `url(${role.image2})` }}
                     />
                 ) : (
                     <div className={`absolute inset-0 ${styles.bg}`} />
                 )}
 
-                {/* Bottom gradient for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
+                {/* Gradient overlay for readability */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black/90 pointer-events-none" />
 
-                {/* Role icon - top left */}
-                <div className="absolute top-3 left-3">
-                    <div className={`w-12 h-12 rounded-full border-2 ${styles.imageBorder} overflow-hidden bg-black/50 shadow-lg`}>
+                {/* Header: icon + name */}
+                <div className="relative z-10 flex items-center gap-2.5 p-3 pb-2">
+                    <div className={`w-10 h-10 rounded-full border-2 ${styles.imageBorder} overflow-hidden bg-black/50 shadow-lg flex-shrink-0`}>
                         {role?.image ? (
                             <Image
                                 src={role.image}
                                 alt={role.name}
-                                width={48}
-                                height={48}
+                                width={80}
+                                height={80}
                                 className="object-cover w-full h-full"
-                                placeholder="blur"
-                                blurDataURL={BLUR_PLACEHOLDER}
+                                unoptimized
                             />
                         ) : (
                             <div className="w-full h-full bg-gray-700" />
                         )}
                     </div>
-                </div>
-
-                {/* Text content - bottom */}
-                <div className="absolute bottom-0 left-0 right-0 p-3">
-                    <h3 className="text-white font-bold text-sm mb-1">
+                    <h3 className="text-white font-bold text-sm leading-tight">
                         {i18n.language === "fr" ? role?.nameFR : role?.name}
                     </h3>
-                    <p className="text-gray-300 text-xs leading-relaxed line-clamp-3">
+                </div>
+
+                {/* Full description */}
+                <div className="relative z-10 px-3 pb-3 flex-1">
+                    <p className="text-gray-300 text-[10px] leading-snug">
                         {i18n.language === "fr" ? role?.descriptionFR : role?.description}
                     </p>
                 </div>

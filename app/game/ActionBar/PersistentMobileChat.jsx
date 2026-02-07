@@ -282,7 +282,7 @@ export default function PersistentMobileChat() {
             <div
                 ref={containerRef}
                 onScroll={handleScroll}
-                className="h-40 overflow-y-auto p-2 space-y-2 bg-slate-950/60"
+                className="h-52 overflow-y-auto p-2 space-y-2 bg-slate-950/60"
             >
                 {renderMessages()}
             </div>

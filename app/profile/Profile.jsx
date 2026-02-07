@@ -125,7 +125,7 @@ const Profile = () => {
                     title={
                       <div className="flex items-center gap-2">
                         <span className="text-xl">{tab.emoji}</span>
-                        <span className="font-medium">{tab.title}</span>
+                        <span className="font-medium">{t(tab.title)}</span>
                       </div>
                     }
                   >
@@ -134,7 +134,7 @@ const Profile = () => {
                         <ProfileSelect
                           key={`${attr.label}-${i}`}
                           path={attr.path}
-                          label={attr.label}
+                          label={t(attr.label)}
                           options={attr.options}
                           currentValue={avState[attr.path]}
                           setAvState={setAvState}

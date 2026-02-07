@@ -36,11 +36,11 @@ const RolesChecklist = ({ rolesChecklistOpen, setRolesChecklistOpen }) => {
 
   const rolesInGame = game?.rolesInGame || [];
 
-  // Build set of discovered role names
-  const discoveredRoles = new Set();
+  // Map revealed role names to player names
+  const discoveredRoles = new Map();
   playersList.forEach((p) => {
     if (p.isRevealed && p.role?.name) {
-      discoveredRoles.add(p.role.name);
+      discoveredRoles.set(p.role.name, p.name);
     }
   });
 
@@ -75,13 +75,11 @@ const RolesChecklist = ({ rolesChecklistOpen, setRolesChecklistOpen }) => {
         </h4>
         <div className="flex flex-col gap-1">
           {roles.map((role, index) => {
-            const isDiscovered = discoveredRoles.has(role.name);
+            const revealedPlayer = discoveredRoles.get(role.name);
             return (
               <div
                 key={`${role.name}-${index}`}
-                className={`flex items-center gap-2 px-2 py-1 rounded-lg ${
-                  isDiscovered ? "opacity-40" : ""
-                }`}
+                className="flex items-center gap-2 px-2 py-1 rounded-lg"
               >
                 {role.image && (
                   <Image
@@ -92,12 +90,11 @@ const RolesChecklist = ({ rolesChecklistOpen, setRolesChecklistOpen }) => {
                     className="rounded-full"
                   />
                 )}
-                <span
-                  className={`text-sm text-white ${
-                    isDiscovered ? "line-through" : ""
-                  }`}
-                >
+                <span className="text-sm text-white">
                   {i18n.language === "fr" ? role.nameFR : role.name}
+                </span>
+                <span className={`text-xs ${revealedPlayer ? "text-yellow-300" : "text-slate-500"}`}>
+                  ({revealedPlayer || "??"})
                 </span>
               </div>
             );
@@ -108,7 +105,7 @@ const RolesChecklist = ({ rolesChecklistOpen, setRolesChecklistOpen }) => {
   };
 
   return (
-    <div className="bg-background w-[30%] min-w-[250px] rounded-l-3xl flex flex-col absolute top-0 right-0 z-40 p-4 overflow-y-auto max-h-[90vh] mt-4">
+    <div className="bg-background w-[40%] min-w-[300px] max-w-[450px] rounded-l-3xl flex flex-col absolute top-0 right-0 z-40 p-4 overflow-y-auto max-h-[90vh] mt-4">
       <div className="mb-2 flex flex-row w-full items-center justify-items-stretch">
         <h3 className="flex-grow font-bold font-wolf">
           {t("game.rolesChecklist") || "Roles"}

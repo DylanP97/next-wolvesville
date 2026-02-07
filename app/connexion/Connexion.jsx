@@ -13,6 +13,9 @@ import { getBtnClassNames } from "../lib/styles";
 import PreServerLoadingScreen from "./PreServerLoadingScreen";
 import WerewolfBackground from "../WerewolfBackground";
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9\s]).{6,}$/;
+
 const Connexion = ({ logOption, onBack }) => {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
@@ -24,6 +27,12 @@ const Connexion = ({ logOption, onBack }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(50);
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
   // Handle Google OAuth callback
   useEffect(() => {
@@ -62,23 +71,67 @@ const Connexion = ({ logOption, onBack }) => {
     }
   }, [searchParams]);
 
+  const clearFieldError = (field) => {
+    setFieldErrors((prev) => ({ ...prev, [field]: "" }));
+  };
+
+  const validate = () => {
+    const errors = { username: "", email: "", password: "" };
+    let isValid = true;
+
+    if (!isLogin && !username.trim()) {
+      errors.username = t("intro.error.usernameRequired");
+      isValid = false;
+    }
+
+    if (!email.trim()) {
+      errors.email = t("intro.error.emailRequired");
+      isValid = false;
+    } else if (!EMAIL_REGEX.test(email.trim())) {
+      errors.email = t("intro.error.invalidEmail");
+      isValid = false;
+    }
+
+    if (!password) {
+      errors.password = t("intro.error.passwordRequired");
+      isValid = false;
+    } else if (!isLogin && !PASSWORD_REGEX.test(password)) {
+      errors.password = t("intro.error.passwordWeak");
+      isValid = false;
+    }
+
+    setFieldErrors(errors);
+    return isValid;
+  };
 
   const handleSwitch = () => {
     setIsLogin((prevIsLogin) => !prevIsLogin);
     setError("");
+    setSuccessMessage("");
+    setFieldErrors({ username: "", email: "", password: "" });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccessMessage("");
+
+    if (!validate()) return;
+
     setIsLoading(true);
-    setError(""); // Clear previous errors
 
     if (isLogin) {
       try {
         const data = await fetchLogin(email, password);
 
         if (data.error) {
-          setError(data.error);
+          // data.error is a translation key like "noAccountFound"
+          const translated = t(`intro.error.${data.error}`);
+          if (data.field) {
+            setFieldErrors((prev) => ({ ...prev, [data.field]: translated }));
+          } else {
+            setError(translated);
+          }
           setIsLoading(false);
           return;
         }
@@ -103,7 +156,7 @@ const Connexion = ({ logOption, onBack }) => {
           });
         }
       } catch (err) {
-        setError("An unexpected error occurred. Please try again.");
+        setError(t("intro.error.loginFailed"));
         console.error("Login error:", err);
       } finally {
         setIsLoading(false);
@@ -113,18 +166,23 @@ const Connexion = ({ logOption, onBack }) => {
         const result = await fetchSignUp(username, email, password, defaultAvatar);
 
         if (result.error) {
-          setError(result.error);
+          const translated = t(`intro.error.${result.error}`);
+          if (result.field) {
+            setFieldErrors((prev) => ({ ...prev, [result.field]: translated }));
+          } else {
+            setError(translated);
+          }
           setIsLoading(false);
           return;
         }
 
         if (result.success) {
           setIsLogin(true);
-          setError(""); // Clear any errors
-          // Optionally show success message
+          setFieldErrors({ username: "", email: "", password: "" });
+          setSuccessMessage(t("intro.error.signupSuccess"));
         }
       } catch (err) {
-        setError("An unexpected error occurred. Please try again.");
+        setError(t("intro.error.signupFailed"));
         console.error("Signup error:", err);
       } finally {
         setIsLoading(false);
@@ -161,8 +219,14 @@ const Connexion = ({ logOption, onBack }) => {
         {isLogin ? t("intro.lo") : t("intro.si")}
       </h1>
 
+      {successMessage && (
+        <div className="w-80 mb-4 p-3 bg-green-500/20 border border-green-500 rounded-lg z-20">
+          <p className="text-green-200 text-sm text-center">{successMessage}</p>
+        </div>
+      )}
+
       {error && (
-        <div className="w-60 mb-4 p-3 bg-red-500/20 border border-red-500 rounded-lg">
+        <div className="w-80 mb-4 p-3 bg-red-500/20 border border-red-500 rounded-lg z-20">
           <p className="text-red-200 text-sm text-center">{error}</p>
         </div>
       )}
@@ -176,6 +240,8 @@ const Connexion = ({ logOption, onBack }) => {
         setEmail={setEmail}
         password={password}
         setPassword={setPassword}
+        fieldErrors={fieldErrors}
+        onFieldChange={clearFieldError}
       />
 
       {/* Google OAuth divider and button */}

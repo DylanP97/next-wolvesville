@@ -2,6 +2,7 @@
 
 import { Select, SelectItem } from "@nextui-org/react";
 import { getColorName } from "../lib/colorNames";
+import { getOptionName } from "../lib/optionNames";
 import i18n from "../lib/i18n";
 
 const isColorAttribute = (path) => path.endsWith("Color");
@@ -9,6 +10,11 @@ const isColorAttribute = (path) => path.endsWith("Color");
 const ProfileSelect = ({ path, label, options, currentValue, setAvState }) => {
   const lang = i18n.language ? i18n.language.substring(0, 2) : "en";
   const isColor = isColorAttribute(path);
+
+  const getDisplayName = (option) => {
+    if (isColor) return getColorName(option, lang);
+    return getOptionName(path, option, lang);
+  };
 
   const updateState = (keys) => {
     const option = keys.values().next().value;
@@ -20,23 +26,26 @@ const ProfileSelect = ({ path, label, options, currentValue, setAvState }) => {
 
   const renderValue = (items) => {
     const item = items[0];
-    if (!item || !isColor) return null;
-    const hex = item.key;
-    return (
-      <div className="flex items-center gap-2">
-        <span
-          className="inline-block w-4 h-4 rounded-full border border-white/30 flex-shrink-0"
-          style={{ backgroundColor: `#${hex}` }}
-        />
-        <span>{getColorName(hex, lang)}</span>
-      </div>
-    );
+    if (!item) return null;
+    const value = item.key;
+    if (isColor) {
+      return (
+        <div className="flex items-center gap-2">
+          <span
+            className="inline-block w-4 h-4 rounded-full border border-white/30 flex-shrink-0"
+            style={{ backgroundColor: `#${value}` }}
+          />
+          <span>{getColorName(value, lang)}</span>
+        </div>
+      );
+    }
+    return <span>{getOptionName(path, value, lang)}</span>;
   };
 
   return (
     <Select
       label={label}
-      selectedKeys={new Set([currentValue])}
+      selectedKeys={currentValue ? new Set([currentValue]) : new Set()}
       onSelectionChange={updateState}
       variant="bordered"
       className="w-full text-white/70"
@@ -45,10 +54,10 @@ const ProfileSelect = ({ path, label, options, currentValue, setAvState }) => {
         value: "text-white",
         label: "!text-white"
       }}
-      {...(isColor ? { renderValue } : {})}
+      renderValue={renderValue}
     >
       {options.map((option) => (
-        <SelectItem key={option} value={option} className="text-black">
+        <SelectItem key={option} value={option} textValue={getDisplayName(option)} className="text-black">
           {isColor ? (
             <div className="flex items-center gap-2">
               <span
@@ -58,7 +67,7 @@ const ProfileSelect = ({ path, label, options, currentValue, setAvState }) => {
               <span>{getColorName(option, lang)}</span>
             </div>
           ) : (
-            option
+            getOptionName(path, option, lang)
           )}
         </SelectItem>
       ))}

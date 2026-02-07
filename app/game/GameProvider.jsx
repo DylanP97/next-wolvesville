@@ -51,6 +51,10 @@ export const GameProvider = ({ children }) => {
   const timeCounter = game?.timeCounter;
   const winningTeam = game?.winningTeam;
   const timeOfTheDay = game?.timeOfTheDay;
+  const roleActions = game?.roleActions;
+  const gameTimeline = game?.gameTimeline;
+  const startTime = game?.startTime;
+  const hasEnded = game?.hasEnded;
 
   // Use stable references for chat histories
   const jailChat = game?.jailNightMessages;
@@ -245,24 +249,29 @@ export const GameProvider = ({ children }) => {
     }
 
     // Reset available chats state
-    if (
-      (clientPlayer.isAlive && isUnderArrest) ||
-      (clientPlayer.isAlive &&
-        isJailer &&
+    // Dead players always get medium chat, regardless of phase
+    if (!clientPlayer.isAlive) {
+      if (isWolf && timeOfTheDay === "nighttime") {
+        // Dead wolves at night: general + wolves + medium
+        setAvailableChats([general, wolves, medium]);
+        setUsedChat(wolves);
+      } else {
+        // All other dead players: general + medium (all phases)
+        setAvailableChats([general, medium]);
+        setUsedChat(medium);
+      }
+    } else if (
+      (isUnderArrest) ||
+      (isJailer &&
         timeOfTheDay === "nighttime" &&
         hasHandcuffed > 0)
     ) {
       setAvailableChats([general, jail]);
       setUsedChat(jail);
-    } else if (timeOfTheDay === "nighttime" && isWolf && !isAlive) {
-      // Dead wolves see all 3: general, wolves, and medium
-      setAvailableChats([general, wolves, medium]);
-      setUsedChat(wolves);
     } else if (timeOfTheDay === "nighttime" && isWolf) {
       setAvailableChats([general, wolves]);
       setUsedChat(wolves);
-    } else if (timeOfTheDay === "nighttime" && ((isMedium && isAlive) || !isAlive)) {
-      // Medium chat available to: alive Medium OR any dead player
+    } else if (timeOfTheDay === "nighttime" && isMedium) {
       setAvailableChats([general, medium]);
       setUsedChat(medium);
     } else {
@@ -270,7 +279,7 @@ export const GameProvider = ({ children }) => {
       setUsedChat(general);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeOfTheDay]);
+  }, [timeOfTheDay, clientPlayer?.isAlive]);
 
   // Track if death effect has been triggered to prevent flickering
   const hasTriggeredDeathEffect = useRef(false);
@@ -400,6 +409,10 @@ export const GameProvider = ({ children }) => {
         availableChats,
         setAvailableChats,
         showDeathFlash,
+        roleActions,
+        gameTimeline,
+        startTime,
+        hasEnded,
       }}
     >
       {children}

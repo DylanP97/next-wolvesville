@@ -89,31 +89,23 @@ export const fetchLogin = async (email, password) => {
     const data = await response.json();
 
     if (!response.ok) {
-      // Handle specific error messages from backend
       if (data.error) {
-
-        // Map backend errors to user-friendly messages
-        if (data.error === "incorrect email" || data.error === "no user found") {
-          return { error: "No account found with this email" };
+        if (data.error.includes("No account") || data.error.includes("no user found")) {
+          return { error: "noAccountFound", field: "email" };
         }
-        if (data.error === "incorrect password") {
-          return { error: "Incorrect password. Please try again." };
+        if (data.error.includes("ncorrect password")) {
+          return { error: "incorrectPassword", field: "password" };
         }
-        return { error: data.error };
+        return { error: "loginFailed" };
       }
 
-      // Fallback for status codes without specific error message
-      if (response.status === 401) {
-        return { error: "Invalid email or password" };
-      }
-
-      return { error: data.message || "Login failed. Please try again." };
+      return { error: "loginFailed" };
     }
 
     return data;
   } catch (error) {
     console.error("Login error:", error);
-    return { error: "Unable to connect to server. Please try again." };
+    return { error: "serverUnavailable" };
   }
 };
 
@@ -158,23 +150,39 @@ export const fetchSignUp = async (username, email, password, defaultAvatar) => {
     const data = await response.json();
 
     if (!response.ok) {
-      // Handle errors object from backend
+      // Handle errors object from signUpErrors middleware
       if (data.errors && typeof data.errors === 'object') {
-        // Convert errors object to a user-friendly message
-        const errorMessages = [];
-        if (data.errors.password) errorMessages.push(data.errors.password);
-        if (data.errors.email) errorMessages.push(data.errors.email);
-        if (data.errors.general) errorMessages.push(data.errors.general);
-
-        return { error: errorMessages.join('. ') || "Signup failed" };
+        if (data.errors.password) return { error: "passwordWeak", field: "password" };
+        if (data.errors.email) return { error: "emailTaken", field: "email" };
+        return { error: "signupFailed" };
       }
 
-      return { error: data.message || "Signup failed" };
+      // Handle message from controller validation
+      if (data.message) {
+        if (data.message.includes("Username Already Exists")) {
+          return { error: "usernameTaken", field: "username" };
+        }
+        if (data.message.includes("Email Already Exists")) {
+          return { error: "emailTaken", field: "email" };
+        }
+        if (data.message.includes("Username")) {
+          return { error: "usernameRequired", field: "username" };
+        }
+        if (data.message.includes("Email")) {
+          return { error: "emailRequired", field: "email" };
+        }
+        if (data.message.includes("Password")) {
+          return { error: "passwordRequired", field: "password" };
+        }
+        return { error: "signupFailed" };
+      }
+
+      return { error: "signupFailed" };
     }
 
     return { success: true, data };
   } catch (error) {
     console.error("Signup error:", error);
-    return { error: "Unable to connect to server. Please try again." };
+    return { error: "serverUnavailable" };
   }
 };

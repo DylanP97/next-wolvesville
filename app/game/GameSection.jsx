@@ -107,7 +107,7 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen, rolesChecklistOpen, setR
         </div>
 
         {/* Chat sidebar for desktop */}
-        <div className="hidden md:flex w-80 lg:w-[500px] h-full z-30 flex-col min-h-0">
+        <div className="hidden md:flex w-96 lg:w-[500px] h-full z-30 flex-col min-h-0">
           <ChatModal isSidebar={true} />
         </div>
       </div>
@@ -135,19 +135,6 @@ const GameSection = ({ summaryIsOpen, setSummaryIsOpen, rolesChecklistOpen, setR
         // isChatOpen={isChatOpen}
         // setIsChatOpen={setIsChatOpen}
         />
-
-
-        {/* Role Description */}
-        <div className="p-2 mb-4">
-          <p className="text-xs md:text-sm italic text-center">
-            {t("game.youAre")}{" "}
-            {i18n.language === "fr" ? clientPlayer.role.nameFR : clientPlayer.role.name}{" "}
-            -{" "}
-            {i18n.language === "fr"
-              ? clientPlayer.role.descriptionFR
-              : clientPlayer.role.description}
-          </p>
-        </div>
         <Image
           src={clientPlayer.role.image}
           alt={clientPlayer.role.name}
