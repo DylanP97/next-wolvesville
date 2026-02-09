@@ -280,7 +280,7 @@
             "seer": "👁️ The seer unveiled the identity of ",
             "wolfSeer": "🐺🔍 The wolf seer has revealed to the wolves the role of ",
             "wolvesMurdered": "💀🐺 The wolves murdered ",
-            "captainReveal": "👔 The village now know its Captain ",
+            "captainReveal": "👁️👔 The village now know its Captain ",
             "captainTripleVote": " and its vote is tripled!",
             "arrestPlayer": " was arrested by the jailer",
             "executePrisoner": "💀👮‍♂️ The jailer executed its prisoner named ",
@@ -289,7 +289,7 @@
             "werewolfReveal": "The autopsy revealed ",
             "wasWerewolf": " was a werewolf",
             "wasProtected": "👩🧹 Someone wounds were healed by the witch potion last night!",
-            "wasHealed": "👩‍⚕️ Someone wounds were healed by the doctor last night!",
+            "wasHealed": "👩‍⚕️ The doctor healed the wounds of",
             "killedBySK": " was murdered last night by the serial killer...",
             "numberOfSKKills": "Number of kills by serial killer: ",
             "graveRobber": "🪦 A grave was looted... ",
@@ -304,7 +304,9 @@
             "babyWolfTargetChosen": "The Baby Werewolf has chosen a revenge target!",
             "babyWolfTargetChanged": "The Baby Werewolf has changed their revenge target!",
             "babyWolfRevenge": "was killed by the Baby Werewolf's revenge!",
-            "paranormalAccident": "A paranormal accident caused the death of"
+            "paranormalAccident": "A paranormal accident caused the death of",
+            "loudmouthReveal": "📢 The Loudmouth's dying words revealed that",
+            "loudmouthIs": "is a"
           }
         },
         "wolfVote": {
@@ -636,7 +638,7 @@
             "seer": "👁️ La voyante a révélé l'identité de ",
             "wolfSeer": "🐺🔍 Le loup-voyant a révélé aux loups le rôle de ",
             "wolvesMurdered": "💀🐺 Les loups ont dévorés ",
-            "captainReveal": "👔 Le village connaît désormais son capitaine ",
+            "captainReveal": "👁️👔 Le village connaît désormais son capitaine ",
             "captainTripleVote": " son vote compte 3 !",
             "arrestPlayer": " a été arrêté par le géôlier",
             "executePrisoner": "💀👮‍♂️ Le géôlier à exécuter son prisonnier ",
@@ -645,7 +647,7 @@
             "werewolfReveal": "L'autopsie a révélé que ",
             "wasWerewolf": " était un loup-garou",
             "wasProtected": "👩🧹 Les blessures d'un joueur ont été guerris par la potion de la sorcière cette nuit !",
-            "wasHealed": "👩‍⚕️ Les blessures d'un joueur ont été gueris par le docteur cette nuit !",
+            "wasHealed": "👩‍⚕️ Le docteur a soigné les blessures de",
             "killedBySK": " a été assasiné la nuit dernière par le tueur en série...",
             "numberOfSKKills": "Nombre de victimes du tueur en série : ",
             "graveRobber": "🪦 Une tombe vient d'être déterrée ! ",
@@ -660,7 +662,9 @@
             "babyWolfTargetChosen": "Le Bébé Loup a choisi une cible de vengeance !",
             "babyWolfTargetChanged": "Le Bébé Loup a changé sa cible de vengeance !",
             "babyWolfRevenge": "a été tué par la vengeance du Bébé Loup !",
-            "paranormalAccident": "Un accident paranormal a causé la mort de"
+            "paranormalAccident": "Un accident paranormal a causé la mort de",
+            "loudmouthReveal": "📢 Les derniers mots de la Commère ont révélé que",
+            "loudmouthIs": "est"
           }
         },
         "wolfVote": {

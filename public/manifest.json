@@ -1,7 +1,7 @@
 {
-  "name": "Wolvesville - Werewolf Online",
-  "short_name": "Wolvesville",
-  "description": "Play the Werewolf game online with friends!",
+  "name": "Loup-garou par DylanP97",
+  "short_name": "Loup-garou",
+  "description": "Jouez au Loup-Garou en ligne avec vos amis !",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0f172a",

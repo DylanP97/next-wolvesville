@@ -145,6 +145,18 @@ const handleSingleSelection = (player, clientPlayer, gameId, socket, actionType,
                 selectedPlayerName: player.name,
             }, gameId);
         },
+
+        gossip: () => {
+            socket.emit("gossip", {
+                type: "gossip",
+                playerId: clientPlayer.id,
+                playerName: clientPlayer.name,
+                selectedPlayerId: player.id,
+                selectedPlayerName: player.name,
+            }, gameId);
+            selectionHelpers.resetToIdle();
+            return;
+        },
     };
 
     // Execute the action
@@ -165,6 +177,7 @@ const handleSingleSelection = (player, clientPlayer, gameId, socket, actionType,
 
     // Complete selection (unless special case handled above)
     if (actionType !== "uncoverRole" &&
+        actionType !== "gossip" &&
         !(actionType === "wolfVote" && clientPlayer.role.name === "Wolf Seer")) {
         selectionHelpers.complete(actionType);
     }

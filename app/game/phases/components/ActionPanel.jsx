@@ -310,13 +310,20 @@ const ActionPanel = () => {
       case "chooseRevenge":
         socket.emit("chooseJuniorWolfDeathRevenge", { babyWolfId: clientPlayer.id, ...payload }, gameId);
         break;
+      case "gossip":
+        socket.emit("gossip", { ...payload, playerName: clientPlayer.name }, gameId);
+        break;
       default:
         socket.emit("registerAction", payload, gameId);
     }
 
     selectionHelpers.startSelection(currentAction.type, currentAction.emoji);
     selectionHelpers.addPlayer(player);
-    selectionHelpers.complete(currentAction.type);
+    if (currentAction.type !== "gossip") {
+      selectionHelpers.complete(currentAction.type);
+    } else {
+      selectionHelpers.resetToIdle();
+    }
     setSelectedPlayer(player);
   };
 

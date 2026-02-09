@@ -157,7 +157,7 @@ const RoleGuideOverlay = () => {
                   )}
                 </div>
                 <div
-                  className={`${styles.badgeBg} px-4 py-1.5 rounded-full text-xs font-semibold text-white shadow-lg`}
+                  className={`${styles.badgeBg} mt-6 px-4 py-1.5 rounded-full text-xs font-semibold text-white shadow-lg`}
                 >
                   {teamName}
                 </div>

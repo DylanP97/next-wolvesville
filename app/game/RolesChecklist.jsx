@@ -32,17 +32,20 @@ const teamConfig = {
 const RolesChecklist = ({ rolesChecklistOpen, setRolesChecklistOpen }) => {
   const { t } = useTranslation();
   const { game } = useAuth();
-  const { playersList } = useGame();
+  const { playersList, clientPlayer } = useGame();
 
   const rolesInGame = game?.rolesInGame || [];
 
-  // Map revealed role names to player names
+  // Map revealed role names to { playerName, isAlive }
   const discoveredRoles = new Map();
   playersList.forEach((p) => {
     if (p.isRevealed && p.role?.name) {
-      discoveredRoles.set(p.role.name, p.name);
+      discoveredRoles.set(p.role.name, { name: p.name, isAlive: p.isAlive });
     }
   });
+
+  // The player's own role is always known
+  const myRoleName = clientPlayer?.role?.name;
 
   // Group roles by team
   const groupedRoles = { village: [], werewolves: [], solo: [] };
@@ -75,11 +78,32 @@ const RolesChecklist = ({ rolesChecklistOpen, setRolesChecklistOpen }) => {
         </h4>
         <div className="flex flex-col gap-1">
           {roles.map((role, index) => {
-            const revealedPlayer = discoveredRoles.get(role.name);
+            const revealed = discoveredRoles.get(role.name);
+            const isMyRole = role.name === myRoleName;
+
+            // Determine status indicator
+            let statusText = "??";
+            let statusColor = "text-slate-500";
+            let rowOpacity = "";
+
+            if (isMyRole) {
+              statusText = i18n.language === "fr" ? "Toi" : "You";
+              statusColor = "text-blue-400 font-semibold";
+            } else if (revealed) {
+              statusText = revealed.name;
+              if (revealed.isAlive) {
+                statusColor = "text-yellow-300";
+              } else {
+                statusColor = "text-red-400";
+                statusText = `💀 ${revealed.name}`;
+                rowOpacity = "opacity-50";
+              }
+            }
+
             return (
               <div
                 key={`${role.name}-${index}`}
-                className="flex items-center gap-2 px-2 py-1 rounded-lg"
+                className={`flex items-center gap-2 px-2 py-1 rounded-lg ${rowOpacity}`}
               >
                 {role.image && (
                   <Image
@@ -90,11 +114,11 @@ const RolesChecklist = ({ rolesChecklistOpen, setRolesChecklistOpen }) => {
                     className="rounded-full"
                   />
                 )}
-                <span className="text-sm text-white">
+                <span className="text-sm text-white flex-shrink-0">
                   {i18n.language === "fr" ? role.nameFR : role.name}
                 </span>
-                <span className={`text-xs ${revealedPlayer ? "text-yellow-300" : "text-slate-500"}`}>
-                  ({revealedPlayer || "??"})
+                <span className={`text-xs ml-auto ${statusColor}`}>
+                  ({statusText})
                 </span>
               </div>
             );

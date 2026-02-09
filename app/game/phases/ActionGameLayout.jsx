@@ -232,6 +232,9 @@ const ActionGameLayout = () => {
       case "chooseRevenge":
         socket.emit("chooseJuniorWolfDeathRevenge", { babyWolfId: clientPlayer.id, ...payload }, gameId);
         break;
+      case "gossip":
+        socket.emit("gossip", { ...payload, playerName: clientPlayer.name }, gameId);
+        break;
       case "link":
         // Cupid linking two players
         socket.emit("linkLovers", {
@@ -244,11 +247,17 @@ const ActionGameLayout = () => {
         socket.emit("registerAction", payload, gameId);
     }
 
-    // Mark action as complete
-    setCompletedActions(prev => new Set([...prev, action.type]));
+    // Mark action as complete (gossip stays reusable — target can be changed)
+    if (action.type !== "gossip") {
+      setCompletedActions(prev => new Set([...prev, action.type]));
+    }
     selectionHelpers.startSelection(action.type, action.emoji);
     players.forEach(p => selectionHelpers.addPlayer(p));
-    selectionHelpers.complete(action.type);
+    if (action.type !== "gossip") {
+      selectionHelpers.complete(action.type);
+    } else {
+      selectionHelpers.resetToIdle();
+    }
     setActiveAction(null);
   }, [activeAction, socket, clientPlayer, roleName, gameId, selectionHelpers]);
 
