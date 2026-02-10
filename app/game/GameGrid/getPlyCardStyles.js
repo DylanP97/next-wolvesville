@@ -173,9 +173,9 @@ export const getPlyCardBackground = (
     )
       return "bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 cursor-pointer animate-pulse hover:animate-none shadow-md hover:shadow-lg transition-all";
   }
-  return `bg-transparent`;
+  return `bg-slate-800/30`;
 };
 
 export const getPlyCardLayout = () => {
-  return "w-full h-20 xs:max-h-24 sm:max-h-24 md:min-h-28 flex flex-col gap-1 items-center relative rounded-lg border border-gray-700 transition-all duration-200 hover:shadow-lg bg-white bg-opacity-10";
+  return "w-full h-20 xs:max-h-24 sm:max-h-24 md:min-h-28 flex flex-col gap-1 items-center relative rounded-lg border border-gray-700 transition-all duration-200 hover:shadow-lg backdrop-blur-[2px]";
 };

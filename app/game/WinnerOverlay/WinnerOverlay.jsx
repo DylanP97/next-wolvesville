@@ -11,11 +11,12 @@ import { fetchTeams } from "../../lib/fetch";
 import AvatarAndRole from "./AvatarAndRole";
 import GameTimeline from "./GameTimeline";
 import GameStats from "./GameStats";
+import GameHighlights from "./GameHighlights";
 
 const WinnerOverlay = () => {
   const { t } = useTranslation();
   const { updateUserGameState, socket } = useAuth();
-  const { winningTeam, playersList, gameId, roleActions, gameTimeline, startTime, hasEnded, dayCount } = useGame();
+  const { winningTeam, playersList, gameId, roleActions, gameTimeline, startTime, hasEnded, dayCount, highlightsData } = useGame();
   const [wTeamData, setWTeamData] = useState();
   const [activeTab, setActiveTab] = useState("results");
 
@@ -47,6 +48,7 @@ const WinnerOverlay = () => {
       { key: "results", label: isFr ? "Resultats" : "Results", icon: "🏆" },
       { key: "timeline", label: isFr ? "Chronologie" : "Timeline", icon: "📜" },
       { key: "stats", label: isFr ? "Statistiques" : "Stats", icon: "📊" },
+      { key: "mvp", label: "MVP", icon: "⭐" },
     ];
 
     return (
@@ -174,6 +176,11 @@ const WinnerOverlay = () => {
             hasEnded={hasEnded}
             dayCount={dayCount}
           />
+        )}
+
+        {/* MVP tab */}
+        {activeTab === "mvp" && (
+          <GameHighlights highlightsData={highlightsData} />
         )}
 
         {/* quitgame button */}

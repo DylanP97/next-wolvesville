@@ -55,6 +55,7 @@ export const GameProvider = ({ children }) => {
   const gameTimeline = game?.gameTimeline;
   const startTime = game?.startTime;
   const hasEnded = game?.hasEnded;
+  const highlightsData = game?.highlightsData;
 
   // Use stable references for chat histories
   const jailChat = game?.jailNightMessages;
@@ -413,6 +414,7 @@ export const GameProvider = ({ children }) => {
         gameTimeline,
         startTime,
         hasEnded,
+        highlightsData,
       }}
     >
       {children}

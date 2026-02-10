@@ -16,7 +16,7 @@ const PreServerLoadingScreen = ({ countdown }) => {
                 loop
                 playsInline
                 className="absolute inset-0 h-screen w-full object-cover z-0"
-                src="/animations/animatedVillage.mp4"
+                src="/animations/animatedVillage.webm"
             />
 
             {/* Floating embers with glowing trails */}
