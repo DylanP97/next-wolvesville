@@ -15,7 +15,6 @@ import { btnClassNames, getBtnClassNames } from "./lib/styles";
 import WerewolfBackground from "./WerewolfBackground";
 import GeneralBtns from "./general-btns/GeneralBtns";
 import { useToRender } from "./providers/RenderProvider";
-import RolesGrid from "./RolesGrid";
 
 const PreScreenMenu = () => {
   const { t } = useTranslation();
@@ -228,12 +227,6 @@ const PreScreenMenu = () => {
               {t("prescreen.register")}
             </Button>
           </div>
-          <button
-            className="text-sm text-slate-300 hover:text-white underline underline-offset-4 transition-colors"
-            onClick={() => setActiveComponent(<RolesGrid onBack={() => {setActiveComponent(<PreScreenMenu />)}} />)}
-          >
-            {t("menu.4")}
-          </button>
         </nav>
 
         <p className="italic px-8 text-center text-white/70 text-sm max-w-[500px] z-20">{t("intro.additionalInfo")}</p>
